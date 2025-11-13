@@ -1,5 +1,6 @@
 using CocoDoogy.Tile;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
@@ -12,27 +13,31 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         /// <summary>
         /// 움직이는 방향
         /// </summary>
-        public HexDirection MoveDirection = HexDirection.East;
+        public HexDirection Dir = HexDirection.East;
 
 
         public MoveCommand(object param): base(CommandType.Move, param)
         {
-            MoveDirection = (HexDirection)param;
+            Dir = (HexDirection)param;
         }
 
 
         public override void Execute()
         {
-            PlayerHandler.LookDirection = MoveDirection;
-            Vector2Int nextPos = PlayerHandler.GridPos.GetDirectionPos(MoveDirection);
+            InGameManager.ConsumeActionPoint(HexTile.GetTile(PlayerHandler.GridPos).CurrentData.moveCost);
+            
+            PlayerHandler.LookDirection = Dir;
+            Vector2Int nextPos = PlayerHandler.GridPos.GetDirectionPos(Dir);
             PlayerHandler.Move(nextPos);
         }
 
         public override void Undo()
         {
-            PlayerHandler.LookDirection = MoveDirection;
-            Vector2Int prePos = PlayerHandler.GridPos.GetDirectionPos(MoveDirection.GetMirror());
+            PlayerHandler.LookDirection = Dir;
+            Vector2Int prePos = PlayerHandler.GridPos.GetDirectionPos(Dir.GetMirror());
             PlayerHandler.Move(prePos);
+            
+            InGameManager.RegenActionPoint(HexTile.GetTile(PlayerHandler.GridPos).CurrentData.moveCost);
         }
     }
 }

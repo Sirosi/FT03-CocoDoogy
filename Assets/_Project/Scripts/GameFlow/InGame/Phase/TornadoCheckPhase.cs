@@ -19,7 +19,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (!centerPiece || centerPiece.BaseData.type != PieceType.Tornado) return true;
             if (centerPiece.Target == null) return true;
 
-            CommandManager.Tornado((Vector2Int)centerPiece.Target);
+            CommandManager.Teleport((Vector2Int)centerPiece.Target);
             
             return false;
         }

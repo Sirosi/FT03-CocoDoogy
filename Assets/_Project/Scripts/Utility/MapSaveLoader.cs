@@ -29,8 +29,8 @@ namespace CocoDoogy.Utility
             // Map 정보 저장
             Map mapData = new()
             {
-                StartPos = HexTileMap.Instance.StartPos,
-                EndPos = HexTileMap.Instance.EndPos,
+                StartPos = HexTileMap.StartPos,
+                EndPos = HexTileMap.EndPos,
             };
 
             List<MapTile> tiles = new(); // tile 정보를 저장할 List
@@ -67,7 +67,7 @@ namespace CocoDoogy.Utility
                 tiles.Add(tileData);
             }
             mapData.Tiles = tiles.ToArray();
-            mapData.Gimmicks = HexTileMap.Instance.Gimmicks.Values.ToArray();
+            mapData.Gimmicks = HexTileMap.Gimmicks.Values.ToArray();
 
             OnMapSaved?.Invoke();
 
@@ -85,8 +85,8 @@ namespace CocoDoogy.Utility
             Map mapData = JsonUtility.FromJson<Map>(json);
 
             // Map 정보 적용
-            HexTileMap.Instance.StartPos = mapData.StartPos;
-            HexTileMap.Instance.EndPos = mapData.EndPos;
+            HexTileMap.StartPos = mapData.StartPos;
+            HexTileMap.EndPos = mapData.EndPos;
 
             // 타일 설치
             foreach (MapTile tile in mapData.Tiles)
@@ -118,7 +118,7 @@ namespace CocoDoogy.Utility
             // 기믹 연결
             foreach (GimmickData data in mapData.Gimmicks)
             {
-                HexTileMap.Instance.Gimmicks.Add(data.Target.GridPos, data);
+                HexTileMap.Gimmicks.Add(data.Target.GridPos, data);
             }
 
             OnMapLoaded?.Invoke();

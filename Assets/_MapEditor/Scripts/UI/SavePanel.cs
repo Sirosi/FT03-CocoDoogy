@@ -95,7 +95,7 @@ namespace CocoDoogy.MapEditor.UI
                     LoadMap(fName);
                     
                     // MapEditorController에서도 사용하지만, 별도로 연결하는 노력을 없애는 게 더 나아 보임
-                    foreach(var gPos in HexTileMap.Instance.Gimmicks.Keys)
+                    foreach(var gPos in HexTileMap.Gimmicks.Keys)
                     {
                         HexTile.GetTile(gPos).DrawOutline(Color.blue);
                     }

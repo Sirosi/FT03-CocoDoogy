@@ -1,4 +1,4 @@
-namespace CocoDoogy.Weather
+namespace CocoDoogy.GameFlow.InGame.Weather
 {
     public enum WeatherType
     {

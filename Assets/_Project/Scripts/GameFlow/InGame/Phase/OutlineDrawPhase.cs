@@ -25,14 +25,14 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             }
             
             // 기믹이 존재하는 타일이면, 빨간색으로
-            foreach (var data in HexTileMap.Instance.Gimmicks.Values)
+            foreach (var data in HexTileMap.Gimmicks.Values)
             {
                 HexTile gimmickTile = HexTile.GetTile(data.Target.GridPos);
                 gimmickTile.DrawOutline(Color.red);
                 filledTiles.Push(gimmickTile);
             }
 
-            HexTile destination = HexTile.GetTile(HexTileMap.Instance.EndPos);
+            HexTile destination = HexTile.GetTile(HexTileMap.EndPos);
             destination.DrawOutline(Color.purple);
             filledTiles.Push(destination);
             

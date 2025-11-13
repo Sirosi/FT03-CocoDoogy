@@ -3,12 +3,16 @@ using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.Tile;
 using CocoDoogy.Utility;
+using System;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
     public class InGameManager: Singleton<InGameManager>
     {
+        public static event Action<int> OnActionPointChanged = null;
+        
+        
         /// <summary>
         /// 현재 인게임이 정상적인(= 플레이 가능) 상태인지 체크
         /// </summary>
@@ -23,6 +27,23 @@ namespace CocoDoogy.GameFlow.InGame
                 return true;
             }
         }
+
+        public static int ConsumedActionPoints
+        {
+            get;
+            private set;
+        }
+        public static int ActionPoint
+        {
+            get => Instance?.actionPoint ?? 0;
+            private set
+            {
+                if (!IsValid) return;
+
+                Instance.actionPoint = value;
+                OnActionPointChanged?.Invoke(Instance.actionPoint);
+            }
+        }
         /// <summary>
         /// InGame에서 사용할 MapData
         /// </summary>
@@ -32,6 +53,8 @@ namespace CocoDoogy.GameFlow.InGame
         private Camera mainCamera = null;
         private bool touched = false;
 
+        private int actionPoint = 0;
+
         private readonly IPhase[] turnPhases =
         {
             new ClearCheckPhase(),
@@ -40,6 +63,7 @@ namespace CocoDoogy.GameFlow.InGame
             new WeatherCheckPhase(),
             new OutlineDrawPhase(),
             new TriggerCheckPhase(),
+            new ActionPointCheckPhase(),
             new LockCheckPhase(),
         };
 
@@ -94,6 +118,9 @@ namespace CocoDoogy.GameFlow.InGame
         /// <param name="mapJson"></param>
         public static void DrawMap(string mapJson)
         {
+            if (!IsValid) return;
+            
+            Instance.Clear();
             CommandManager.Clear();
 
             if (mapJson is null)
@@ -103,7 +130,25 @@ namespace CocoDoogy.GameFlow.InGame
             }
             MapSaveLoader.Apply(mapJson);
 
-            CommandManager.Deploy(HexTileMap.Instance.StartPos, HexDirection.NorthEast);
+            CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
+        }
+
+        private void Clear()
+        {
+            ActionPoint = 0;
+        }
+
+        public static void RefillActionPoint() => ActionPoint = HexTileMap.ActionPoint;
+        public static void ClearActionPoint() => ActionPoint = 0;
+        public static void RegenActionPoint(int regen)
+        {
+            ConsumedActionPoints -= regen;
+            ActionPoint += regen;
+        }
+        public static void ConsumeActionPoint(int consume)
+        {
+            ConsumedActionPoints += consume;
+            ActionPoint -= consume;
         }
 
         // ReSharper disable Unity.PerformanceAnalysis

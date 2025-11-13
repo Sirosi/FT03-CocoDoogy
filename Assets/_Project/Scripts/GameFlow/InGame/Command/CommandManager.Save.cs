@@ -22,7 +22,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
             }
             CommandSave result = new()
             {
-                StartPos = HexTileMap.Instance.StartPos,
+                StartPos = HexTileMap.StartPos,
                 Data = data
             };
             return JsonUtility.ToJson(result);
@@ -43,9 +43,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     CommandType.Trigger => JsonUtility.FromJson<TriggerCommand>(data.DataJson),
                     
                     CommandType.Slide => JsonUtility.FromJson<SlideCommand>(data.DataJson),
-                    CommandType.Tornado => JsonUtility.FromJson<TornadoCommand>(data.DataJson),
+                    CommandType.Teleport => JsonUtility.FromJson<TeleportCommand>(data.DataJson),
                     
                     CommandType.Deploy => JsonUtility.FromJson<DeployCommand>(data.DataJson),
+                    CommandType.Refill => JsonUtility.FromJson<RefillCommand>(data.DataJson),
                     CommandType.Weather => JsonUtility.FromJson<WeatherCommand>(data.DataJson),
                     _ => null
                 };

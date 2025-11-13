@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using CocoDoogy.GameFlow.InGame.Command.Content;
-using CocoDoogy.Weather;
-using CocoDoogy.Tile;
-using Newtonsoft.Json;
 
 namespace CocoDoogy.GameFlow.InGame.Command
 {
@@ -41,8 +38,9 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     CommandType.Move => new MoveCommand(param),
                     CommandType.Trigger => new TriggerCommand(param),
                     CommandType.Slide => new SlideCommand(param),
-                    CommandType.Tornado => new TornadoCommand(param),
+                    CommandType.Teleport => new TeleportCommand(param),
                     CommandType.Deploy => new DeployCommand(param),
+                    CommandType.Refill => new RefillCommand(param),
                     CommandType.Weather => new WeatherCommand(param),
                     _ => null
                 };

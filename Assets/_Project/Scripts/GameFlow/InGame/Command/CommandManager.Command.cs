@@ -1,5 +1,5 @@
 using CocoDoogy.Tile;
-using CocoDoogy.Weather;
+using CocoDoogy.GameFlow.InGame.Weather;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command
@@ -20,17 +20,22 @@ namespace CocoDoogy.GameFlow.InGame.Command
         {
             ExecuteCommand(CommandType.Slide, direction);
         }
-        public static void Tornado(Vector2Int gridPos)
+        public static void Teleport(Vector2Int gridPos)
         {
-            ExecuteCommand(CommandType.Tornado, (PlayerHandler.GridPos, gridPos));
+            ExecuteCommand(CommandType.Teleport, (PlayerHandler.GridPos, gridPos));
         }
 
+        
         
         public static void Deploy(Vector2Int gridPos, HexDirection direction)
         {
             ExecuteCommand(CommandType.Deploy, (gridPos, direction));
         }
-
+        public static void Refill()
+        {
+            ExecuteCommand(CommandType.Refill, (InGameManager.ActionPoint, PlayerHandler.GridPos));
+        }
+        
         public static void Weather(WeatherType weather)
         {
             ExecuteCommand(CommandType.Weather, (WeatherManager.NowWeather, weather));

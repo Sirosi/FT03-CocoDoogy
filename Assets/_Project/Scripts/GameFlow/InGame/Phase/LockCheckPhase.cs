@@ -18,7 +18,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (!tile.IsPlaceable || // 타일이 이동불가 상태인지
                 tile.CanMovePoses().Count <= 0) // 주변에 이동 가능 타일이 없는지
             {
-                CommandManager.Deploy(HexTileMap.Instance.StartPos, HexDirection.East);
+                CommandManager.Refill();
                 return false;
             }
             // TODO: 주변에 이동 가능 타일이 없는지는 아이템 사용 가능 여부도 체크해야 할 수 있음

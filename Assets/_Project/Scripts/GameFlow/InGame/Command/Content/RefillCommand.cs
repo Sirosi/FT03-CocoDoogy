@@ -1,0 +1,49 @@
+using CocoDoogy.Tile;
+using UnityEngine;
+
+namespace CocoDoogy.GameFlow.InGame.Command.Content
+{
+    /// <summary>
+    /// 행동력 부족 및 이동 불가능 등으로 인한 초기화 동작
+    /// </summary>
+    [System.Serializable]
+    public class RefillCommand: CommandBase
+    {
+        public override bool IsUserCommand => false;
+
+
+        /// <summary>
+        /// 남은 포인트
+        /// </summary>
+        public int RemainPoints = 0;
+        /// <summary>
+        /// 마지막 위치
+        /// </summary>
+        public Vector2Int GridPos = Vector2Int.zero;
+        
+        
+        public RefillCommand(object param) : base(CommandType.Refill, param)
+        {
+            var data = ((int, Vector2Int))param;
+            RemainPoints = data.Item1;
+            GridPos = data.Item2;
+        }
+
+        
+        public override void Execute()
+        {
+            InGameManager.ConsumeActionPoint(RemainPoints);
+            InGameManager.RefillActionPoint();
+            
+            PlayerHandler.Deploy(HexTileMap.StartPos);
+        }
+
+        public override void Undo()
+        {
+            InGameManager.ClearActionPoint();
+            InGameManager.RegenActionPoint(RemainPoints);
+            
+            PlayerHandler.Deploy(GridPos);
+        }
+    }
+}
