@@ -212,7 +212,7 @@ namespace CocoDoogy.MapEditor.Controller
             HexTile selectedTile = HexTile.GetTile(gridPos);
             if (!selectedTile) return;
 
-            Piece centerPiece = selectedTile.Pieces[(int)HexDirection.Center];
+            Piece centerPiece = selectedTile.GetPiece(HexDirection.Center);
             if (!centerPiece || !centerPiece.IsTrigger) return;
 
             ClearSelectedTile();
@@ -229,7 +229,7 @@ namespace CocoDoogy.MapEditor.Controller
             HexTile selectedTile = HexTile.GetTile(gridPos);
             if (!selectedTile) return;
 
-            Piece centerPiece = PieceDeployPanel.SelectedTile.Pieces[(int)HexDirection.Center];
+            Piece centerPiece = PieceDeployPanel.SelectedTile.GetPiece(HexDirection.Center);
             if (!centerPiece || !centerPiece.BaseData.hasTarget) return;
 
             if (centerPiece.Target != null)
@@ -365,7 +365,7 @@ namespace CocoDoogy.MapEditor.Controller
 
             foreach(var tile in HexTile.Tiles.Values)
             {
-                Piece centerPiece = tile.Pieces[(int)HexDirection.Center];
+                Piece centerPiece = tile.GetPiece(HexDirection.Center);
                 if (!centerPiece || !centerPiece.BaseData.hasTarget) continue;
                 if (centerPiece.Target == null) continue;
 

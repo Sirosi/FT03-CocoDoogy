@@ -31,7 +31,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
                 HexTile tile = HexTile.GetTile(GridPos);
                 if (!tile) return null;
 
-                Piece piece = tile.Pieces[(int)HexDirection.Center];
+                Piece piece = tile.GetPiece(HexDirection.Center);
                 if (!piece) return null;
 
                 TriggerPieceBase result = piece.GetComponent<TriggerPieceBase>();

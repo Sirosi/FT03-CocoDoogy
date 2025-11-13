@@ -35,7 +35,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             // 중앙 기물 확인
             // Switch, Button이 아니면 Trigger 동작시키는 거 불가능하게
             // GravityButton은 다른 식으로 동작함
-            Piece centerPiece = tile.Pieces[(int)HexDirection.Center];
+            Piece centerPiece = tile.GetPiece(HexDirection.Center);
             if (!centerPiece) return true;
             if (centerPiece.BaseData.type is not (PieceType.Switch or PieceType.Button)) return true;
 

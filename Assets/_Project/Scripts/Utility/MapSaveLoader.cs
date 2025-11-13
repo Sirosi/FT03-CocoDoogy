@@ -58,10 +58,10 @@ namespace CocoDoogy.Utility
                 }
 
                 // 중앙 기물은 LookDirection을 가져야 함으로 Center일 경우 추가 정보 저장
-                int centerIdx = (int)HexDirection.Center;
-                if (tile.Pieces[centerIdx])
+                Piece centerPiece = tile.GetPiece(HexDirection.Center);
+                if (centerPiece)
                 {
-                    tileData.Pieces[centerIdx].LookDirection = tile.Pieces[centerIdx].LookDirection;
+                    tileData.Pieces[(int)HexDirection.Center].LookDirection = centerPiece.LookDirection;
                 }
 
                 tiles.Add(tileData);
@@ -112,7 +112,7 @@ namespace CocoDoogy.Utility
             // 기물 목표 위치 연결
             foreach (var grids in mapData.PieceToTargets)
             {
-                HexTile.GetTile(grids.PiecePos).Pieces[(int)HexDirection.Center].Target = grids.TargetPos;
+                HexTile.GetTile(grids.PiecePos).GetPiece(HexDirection.Center).Target = grids.TargetPos;
             }
 
             // 기믹 연결
