@@ -11,6 +11,7 @@ namespace CocoDoogy.GameFlow.InGame
     public class InGameManager: Singleton<InGameManager>
     {
         public static event Action<int> OnActionPointChanged = null;
+        public static event Action<int> OnRefillCountChanged = null;
         
         
         /// <summary>
@@ -33,6 +34,18 @@ namespace CocoDoogy.GameFlow.InGame
             get;
             private set;
         }
+
+        public static int RefillCount
+        {
+            get => Instance?.refillCount ?? 0;
+            private set
+            {
+                if (!IsValid) return;
+
+                Instance.refillCount = value;
+                OnRefillCountChanged?.Invoke(Instance.refillCount);
+            }
+        }
         public static int ActionPoint
         {
             get => Instance?.actionPoint ?? 0;
@@ -53,6 +66,7 @@ namespace CocoDoogy.GameFlow.InGame
         private Camera mainCamera = null;
         private bool touched = false;
 
+        private int refillCount = 0;
         private int actionPoint = 0;
 
         private readonly IPhase[] turnPhases =
@@ -135,11 +149,27 @@ namespace CocoDoogy.GameFlow.InGame
 
         private void Clear()
         {
+            RefillCount = 0;
             ActionPoint = 0;
         }
 
-        public static void RefillActionPoint() => ActionPoint = HexTileMap.ActionPoint;
-        public static void ClearActionPoint() => ActionPoint = 0;
+        /// <summary>
+        /// 초기화 동작
+        /// </summary>
+        public static void RefillActionPoint()
+        {
+            RefillCount++;
+            ActionPoint = HexTileMap.ActionPoint;
+        }
+        /// <summary>
+        /// 역초기화 동작
+        /// </summary>
+        public static void ClearActionPoint()
+        {
+            RefillCount--;
+            ActionPoint = 0;
+        }
+
         public static void RegenActionPoint(int regen)
         {
             ConsumedActionPoints -= regen;

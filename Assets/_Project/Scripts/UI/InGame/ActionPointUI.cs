@@ -1,4 +1,5 @@
 using CocoDoogy.GameFlow.InGame;
+using CocoDoogy.Tile;
 using UnityEngine;
 using TMPro;
 
@@ -21,7 +22,7 @@ namespace CocoDoogy.UI.InGame
 
         private void OnActionPointChanged(int point)
         {
-            text.SetText($"{point} / {5}");
+            text.SetText($"{point} / {HexTileMap.ActionPoint}");
         }
     }
 }

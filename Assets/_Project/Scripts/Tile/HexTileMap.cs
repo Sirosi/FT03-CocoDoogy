@@ -14,6 +14,8 @@ namespace CocoDoogy.Tile
     /// </summary>
     public class HexTileMap : Singleton<HexTileMap>
     {
+        public static int RefillCount { get; set; } = 3;
+        
         public static int ActionPoint { get; set; } = 5;
         
         public static Vector2Int StartPos { get; set; } = Vector2Int.zero;
