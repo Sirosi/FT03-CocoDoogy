@@ -55,7 +55,7 @@ namespace CocoDoogy.Network.Login
             gameTicketUseButton.onClick.AddListener(OnConsumeTicket);
             findUserByNicknameButton.onClick.AddListener(OnClickFindUserByNicknameAsync);
 
-            DataManager.Instance.OnUserDataLoaded += RefreshFriendRequestList;
+            DataManager.Instance.OnPrivateUserDataLoaded += RefreshFriendRequestList;
         }
 
         
