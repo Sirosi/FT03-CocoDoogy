@@ -1,3 +1,4 @@
+using CocoDoogy.Data;
 using CocoDoogy.UI;
 using CocoDoogy.UI.StageSelect;
 using System;
@@ -19,8 +20,9 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private RectTransform page2;
         private bool isFirstPage;
         
-        [Header("Tips")]
-        
+        [Header("StageInfo Content")]
+        [SerializeField] private RectTransform content;
+        [SerializeField] private StageInfo[] stageInfos;
         
         [Header("Ranks")]
         [SerializeField] private GameObject[] ranks;
@@ -63,6 +65,8 @@ namespace CocoDoogy.UI.StageSelect
             isFirstPage = true;
             page1.gameObject.SetActive(true);
             page2.gameObject.SetActive(false);
+            
+            StageInfoHelps();
         }
 
 
@@ -78,8 +82,10 @@ namespace CocoDoogy.UI.StageSelect
                 itemAmounts[index].text = $"2개";
             }
         }
-
-
+        
+        
+        
+        
 
         private async void OnPageChangeButtonClicked()
         {
@@ -96,7 +102,25 @@ namespace CocoDoogy.UI.StageSelect
                 isFirstPage = true;
             }
         }
-            
+
+
+
+        private void StageInfoHelps()
+        {
+            StageInfo stageInfo = stageInfos[selectedStage - 1];
+            for (int i = content.childCount - 1; i >= 0; --i)
+            {
+                Destroy(content.GetChild(i).gameObject);
+            }
+            foreach (var prefab in stageInfo.contentPrefabs)
+            {
+                Instantiate(prefab, content);
+            }
+        }
+        
+        
+        
+        
         private void OnStartButtonClicked()
         {
             Loading.LoadScene($"Stage{selectedStage}");

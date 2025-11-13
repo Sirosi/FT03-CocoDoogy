@@ -42,6 +42,8 @@ namespace CocoDoogy.UI.StageSelect
             }
             Instance = this;
             
+            
+            stageReadyUI.gameObject.SetActive(false);
             isStageSelect = true;
             isStageReady = false;
             
