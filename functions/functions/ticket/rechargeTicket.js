@@ -57,7 +57,7 @@ exports.rechargeTicket = onCall(fnConfig, async (request) => {
       if (newRegenTicket < maxTicket) {
         newLastTime = lastTime + (ticketsActuallyAdded * rechargeInterval);
       } else {
-        newLastTime = null;
+        newLastTime = 0;
       }
 
       t.update(userPrivateRef, {

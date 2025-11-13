@@ -37,10 +37,12 @@ namespace CocoDoogy.UI.Shop
             stampShopButton.onClick.AddListener(OnClickStampShopButton);
             jemShopButton.onClick.AddListener(OnClickJemShopButton);
         }
+
         private void OnEnable()
         {
             InitTabs();
-        } 
+        }
+
         public override void OpenPanel() => gameObject.SetActive(true);
         protected override void ClosePanel() => WindowAnimation.SwipeWindow(transform as RectTransform);
         public void OpenPurchasePanel(ItemData itemData) => purchasePanel.Open(itemData, OnPurchaseRequest);
@@ -89,7 +91,6 @@ namespace CocoDoogy.UI.Shop
             
             ChangeUITabs.ChangeTab(clicked, true);
         }
-        // TODO : Info UI 버튼에서 이쪽으로 연결되게 해야함. 
         
         private void OnClickItemShopButton()
         {
@@ -120,6 +121,28 @@ namespace CocoDoogy.UI.Shop
             
             targetPanel.gameObject.SetActive(true);
             currentActivePanel = targetPanel;
+        }
+        #endregion
+
+        # region < InfoUI에서 버튼에 연결하기 위한 메서드 >
+        public void OpenJemShopUI()
+        {
+            OpenPanel();
+            itemShop.Change(false);
+            stampShop.Change(false);
+            jemShop.Change(true);
+            ToggleTab(jemShop.transform);
+            OnClickButton(jemShopButton);
+        }
+
+        public void OpenStampShopUI()
+        {
+            OpenPanel();
+            itemShop.Change(false);
+            stampShop.Change(true);
+            jemShop.Change(false);
+            ToggleTab(stampShop.transform);
+            OnClickButton(stampShopButton);
         }
         #endregion
     }

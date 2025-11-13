@@ -1,5 +1,6 @@
-using CocoDoogy.Network.UI;
+using CocoDoogy.UI.UserInfo;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CocoDoogy.UI.Friend
 {
@@ -9,11 +10,13 @@ namespace CocoDoogy.UI.Friend
         [SerializeField] private RectTransform friendsWindow;
         [SerializeField] private GameObject searchWindowBg;
 
-        [Header("Menu Buttons")] 
+        [Header("Close Button")] 
         [SerializeField] private CommonButton closeButton;
-        [SerializeField] private CommonButton friendsInfoButton;
-        [SerializeField] private CommonButton friendsRequestButton;
-        [SerializeField] private CommonButton friendsSentButton;
+        
+        [Header("Tab Buttons")]
+        [SerializeField] private Button friendsInfoButton;
+        [SerializeField] private Button friendsRequestButton;
+        [SerializeField] private Button friendsSentButton;
 
         [Header("Popup Buttons")] 
         [SerializeField] private CommonButton searchFriendButton;
@@ -56,13 +59,28 @@ namespace CocoDoogy.UI.Friend
         private void InitTabs()
         {
             currentActivePanel = friendsInfoPanel;
+            OnClickButton(friendsInfoButton);
             friendsInfoPanel.gameObject.SetActive(true);
             receivedRequestPanel.gameObject.SetActive(false);
             sentRequestPanel.gameObject.SetActive(false);
         }
-        private void OnClickFriendInfoButton() =>ToggleTab(friendsInfoPanel);
-        private void OnClickFriendRequestButton() => ToggleTab(receivedRequestPanel);
-        private void OnClickFriendSentButton() =>ToggleTab(sentRequestPanel);
+        private void OnClickFriendInfoButton()
+        {
+            OnClickButton(friendsInfoButton);
+            ToggleTab(friendsInfoPanel);
+        }
+
+        private void OnClickFriendRequestButton()
+        {
+            OnClickButton(friendsRequestButton);
+            ToggleTab(receivedRequestPanel);
+        }
+
+        private void OnClickFriendSentButton()
+        {
+            OnClickButton(friendsSentButton);
+            ToggleTab(sentRequestPanel);
+        }
 
         private void ToggleTab(RequestPanel targetPanel)
         {
@@ -77,6 +95,13 @@ namespace CocoDoogy.UI.Friend
             currentActivePanel = targetPanel;
         }
         #endregion
-        
+        private void OnClickButton(Button clicked)
+        {
+            ChangeUITabs.ChangeTab(friendsInfoButton, false);
+            ChangeUITabs.ChangeTab(friendsRequestButton, false);
+            ChangeUITabs.ChangeTab(friendsSentButton, false);
+            
+            ChangeUITabs.ChangeTab(clicked, true);
+        }
     }
 }

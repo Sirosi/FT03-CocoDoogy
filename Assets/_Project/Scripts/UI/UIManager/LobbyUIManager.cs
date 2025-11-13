@@ -27,6 +27,8 @@ namespace CocoDoogy.UI.UIManager
         [SerializeField] private CommonButton shopButton;
         [SerializeField] private CommonButton startButton;
         
+        public ShopUI ShopUI => shopPanel;
+        
         protected override void Awake()
         {
             base.Awake();
