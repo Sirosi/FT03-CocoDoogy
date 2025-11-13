@@ -99,7 +99,7 @@ namespace CocoDoogy.UI.StageSelect
         
         private void OnBackButtonClicked()
         {
-            if (isStageSelect) Loading.LoadScene("MainUITest");
+            if (isStageSelect) Loading.LoadScene("UIConnectTest");
             if (isStageReady)
             {
                 WindowAnimation.SwipeWindow(stageReadyUI);
