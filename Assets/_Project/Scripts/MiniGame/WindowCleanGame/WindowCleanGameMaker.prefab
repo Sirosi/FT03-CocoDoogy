@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2329621842972382809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9023405784449056980}
+  - component: {fileID: 4451988648047248168}
+  m_Layer: 0
+  m_Name: WindowCleanGameMaker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9023405784449056980
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329621842972382809}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 77.478516, y: 104.87802, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4451988648047248168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329621842972382809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f68a3f11a2658404cbb8b6400334ad31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DirtyPrefab: {fileID: 2855864693895411459, guid: 7e50ce07dfd5f1a4cadef7280f2c846b, type: 3}
+  backGround: {fileID: 0}
+  dirtyParent: {fileID: 0}
+  forestBackGroundsprite: {fileID: 21300000, guid: ce4d45f7c9b6b8b4d921e14e23ff0580, type: 3}
+  sandBackGroundsprite: {fileID: 21300000, guid: 90ec4f836e57c8e42a20dcd30056004e, type: 3}
+  waterBackGroundsprite: {fileID: 21300000, guid: 7c517438b305bd241824f75e6b8ab366, type: 3}
+  snowBackGroundsprite: {fileID: 21300000, guid: 37871dd00452716479a2144395d26ee4, type: 3}
+  forestDirties:
+  - {fileID: 21300000, guid: 52bdd9ddcf08e194bb3035bc22b7fb6c, type: 3}
+  - {fileID: 21300000, guid: 7e135a44784534b448dc3c6c62c143a8, type: 3}
+  - {fileID: 21300000, guid: 9d181424d2a6e3f4f8c7fea9b1beef42, type: 3}
+  sandDirties:
+  - {fileID: 21300000, guid: 754e2602c7f591144926e05d39951682, type: 3}
+  - {fileID: 21300000, guid: fd7b5b6a6ee723141b27c23709cd03c9, type: 3}
+  - {fileID: 21300000, guid: a68ced4753cd42446b4db79003639ef4, type: 3}
+  waterDirties:
+  - {fileID: 21300000, guid: e5f3a4594de488c4096764fbacdc45b2, type: 3}
+  - {fileID: 21300000, guid: 91ce724a6224b6549a41a5595c8867a3, type: 3}
+  - {fileID: 21300000, guid: c4f9cba518c693943a241d55ab678f9f, type: 3}
+  snowDirties:
+  - {fileID: 21300000, guid: e8f5c7b3a9a2d8643b2dc37c91b19401, type: 3}
+  - {fileID: 21300000, guid: 4142386a292fc1048b2276be2c37d906, type: 3}
+  - {fileID: 21300000, guid: 3657866b8ccc64e4598ebbb96e5894ac, type: 3}

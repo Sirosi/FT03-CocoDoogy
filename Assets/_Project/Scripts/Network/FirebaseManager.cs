@@ -1,0 +1,83 @@
+using CocoDoogy.Core;
+using Firebase;
+using Firebase.Auth;
+using Firebase.Database;
+using Firebase.Extensions;
+using Firebase.Firestore;
+using Firebase.Functions;
+using Firebase.Storage;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace CocoDoogy.Network
+{
+
+    // TODO : 나중에 구조 변경 생각
+    public partial class FirebaseManager : Singleton<FirebaseManager>
+    {
+        public FirebaseAuth Auth { get; private set; }
+        public FirebaseUser User { get; set; }
+        public FirebaseDatabase DB { get; set; }
+        public FirebaseStorage Storage { get; private set; }
+        public FirebaseFirestore Firestore { get; private set; }
+        public FirebaseFunctions Functions { get; private set; }
+
+        public bool IsFirebaseReady { get; private set; } = false;
+
+        /// <summary>
+        /// 파이어베이스 초기화가 완료 후에 작동하는 이벤트
+        /// GoogleLogin.cs -> Firebase.OnFirebaseInitialized += InitGoogleConfig; 이런식으로 사용하면 될 듯
+        /// </summary>
+        public event Action OnFirebaseInitialized;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            DontDestroyOnLoad(gameObject);
+            InitFirebase();
+        }
+
+        /// <summary>
+        /// 각 파이어베이스 초기화시키는 메서드
+        /// </summary>
+        private void InitFirebase()
+        {
+            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+            {
+                if (task.Result == DependencyStatus.Available)
+                {
+                    Debug.Log("Firebase dependency check available");
+
+                    // 각 파이어베이스 초기화
+                    Auth = FirebaseAuth.DefaultInstance;
+                    DB = FirebaseDatabase.DefaultInstance;
+                    Storage = FirebaseStorage.DefaultInstance;
+                    Firestore = FirebaseFirestore.DefaultInstance;
+                    Functions = FirebaseFunctions.GetInstance("asia-northeast3");
+
+                    IsFirebaseReady = true;
+                    OnFirebaseInitialized?.Invoke();
+                }
+                else
+                {
+                    IsFirebaseReady = false;
+                    Debug.LogError($"Could not initialize FirebaseAuth {task.Result}");
+                }
+            });
+        }
+
+        /// <summary>
+        /// LoginUI 에서 OnFirebaseInitialized에 이벤트를 넣어야하는데 이벤트를 넣기 전에 
+        /// OnFirebaseInitialized?.Invoke() 부분이 실행될 수 있기 때문에 파악 후 이벤트 실행 or 넣기 
+        /// </summary>
+        /// <param name="callback"></param>
+        public void SubscribeOnFirebaseInitialized(Action callback)
+        {
+            if (IsFirebaseReady) callback?.Invoke();
+            else OnFirebaseInitialized += callback;
+        }
+    }
+}

@@ -1,0 +1,147 @@
+using CocoDoogy.Network.Ticket;
+using Newtonsoft.Json;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace CocoDoogy.Network
+{
+    public partial class FirebaseManager
+    {
+        private const long RechargeIntervalMs = 1 * 60 * 1000; // TODO: 지금은 1분 주기로 실행되게 되어있는데 나중에 10분 or 30분 주기로 변경 예정
+        private const int MaxRegenTicket = 5;
+        public int TotalTicket => CurrentTicket + BonusTicket;
+        
+        public int CurrentTicket { get; private set; }
+        public int BonusTicket { get; private set; }
+        public long? LastTicketTimestamp { get; private set; } = 0;
+        public TimeSpan TimeUntilNextTicket { get; private set; } = TimeSpan.Zero;
+        
+        private long serverTimeOffset = 0;
+        
+        /// <summary>
+        /// 티켓을 충전하거나 사용하면 그걸 클라이언트에 반영하는 메서드
+        /// </summary>
+        /// <param name="obj">Firebase Functions에서 반환된 값</param>
+        private void UpdateTicketState(object obj)
+        {
+            string json = JsonConvert.SerializeObject(obj);
+            TicketResponse response = JsonConvert.DeserializeObject<TicketResponse>(json);
+
+            if (!response.Success)
+            {
+                Debug.LogError($"티켓 작업 실패: {response.Reason}");
+                return;
+            }
+
+            CurrentTicket = response.CurrentTicket;
+            BonusTicket = response.BonusTicket;
+            if (response.ServerTime is not null)
+            { // 서버와 클라이언트 간의 시간차이 계산
+                serverTimeOffset = Convert.ToInt64(response.ServerTime) - DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                Debug.Log($"serverTimeOffset: {serverTimeOffset}");
+            }
+            LastTicketTimestamp = response.LastTicketTime != null ? Convert.ToInt64(response.LastTicketTime) : null;
+            
+            // TODO : 나중에 삭제
+            if (response.Added > 0)
+                Debug.Log($"티켓 {response.Added}개 충전됨. 총 {TotalTicket}개 ({CurrentTicket} + {BonusTicket})");
+            else
+                Debug.Log($"티켓 상태 갱신됨.총 {TotalTicket}개 ({CurrentTicket} + {BonusTicket})");
+        }
+
+        /// <summary>
+        /// 티켓을 충전하는 메서드
+        /// </summary>
+        public async Task RechargeTicketAsync()
+        {
+            try
+            {
+                var result = await Functions.GetHttpsCallable("rechargeTicket").CallAsync();
+                UpdateTicketState(result.Data);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Firebase Function 호출 실패: {e.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 티켓을 사용하는 메서드
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> UseTicketAsync()
+        {
+            if (TotalTicket <= 0)
+            {
+                Debug.LogWarning("로컬 확인: 사용 가능한 티켓이 없습니다.");
+                return false;
+            }
+
+            try
+            {
+                var result = await Functions.GetHttpsCallable("consumeTicket").CallAsync();
+                string json = JsonConvert.SerializeObject(result.Data);
+                TicketResponse response = JsonConvert.DeserializeObject<TicketResponse>(json);
+
+                if (response.Success) UpdateTicketState(result.Data);
+                
+                return response.Success;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("티켓 사용 함수 호출 실패: " + e.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 게임이 실행되고 무한 반복되는 코루틴 메서드 <\br>
+        /// 일정 주기마다 RechargeTicketAsync를 실행시킴
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator UpdateLocalTimerCoroutine()
+        {
+            while (true)
+            {
+                if (CurrentTicket >= MaxRegenTicket || !LastTicketTimestamp.HasValue || LastTicketTimestamp <= 0)
+                {
+                    TimeUntilNextTicket = TimeSpan.Zero;
+                    yield return new WaitForSecondsRealtime(5f); 
+                    continue;
+                }
+
+                TimeUntilNextTicket = CalculateTimeUntilNextRecharge();
+
+                if (TimeUntilNextTicket <= TimeSpan.Zero)
+                {
+                    _ = RechargeTicketAsync();
+                    yield return new WaitForSecondsRealtime(3f); 
+                }
+                else
+                {
+                    yield return new WaitForSecondsRealtime((float)Mathf.Min((float)TimeUntilNextTicket.TotalSeconds, 5f));
+                }
+            }
+        }
+        
+        /// <summary>
+        /// 다음 티켓 충전 시간을 계산하는 메서드
+        /// </summary>
+        /// <returns></returns>
+        private TimeSpan CalculateTimeUntilNextRecharge()
+        {
+            if (LastTicketTimestamp == null || LastTicketTimestamp <= 0) return TimeSpan.Zero;
+            
+            long currentLocalTimeMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + serverTimeOffset;
+            long timeElapsedSinceLastTime = currentLocalTimeMs - LastTicketTimestamp.Value;
+
+            if (timeElapsedSinceLastTime >= RechargeIntervalMs) return TimeSpan.Zero;
+            
+            long timeLeftMs = RechargeIntervalMs - timeElapsedSinceLastTime;
+            return TimeSpan.FromMilliseconds(timeLeftMs);
+        }
+    }
+}

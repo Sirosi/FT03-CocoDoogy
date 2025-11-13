@@ -1,0 +1,567 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4864466465157205230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3515511772029449768}
+  - component: {fileID: 8405631689666356922}
+  - component: {fileID: 7150411360215417542}
+  - component: {fileID: 2378233644098321866}
+  - component: {fileID: 2645735018059196249}
+  - component: {fileID: 1829738561049236941}
+  - component: {fileID: 8884511360502333469}
+  m_Layer: 0
+  m_Name: CoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3515511772029449768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864466465157205230}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1771006052046265290}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8405631689666356922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864466465157205230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d09b4f0a4ba71b4da9868a8d5b9f7e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7150411360215417542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864466465157205230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77100f07130aea14b8926f2fe3ff2598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxList:
+  - type: 1
+    eventReference:
+      Guid:
+        Data1: -345683676
+        Data2: 1220902991
+        Data3: 1237489546
+        Data4: 747204544
+      Path: event:/SFX/Interaction/LeverOn
+  - type: 2
+    eventReference:
+      Guid:
+        Data1: 94867625
+        Data2: 1245112528
+        Data3: 1244384956
+        Data4: -574479178
+      Path: event:/SFX/Interaction/LeverOff
+  - type: 3
+    eventReference:
+      Guid:
+        Data1: -1713403218
+        Data2: 1252982623
+        Data3: 1900329914
+        Data4: -1876803356
+      Path: event:/SFX/Interaction/SwitchOn
+  - type: 4
+    eventReference:
+      Guid:
+        Data1: 1755327612
+        Data2: 1224176504
+        Data3: 1531076757
+        Data4: -496202047
+      Path: event:/SFX/Interaction/SwitchOff
+  - type: 5
+    eventReference:
+      Guid:
+        Data1: -797451051
+        Data2: 1236502852
+        Data3: -747991890
+        Data4: -1657329013
+      Path: event:/SFX/Interaction/PressurePlate
+  - type: 6
+    eventReference:
+      Guid:
+        Data1: -911902704
+        Data2: 1087274748
+        Data3: -784333152
+        Data4: -1659654017
+      Path: event:/SFX/Interaction/PushChest
+  - type: 7
+    eventReference:
+      Guid:
+        Data1: 998630776
+        Data2: 1174227011
+        Data3: -1561604718
+        Data4: 259117023
+      Path: event:/SFX/Footstep/Water
+  - type: 8
+    eventReference:
+      Guid:
+        Data1: 1741829481
+        Data2: 1097456035
+        Data3: 1041627781
+        Data4: 1122355674
+      Path: event:/SFX/Footstep/Grass
+  - type: 9
+    eventReference:
+      Guid:
+        Data1: -1820351225
+        Data2: 1308382196
+        Data3: 112681908
+        Data4: 840734645
+      Path: event:/SFX/Footstep/Snow
+  - type: 10
+    eventReference:
+      Guid:
+        Data1: 981998330
+        Data2: 1139156831
+        Data3: -642995065
+        Data4: 192538791
+      Path: event:/SFX/Footstep/Sand
+  - type: 11
+    eventReference:
+      Guid:
+        Data1: 887947965
+        Data2: 1116254560
+        Data3: -472895057
+        Data4: 1906534427
+      Path: event:/SFX/Footstep/Wood
+  - type: 12
+    eventReference:
+      Guid:
+        Data1: -1787977346
+        Data2: 1139375707
+        Data3: -116805491
+        Data4: -289967193
+      Path: event:/SFX/Footstep/Dirt
+  - type: 13
+    eventReference:
+      Guid:
+        Data1: 722811114
+        Data2: 1250327366
+        Data3: -448214089
+        Data4: 1754502556
+      Path: event:/SFX/Gimmick/HouseEnter
+  - type: 14
+    eventReference:
+      Guid:
+        Data1: 1608868788
+        Data2: 1208935594
+        Data3: 1175306388
+        Data4: 548421215
+      Path: event:/SFX/Gimmick/OasisEnter
+  - type: 15
+    eventReference:
+      Guid:
+        Data1: -1066255062
+        Data2: 1338060809
+        Data3: -1693227122
+        Data4: -1986992765
+      Path: event:/SFX/Gimmick/DockEnter
+  - type: 16
+    eventReference:
+      Guid:
+        Data1: 1595957532
+        Data2: 1263970614
+        Data3: -1152263775
+        Data4: 1971873961
+      Path: event:/SFX/Weather/Clear
+  - type: 17
+    eventReference:
+      Guid:
+        Data1: -1386827239
+        Data2: 1225893509
+        Data3: -1540770173
+        Data4: -1835377869
+      Path: event:/SFX/Weather/Rain
+  - type: 18
+    eventReference:
+      Guid:
+        Data1: -1465955396
+        Data2: 1140725119
+        Data3: 658289052
+        Data4: -1665990607
+      Path: event:/SFX/Weather/Snow
+  - type: 19
+    eventReference:
+      Guid:
+        Data1: -1127212899
+        Data2: 1319373650
+        Data3: 83554486
+        Data4: -605360083
+      Path: event:/SFX/Weather/Wind
+  - type: 20
+    eventReference:
+      Guid:
+        Data1: -1293081751
+        Data2: 1239288175
+        Data3: 314958759
+        Data4: 304266229
+      Path: event:/SFX/Weather/Hail
+  - type: 21
+    eventReference:
+      Guid:
+        Data1: -1962054361
+        Data2: 1123200055
+        Data3: 1942296732
+        Data4: -1015552341
+      Path: event:/SFX/Weather/Mirage
+  - type: 22
+    eventReference:
+      Guid:
+        Data1: 388533925
+        Data2: 1318692388
+        Data3: -975551587
+        Data4: -517404191
+      Path: event:/SFX/Minigame/PickTrash
+  - type: 23
+    eventReference:
+      Guid:
+        Data1: -2114967419
+        Data2: 1188394001
+        Data3: -1264829044
+        Data4: 1792253202
+      Path: event:/SFX/Minigame/DropTrash
+  - type: 24
+    eventReference:
+      Guid:
+        Data1: -1164134178
+        Data2: 1314039632
+        Data3: -1092576619
+        Data4: 734757826
+      Path: event:/SFX/Minigame/PickCloth
+  - type: 25
+    eventReference:
+      Guid:
+        Data1: 1908865576
+        Data2: 1237541481
+        Data3: -494481524
+        Data4: 693025113
+      Path: event:/SFX/Minigame/DropCloth
+  - type: 26
+    eventReference:
+      Guid:
+        Data1: 496740920
+        Data2: 1221459681
+        Data3: 1407252130
+        Data4: 1948356037
+      Path: event:/SFX/Minigame/DigSand
+  - type: 27
+    eventReference:
+      Guid:
+        Data1: 763221275
+        Data2: 1216892797
+        Data3: -1632893505
+        Data4: -2023603027
+      Path: event:/SFX/UI/SuccessMission
+  - type: 28
+    eventReference:
+      Guid:
+        Data1: 1645129604
+        Data2: 1117692771
+        Data3: 757492373
+        Data4: 819175566
+      Path: event:/SFX/UI/SuccessStage
+  - type: 29
+    eventReference:
+      Guid:
+        Data1: -1777075120
+        Data2: 1146715641
+        Data3: 1609997197
+        Data4: -842941399
+      Path: event:/SFX/UI/FailStage
+  - type: 30
+    eventReference:
+      Guid:
+        Data1: 1952342693
+        Data2: 1159958890
+        Data3: -993283967
+        Data4: 903448127
+      Path: event:/SFX/UI/ButtonDown
+  - type: 31
+    eventReference:
+      Guid:
+        Data1: 86252079
+        Data2: 1167745429
+        Data3: 2116558465
+        Data4: -1147205353
+      Path: event:/SFX/UI/ButtonUp1
+  - type: 32
+    eventReference:
+      Guid:
+        Data1: 1440921346
+        Data2: 1087163163
+        Data3: 1636548000
+        Data4: -1687639625
+      Path: event:/SFX/UI/ButtonUp2
+  - type: 33
+    eventReference:
+      Guid:
+        Data1: 136054408
+        Data2: 1176063772
+        Data3: -33167702
+        Data4: 301100124
+      Path: event:/SFX/UI/PopUp
+  - type: 34
+    eventReference:
+      Guid:
+        Data1: -466790381
+        Data2: 1083001024
+        Data3: 1739776697
+        Data4: 352098150
+      Path: event:/SFX/Emote/Positive
+  - type: 35
+    eventReference:
+      Guid:
+        Data1: 1357268756
+        Data2: 1079850610
+        Data3: 910332082
+        Data4: 1423735083
+      Path: event:/SFX/Emote/Neutral
+  - type: 36
+    eventReference:
+      Guid:
+        Data1: -1621085955
+        Data2: 1189864900
+        Data3: 684788632
+        Data4: -1032527471
+      Path: event:/SFX/Emote/Negative
+  - type: 37
+    eventReference:
+      Guid:
+        Data1: -1012921921
+        Data2: 1098977815
+        Data3: 1087699333
+        Data4: 1877176503
+      Path: event:/SFX/Loop/Detecting
+  - type: 38
+    eventReference:
+      Guid:
+        Data1: 1989177838
+        Data2: 1189871063
+        Data3: -1758311286
+        Data4: 549782819
+      Path: event:/SFX/Loop/WaterSplash
+  - type: 39
+    eventReference:
+      Guid:
+        Data1: -1830622457
+        Data2: 1247549110
+        Data3: 779273139
+        Data4: -422208072
+      Path: event:/SFX/Loop/ShakeUmbrella
+  duckingSnapShot:
+    Guid:
+      Data1: -983966404
+      Data2: 1217928283
+      Data3: -2089836869
+      Data4: -1104273429
+    Path: snapshot:/Sfx Ducking
+--- !u!114 &2378233644098321866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864466465157205230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc6dae0b8edcabd4690eb408b686fb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainBgmEvent:
+    Guid:
+      Data1: 1056652163
+      Data2: 1260339331
+      Data3: 1274943367
+      Data4: -1011817880
+    Path: event:/MainBgm
+--- !u!114 &2645735018059196249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864466465157205230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96cc0d0ade0cc0047819e86e4077f7e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1829738561049236941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864466465157205230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece1467b44167c343bbb4ade6e31d7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileData:
+  - {fileID: 11400000, guid: 10a355761618d1c41af1aa2601864c67, type: 2}
+  - {fileID: 11400000, guid: e444c73224af05f4d829c97839537cf9, type: 2}
+  - {fileID: 11400000, guid: a46cf676bb6980f46ac21fe56702eaf7, type: 2}
+  - {fileID: 11400000, guid: a5d4e7754089f1f478cb8f7e7ee9dace, type: 2}
+  - {fileID: 11400000, guid: b86692b6d166bec48af4a14e331bf8a1, type: 2}
+  - {fileID: 11400000, guid: 19bcd40ac26cf8b45834737f98f455ae, type: 2}
+  - {fileID: 11400000, guid: 7f1384ad2bc2bd04f967e7a6e8e2da68, type: 2}
+  - {fileID: 11400000, guid: 0e2c8b312dcb6b64fb128855ad2758c5, type: 2}
+  - {fileID: 11400000, guid: dc8a330fa474952409900717bdb611e9, type: 2}
+  - {fileID: 11400000, guid: 33c0f835e54d7284ba876a87f14e2594, type: 2}
+  pieceData:
+  - {fileID: 11400000, guid: f287a29e3cba5ad42bf0fdb9a7369257, type: 2}
+  - {fileID: 11400000, guid: 88d60edce01abf540999ceddaf811ae3, type: 2}
+  - {fileID: 11400000, guid: 204c47ba9e9c88e429700e6de486083e, type: 2}
+  - {fileID: 11400000, guid: 05d59deeb453744448f0a57d984ebde3, type: 2}
+  - {fileID: 11400000, guid: 97ccd3564b4a66041ba33081f5174404, type: 2}
+  - {fileID: 11400000, guid: d11a8d5cea36cbf478994f2c3440347c, type: 2}
+  - {fileID: 11400000, guid: 486b79623ccc34a46b7ce3a27291aa0b, type: 2}
+  - {fileID: 11400000, guid: 8d06a0c867fe8e44ab57d7b2b9d67bab, type: 2}
+  - {fileID: 11400000, guid: b126a1f9f496fdf4394d4948a1ffda96, type: 2}
+  - {fileID: 11400000, guid: 68513e274a5db9a438d6657cd49a161a, type: 2}
+  - {fileID: 11400000, guid: 472d00a6d50fbb04b8428f579421295d, type: 2}
+  - {fileID: 11400000, guid: 3e9c340c6e45581429c28ca8812d2119, type: 2}
+  - {fileID: 11400000, guid: 5741ab3793f0d54448f90e3a6010cdd0, type: 2}
+  - {fileID: 11400000, guid: c659cd36e24cb6843946e62e090363a7, type: 2}
+  - {fileID: 11400000, guid: 62d8c3354581f204585ab8a6af2e8274, type: 2}
+--- !u!114 &8884511360502333469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864466465157205230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db2f9a0d9184805981be8ad5a492323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8724078286053695815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1771006052046265290}
+  - component: {fileID: 7747608282288433985}
+  - component: {fileID: 2539362044976478581}
+  - component: {fileID: 2732846561441072552}
+  m_Layer: 0
+  m_Name: PopupCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1771006052046265290
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8724078286053695815}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3515511772029449768}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!223 &7747608282288433985
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8724078286053695815}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 10
+  m_TargetDisplay: 0
+--- !u!114 &2539362044976478581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8724078286053695815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!114 &2732846561441072552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8724078286053695815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
