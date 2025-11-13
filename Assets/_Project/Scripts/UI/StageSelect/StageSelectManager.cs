@@ -42,6 +42,8 @@ namespace CocoDoogy.UI.StageSelect
             }
             Instance = this;
             
+            
+            stageReadyUI.gameObject.SetActive(false);
             isStageSelect = true;
             isStageReady = false;
             
@@ -97,7 +99,7 @@ namespace CocoDoogy.UI.StageSelect
         
         private void OnBackButtonClicked()
         {
-            if (isStageSelect) Loading.LoadScene("MainUITest");
+            if (isStageSelect) Loading.LoadScene("UIConnectTest");
             if (isStageReady)
             {
                 WindowAnimation.SwipeWindow(stageReadyUI);
