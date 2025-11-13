@@ -18,6 +18,9 @@ namespace CocoDoogy.MapEditor.UI
         [Header("UI")]
         [SerializeField] private TMP_InputField fileNameInput;
         [SerializeField] private CommonButton saveButton;
+        
+        [SerializeField] private TMP_InputField refillCountInput;
+        [SerializeField] private TMP_InputField actionPointInput;
 
         [Header("Buttons")]
         [SerializeField] private CommonButton loadButtonPrefab;
@@ -54,6 +57,22 @@ namespace CocoDoogy.MapEditor.UI
                 MessageDialog.ShowMessage("저장 실패", "파일명이 최소 2자리 이상 돼야 합니다.", DialogMode.Confirm, null);
                 return;
             }
+            
+            string refillCountStr = refillCountInput.text.Trim();
+            string actionPointStr = actionPointInput.text.Trim();
+            if (!int.TryParse(refillCountStr, out int refillCount))
+            {
+                MessageDialog.ShowMessage("저장 실패", "초기화 횟수가 숫자가 아닙니다.", DialogMode.Confirm, null);
+                return;
+            }
+            if (!int.TryParse(actionPointStr, out int actionPoint))
+            {
+                MessageDialog.ShowMessage("저장 실패", "행동력이 숫자가 아닙니다.", DialogMode.Confirm, null);
+                return;
+            }
+            
+            HexTileMap.RefillCount = refillCount;
+            HexTileMap.ActionPoint = actionPoint;
 
             Directory.CreateDirectory(FOLDER_PATH);
             string path = Path.Combine(FOLDER_PATH, $"{FileName}.json");
@@ -70,6 +89,8 @@ namespace CocoDoogy.MapEditor.UI
             MapSaveLoader.Apply(json);
 
             FileName = fileName;
+            refillCountInput.text = HexTileMap.RefillCount.ToString();
+            actionPointInput.text = HexTileMap.ActionPoint.ToString();
         }
 
         private void RefreshFileInfos()

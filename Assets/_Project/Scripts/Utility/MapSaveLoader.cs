@@ -29,6 +29,8 @@ namespace CocoDoogy.Utility
             // Map 정보 저장
             Map mapData = new()
             {
+                RefillCount = HexTileMap.RefillCount,
+                ActionPoint = HexTileMap.ActionPoint,
                 StartPos = HexTileMap.StartPos,
                 EndPos = HexTileMap.EndPos,
             };
@@ -85,6 +87,8 @@ namespace CocoDoogy.Utility
             Map mapData = JsonUtility.FromJson<Map>(json);
 
             // Map 정보 적용
+            HexTileMap.RefillCount = mapData.RefillCount;
+            HexTileMap.ActionPoint = mapData.ActionPoint;
             HexTileMap.StartPos = mapData.StartPos;
             HexTileMap.EndPos = mapData.EndPos;
 
@@ -128,6 +132,9 @@ namespace CocoDoogy.Utility
         [System.Serializable]
         private class Map
         {
+            public int RefillCount = 3;
+            public int ActionPoint = 5;
+            
             public Vector2Int StartPos = Vector2Int.zero;
             public Vector2Int EndPos = Vector2Int.zero;
 
