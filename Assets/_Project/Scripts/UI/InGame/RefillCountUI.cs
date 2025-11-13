@@ -22,7 +22,7 @@ namespace CocoDoogy.UI.InGame
 
         private void OnRefillCountChanged(int point)
         {
-            text.SetText($"{point} / {HexTileMap.RefillCount}");
+            text.SetText($"{(HexTileMap.RefillCount + 1 - point)} / {HexTileMap.RefillCount}");
         }
     }
 }
