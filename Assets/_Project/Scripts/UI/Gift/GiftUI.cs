@@ -2,6 +2,7 @@ using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace CocoDoogy.UI.Gift
@@ -9,7 +10,7 @@ namespace CocoDoogy.UI.Gift
     public class GiftUI : UIPanel
     {
         [Header("Buttons")]
-        [SerializeField] private CommonButton closeThisButton;
+        [SerializeField] private Button closeThisButton;
         [SerializeField] private CommonButton getAllButton;
         [SerializeField] private CommonButton confirmButton;
         

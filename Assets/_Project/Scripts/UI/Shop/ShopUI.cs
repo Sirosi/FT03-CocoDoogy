@@ -16,7 +16,7 @@ namespace CocoDoogy.UI.Shop
         [Header("Purchase Item Button")] [SerializeField] private List<ShopItem> shopItems;
         [Header("Purchase Panel")] [SerializeField] private PurchasePanel purchasePanel;
         [Header("Confirm Panel")] [SerializeField] private ConfirmPanel confirmPanel;
-        [Header("Close Button")] [SerializeField] private CommonButton closeButton;
+        [Header("Close Button")] [SerializeField] private Button closeButton;
 
         [Header("Categories")] 
         [SerializeField] private ShopCategory itemShop;

@@ -11,7 +11,7 @@ namespace CocoDoogy.UI.Friend
         [SerializeField] private GameObject searchWindowBg;
 
         [Header("Close Button")] 
-        [SerializeField] private CommonButton closeButton;
+        [SerializeField] private Button closeButton;
         
         [Header("Tab Buttons")]
         [SerializeField] private Button friendsInfoButton;
