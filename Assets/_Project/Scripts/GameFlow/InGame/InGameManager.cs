@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
-    public class InGameManager: Singleton<InGameManager>
+    public class InGameManager : Singleton<InGameManager>
     {
         public static event Action<int> OnActionPointChanged = null;
         public static event Action<int> OnRefillCountChanged = null;
@@ -23,8 +23,8 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 if (!Instance) return false;
                 if (!PlayerHandler.Instance) return false;
-                
-                
+
+
                 return true;
             }
         }
