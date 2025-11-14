@@ -1,48 +1,45 @@
-using TMPro;
+using CocoDoogy.UI.IntroAndLogin;
+using CocoDoogy.Core;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CocoDoogy
 {
-    public class IntroUIManager : MonoBehaviour
+    public class IntroUIManager : Singleton<IntroUIManager>
     {
-        [Header("Start")]
-        [SerializeField] private Button backGround;
+        [SerializeField] private IntroUI introUI;
+        [SerializeField] private LoginUI loginUI;
+        [SerializeField] private RegisterUI registerUI;
         
-        [Header("Step1")]
-        [SerializeField] private GameObject touchToStart;
-
-        [Header("Step2")]
-        [SerializeField] private GameObject loginPanel;
+        public IntroUI IntroUI => introUI;
+        public LoginUI LoginUI => loginUI;
+        public RegisterUI RegisterUI => registerUI;
         
-        [Header("Step3")]
-        [SerializeField] private GameObject registerPanel;
-        [SerializeField] private TMP_InputField nickname;
-        [SerializeField] private Button registerButton;
-        
-        
-        
-        private void Awake()
+        /// <summary>
+        /// 닉네임 입력 팝업 띄우는 메서드 (RegisterUI)
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> ShowNicknameInputPopupAsync()
         {
-            touchToStart.SetActive(true);
-            loginPanel.SetActive(false);
-            registerPanel.SetActive(false);
-            
-            backGround.onClick.AddListener(OnBackGroundButtonClicked);
+            return registerUI.InputNicknameAsync();
         }
 
-        private void OnBackGroundButtonClicked()
+        /// <summary>
+        /// 닉네임 입력 후 예외조건을 통과하지 못하면 에러 메세지를 띄우는 메서드
+        /// </summary>
+        /// <param name="errorMessage"></param>
+        public async Task ShowErrorPopupAsync(string errorMessage)
         {
-            touchToStart.SetActive(false);
-            loginPanel.SetActive(true);
+            await registerUI.ErrorPopup.ShowPopupAsync(errorMessage, 1, 0.5f);
         }
 
-
-        
-        
-        //모든 절차가 끝났을때
-        //Loading.LoadScene("대충로비화면씬이름");
+        /// <summary>
+        /// 닉네임 입력 후 예외조건을 통과한 다음에 메세지를 띄우는 메서드
+        /// </summary>
+        /// <param name="message"></param>
+        public async Task ShowCreatePopupAsync(string message)
+        {
+            await registerUI.CreatePopup.ShowPopupAsync(message, 1, 0.5f);
+        }
     }
-
-    
 }

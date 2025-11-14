@@ -50,9 +50,8 @@ namespace CocoDoogy.UI.Friend
             InitTabs();
             WindowAnimation.CloseWindow(searchWindowBg.transform);
         }
-
-        public override void OpenPanel() =>  gameObject.SetActive(true);
-        protected override void ClosePanel() => WindowAnimation.SwipeWindow(friendsWindow);
+        
+        public override void ClosePanel() => WindowAnimation.SwipeWindow(friendsWindow);
         private void OnClickFriendSearch() =>searchWindowBg.SetActive(true);
         
         #region ChangeTabs

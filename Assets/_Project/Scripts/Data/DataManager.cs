@@ -125,7 +125,14 @@ namespace CocoDoogy.Data
             privateListener?.Stop();
             privateListener = null;
         }
-
+    
+        /// <summary>
+        /// Intro -> Lobby 씬 전환 시 이벤트 구독 전에 이벤트가 실행되서 이벤트를 실행시키기 위한 메서드 
+        /// </summary>
+        public void InvokePrivateUserData()
+        {
+            OnPrivateUserDataLoaded?.Invoke();
+        }
         protected override void OnDestroy()
         {
             base.OnDestroy();

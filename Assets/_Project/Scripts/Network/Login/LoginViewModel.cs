@@ -5,6 +5,7 @@ using Firebase.Auth;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace CocoDoogy.Network.Login
 {
@@ -34,8 +35,8 @@ namespace CocoDoogy.Network.Login
 
             if (!isExistingUser) // 기존 유저가 아닌 경우
             {
-                string nickname = await GetValidNickNameAsync(user.UserId);
-
+                // string nickname = await GetValidNickNameAsync(user.UserId);
+                string nickname = await GetNickNameAsync(user.UserId);
                 await UserData.CreateOnServerAsync(user.UserId, nickname);
             }
 
@@ -58,82 +59,167 @@ namespace CocoDoogy.Network.Login
         public void SignOut() => authProvider.SignOut();
         #endregion
         
+
+        #region < 익명로그인 기능 & 익명로그인 링크 구글 기능 > 
+        public void SignInAnonymously() => authProvider.SignInAnonymously();
+        public void LinkGoogleAccount() =>  authProvider.LinkGoogleAccount();
+        #endregion
+
         #region < 로그인 이후 최초 가입 시 닉네임 입력 시퀀스 >
 
-        private async Task<string> GetValidNickNameAsync(string uid)
+        private async Task<string> GetNickNameAsync(string uid)
         {
             string nickname = null;
             bool isSuccess = false;
 
             while (!isSuccess)
             {
-                nickname = await ShowNicknameInputDialogAsync();
+                nickname = await IntroUIManager.Instance.ShowNicknameInputPopupAsync();
+                
+                if (!CanUse(nickname)) continue;
 
-                if (string.IsNullOrWhiteSpace(nickname))
-                {
-                    await ShowMessageAsync("알림", "닉네임은 비워둘 수 없습니다!");
-                    continue; 
-                }
-
-                if (Regex.IsMatch(nickname, @"^[가-힣]+$") && !(nickname.Length >= 2 && nickname.Length <= 6))
-                {
-                    await ShowMessageAsync("알림", "한글은 최소 두글자에서 여섯글자 사이");
-                    continue;
-                }
-
-                if (Regex.IsMatch(nickname, @"^[a-zA-Z]+$") && !(nickname.Length >= 4 && nickname.Length <= 12))
-                {
-                    await ShowMessageAsync("알림", "영어는 최소 네글자에서 열두글자 사이");
-                    continue;
-                }
                 try
                 {
                     bool isAvailable = await UserData.TrySetNewNickNameAsync(uid, nickname);
 
                     if (isAvailable)
                     {
+                        await IntroUIManager.Instance.ShowCreatePopupAsync("닉네임 생성이 완료되었습니다.");
                         isSuccess = true; 
                     }
                     else
                     {
-                        await ShowMessageAsync("알림", $"'{nickname}'은 이미 사용 중인 닉네임입니다. 다른 닉네임을 사용해주세요.");
+                        await IntroUIManager.Instance.ShowErrorPopupAsync("이미 존재하는 닉네임 입니다.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    await ShowMessageAsync("오류", $"닉네임 검사 중 오류가 발생했습니다: {ex.Message}");
+                    await IntroUIManager.Instance.ShowErrorPopupAsync($"오류!\n닉네임 검사 중 오류가 발생했습니다: {ex.Message}.");
                 }
             }
-
             return nickname;
         }
 
-        private Task ShowMessageAsync(string title, string message)
-        {
-            var taskCompletionSource = new TaskCompletionSource<bool>();
-
-            MessageDialog.ShowMessage(title, message, DialogMode.Confirm, (_) => taskCompletionSource.SetResult(true));
-
-            return taskCompletionSource.Task;
-        }
-
-        private Task<string> ShowNicknameInputDialogAsync()
-        {
-            var taskCompletionSource = new TaskCompletionSource<string>();
-
-            MessageDialog.ShowInputBox(
-                "닉네임 설정",
-                "처음 오신 것 같아요!\n사용하실 닉네임을 입력해주세요.",
-                (nickname) => taskCompletionSource.SetResult(nickname));
-
-            return taskCompletionSource.Task;
-        }
-
         #endregion
+        
 
-        #region < 익명로그인 기능 & 익명로그인 링크 구글 기능 > 
-        public void SignInAnonymously() => authProvider.SignInAnonymously();
-        public void LinkGoogleAccount() =>  authProvider.LinkGoogleAccount();
+        # region < 닉네임 입력 확인 연쇄책임패턴 > 
+        /// <summary>
+        /// 입력된 닉네임이 적합한 닉네임인지 확인
+        /// </summary>
+        /// <param name="nickname"></param>
+        /// <returns></returns>
+        private bool CanUse(string nickname)
+        {
+            foreach (var check in CanUseNickname)
+            {
+                if(!check(nickname)) return false;
+            }
+            return true;
+        }
+        
+        /// <summary>
+        /// 현재 입력된 닉네임이 예외 조건에 걸리지 않는지 확인하는 책임연쇄패턴
+        /// </summary>
+        private static readonly Func<string, bool>[] CanUseNickname =
+        {
+            IsEmpty,
+            IsKoreanAlphaNickname,
+            IsKoreanNickname,
+            IsEnglishNickname,
+            IsMixedNickname,
+            IsSpecialSymbol,
+        };
+
+        /// <summary>
+        /// 현재 입력된 닉네임이 비어있는가
+        /// </summary>
+        /// <param name="nickname"></param>
+        /// <returns></returns>
+        private static bool IsEmpty(string nickname)
+        {
+            if (string.IsNullOrWhiteSpace(nickname))
+            {
+                _ = IntroUIManager.Instance.ShowErrorPopupAsync("닉네임은 비워둘 수 없습니다.");
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 한글의 자음 혹은 모음이 닉네임에 포함되어있는가
+        /// </summary>
+        /// <param name="nickname"></param>
+        /// <returns></returns>
+        private static bool IsKoreanAlphaNickname(string nickname)
+        {
+            if (Regex.IsMatch(nickname, @"[\u1100-\u11FF\u3130-\u318F\uFFA0-\uFFDC]"))
+            {
+                _ = IntroUIManager.Instance.ShowErrorPopupAsync("자음 또는 모음 단독 입력은 허용되지 않습니다.");
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 한글로 되어있는 닉네임이 최소 2글자 최대 6글자 사이로 이루어져있는가
+        /// </summary>
+        /// <param name="nickname"></param>
+        /// <returns></returns>
+        private static bool IsKoreanNickname(string nickname)
+        {
+            if (Regex.IsMatch(nickname, @"^[가-힣0-9]+$") && nickname.Length is < 2 or > 6)
+            {
+                _ = IntroUIManager.Instance.ShowErrorPopupAsync("한글 닉네임은 최소 2글자 최대 6글자 사이로 입력가능합니다.");
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 영어로된 닉네임이 최소 4글자 최대 12글자 사이로 이루어져있는가
+        /// </summary>
+        /// <param name="nickname"></param>
+        /// <returns></returns>
+        private static bool IsEnglishNickname(string nickname)
+        {
+            if (Regex.IsMatch(nickname, @"^[a-zA-Z0-9]+$") && nickname.Length is < 4 or > 12)
+            {
+                _ = IntroUIManager.Instance.ShowErrorPopupAsync("영어 닉네임은 최소 4글자 최대 12글자 사이로 입력가능합니다.");
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 한글 + 영어 닉네임이 최소 4글자 최대 12글자 사이로 이루어져있는가
+        /// </summary>
+        /// <param name="nickname"></param>
+        /// <returns></returns>
+        private static bool IsMixedNickname(string nickname)
+        {
+            if (Regex.IsMatch(nickname, @"^(?=.*[가-힣])(?=.*[A-Za-z])[A-Za-z가-힣0-9]+$") && nickname.Length is < 4 or > 12)
+            {
+                _ = IntroUIManager.Instance.ShowErrorPopupAsync("혼합 닉네임은 최소 4글자 최대 12글자 사이로 입력가능합니다.");
+                return false;
+            }
+            return true;
+        }
+        
+        /// <summary>
+        /// 특수기호가 사용되어있는가
+        /// </summary>
+        /// <param name="nickname"></param>
+        /// <returns></returns>
+        private static bool IsSpecialSymbol(string nickname)
+        {
+            if (Regex.IsMatch(nickname, @"[^\w\.@-]"))
+            {
+                _= IntroUIManager.Instance.ShowErrorPopupAsync("특수 기호 입력은 허용되지 않습니다.");
+                return false;
+            }
+            return true;
+        }
         #endregion
     }
 }

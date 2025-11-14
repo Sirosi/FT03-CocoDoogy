@@ -21,7 +21,10 @@ namespace CocoDoogy.Network
         public async Task<IDictionary<string, object>> PurchaseWithCashMoneyAsync(string itemId, int quantity)
         {
             if (!IsFirebaseReady) throw new Exception("Firebase가 초기화되지 않았습니다.");
-            var data = new Dictionary<string, object> { { "itemId", itemId }, { "itemQuantity", Convert.ToInt32(quantity) } };
+            var data = new Dictionary<string, object>
+            {
+                { "itemId", itemId }, { "itemQuantity", Convert.ToInt32(quantity) }
+            };
             try
             {
                 var result = await Functions.GetHttpsCallable("purchaseWithCashMoney").CallAsync(data);
@@ -36,7 +39,8 @@ namespace CocoDoogy.Network
             }
         }
 
-        public async Task<IDictionary<string, object>> TakePresentRequestAsync(string functionName, string giftId, string errorMessage)
+        public async Task<IDictionary<string, object>> TakePresentRequestAsync(string functionName, string giftId,
+            string errorMessage)
         {
             try
             {
@@ -52,7 +56,7 @@ namespace CocoDoogy.Network
                 throw;
             }
         }
-        
+
         public async Task<List<Dictionary<string, object>>> GetGiftListAsync()
         {
             var userId = Auth.CurrentUser.UserId;
@@ -72,6 +76,7 @@ namespace CocoDoogy.Network
                 {
                     giftList.Add(item as Dictionary<string, object>);
                 }
+
                 return giftList;
             }
 

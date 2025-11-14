@@ -42,11 +42,17 @@ namespace CocoDoogy.UI.Shop
         {
             InitTabs();
         }
-
-        public override void OpenPanel() => gameObject.SetActive(true);
-        protected override void ClosePanel() => WindowAnimation.SwipeWindow(transform as RectTransform);
+        
+        public override void ClosePanel() => WindowAnimation.SwipeWindow(transform as RectTransform);
         public void OpenPurchasePanel(ItemData itemData) => purchasePanel.Open(itemData, OnPurchaseRequest);
         private void OnPurchaseRequest(ItemData itemData, int quantity) => _ = ExecutePurchaseAsync(itemData, quantity);
+        
+        /// <summary>
+        /// 구매를 실행하는 메서드. itemData에서 DB에 검색할 내용인 아이템ID를 가져와서 DB에 전송.<br/>
+        /// PurchaseWithCashMoneyAsync를 통해서 Firebase Functions의 기능을 사용. DB 내에서 결제 처리 후 결과를 반환하여 사용함.
+        /// </summary>
+        /// <param name="itemData"></param>
+        /// <param name="quantity"></param>
         private async Task ExecutePurchaseAsync(ItemData itemData, int quantity)
         {
             try
