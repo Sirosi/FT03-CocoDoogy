@@ -20,9 +20,8 @@ namespace CocoDoogy
             closeButton.onClick.AddListener(ClosePanel);
             _ = RefreshUIAsync();
         }
-
-        public override void OpenPanel() => gameObject.SetActive(true);
-        protected override void ClosePanel() => WindowAnimation.CloseWindow(profileWindow);
+        
+        public override void ClosePanel() => WindowAnimation.CloseWindow(profileWindow);
 
         
         private async Task RefreshUIAsync()

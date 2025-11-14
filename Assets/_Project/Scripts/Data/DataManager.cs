@@ -56,6 +56,15 @@ namespace CocoDoogy.Data
                 .ToArray();
         }
 #endif
+        /// <summary>
+        /// 게임 실행 시, DontDestroy해야 하는 모든 Manager 스크립트를 갖고 있는<br/>
+        /// CoreManager 생성 메소드
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod]
+        private static void InitializeRuntime()
+        {
+            Instantiate(Resources.Load<GameObject>("CoreManager")).name = "CoreManager";
+        }
 
         protected override void Awake()
         {
@@ -130,7 +139,14 @@ namespace CocoDoogy.Data
             privateListener?.Stop();
             privateListener = null;
         }
-
+    
+        /// <summary>
+        /// Intro -> Lobby 씬 전환 시 이벤트 구독 전에 이벤트가 실행되서 이벤트를 실행시키기 위한 메서드 
+        /// </summary>
+        public void InvokePrivateUserData()
+        {
+            OnPrivateUserDataLoaded?.Invoke();
+        }
         protected override void OnDestroy()
         {
             base.OnDestroy();

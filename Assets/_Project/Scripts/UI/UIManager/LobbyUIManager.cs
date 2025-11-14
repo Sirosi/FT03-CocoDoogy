@@ -1,5 +1,6 @@
 using CocoDoogy.Core;
 using CocoDoogy.Data;
+using CocoDoogy.Network;
 using CocoDoogy.UI.Friend;
 using CocoDoogy.UI.Gift;
 using CocoDoogy.UI.Shop;
@@ -44,17 +45,22 @@ namespace CocoDoogy.UI.UIManager
             settingsButton.onClick.AddListener(OnClickSettingButton);
             shopButton.onClick.AddListener(OnClickShopButton);
             startButton.onClick.AddListener(OnStartButtonClicked);
+            
+            StartCoroutine(FirebaseManager.Instance.UpdateLocalTimerCoroutine());
         }
 
         private IEnumerator Start()
         {
             // 해당 이벤트 추가는 로그인 후 되어야 되므로 UIManager에서 구독, 나중에 문제되면 DataManager.Instance가 null 아닐때 async로 변경해서 사용
             yield return new WaitUntil(() => DataManager.Instance != null);
-            DataManager.Instance.OnPrivateUserDataLoaded += friendPanel.FriendsInfoPanel.SubscriptionEvent;
-            DataManager.Instance.OnPrivateUserDataLoaded += friendPanel.ReceivedRequestPanel.SubscriptionEvent;
-            DataManager.Instance.OnPrivateUserDataLoaded += friendPanel.SentRequestPanel.SubscriptionEvent;
+            DataManager.Instance.OnPrivateUserDataLoaded += friendPanel.FriendsInfoPanel.Refresh;
+            DataManager.Instance.OnPrivateUserDataLoaded += friendPanel.ReceivedRequestPanel.Refresh;
+            DataManager.Instance.OnPrivateUserDataLoaded += friendPanel.SentRequestPanel.Refresh;
             DataManager.Instance.OnPrivateUserDataLoaded += giftPanel.SubscriptionEvent;
             DataManager.Instance.OnPrivateUserDataLoaded += infoPanel.SubscriptionEvent;
+            
+            // 씬 이동 후 이벤트가 구독되기 전에 실행되서 UI Refresh가 되지 않아 따로 이벤트 실행
+            DataManager.Instance.InvokePrivateUserData();
         }
         private void OnClickProfileButton() => profilePanel.OpenPanel();
         private void OnClickFriendButton() => friendPanel.OpenPanel();

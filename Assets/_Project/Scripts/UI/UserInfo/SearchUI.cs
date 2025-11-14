@@ -27,14 +27,10 @@ namespace CocoDoogy
         {
             searchWindow.gameObject.SetActive(true);
         }
-
-        public override void OpenPanel() => gameObject.SetActive(true);
         
-        protected override void ClosePanel()
-        {
-            gameObject.SetActive(false);
-            WindowAnimation.CloseWindow(searchWindow.transform);
-        }
+        
+        public override void ClosePanel() => WindowAnimation.CloseWindow(searchWindow.transform);
+        
 
         private void OnSearchButtonClicked()
         {
