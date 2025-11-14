@@ -18,7 +18,6 @@ namespace CocoDoogy.GameFlow.InGame.Weather
             set
             {
                 if (!Instance) return;
-                if (Instance.nowWeather == value) return;
                 
                 Instance.nowWeather = value;
                 OnWeatherChanged?.Invoke(value);
@@ -32,6 +31,11 @@ namespace CocoDoogy.GameFlow.InGame.Weather
 
 
         #if UNITY_EDITOR
+        [MenuItem("Debug/Weather/Sunny")]
+        private static void TestSunny()
+        {
+            CommandManager.Weather(WeatherType.Sunny);
+        }
         [MenuItem("Debug/Weather/Rain")]
         private static void TestRain()
         {
@@ -42,10 +46,10 @@ namespace CocoDoogy.GameFlow.InGame.Weather
         {
             CommandManager.Weather(WeatherType.Snow);
         }
-        [MenuItem("Debug/Weather/Sunny")]
-        private static void TestRollback()
+        [MenuItem("Debug/Weather/Mirage")]
+        private static void TestMirage()
         {
-            CommandManager.Weather(WeatherType.Sunny);
+            CommandManager.Weather(WeatherType.Mirage);
         }
         #endif
         

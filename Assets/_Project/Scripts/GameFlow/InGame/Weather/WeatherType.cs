@@ -15,6 +15,11 @@ namespace CocoDoogy.GameFlow.InGame.Weather
         /// 폭설<br/>
         /// 눈 -> 폭설, 물 -> 얼음
         /// </summary>
-        Snow = 2
+        Snow = 2,
+        /// <summary>
+        /// 신기루<br/>
+        /// 오아시스를 표시
+        /// </summary>
+        Mirage = 3,
     }
 }

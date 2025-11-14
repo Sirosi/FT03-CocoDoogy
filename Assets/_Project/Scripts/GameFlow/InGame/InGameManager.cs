@@ -29,6 +29,8 @@ namespace CocoDoogy.GameFlow.InGame
             }
         }
 
+        public static int LastConsumeActionPoint { get; private set; } = 0;
+        
         public static int ConsumedActionPoints
         {
             get;
@@ -91,6 +93,7 @@ namespace CocoDoogy.GameFlow.InGame
 
         void Update()
         {
+            // TODO: 리팩토링 필요
             if (TouchSystem.TouchCount > 0)
             {
                 if (touched) return;
@@ -113,6 +116,16 @@ namespace CocoDoogy.GameFlow.InGame
                             if (playerTile.CanMove(direction))
                             {
                                 CommandManager.Move(direction);
+                                
+                                int min = InGameManager.ConsumedActionPoints - InGameManager.LastConsumeActionPoint + 1;
+                                int max = InGameManager.ConsumedActionPoints;
+            
+                                foreach (var weather in HexTileMap.Weathers)
+                                {
+                                    if (!weather.Key.IsBetween(min, max)) continue;
+                                    CommandManager.Weather(weather.Value);
+                                    break;
+                                }
                             }
                             break;
                         }
@@ -145,10 +158,13 @@ namespace CocoDoogy.GameFlow.InGame
             MapSaveLoader.Apply(mapJson);
 
             CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
+            CommandManager.Weather(HexTileMap.DefaultWeather);
+            ProcessPhase();
         }
 
         private void Clear()
         {
+            LastConsumeActionPoint = 0;
             RefillCount = 0;
             ActionPoint = 0;
         }
@@ -177,6 +193,7 @@ namespace CocoDoogy.GameFlow.InGame
         }
         public static void ConsumeActionPoint(int consume)
         {
+            LastConsumeActionPoint = consume;
             ConsumedActionPoints += consume;
             ActionPoint -= consume;
         }

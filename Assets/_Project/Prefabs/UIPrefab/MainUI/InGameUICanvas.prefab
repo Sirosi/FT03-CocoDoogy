@@ -1961,6 +1961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6877867544148547645}
+  - component: {fileID: 9019183471440118786}
   - component: {fileID: 282240349091434771}
   - component: {fileID: 7175507685317870087}
   - component: {fileID: 4326091427672042400}
@@ -1992,6 +1993,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &9019183471440118786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2318462307422602352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e992e2aa9842859d57ee0dc3e706e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weatherImage: {fileID: 8809161432460457365}
 --- !u!222 &282240349091434771
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2966,7 +2980,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000009536743}
+  m_AnchoredPosition: {x: 0, y: 0.00000023841858}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5453919182539177546
@@ -6088,7 +6102,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

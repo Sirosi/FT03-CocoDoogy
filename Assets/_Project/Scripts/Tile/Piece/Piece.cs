@@ -16,6 +16,18 @@ namespace CocoDoogy.Tile.Piece
         /// </summary>
         public HexDirection LookDirection { get; set; } = HexDirection.East;
         public Vector2Int? Target { get; set; } = null;
+        /// <summary>
+        /// 특수한 기물을 위한 데이터
+        /// </summary>
+        public string SpecialData
+        {
+            get => specialData;
+            set
+            {
+                specialData = value;
+                onDataInsert?.Invoke(specialData);
+            }
+        }
 
         public bool IsTrigger => BaseData && BaseData.type is PieceType.Switch or PieceType.Button or PieceType.GravityButton;
         
@@ -28,8 +40,18 @@ namespace CocoDoogy.Tile.Piece
         /// 릴리즈시 동작
         /// </summary>
         private Action<Piece> onRelease = null;
+        
+        /// <summary>
+        /// 데이터 입력
+        /// </summary>
+        private Action<string> onDataInsert = null;
+        /// <summary>
+        /// 특수행동
+        /// </summary>
+        private Action onExecute = null;
 
         private bool hasInit = false;
+        private string specialData = string.Empty;
         
         
         #region ◇ LifeCycle ◇
@@ -40,6 +62,8 @@ namespace CocoDoogy.Tile.Piece
             
             onSpawn = GetComponentsInChildren<ISpawn<Piece>>().GetEvents();
             onRelease = GetComponentsInChildren<IRelease<Piece>>().GetEvents();
+            onDataInsert = GetComponentsInChildren<ISpecialPiece>().GetInserts();
+            onExecute = GetComponentsInChildren<ISpecialPiece>().GetExecutes();
         }
 
         private void Spawn(PieceData data)
@@ -81,6 +105,11 @@ namespace CocoDoogy.Tile.Piece
             Parent = parent;
             
             onSpawn?.Invoke(this);
+        }
+
+        public void Execute()
+        {
+            onExecute?.Invoke();
         }
         
         

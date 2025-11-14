@@ -1,5 +1,6 @@
 using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame;
+using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
 using System.Collections.Generic;
@@ -20,8 +21,10 @@ namespace CocoDoogy.Tile
         
         public static Vector2Int StartPos { get; set; } = Vector2Int.zero;
         public static Vector2Int EndPos { get; set; } = Vector2Int.zero;
+        public static WeatherType DefaultWeather { get; set; } = WeatherType.Sunny;
         
         public static Dictionary<Vector2Int, GimmickData> Gimmicks { get; } = new();
+        public static Dictionary<int, WeatherType> Weathers { get; } = new();
         
         
         [SerializeField] private Transform tileGroup;
@@ -139,6 +142,7 @@ namespace CocoDoogy.Tile
             StartPos = Vector2Int.zero;
             EndPos = Vector2Int.zero;
             Gimmicks.Clear();
+            Weathers.Clear();
         }
     }
 }

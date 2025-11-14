@@ -1,3 +1,4 @@
+using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
@@ -31,6 +32,7 @@ namespace CocoDoogy.Utility
             {
                 RefillCount = HexTileMap.RefillCount,
                 ActionPoint = HexTileMap.ActionPoint,
+                DefaultWeather = HexTileMap.DefaultWeather,
                 StartPos = HexTileMap.StartPos,
                 EndPos = HexTileMap.EndPos,
             };
@@ -50,7 +52,8 @@ namespace CocoDoogy.Utility
                 {
                     if (tile.Pieces[i] is null) continue;
                     tileData.Pieces[i].Type = tile.Pieces[i].BaseData.type;
-
+                    tileData.Pieces[i].Data = tile.Pieces[i].SpecialData;
+                    
                     if (tile.Pieces[i].Target == null) continue;
                     mapData.PieceToTargets.Add(new()
                     {
@@ -71,6 +74,15 @@ namespace CocoDoogy.Utility
             mapData.Tiles = tiles.ToArray();
             mapData.Gimmicks = HexTileMap.Gimmicks.Values.ToArray();
 
+            foreach (var weather in HexTileMap.Weathers)
+            {
+                mapData.Weathers.Add(new WeatherData()
+                {
+                    ActionPoint = weather.Key,
+                    Weather = weather.Value
+                });
+            }
+
             OnMapSaved?.Invoke();
 
             return JsonUtility.ToJson(mapData);
@@ -89,6 +101,7 @@ namespace CocoDoogy.Utility
             // Map 정보 적용
             HexTileMap.RefillCount = mapData.RefillCount;
             HexTileMap.ActionPoint = mapData.ActionPoint;
+            HexTileMap.DefaultWeather = mapData.DefaultWeather;
             HexTileMap.StartPos = mapData.StartPos;
             HexTileMap.EndPos = mapData.EndPos;
 
@@ -109,10 +122,12 @@ namespace CocoDoogy.Utility
                     var pieceData = tile.Pieces[i];
                     if (pieceData.Type == PieceType.None) continue;
 
-                    HexTileMap.AddPiece(hexTile, (HexDirection)i, pieceData.Type, pieceData.LookDirection);
+                    Piece piece = HexTileMap.AddPiece(hexTile, (HexDirection)i, pieceData.Type, pieceData.LookDirection);
+                    if (string.IsNullOrEmpty(pieceData.Data)) continue;
+                    piece.SpecialData = pieceData.Data;
                 }
             }
-
+            
             // 기물 목표 위치 연결
             foreach (var grids in mapData.PieceToTargets)
             {
@@ -124,16 +139,24 @@ namespace CocoDoogy.Utility
             {
                 HexTileMap.Gimmicks.Add(data.Target.GridPos, data);
             }
+            
+            // 날씨 추가
+            foreach (WeatherData data in mapData.Weathers)
+            {
+                HexTileMap.Weathers.Add(data.ActionPoint, data.Weather);
+            }
 
             OnMapLoaded?.Invoke();
         }
 
+        
         #region ◇ Save 구조화용 class ◇
-        [System.Serializable]
+        [Serializable]
         private class Map
         {
             public int RefillCount = 3;
             public int ActionPoint = 5;
+            public WeatherType DefaultWeather = WeatherType.Sunny;
             
             public Vector2Int StartPos = Vector2Int.zero;
             public Vector2Int EndPos = Vector2Int.zero;
@@ -143,14 +166,22 @@ namespace CocoDoogy.Utility
             public GimmickData[] Gimmicks = { };
 
             public List<PieceToTarget> PieceToTargets = new();
+            public List<WeatherData> Weathers = new();
         }
-        [System.Serializable]
+
+        [Serializable]
+        private class WeatherData
+        {
+            public int ActionPoint = 0;
+            public WeatherType Weather;
+        }
+        [Serializable]
         private class PieceToTarget
         {
             public Vector2Int PiecePos = Vector2Int.zero;
             public Vector2Int TargetPos = Vector2Int.zero;
         }
-        [System.Serializable]
+        [Serializable]
         private class MapTile
         {
             public TileType Type = TileType.None;
@@ -167,11 +198,12 @@ namespace CocoDoogy.Utility
                 new(),
             };
         }
-        [System.Serializable]
+        [Serializable]
         private class MapPiece
         {
             public PieceType Type = PieceType.None;
             public HexDirection LookDirection = HexDirection.East;
+            public string Data = string.Empty;
         }
         #endregion
     }

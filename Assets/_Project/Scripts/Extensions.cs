@@ -1,5 +1,6 @@
 using CocoDoogy.Tile;
 using CocoDoogy.LifeCycle;
+using CocoDoogy.Tile.Piece;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,24 @@ namespace CocoDoogy
             foreach (var v in releases)
             {
                 result += v.OnRelease;
+            }
+            return result;
+        }
+        public static Action<string> GetInserts(this IEnumerable<ISpecialPiece> inserts)
+        {
+            Action<string> result = null;
+            foreach (var v in inserts)
+            {
+                result += v.OnDataInsert;
+            }
+            return result;
+        }
+        public static Action GetExecutes(this IEnumerable<ISpecialPiece> inserts)
+        {
+            Action result = null;
+            foreach (var v in inserts)
+            {
+                result += v.OnExecute;
             }
             return result;
         }
@@ -247,6 +266,11 @@ namespace CocoDoogy
         public static void SetEnable(this MonoBehaviour component, bool enable)
         {
             component.enabled = enable;
+        }
+
+        public static bool IsBetween(this int value, int min, int max)
+        {
+            return min <= value && value <= max;
         }
     }
 }

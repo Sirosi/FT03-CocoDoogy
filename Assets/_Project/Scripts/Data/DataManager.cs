@@ -1,4 +1,5 @@
 using CocoDoogy.Core;
+using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Network;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
@@ -40,6 +41,10 @@ namespace CocoDoogy.Data
             guids = AssetDatabase.FindAssets("t:PieceData");
             pieceData = guids
                 .Select(guid => AssetDatabase.LoadAssetAtPath<PieceData>(AssetDatabase.GUIDToAssetPath(guid)))
+                .ToArray();
+            guids = AssetDatabase.FindAssets("t:WeatherData");
+            weatherData = guids
+                .Select(guid => AssetDatabase.LoadAssetAtPath<WeatherData>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
         }
 #endif
