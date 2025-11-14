@@ -11,6 +11,10 @@ namespace CocoDoogy.UI.UIManager
 {
     public class LobbyUIManager : Singleton<LobbyUIManager>
     {
+        [Header("MainUIs")]
+        [SerializeField] private RectTransform lobbyUIPanel;
+        [SerializeField] private RectTransform stageSelectUIPanel;
+        
         [Header("Lobby UI Panels")]
         [SerializeField] private ProfileUI profilePanel;
         [SerializeField] private FriendUI friendPanel;
@@ -32,6 +36,8 @@ namespace CocoDoogy.UI.UIManager
         protected override void Awake()
         {
             base.Awake();
+            stageSelectUIPanel.gameObject.SetActive(false);
+            
             profileButton.onClick.AddListener(OnClickProfileButton);
             friendsButton.onClick.AddListener(OnClickFriendButton);
             giftsButton.onClick.AddListener(OnClickGiftButton);
@@ -55,8 +61,12 @@ namespace CocoDoogy.UI.UIManager
         private void OnClickGiftButton() =>  giftPanel.OpenPanel();
         private void OnClickSettingButton() => settingsPanel.OpenPanel();
         private void OnClickShopButton() => shopPanel.OpenPanel();
-        
-        private void OnStartButtonClicked() => Loading.LoadScene("StageSelectUITest");
+
+        private void OnStartButtonClicked()
+        {
+            WindowAnimation.SwipeWindow(lobbyUIPanel);
+            stageSelectUIPanel.gameObject.SetActive(true);
+        }
 
     }
 }
