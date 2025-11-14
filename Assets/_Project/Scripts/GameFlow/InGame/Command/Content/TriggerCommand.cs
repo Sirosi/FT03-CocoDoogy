@@ -47,7 +47,6 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             if (!trigger) return;
 
             trigger.Interact();
-            GimmickExecutor.ExecuteFromTrigger(GridPos, trigger.IsOn);
         }
 
         public override void Undo()
@@ -56,7 +55,6 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             if (!trigger) return;
 
             trigger.UnInteract();
-            GimmickExecutor.ExecuteFromTrigger(GridPos, trigger.IsOn);
         }
     }
 }

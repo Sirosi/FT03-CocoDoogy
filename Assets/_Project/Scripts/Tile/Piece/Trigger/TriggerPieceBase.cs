@@ -22,11 +22,5 @@ namespace CocoDoogy.Tile.Piece.Trigger
 
         public abstract void Interact();
         public abstract void UnInteract();
-
-
-        protected void ChangeTrigger(bool isOn)
-        {
-            GimmickExecutor.ExecuteFromTrigger(Parent.GridPos, isOn);
-        }
     }
 }

@@ -2,6 +2,10 @@ using UnityEngine;
 
 namespace CocoDoogy.Tile.Piece.Trigger
 {
+    /// <summary>
+    /// SwitchType용 트리거<br/>
+    /// 토글 형태로 동작
+    /// </summary>
     public class SwitchPiece : TriggerPieceBase
     {
         [SerializeField] private Transform lever;
@@ -28,7 +32,8 @@ namespace CocoDoogy.Tile.Piece.Trigger
 
         public override void Interact()
         {
-            ChangeTrigger(IsOn = !IsOn);
+            IsOn = !IsOn;
+            // TODO: 토글 소리가 들려야 함
         }
         public override void UnInteract() => Interact();
     }

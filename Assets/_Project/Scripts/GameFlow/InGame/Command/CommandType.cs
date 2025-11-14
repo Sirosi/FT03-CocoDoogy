@@ -43,6 +43,11 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// 날씨 처리
         /// </summary>
         Weather = 111,
+        
+        /// <summary>
+        /// 타일 회전
+        /// </summary>
+        TileRotate = 121,
         #endregion
     }
 }

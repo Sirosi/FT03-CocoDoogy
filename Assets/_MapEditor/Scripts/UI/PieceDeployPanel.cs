@@ -4,6 +4,7 @@ using CocoDoogy.MapEditor.UI.GimmickConnector;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
 using CocoDoogy.UI;
+using TMPro;
 using UnityEngine;
 
 namespace CocoDoogy.MapEditor.UI
@@ -22,9 +23,10 @@ namespace CocoDoogy.MapEditor.UI
         [SerializeField] private CommonButton cwRotateButton;
         [SerializeField] private PieceIcon[] slotIcons;
 
-        [Header("Connect Buttons")]
+        [Header("Connect UIs")]
         [SerializeField] private CommonButton gimmickButton;
         [SerializeField] private CommonButton targetButton;
+        [SerializeField] private TMP_InputField buttonLifeInput;
 
 
         public static HexTile SelectedTile = null;
@@ -41,6 +43,7 @@ namespace CocoDoogy.MapEditor.UI
             cwRotateButton.onClick.AddListener(OnCWRotateClicked);
             gimmickButton.onClick.AddListener(OnGimmickButtonClicked);
             targetButton.onClick.AddListener(OnTargetButtonClicked);
+            buttonLifeInput.onValueChanged.AddListener(OnButtonLifeChanged);
         }
         void OnDestroy()
         {
@@ -128,6 +131,7 @@ namespace CocoDoogy.MapEditor.UI
 
             if (direction != HexDirection.Center) return;
             targetButton.gameObject.SetActive(piece && piece.BaseData.hasTarget);
+            buttonLifeInput.gameObject.SetActive(piece.BaseData.type == PieceType.Button);
         }
 
         
@@ -159,6 +163,12 @@ namespace CocoDoogy.MapEditor.UI
         private void OnTargetButtonClicked()
         {
             MapEditorController.EditMode = MapEditMode.PieceTargetMode;
+        }
+
+        private void OnButtonLifeChanged(string newValue)
+        {
+            if (int.TryParse(newValue, out int num)) return;
+            // TODO: 아직 완성되지 않음
         }
         
         /// <summary>
