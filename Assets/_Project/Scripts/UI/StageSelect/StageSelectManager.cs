@@ -13,6 +13,11 @@ namespace CocoDoogy.UI.StageSelect
     public class StageSelectManager : MonoBehaviour
     {
         public static StageSelectManager Instance { get; private set; }
+
+        [Header("Main UIs")]
+        [SerializeField] private RectTransform lobbyUIPanel;
+        [SerializeField] private RectTransform stageSelectUIPanel;
+        
         
         [Header("UI Elements")]
         [SerializeField] private RectTransform stageSelectUI;
@@ -42,6 +47,7 @@ namespace CocoDoogy.UI.StageSelect
             }
             Instance = this;
             
+            stageReadyUI.gameObject.SetActive(false);
             isStageSelect = true;
             isStageReady = false;
             
@@ -97,7 +103,11 @@ namespace CocoDoogy.UI.StageSelect
         
         private void OnBackButtonClicked()
         {
-            if (isStageSelect) Loading.LoadScene("MainUITest");
+            if (isStageSelect)
+            {
+                WindowAnimation.SwipeWindow(stageSelectUIPanel);
+                lobbyUIPanel.gameObject.SetActive(true);
+            }
             if (isStageReady)
             {
                 WindowAnimation.SwipeWindow(stageReadyUI);

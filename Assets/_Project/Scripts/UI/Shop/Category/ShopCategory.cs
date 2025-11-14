@@ -17,5 +17,10 @@ namespace CocoDoogy.UI.Shop.Category
                 shopItem.OnClickSubscriptionEvent(() => shopUI.OpenPurchasePanel(shopItem.ItemData));
             }
         }
+
+        public void Change(bool active)
+        {
+            gameObject.SetActive(active);
+        }
     }
 }

@@ -3,6 +3,7 @@ using CocoDoogy.Network.UI;
 using CocoDoogy.UI.Popup;
 using Firebase.Auth;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CocoDoogy.Network.Login
@@ -74,6 +75,17 @@ namespace CocoDoogy.Network.Login
                     continue; 
                 }
 
+                if (Regex.IsMatch(nickname, @"^[가-힣]+$") && !(nickname.Length >= 2 && nickname.Length <= 6))
+                {
+                    await ShowMessageAsync("알림", "한글은 최소 두글자에서 여섯글자 사이");
+                    continue;
+                }
+
+                if (Regex.IsMatch(nickname, @"^[a-zA-Z]+$") && !(nickname.Length >= 4 && nickname.Length <= 12))
+                {
+                    await ShowMessageAsync("알림", "영어는 최소 네글자에서 열두글자 사이");
+                    continue;
+                }
                 try
                 {
                     bool isAvailable = await UserData.TrySetNewNickNameAsync(uid, nickname);

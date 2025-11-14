@@ -11,6 +11,10 @@ namespace CocoDoogy.UI.UIManager
 {
     public class LobbyUIManager : Singleton<LobbyUIManager>
     {
+        [Header("MainUIs")]
+        [SerializeField] private RectTransform lobbyUIPanel;
+        [SerializeField] private RectTransform stageSelectUIPanel;
+        
         [Header("Lobby UI Panels")]
         [SerializeField] private ProfileUI profilePanel;
         [SerializeField] private FriendUI friendPanel;
@@ -27,9 +31,13 @@ namespace CocoDoogy.UI.UIManager
         [SerializeField] private CommonButton shopButton;
         [SerializeField] private CommonButton startButton;
         
+        public ShopUI ShopUI => shopPanel;
+        
         protected override void Awake()
         {
             base.Awake();
+            stageSelectUIPanel.gameObject.SetActive(false);
+            
             profileButton.onClick.AddListener(OnClickProfileButton);
             friendsButton.onClick.AddListener(OnClickFriendButton);
             giftsButton.onClick.AddListener(OnClickGiftButton);
@@ -42,19 +50,23 @@ namespace CocoDoogy.UI.UIManager
         {
             // 해당 이벤트 추가는 로그인 후 되어야 되므로 UIManager에서 구독, 나중에 문제되면 DataManager.Instance가 null 아닐때 async로 변경해서 사용
             yield return new WaitUntil(() => DataManager.Instance != null);
-            DataManager.Instance.OnUserDataLoaded += friendPanel.FriendsInfoPanel.SubscriptionEvent;
-            DataManager.Instance.OnUserDataLoaded += friendPanel.ReceivedRequestPanel.SubscriptionEvent;
-            DataManager.Instance.OnUserDataLoaded += friendPanel.SentRequestPanel.SubscriptionEvent;
-            DataManager.Instance.OnUserDataLoaded += giftPanel.SubscriptionEvent;
-            DataManager.Instance.OnUserDataLoaded += infoPanel.SubscriptionEvent;
+            DataManager.Instance.OnPrivateUserDataLoaded += friendPanel.FriendsInfoPanel.SubscriptionEvent;
+            DataManager.Instance.OnPrivateUserDataLoaded += friendPanel.ReceivedRequestPanel.SubscriptionEvent;
+            DataManager.Instance.OnPrivateUserDataLoaded += friendPanel.SentRequestPanel.SubscriptionEvent;
+            DataManager.Instance.OnPrivateUserDataLoaded += giftPanel.SubscriptionEvent;
+            DataManager.Instance.OnPrivateUserDataLoaded += infoPanel.SubscriptionEvent;
         }
         private void OnClickProfileButton() => profilePanel.OpenPanel();
         private void OnClickFriendButton() => friendPanel.OpenPanel();
         private void OnClickGiftButton() =>  giftPanel.OpenPanel();
         private void OnClickSettingButton() => settingsPanel.OpenPanel();
         private void OnClickShopButton() => shopPanel.OpenPanel();
-        
-        private void OnStartButtonClicked() => Loading.LoadScene("StageSelectUITest");
+
+        private void OnStartButtonClicked()
+        {
+            WindowAnimation.SwipeWindow(lobbyUIPanel);
+            stageSelectUIPanel.gameObject.SetActive(true);
+        }
 
     }
 }

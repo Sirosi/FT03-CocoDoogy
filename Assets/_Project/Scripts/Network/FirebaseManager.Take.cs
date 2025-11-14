@@ -77,5 +77,31 @@ namespace CocoDoogy.Network
 
             return new List<Dictionary<string, object>>();
         }
+        
+        /// <summary>
+        /// Firebase Firestore에서 현재 로그인한 유저의 itemDic을 읽어와 반환하는 메서드
+        /// </summary>
+        public async Task<IDictionary<string, object>> GetItemListAsync()
+        {
+            var userId = Auth.CurrentUser.UserId;
+            var userDoc = await Firestore
+                .Collection("users")
+                .Document(userId)
+                .Collection("private")
+                .Document("data")
+                .GetSnapshotAsync();
+            if (!userDoc.Exists) return new Dictionary<string, object>();
+            if (userDoc.TryGetValue("itemDic", out Dictionary<string, object> dictionary))
+            {
+                var itemDic = new Dictionary<string, object>();
+                foreach (var item in dictionary)
+                {
+                    itemDic[item.Key] = item.Value;
+                }
+                return itemDic;
+            }
+
+            return new Dictionary<string, object>();
+        }
     }
 }

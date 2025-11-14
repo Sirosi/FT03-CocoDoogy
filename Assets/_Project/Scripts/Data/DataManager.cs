@@ -4,7 +4,6 @@ using CocoDoogy.Network;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
 using Firebase.Firestore;
-using Mono.Cecil;
 using System;
 using System.Linq;
 using UnityEditor;
@@ -21,16 +20,25 @@ namespace CocoDoogy.Data
         
         public UserData UserData { get; private set; }
         
-        //데이터가 변경되면 불러오는 이벤트 입니다. UI에서 구독하면 자동으로 업데이트가 가능합니다.
-        public event Action OnUserDataLoaded;
+        /// <summary>
+        /// Firebase Store의 Document 내부의 필드에 변화가 생기면 발생하는 이벤트. public Doc 하위 필드 변경시 발생
+        /// </summary>
+        public event Action OnPublicUserDataLoaded;
+        /// <summary>
+        /// Firebase Store의 Document 내부의 필드에 변화가 생기면 발생하는 이벤트. private Doc 하위 필드 변경시 발생
+        /// </summary>
+        public event Action OnPrivateUserDataLoaded;
 
+        /// <summary>
+        /// Firebase Store의 Document 내부의 필드에 변화를 감지하는 리스너. public Doc 하위 필드 변경시 발생
+        /// </summary>
         private ListenerRegistration publicListener;
+        /// <summary>
+        /// Firebase Store의 Document 내부의 필드에 변화를 감지하는 리스너. private Doc 하위 필드 변경시 발생
+        /// </summary>
         private ListenerRegistration privateListener;
         
-        private bool isPublicDataLoaded = false;
-        private bool isPrivateDataLoaded = false;
-
-        
+        private PrivateUserData lastPrivateData;
 #if UNITY_EDITOR
         void Reset()
         {
@@ -49,7 +57,6 @@ namespace CocoDoogy.Data
         }
 #endif
 
-
         protected override void Awake()
         {
             base.Awake();
@@ -60,23 +67,10 @@ namespace CocoDoogy.Data
             }
         }
 
-
-        /// <summary>
-        /// 게임 실행 시, DontDestroy해야 하는 모든 Manager 스크립트를 갖고 있는<br/>
-        /// CoreManager 생성 메소드
-        /// </summary>
-        [RuntimeInitializeOnLoadMethod]
-        private static void InitializeRuntime()
-        {
-            Instantiate(Resources.Load<GameObject>("CoreManager")).name = "CoreManager";
-        }
-
-
         //실시간 리스너 구독
         public void StartListeningForUserData(string userId)
         {
             StopListening();
-
             publicListener = CreateListener(userId, "public", "profile", true);
             privateListener = CreateListener(userId, "private", "data", false);
         }
@@ -86,24 +80,12 @@ namespace CocoDoogy.Data
             var docRef = FirebaseManager.Instance.Firestore
                 .Collection("users").Document(userId)
                 .Collection(collection).Document(document);
-
-            if (isPublic)
-            {
-                publicListener?.Stop();
-            }
-            else
-            {
-                privateListener?.Stop();
-            }
-
+            
             var listener = docRef.Listen(snapshot =>
             {
                 try
                 {
-                    if (snapshot.Metadata.HasPendingWrites)
-                        return;
-
-                    if (!snapshot.Exists) return;
+                    if (!snapshot.Exists || snapshot.Metadata.HasPendingWrites) return;
 
                     if (UserData == null)
                     {
@@ -113,20 +95,23 @@ namespace CocoDoogy.Data
 
                     if (isPublic)
                     {
-                        UserData.PublicUserData = snapshot.ConvertTo<PublicUserData>();
-                        Debug.Log("PublicUserData");
-                        isPublicDataLoaded = true;
+                        var newPublicData = snapshot.ConvertTo<PublicUserData>();
+                        if (UserData.PublicUserData != null && UserData.PublicUserData.Equals(newPublicData)) return;
+
+                        UserData.PublicUserData = newPublicData;
+                        Debug.Log("PublicUserData 업데이트됨");
+                        OnPublicUserDataLoaded?.Invoke();
                     }
                     else
                     {
-                        UserData.PrivateUserData = snapshot.ConvertTo<PrivateUserData>();
-                        Debug.Log("PrivateUserData");
-                        isPrivateDataLoaded = true;
-                    }
+                        var newPrivateData = snapshot.ConvertTo<PrivateUserData>();
+                        
+                        if (lastPrivateData != null && lastPrivateData.Equals(newPrivateData)) return;
 
-                    if (isPrivateDataLoaded && isPublicDataLoaded)
-                    {
-                        OnUserDataLoaded?.Invoke();
+                        lastPrivateData = newPrivateData;
+                        UserData.PrivateUserData = newPrivateData;
+                        Debug.Log("PrivateUserData 업데이트됨");
+                        OnPrivateUserDataLoaded?.Invoke();
                     }
                 }
                 catch (Exception e)
@@ -134,16 +119,7 @@ namespace CocoDoogy.Data
                     Debug.LogError($"실시간 데이터 동기화 중 오류 발생: {e.Message}");
                 }
             });
-
-            if (isPublic)
-            {
-                publicListener = listener;
-            }
-            else
-            {
-                privateListener = listener;
-            }
-
+            
             return listener;
         }
 

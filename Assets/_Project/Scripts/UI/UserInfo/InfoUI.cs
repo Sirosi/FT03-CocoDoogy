@@ -1,4 +1,5 @@
 using CocoDoogy.Network;
+using CocoDoogy.UI.UIManager;
 using Firebase.Firestore;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,18 @@ namespace CocoDoogy.UI.UserInfo
     {
         [SerializeField] private TextMeshProUGUI ticketCountText;
         [SerializeField] private TextMeshProUGUI cashMoneyText;
+        [SerializeField] private CommonButton stampShopButton;
+        [SerializeField] private CommonButton jemShopButton;
         
         private FirebaseManager Firebase => FirebaseManager.Instance;
 
+        private void Awake()
+        {
+            stampShopButton.onClick.AddListener((() => LobbyUIManager.Instance.ShopUI.OpenStampShopUI()));
+            jemShopButton.onClick.AddListener((() => LobbyUIManager.Instance.ShopUI.OpenJemShopUI()));
+        }
         public void SubscriptionEvent() => _ = RefreshUIAsync();
-
+        
         private async Task RefreshUIAsync()
         {
             var docRef = Firebase.Firestore
