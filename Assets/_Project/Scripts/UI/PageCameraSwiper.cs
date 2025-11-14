@@ -1,9 +1,9 @@
 using CocoDoogy.Utility;
-using CocoDoogy.Core;
 using UnityEngine;
 using DG.Tweening;
 using System;
 using UnityEngine.InputSystem;
+using CocoDoogy.Core;
 
 namespace CocoDoogy.UI
 {
@@ -34,9 +34,6 @@ namespace CocoDoogy.UI
         [Tooltip("전환 속도 (초 단위)")]
         [SerializeField] private float snapDuration = 0.5f;
 
-        [Tooltip("전환 강도 (Ease.OutBack일 때만 적용)")]
-        [SerializeField] private float snapForce = 0.75f;
-
         private Camera mainCamera;
         private int currentIndex = 0;
 
@@ -50,14 +47,15 @@ namespace CocoDoogy.UI
         /// 페이지 전환 이벤트 (index 인자 포함)
         /// 외부 시스템(Lighting, BGM, UI 등)이 구독하여 페이지 변경에 반응
         /// </summary>
-        public static event Action<int> OnPageChanged;
+        public static event Action<Theme> OnStartPageChanged;
+        public static event Action<Theme> OnEndPageChanged; // 페이지 전환 완료 시 호출
 
         void Start()
         {
             mainCamera = Camera.main;
             MoveToPageInstant(currentIndex);
             SetActivePage(currentIndex);
-            NotifyPageChanged(currentIndex);
+            NotifyPageChanged(GetThemeByIndex(currentIndex));
         }
 
         void OnDestroy()
@@ -68,6 +66,18 @@ namespace CocoDoogy.UI
         void Update()
         {
             Swipe();
+        }
+
+        private Theme GetThemeByIndex(int index)
+        {
+            switch (index)
+            {
+                case 0: return Theme.Forest;
+                case 1: return Theme.Sand;
+                case 2: return Theme.Water;
+                case 3: return Theme.Snow;
+                default: return Theme.None;
+            }
         }
 
         private void Swipe()
@@ -148,7 +158,7 @@ namespace CocoDoogy.UI
             currentIndex = index;
 
             // 페이지 변경 이벤트 즉시 호출 (Lighting, BGM 등이 카메라 애니메이션과 동시에 전환)
-            NotifyPageChanged(index);
+            NotifyPageChanged(GetThemeByIndex(index));
 
             camTr.DOMove(targetPoint.position, snapDuration)
                 .SetEase(Ease.OutCubic)
@@ -179,10 +189,11 @@ namespace CocoDoogy.UI
         /// 페이지 전환 이벤트 호출
         /// Lighting, BGM, UI 등 모든 페이지 기반 시스템에 알림
         /// </summary>
-        /// <param name="index">변경된 페이지 인덱스</param>
-        private void NotifyPageChanged(int index)
+        /// <param name="index">변경된 페이지 Theme</param>
+        private void NotifyPageChanged(Theme theme)
         {
-            OnPageChanged?.Invoke(index);
+            OnStartPageChanged?.Invoke(theme);
+            OnEndPageChanged?.Invoke(theme);
         }
     }
 }

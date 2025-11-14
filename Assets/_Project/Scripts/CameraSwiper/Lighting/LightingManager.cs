@@ -10,7 +10,6 @@ namespace CocoDoogy.Core
     /// </summary>
     public class LightingManager : MonoBehaviour
     {
-        public static LightingManager Instance { get; private set; }
 
         [Header("Lighting Presets")]
         [Tooltip("4개 페이지용 LightingPreset 배열 (인덱스 순서대로)")]
@@ -18,24 +17,25 @@ namespace CocoDoogy.Core
 
         private void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-                // PageCameraSwiper의 페이지 전환 이벤트 구독
-                PageCameraSwiper.OnPageChanged += ApplyPreset;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            PageCameraSwiper.OnStartPageChanged += ApplyPreset;
         }
 
         private void OnDestroy()
         {
             // 이벤트 구독 해제 (메모리 누수 방지)
-            if (Instance == this)
+            PageCameraSwiper.OnStartPageChanged -= ApplyPreset;
+        }
+
+
+        private int ThemeToIndex(Theme theme)
+        {
+            switch (theme)
             {
-                PageCameraSwiper.OnPageChanged -= ApplyPreset;
+                case Theme.Forest: return 0;
+                case Theme.Sand: return 1;
+                case Theme.Water: return 2;
+                case Theme.Snow: return 3;
+                default: return 0;
             }
         }
 
@@ -43,18 +43,12 @@ namespace CocoDoogy.Core
         /// 지정된 페이지 인덱스의 LightingPreset을 적용
         /// </summary>
         /// <param name="pageIndex">페이지 인덱스 (0~3)</param>
-        public void ApplyPreset(int pageIndex)
+        public void ApplyPreset(Theme theme)
         {
-            if (pageIndex < 0 || pageIndex >= presets.Length)
-            {
-                Debug.LogWarning($"[LightingManager] 페이지 인덱스 범위 초과: {pageIndex} (최대: {presets.Length - 1})");
-                return;
-            }
-
-            LightingPreset preset = presets[pageIndex];
+            LightingPreset preset = presets[ThemeToIndex(theme)];
             if (preset == null)
             {
-                Debug.LogWarning($"[LightingManager] 페이지 {pageIndex}에 LightingPreset이 할당되지 않음");
+                Debug.LogWarning($"[LightingManager] 페이지 {theme}에 LightingPreset이 할당되지 않음");
                 return;
             }
 
@@ -90,11 +84,6 @@ namespace CocoDoogy.Core
             RenderSettings.haloStrength = preset.haloStrength;
             RenderSettings.flareStrength = preset.flareStrength;
             RenderSettings.flareFadeSpeed = preset.flareFadeSpeed;
-
-            //             // Dynamic GI 업데이트 (실시간 전역 조명)
-            // #if UNITY_EDITOR
-            //             DynamicGI.UpdateEnvironment();
-            // #endif
 
             Debug.Log($"[LightingManager] LightingPreset 적용 완료: {preset.name}");
         }

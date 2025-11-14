@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
-    public class InGameManager: Singleton<InGameManager>
+    public class InGameManager : Singleton<InGameManager>
     {
         /// <summary>
         /// 현재 인게임이 정상적인(= 플레이 가능) 상태인지 체크
@@ -18,8 +18,8 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 if (!Instance) return false;
                 if (!PlayerHandler.Instance) return false;
-                
-                
+
+
                 return true;
             }
         }
