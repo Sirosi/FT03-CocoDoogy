@@ -21,8 +21,6 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 CommandManager.Refill();
                 return false;
             }
-            // TODO: 주변에 이동 가능 타일이 없는지는 아이템 사용 가능 여부도 체크해야 할 수 있음
-
             
             return true;
         }
