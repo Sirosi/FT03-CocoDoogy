@@ -1,4 +1,5 @@
 using CocoDoogy.Animation;
+using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using CocoDoogy.Tile;
 using DG.Tweening;
@@ -115,7 +116,17 @@ namespace CocoDoogy.GameFlow.InGame
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Moving);
             DOTween.Kill(Instance, true);
-            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance).OnStepComplete(OnBehaviourCompleted);
+            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION)
+                .SetId(Instance)
+                .OnStepComplete(() => {
+                        OnBehaviourCompleted();
+                        HexTile currentTile = HexTile.GetTile(gridPos);
+                        if (currentTile != null && currentTile.CurrentData.stepSfx != SfxType.None)
+                        {
+                            SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
+                        }
+                    }
+                    );
         }
         /// <summary>
         /// 미끄러지듯 이동
