@@ -62,6 +62,11 @@ namespace CocoDoogy.Data
             }
         }
 
+        private void Start()
+        {
+            Application.targetFrameRate = 60;
+        }
+
         //실시간 리스너 구독
         public void StartListeningForUserData(string userId)
         {

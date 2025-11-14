@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &221878929
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1673,7 +1673,7 @@ GameObject:
   - component: {fileID: 1539739665}
   - component: {fileID: 1539739664}
   m_Layer: 5
-  m_Name: ConfirmButton
+  m_Name: RegisterButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2056,6 +2056,8 @@ MonoBehaviour:
   touchToStart: {fileID: 2006644348}
   loginPanel: {fileID: 731194125}
   registerPanel: {fileID: 221878928}
+  nickname: {fileID: 1340590739}
+  registerButton: {fileID: 1539739664}
 --- !u!1 &2006644348
 GameObject:
   m_ObjectHideFlags: 0

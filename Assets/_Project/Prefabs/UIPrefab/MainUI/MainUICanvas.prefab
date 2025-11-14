@@ -592,7 +592,6 @@ GameObject:
   - component: {fileID: 1010186250538087066}
   - component: {fileID: 2756111384460300658}
   - component: {fileID: 3850599606105133192}
-  - component: {fileID: 3828708716979013655}
   m_Layer: 5
   m_Name: FriendsListButton
   m_TagString: Untagged
@@ -700,21 +699,6 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2756111384460300658}
   m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &3828708716979013655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 470361698856815868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cba5ab6c5d0df9441af653481cf59d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &718936316960921089
@@ -1989,9 +1973,9 @@ MonoBehaviour:
   friendsWindow: {fileID: 4336282203641779611}
   searchWindowBg: {fileID: 3093597862848525627}
   closeButton: {fileID: 6418536594413128146}
-  friendsInfoButton: {fileID: 3828708716979013655}
-  friendsRequestButton: {fileID: 6826709934467677729}
-  friendsSentButton: {fileID: 3739169558653369852}
+  friendsInfoButton: {fileID: 3850599606105133192}
+  friendsRequestButton: {fileID: 2185339013334967503}
+  friendsSentButton: {fileID: 2772065457196985615}
   searchFriendButton: {fileID: 1576076658265407092}
   sendAllButton: {fileID: 4449304897684838802}
   friendsInfoPanel: {fileID: 2788289260268879566}
@@ -2743,7 +2727,6 @@ GameObject:
   - component: {fileID: 3547054246262678915}
   - component: {fileID: 4112826636636282154}
   - component: {fileID: 2772065457196985615}
-  - component: {fileID: 3739169558653369852}
   m_Layer: 5
   m_Name: SentButton
   m_TagString: Untagged
@@ -2851,21 +2834,6 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 4112826636636282154}
   m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &3739169558653369852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2159466153897927827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cba5ab6c5d0df9441af653481cf59d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &2249513204966061516
@@ -3658,7 +3626,7 @@ MonoBehaviour:
   giftPanel: {fileID: 5205690956482792999}
   settingsPanel: {fileID: 4196531317552085683}
   shopPanel: {fileID: 4426815643610483226}
-  infoPanel: {fileID: 0}
+  infoPanel: {fileID: 6347136765463875691}
   profileButton: {fileID: 8457395021050429840}
   friendsButton: {fileID: 7556543528386946608}
   giftsButton: {fileID: 4405178223659039332}
@@ -3696,7 +3664,7 @@ GameObject:
   - component: {fileID: 3347797755235962775}
   - component: {fileID: 3855278893113729530}
   m_Layer: 5
-  m_Name: StartButton
+  m_Name: PlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3720,7 +3688,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -50, y: 150}
-  m_SizeDelta: {x: 185, y: 189}
+  m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8893563263797736749
 CanvasRenderer:
@@ -3750,7 +3718,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f8e5cd479fb67864fb7308a4c609ab7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3039f3719fb6e184bb72dd21dec0c5ce, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3902,7 +3870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -55}
+  m_AnchoredPosition: {x: 0, y: -80}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &492350985053693113
@@ -3933,7 +3901,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start
+  m_text: Play!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 97e8c70db00c76841b0471dbf037335f, type: 2}
   m_sharedMaterial: {fileID: 8056748052174156069, guid: 97e8c70db00c76841b0471dbf037335f, type: 2}
@@ -3942,8 +3910,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4287920128
-  m_fontColor: {r: 0, g: 0.47058827, b: 0.5803922, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3970,7 +3938,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4668,7 +4636,6 @@ GameObject:
   - component: {fileID: 6898441107873532123}
   - component: {fileID: 980492104517551375}
   - component: {fileID: 2185339013334967503}
-  - component: {fileID: 6826709934467677729}
   m_Layer: 5
   m_Name: RequestsButton
   m_TagString: Untagged
@@ -4776,21 +4743,6 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 980492104517551375}
   m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &6826709934467677729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3328853840515210315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cba5ab6c5d0df9441af653481cf59d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &3425157202523558447
@@ -6838,7 +6790,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 75, y: 75}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5349809951627308242
 CanvasRenderer:
@@ -6868,7 +6820,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e0a91d00361afa94e96072cb139ca118, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 08f887cb546dc224ab4bb1bbddc4f58a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10081,6 +10033,7 @@ GameObject:
   - component: {fileID: 3705540767126539062}
   - component: {fileID: 444565302981244675}
   - component: {fileID: 8457395021050429840}
+  - component: {fileID: 6556274298117292065}
   m_Layer: 5
   m_Name: ProfileButton
   m_TagString: Untagged
@@ -10136,8 +10089,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3afad7102e0cbaf45ac77c09ab34a20a, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: fa79a542e6c13ac4e97cd5f6bec5d7fe, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -10161,6 +10114,19 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6556274298117292065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8696741367553151210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &8767223254530925616
 GameObject:
   m_ObjectHideFlags: 0
@@ -11477,6 +11443,14 @@ PrefabInstance:
       propertyPath: popupBackground
       value: 
       objectReference: {fileID: 1419166113811132973}
+    - target: {fileID: 4841869907732832227, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
+      propertyPath: jemShopButton
+      value: 
+      objectReference: {fileID: 9186452231180702019}
+    - target: {fileID: 4841869907732832227, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
+      propertyPath: stampShopButton
+      value: 
+      objectReference: {fileID: 3168114701131179085}
     - target: {fileID: 8890221282855712916, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
       propertyPath: m_Name
       value: Info UI
@@ -11493,6 +11467,39 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1062678397815924334, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
   m_PrefabInstance: {fileID: 1955767601210216328}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3168114701131179085 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3518208288833907653, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
+  m_PrefabInstance: {fileID: 1955767601210216328}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba5ab6c5d0df9441af653481cf59d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6347136765463875691 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4841869907732832227, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
+  m_PrefabInstance: {fileID: 1955767601210216328}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b182a00f5b7146bd9fb2e202eb564518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9186452231180702019 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7230702806683131595, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
+  m_PrefabInstance: {fileID: 1955767601210216328}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba5ab6c5d0df9441af653481cf59d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3735655506120432424
 PrefabInstance:
   m_ObjectHideFlags: 0
