@@ -24,9 +24,9 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// </summary>
         Slide = 21,
         /// <summary>
-        /// 토네이도 이동처리
+        /// 순간이동처리
         /// </summary>
-        Tornado = 22,
+        Teleport = 22,
         #endregion
         
         #region ◇ 시스템 조작 ◇
@@ -35,9 +35,14 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// </summary>
         Deploy = 101,
         /// <summary>
+        /// 행동력 초기화
+        /// </summary>
+        Refill = 102,
+        
+        /// <summary>
         /// 날씨 처리
         /// </summary>
-        Weather = 102,
+        Weather = 111,
         #endregion
     }
 }

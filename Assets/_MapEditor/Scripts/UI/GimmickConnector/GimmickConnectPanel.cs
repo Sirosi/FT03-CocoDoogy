@@ -71,7 +71,7 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
             SelectedGimmick = HexTileMap.GetGimmick(gridPos);
             if (SelectedGimmick is null) // 기믹이 없던 위치라면
             {
-                HexTileMap.Instance.Gimmicks.Add(gridPos, SelectedGimmick = new());
+                HexTileMap.Gimmicks.Add(gridPos, SelectedGimmick = new());
                 SelectedGimmick.Target.GridPos = gridPos;
             }
             tileInfoText.text = $"{HexTile.GetTile(gridPos).CurrentData.type} {gridPos}";

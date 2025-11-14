@@ -34,7 +34,7 @@ namespace CocoDoogy.Tile
         {
             get
             {
-                Piece.Piece centerPiece = Pieces[(int)HexDirection.Center];
+                Piece.Piece centerPiece = GetPiece(HexDirection.Center);
 
                 bool canMove = CurrentData.canMove;
                 bool canPiece = centerPiece &&
@@ -200,9 +200,10 @@ namespace CocoDoogy.Tile
             }
 
             // Center는 LookDirection 회전만 해줘야 함
-            if (Pieces[(int)HexDirection.Center])
+            Piece.Piece centerPiece = GetPiece(HexDirection.Center);
+            if (centerPiece)
             {
-                Pieces[(int)HexDirection.Center].LookDirection = Pieces[(int)HexDirection.Center].LookDirection.AddRotate(rotate);
+                centerPiece.LookDirection = centerPiece.LookDirection.AddRotate(rotate);
             }
 
             OnRotateChanged?.Invoke(this, rotate);
@@ -254,6 +255,7 @@ namespace CocoDoogy.Tile
         /// 해당 위치에 기물 추가
         /// </summary>
         /// <param name="direction"></param>
+        /// 
         /// <param name="pieceType"></param>
         /// <returns></returns>
         public Piece.Piece SetPiece(HexDirection direction, PieceType pieceType, HexDirection lookDirection)
@@ -370,8 +372,8 @@ namespace CocoDoogy.Tile
         /// 이동불가 장애물이 존재하는지
         /// </summary>
         private static bool HasTargetObstacle(HexTile hexTile, HexDirection direction) =>
-            (hexTile.Pieces[(int)HexDirection.Center] &&                    // 센터에 기물이 존재하고,
-            !hexTile.Pieces[(int)HexDirection.Center].BaseData.canMove) ||  // 움직일 수 없는지
+            (hexTile.GetPiece(HexDirection.Center) &&                    // 센터에 기물이 존재하고,
+            !hexTile.GetPiece(HexDirection.Center).BaseData.canMove) ||  // 움직일 수 없는지
             (hexTile.Pieces[(int)direction] &&                              // 그 방향에 기물이 존재하고,
             !hexTile.Pieces[(int)direction].BaseData.canMove);              // 움직일 수 없는지
         /// <summary>
@@ -380,7 +382,7 @@ namespace CocoDoogy.Tile
         private static bool CheckMyBridge(HexTile hexTile, HexDirection direction)
         {
             HexTile myTile = HexTile.GetTile(hexTile.GridPos.GetDirectionPos(direction));
-            Piece.Piece piece = myTile.Pieces[(int)HexDirection.Center];
+            Piece.Piece piece = myTile.GetPiece(HexDirection.Center);
             if (piece && piece.BaseData.type == PieceType.Bridge)
             {
                 return piece.LookDirection != direction && piece.LookDirection != direction.GetMirror();
@@ -392,7 +394,7 @@ namespace CocoDoogy.Tile
         /// </summary>
         private static bool CheckTargetBridge(HexTile hexTile, HexDirection direction)
         {
-            Piece.Piece piece = hexTile.Pieces[(int)HexDirection.Center];
+            Piece.Piece piece = hexTile.GetPiece(HexDirection.Center);
             if (piece && piece.BaseData.type == PieceType.Bridge)
             {
                 return piece.LookDirection != direction && piece.LookDirection != direction.GetMirror();

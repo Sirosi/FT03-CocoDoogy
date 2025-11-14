@@ -12,6 +12,9 @@ namespace CocoDoogy.Tile.Piece
         private HexDirection LookDirection => piece.LookDirection;
 
 
+        /// <summary>
+        /// 이 기물이 올라간 타일
+        /// </summary>
         private HexTile Parent
         {
             get => parent;

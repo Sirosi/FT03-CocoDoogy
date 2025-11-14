@@ -29,8 +29,10 @@ namespace CocoDoogy.Utility
             // Map 정보 저장
             Map mapData = new()
             {
-                StartPos = HexTileMap.Instance.StartPos,
-                EndPos = HexTileMap.Instance.EndPos,
+                RefillCount = HexTileMap.RefillCount,
+                ActionPoint = HexTileMap.ActionPoint,
+                StartPos = HexTileMap.StartPos,
+                EndPos = HexTileMap.EndPos,
             };
 
             List<MapTile> tiles = new(); // tile 정보를 저장할 List
@@ -58,16 +60,16 @@ namespace CocoDoogy.Utility
                 }
 
                 // 중앙 기물은 LookDirection을 가져야 함으로 Center일 경우 추가 정보 저장
-                int centerIdx = (int)HexDirection.Center;
-                if (tile.Pieces[centerIdx])
+                Piece centerPiece = tile.GetPiece(HexDirection.Center);
+                if (centerPiece)
                 {
-                    tileData.Pieces[centerIdx].LookDirection = tile.Pieces[centerIdx].LookDirection;
+                    tileData.Pieces[(int)HexDirection.Center].LookDirection = centerPiece.LookDirection;
                 }
 
                 tiles.Add(tileData);
             }
             mapData.Tiles = tiles.ToArray();
-            mapData.Gimmicks = HexTileMap.Instance.Gimmicks.Values.ToArray();
+            mapData.Gimmicks = HexTileMap.Gimmicks.Values.ToArray();
 
             OnMapSaved?.Invoke();
 
@@ -85,8 +87,10 @@ namespace CocoDoogy.Utility
             Map mapData = JsonUtility.FromJson<Map>(json);
 
             // Map 정보 적용
-            HexTileMap.Instance.StartPos = mapData.StartPos;
-            HexTileMap.Instance.EndPos = mapData.EndPos;
+            HexTileMap.RefillCount = mapData.RefillCount;
+            HexTileMap.ActionPoint = mapData.ActionPoint;
+            HexTileMap.StartPos = mapData.StartPos;
+            HexTileMap.EndPos = mapData.EndPos;
 
             // 타일 설치
             foreach (MapTile tile in mapData.Tiles)
@@ -112,13 +116,13 @@ namespace CocoDoogy.Utility
             // 기물 목표 위치 연결
             foreach (var grids in mapData.PieceToTargets)
             {
-                HexTile.GetTile(grids.PiecePos).Pieces[(int)HexDirection.Center].Target = grids.TargetPos;
+                HexTile.GetTile(grids.PiecePos).GetPiece(HexDirection.Center).Target = grids.TargetPos;
             }
 
             // 기믹 연결
             foreach (GimmickData data in mapData.Gimmicks)
             {
-                HexTileMap.Instance.Gimmicks.Add(data.Target.GridPos, data);
+                HexTileMap.Gimmicks.Add(data.Target.GridPos, data);
             }
 
             OnMapLoaded?.Invoke();
@@ -128,6 +132,9 @@ namespace CocoDoogy.Utility
         [System.Serializable]
         private class Map
         {
+            public int RefillCount = 3;
+            public int ActionPoint = 5;
+            
             public Vector2Int StartPos = Vector2Int.zero;
             public Vector2Int EndPos = Vector2Int.zero;
 

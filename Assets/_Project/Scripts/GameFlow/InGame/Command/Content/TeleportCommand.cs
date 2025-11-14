@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
     [System.Serializable]
-    public class TornadoCommand : CommandBase
+    public class TeleportCommand : CommandBase
     {
         public override bool IsUserCommand => false;
 
@@ -20,7 +20,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public Vector2Int NextPos = Vector2Int.zero;
 
 
-        public TornadoCommand(object param) : base(CommandType.Tornado, param)
+        public TeleportCommand(object param) : base(CommandType.Teleport, param)
         {
             var poses = ((Vector2Int, Vector2Int))param;
             PrePos = poses.Item1;

@@ -122,7 +122,7 @@ namespace CocoDoogy.MapEditor.UI
             if (!SelectedTile) return;
 
             // 사용할 데이터 세팅
-            Piece piece = SelectedTile.Pieces[(int)direction];
+            Piece piece = SelectedTile.GetPiece(direction);
             PieceIcon slotIcon = slotIcons[(int)direction];
             slotIcon.SetPiece(piece);
 

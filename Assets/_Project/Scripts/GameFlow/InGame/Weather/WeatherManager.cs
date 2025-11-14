@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 
-namespace CocoDoogy.Weather
+namespace CocoDoogy.GameFlow.InGame.Weather
 {
     public class WeatherManager: Singleton<WeatherManager>
     {
