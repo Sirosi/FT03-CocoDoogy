@@ -1,3 +1,5 @@
+using Firebase.Firestore;
+using Firebase.Functions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -27,9 +29,9 @@ namespace CocoDoogy.Network
             };
             try
             {
-                var result = await Functions.GetHttpsCallable("purchaseWithCashMoney").CallAsync(data);
+                HttpsCallableResult result = await Functions.GetHttpsCallable("purchaseWithCashMoney").CallAsync(data);
                 string json = JsonConvert.SerializeObject(result.Data);
-                var dict = JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
+                IDictionary<string, object> dict = JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
                 return dict;
             }
             catch (Exception e)
@@ -39,28 +41,44 @@ namespace CocoDoogy.Network
             }
         }
 
-        public async Task<IDictionary<string, object>> TakePresentRequestAsync(string functionName, string giftId,
-            string errorMessage)
+        public async Task<IDictionary<string, object>> TakeGiftRequestAsync(string giftId)
         {
             try
             {
-                var data = new Dictionary<string, object> { { "giftId", giftId } };
-                var result = await Functions.GetHttpsCallable(functionName).CallAsync(data);
+                Dictionary<string, object> data = new Dictionary<string, object> { { "giftId", giftId } };
+                HttpsCallableResult result = await Functions.GetHttpsCallable("takePresentRequest").CallAsync(data);
 
                 string json = JsonConvert.SerializeObject(result.Data);
                 return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
             }
             catch (Exception e)
             {
-                Debug.LogError($"{errorMessage}: {e.Message}");
+                Debug.LogError($"선물 받기 실패: {e.Message}");
                 throw;
             }
         }
 
+        public async Task<IDictionary<string, object>> UseItemAsync(string itemId)
+        {
+            try
+            {
+                Dictionary<string, object> data = new Dictionary<string, object> { { "itemId", itemId } };
+                HttpsCallableResult result = await Functions.GetHttpsCallable("useItem").CallAsync(data);
+
+                string json = JsonConvert.SerializeObject(result.Data);
+                return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"아이템 사용 실패: {e.Message}");
+                throw;
+            }
+        }
+        
         public async Task<List<IDictionary<string, object>>> GetGiftListAsync()
         {
-            var userId = Auth.CurrentUser.UserId;
-            var userDoc = await Firestore
+            string userId = Auth.CurrentUser.UserId;
+            DocumentSnapshot userDoc = await Firestore
                 .Collection("users")
                 .Document(userId)
                 .Collection("private")
@@ -88,8 +106,8 @@ namespace CocoDoogy.Network
         /// </summary>
         public async Task<IDictionary<string, object>> GetItemListAsync()
         {
-            var userId = Auth.CurrentUser.UserId;
-            var userDoc = await Firestore
+            string userId = Auth.CurrentUser.UserId;
+            DocumentSnapshot userDoc = await Firestore
                 .Collection("users")
                 .Document(userId)
                 .Collection("private")
@@ -105,7 +123,6 @@ namespace CocoDoogy.Network
                 }
                 return itemDic;
             }
-
             return new Dictionary<string, object>();
         }
     }

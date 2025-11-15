@@ -88,6 +88,7 @@ namespace CocoDoogy.UI.StageSelect
         
         private void OnStartButtonClicked()
         {
+            itemToggleHandler.UseItem();
             Loading.LoadScene($"InGame");
         }
     }

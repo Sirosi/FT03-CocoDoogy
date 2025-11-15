@@ -1,3 +1,4 @@
+using CocoDoogy.Network;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -29,8 +30,9 @@ namespace CocoDoogy.StageSelect.Item
         public string ItemAmountText {
             set => itemAmountText.text = value;
         }
-        public Toggle Item => itemToggle;
 
+        private string ItemId;
+        
         
         
         private void Awake()
@@ -48,6 +50,7 @@ namespace CocoDoogy.StageSelect.Item
         public void Init(IDictionary<string, object> data, string itemId)
         {
             Data = data;
+            ItemId = itemId;
             if (data.TryGetValue(itemId, out object value))
             {
                 CurrentAmount = Convert.ToInt32(value);   
@@ -56,6 +59,23 @@ namespace CocoDoogy.StageSelect.Item
             
             // 아이템 수량이 0이면 토글 비활성화
             itemToggle.interactable = CurrentAmount > 0;
+        }
+
+        public async void Use()
+        {
+            if (!itemToggle.isOn) return;
+
+            IDictionary<string, object> result = await FirebaseManager.Instance.UseItemAsync(ItemId);
+            bool success = (bool)result["success"];
+            if (success)
+            {
+                // TODO : 아이템 사용 시 인게임에서 어떻게 나올지 
+                Debug.Log("아이템 사용 성공");
+            }
+            else
+            {
+                Debug.Log("아이템 사용 실패");
+            }
         }
     }
 }

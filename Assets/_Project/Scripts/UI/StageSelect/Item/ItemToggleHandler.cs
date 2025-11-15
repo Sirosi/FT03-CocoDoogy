@@ -50,5 +50,13 @@ namespace CocoDoogy.StageSelect.Item
         {
             toggle.ItemAmountText = isOn ? $"{toggle.CurrentAmount - 1} 개" : $"{toggle.CurrentAmount} 개";
         }
+
+        public void UseItem()
+        {
+            foreach (var toggle in itemToggles)
+            {
+                toggle.Use();
+            }
+        }
     }
 }
