@@ -5,6 +5,7 @@ using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
 using Firebase.Firestore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -19,7 +20,11 @@ namespace CocoDoogy.Data
         [SerializeField] private ItemData[] stampData;
         
         public UserData UserData { get; private set; }
-        
+        /// <summary>
+        /// itemData에 있는 정보를 다른 클래스에서 사용하기 위한 변수 <br/>
+        /// 지금은 ItemToggleHandler에서 아이템 버튼에 아이템 정보를 찾아넣기 위해 사용 중.
+        /// </summary>
+        public IReadOnlyList<ItemData> ItemData => itemData;
         /// <summary>
         /// Firebase Store의 Document 내부의 필드에 변화가 생기면 발생하는 이벤트. public Doc 하위 필드 변경시 발생
         /// </summary>
@@ -38,6 +43,9 @@ namespace CocoDoogy.Data
         /// </summary>
         private ListenerRegistration privateListener;
         
+        /// <summary>
+        /// Firebase의 변화를 알리는 Listener가 중복으로 생성되는것을 방지하기 위한 변수
+        /// </summary>
         private PrivateUserData lastPrivateData;
 #if UNITY_EDITOR
         void Reset()

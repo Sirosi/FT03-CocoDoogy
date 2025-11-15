@@ -1,5 +1,6 @@
 using CocoDoogy.Data;
 using CocoDoogy.Network;
+using CocoDoogy.StageSelect.Item;
 using CocoDoogy.UI;
 using CocoDoogy.UI.StageSelect;
 using System;
@@ -30,15 +31,9 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private GameObject[] ranks;
         private TextMeshProUGUI[] rankTexts;
         private CommonButton[] replayButtons;
-        
-        [Header("Items")]
-        [SerializeField] private Toggle[] itemToggles;
-        private TextMeshProUGUI[] itemAmounts;
-        
-        [Header("Item Dictionaries")]
-        private IDictionary<string, object> itemDic;
-        private long[] itemCounts;
-        private bool[] isEquipped;
+
+        [Header("Item Toggle Handler")]
+        [SerializeField] private ItemToggleHandler itemToggleHandler;
         
         [Header("Buttons")]
         [SerializeField] private CommonButton pageChangeButton;
@@ -46,20 +41,6 @@ namespace CocoDoogy.UI.StageSelect
 
         private void Awake()
         {
-            itemAmounts = new TextMeshProUGUI[itemToggles.Length];
-            itemCounts = new long[itemToggles.Length];
-            isEquipped = new bool[itemToggles.Length];
-            
-            for (int i = 0; i < itemToggles.Length; ++i)
-            {
-                int index = i;
-                
-                itemAmounts[i] = itemToggles[i].GetComponentInChildren<TextMeshProUGUI>();
-                isEquipped[i] = false;
-
-                itemToggles[i].onValueChanged.AddListener(isOn => OnItemEquipped(index, isOn));
-            }
-            
             pageChangeButton.onClick.AddListener(OnPageChangeButtonClicked);
             startButton.onClick.AddListener(OnStartButtonClicked);
         }
@@ -73,46 +54,9 @@ namespace CocoDoogy.UI.StageSelect
             page1.gameObject.SetActive(true);
             page2.gameObject.SetActive(false);
             
-            
-            itemDic = await FirebaseManager.Instance.GetItemListAsync();
-            for (int i = 0; i < itemToggles.Length; ++i)
-            {
-                string key = $"item00{i + 1}";
-                long count = (long)itemDic[key];
-                
-                itemCounts[i] = count;
-                isEquipped[i] = false;
-
-                itemToggles[i].SetIsOnWithoutNotify(false);
-                itemAmounts[i].text = $"{count}개";
-            }
-
-
             StageInfoHelps();
         }
-
-
-
-        private void OnItemEquipped(int index, bool isOn)
-        {
-            isEquipped[index] = isOn;
-            
-            long count = itemCounts[index];
-            
-            if (isOn)
-            {
-                itemAmounts[index].text = $"{count - 1}개";
-            }
-            else
-            {
-                itemAmounts[index].text = $"{count}개";
-            }
-        }
         
-        
-        
-        
-
         private async void OnPageChangeButtonClicked()
         {
             if (isFirstPage)
@@ -128,9 +72,7 @@ namespace CocoDoogy.UI.StageSelect
                 isFirstPage = true;
             }
         }
-
-
-
+        
         private void StageInfoHelps()
         {
             StageInfo stageInfo = stageInfos[selectedStage - 1];
@@ -143,9 +85,6 @@ namespace CocoDoogy.UI.StageSelect
                 Instantiate(prefab, content);
             }
         }
-        
-        
-        
         
         private void OnStartButtonClicked()
         {

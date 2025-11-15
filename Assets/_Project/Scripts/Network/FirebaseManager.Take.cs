@@ -57,7 +57,7 @@ namespace CocoDoogy.Network
             }
         }
 
-        public async Task<List<Dictionary<string, object>>> GetGiftListAsync()
+        public async Task<List<IDictionary<string, object>>> GetGiftListAsync()
         {
             var userId = Auth.CurrentUser.UserId;
             var userDoc = await Firestore
@@ -67,20 +67,20 @@ namespace CocoDoogy.Network
                 .Document("data")
                 .GetSnapshotAsync();
 
-            if (!userDoc.Exists) return new List<Dictionary<string, object>>();
+            if (!userDoc.Exists) return new List<IDictionary<string, object>>();
 
             if (userDoc.TryGetValue("giftList", out List<object> giftListRaw))
             {
-                var giftList = new List<Dictionary<string, object>>();
+                var giftList = new List<IDictionary<string, object>>();
                 foreach (var item in giftListRaw)
                 {
-                    giftList.Add(item as Dictionary<string, object>);
+                    giftList.Add(item as IDictionary<string, object>);
                 }
 
                 return giftList;
             }
 
-            return new List<Dictionary<string, object>>();
+            return new List<IDictionary<string, object>>();
         }
         
         /// <summary>
