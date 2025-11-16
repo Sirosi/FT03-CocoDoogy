@@ -96,6 +96,7 @@ namespace CocoDoogy.GameFlow.InGame
             new TriggerCheckPhase(),
             new CrateMovePhase(),
             new ActionPointCheckPhase(),
+            new CrateProcessPhase(),
             new LockCheckPhase(),
         };
 
