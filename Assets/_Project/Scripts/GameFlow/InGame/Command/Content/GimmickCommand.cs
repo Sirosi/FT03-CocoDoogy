@@ -1,6 +1,7 @@
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
+using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
@@ -20,7 +21,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public int MainData = 0;
         public int SubData = 0;
         public int PreSubData = 0;
-        public HexDirection LookDirection = 0;
+        public HexDirection Dir = 0;
         
         
         public GimmickCommand(object param) : base(CommandType.Gimmick, param)
@@ -31,7 +32,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             MainData = data.Item3;
             SubData = data.Item4;
             PreSubData = data.Item5;
-            LookDirection = data.Item6;
+            Dir = data.Item6;
         }
 
         
@@ -45,7 +46,10 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
                     tile.Rotate((HexRotate)MainData);
                     break;
                 case GimmickType.PieceChange:
-                    tile.SetPiece((HexDirection)MainData, (PieceType)SubData, LookDirection);
+                    tile.SetPiece((HexDirection)MainData, (PieceType)SubData, Dir);
+                    break;
+                case GimmickType.PieceMove:
+                    tile.GetPiece((HexDirection)MainData).Move(Dir);
                     break;
             }
         }
@@ -60,7 +64,11 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
                     tile.Rotate((HexRotate)(-MainData));
                     break;
                 case GimmickType.PieceChange:
-                    tile.SetPiece((HexDirection)MainData, (PieceType)PreSubData, LookDirection);
+                    tile.SetPiece((HexDirection)MainData, (PieceType)PreSubData, Dir);
+                    break;
+                case GimmickType.PieceMove:
+                    tile = HexTile.GetTile(GridPos.GetDirectionPos(Dir));
+                    tile.GetPiece((HexDirection)MainData).Move(Dir.GetMirror());
                     break;
             }
         }

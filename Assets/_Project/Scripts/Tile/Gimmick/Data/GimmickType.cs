@@ -12,5 +12,9 @@ namespace CocoDoogy.Tile.Gimmick.Data
         /// 기물 교체
         /// </summary>
         PieceChange = 2,
+        /// <summary>
+        /// 기물 이동
+        /// </summary>
+        PieceMove = 3,
     }
 }

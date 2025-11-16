@@ -50,5 +50,9 @@ namespace CocoDoogy.GameFlow.InGame.Command
         {
             ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceChange, (int)direction, (int)newPiece, (int)oldPiece, lookDirection), false);
         }
+        public static void GimmickPieceMove(Vector2Int gridPos, HexDirection pieceDir, HexDirection moveDir)
+        {
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceMove, (int)pieceDir, 0, 0, moveDir), false);
+        }
     }
 }
