@@ -66,12 +66,12 @@ namespace CocoDoogy.UI.IntroAndLogin
         /// <param name="loginUser"></param>
         private void OnUserLoggedIn(FirebaseUser loginUser)
         {
-            SceneManager.LoadScene("UIConnectTest");
+            SceneManager.LoadScene("Lobby");
         }
         
         private void OnLoginError(string errorMessage)
         {
-            
+            // TODO : 로그인에 실패한 경우
         }
     }
 }

@@ -20,18 +20,18 @@ namespace CocoDoogy.UI
 
     public class PageCameraSwiper : MonoBehaviour
     {
-        [Header("Page Settings")]
+        [Header("Page Settings")] 
         [SerializeField] private Transform[] cameraPoints;
+
         [SerializeField] private GameObject[] pages;
 
-        [Header("Settings")]
-        [Tooltip("드래그 감도 (값이 높을수록 민감)")]
+        [Header("Settings")] [Tooltip("드래그 감도 (값이 높을수록 민감)")]
         [SerializeField] private float dragSensitivity = 0.25f;
 
-        [Tooltip("페이지 전환 임계값 (0~1, 화면 폭 대비 비율)")]
+        [Tooltip("페이지 전환 임계값 (0~1, 화면 폭 대비 비율)")] 
         [Range(0f, 1f)] public float snapThreshold = 0.25f;
 
-        [Tooltip("전환 속도 (초 단위)")]
+        [Tooltip("전환 속도 (초 단위)")] 
         [SerializeField] private float snapDuration = 0.5f;
 
         private Camera mainCamera;
@@ -48,6 +48,7 @@ namespace CocoDoogy.UI
         /// 외부 시스템(Lighting, BGM, UI 등)이 구독하여 페이지 변경에 반응
         /// </summary>
         public static event Action<Theme> OnStartPageChanged;
+
         public static event Action<Theme> OnEndPageChanged; // 페이지 전환 완료 시 호출
 
         void Start()
@@ -65,7 +66,11 @@ namespace CocoDoogy.UI
 
         void Update()
         {
-            Swipe();
+#if UNITY_EDITOR
+            HandleEditorSwipe();
+#else
+                Swipe();
+#endif
         }
 
         private Theme GetThemeByIndex(int index)
@@ -111,8 +116,10 @@ namespace CocoDoogy.UI
                 Vector3 blendedPos = Vector3.Lerp(currentPoint.position, targetPoint.position, weight);
                 Quaternion blendedRot = Quaternion.Slerp(currentPoint.rotation, targetPoint.rotation, weight);
 
-                mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, blendedPos, Time.deltaTime * lerpSpeed);
-                mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, blendedRot, Time.deltaTime * lerpSpeed);
+                mainCamera.transform.position =
+                    Vector3.Lerp(mainCamera.transform.position, blendedPos, Time.deltaTime * lerpSpeed);
+                mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, blendedRot,
+                    Time.deltaTime * lerpSpeed);
             }
             else if (isDragging)
             {
@@ -195,5 +202,55 @@ namespace CocoDoogy.UI
             OnStartPageChanged?.Invoke(theme);
             OnEndPageChanged?.Invoke(theme);
         }
+
+#if UNITY_EDITOR
+        private void HandleEditorSwipe()
+        {
+            bool hasInput = Mouse.current.leftButton.isPressed;
+            Vector2 inputPos = Mouse.current.position.ReadValue();
+
+            if (hasInput)
+            {
+                lastPos = inputPos;
+
+                if (!isDragging)
+                {
+                    isDragging = true;
+                    startPos = lastPos;
+                }
+
+                float deltaX = (lastPos.x - startPos.x) / Screen.width;
+                float dragPercent = Mathf.Clamp(deltaX * dragSensitivity, -1f, 1f);
+
+                int targetIndex = currentIndex;
+                if (dragPercent > 0 && currentIndex > 0)
+                    targetIndex = currentIndex - 1;
+                else if (dragPercent < 0 && currentIndex < cameraPoints.Length - 1)
+                    targetIndex = currentIndex + 1;
+
+                float weight = Mathf.Abs(dragPercent);
+
+                Transform currentPoint = cameraPoints[currentIndex];
+                Transform targetPoint = cameraPoints[targetIndex];
+
+                Vector3 blendedPos = Vector3.Lerp(currentPoint.position, targetPoint.position, weight);
+                Quaternion blendedRot = Quaternion.Slerp(currentPoint.rotation, targetPoint.rotation, weight);
+
+                mainCamera.transform.position =
+                    Vector3.Lerp(mainCamera.transform.position, blendedPos, Time.deltaTime * lerpSpeed);
+                mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, blendedRot,
+                    Time.deltaTime * lerpSpeed);
+            }
+            else if (isDragging)
+            {
+                isDragging = false;
+
+                float normalizedDrag = (lastPos.x - startPos.x) / Screen.width;
+                EvaluateSwipe(normalizedDrag);
+
+                startPos = lastPos;
+            }
+        }
+#endif
     }
 }
