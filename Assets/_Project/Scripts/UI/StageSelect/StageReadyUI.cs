@@ -2,9 +2,11 @@ using CocoDoogy.Data;
 using CocoDoogy.Network;
 using CocoDoogy.StageSelect.Item;
 using CocoDoogy.UI;
+using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.StageSelect;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +20,7 @@ namespace CocoDoogy.UI.StageSelect
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI title;
         
-        [Header("Stage Informations")]
+        [Header("Stage Information")]
         [SerializeField] private RectTransform page1;
         [SerializeField] private RectTransform page2;
         private bool isFirstPage;
@@ -45,7 +47,7 @@ namespace CocoDoogy.UI.StageSelect
             startButton.onClick.AddListener(OnStartButtonClicked);
         }
 
-        private async void OnEnable()
+        private void OnEnable()
         {
             selectedStage = StageSelectManager.SelectedStage;
             title.text = $"Stage{selectedStage}";
@@ -86,10 +88,28 @@ namespace CocoDoogy.UI.StageSelect
             }
         }
         
-        private void OnStartButtonClicked()
+        private async void OnStartButtonClicked()
         {
-            itemToggleHandler.UseItem();
-            Loading.LoadScene($"InGame");
+            bool isReady = await OnConsumeTicketAsync();
+            if (isReady)
+            {
+                itemToggleHandler.UseItem();
+                Loading.LoadScene($"InGame");
+            }
+            else
+            {
+                // TODO : 티켓이 부족하면 메세지를 띄우게만 해뒀는데 여기에서 상점으로 연결까지 할 수도?
+                MessageDialog.ShowMessage(
+                    "티켓 부족", 
+                    "티켓이 부족하여 게임을 진행할 수 없습니다.",
+                    DialogMode.Confirm,
+                    null);
+            }
+        }
+        
+        private async Task<bool> OnConsumeTicketAsync()
+        {
+            return await FirebaseManager.Instance.UseTicketAsync();
         }
     }
 }

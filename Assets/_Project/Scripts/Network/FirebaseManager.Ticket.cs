@@ -42,11 +42,10 @@ namespace CocoDoogy.Network
             if (response.ServerTime is not null)
             { // 서버와 클라이언트 간의 시간차이 계산
                 serverTimeOffset = Convert.ToInt64(response.ServerTime) - DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                Debug.Log($"serverTimeOffset: {serverTimeOffset}");
             }
             LastTicketTimestamp = response.LastTicketTime != null ? Convert.ToInt64(response.LastTicketTime) : null;
             
-            // TODO : 나중에 삭제
+            // TODO : 로그 확인용이므로 나중에 삭제
             Debug.Log(response.Added > 0
                 ? $"티켓 {response.Added}개 충전됨. 총 {TotalTicket}개 ({CurrentTicket} + {BonusTicket})"
                 : $"티켓 상태 갱신됨.총 {TotalTicket}개 ({CurrentTicket} + {BonusTicket})");
@@ -98,7 +97,7 @@ namespace CocoDoogy.Network
         }
 
         /// <summary>
-        /// 게임이 실행되고 무한 반복되는 코루틴 메서드 <\br>
+        /// 게임이 실행되고 무한 반복되는 코루틴 메서드 <br/>
         /// 일정 주기마다 RechargeTicketAsync를 실행시킴
         /// </summary>
         /// <returns></returns>
