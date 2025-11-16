@@ -50,7 +50,6 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
                 new TMP_Dropdown.OptionData(GimmickType.None.ToString()),
                 new TMP_Dropdown.OptionData(GimmickType.TileRotate.ToString()),
                 new TMP_Dropdown.OptionData(GimmickType.PieceChange.ToString()),
-                new TMP_Dropdown.OptionData(GimmickType.PieceDestroy.ToString()),
             });
 
             gimmickTypeDropdown.onValueChanged.AddListener(OnGimmickTypeChanged);
@@ -111,6 +110,11 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
 
             try
             {
+                if (type == GimmickType.None)
+                {
+                    // 적절한 삭제 아이콘을 줘야할 것 같음
+                    return;
+                }
                 effectPages[(int)type - 1].Show();
             }
             catch (IndexOutOfRangeException e)

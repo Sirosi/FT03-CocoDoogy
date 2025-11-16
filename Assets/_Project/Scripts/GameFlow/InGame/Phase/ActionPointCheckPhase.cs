@@ -16,7 +16,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             HexTile nextTile = HexTile.GetTile(PlayerHandler.GridPos);
             if (InGameManager.ActionPoint < nextTile.CurrentData.moveCost)
             {
-                if (InGameManager.RefillCount >= HexTileMap.RefillCount)
+                if (InGameManager.RefillPoint <= 1)
                 {
                     // TODO: 상징적인 패배를 넣어야 함.
                     MessageDialog.ShowMessage("미아", "집을 영구적으로 잃었습니다.", DialogMode.Confirm, null);

@@ -30,7 +30,7 @@ namespace CocoDoogy.Utility
             // Map 정보 저장
             Map mapData = new()
             {
-                RefillCount = HexTileMap.RefillCount,
+                RefillCount = HexTileMap.RefillPoint,
                 ActionPoint = HexTileMap.ActionPoint,
                 DefaultWeather = HexTileMap.DefaultWeather,
                 StartPos = HexTileMap.StartPos,
@@ -99,7 +99,7 @@ namespace CocoDoogy.Utility
             Map mapData = JsonUtility.FromJson<Map>(json);
 
             // Map 정보 적용
-            HexTileMap.RefillCount = mapData.RefillCount;
+            HexTileMap.RefillPoint = mapData.RefillCount;
             HexTileMap.ActionPoint = mapData.ActionPoint;
             HexTileMap.DefaultWeather = mapData.DefaultWeather;
             HexTileMap.StartPos = mapData.StartPos;
@@ -138,6 +138,13 @@ namespace CocoDoogy.Utility
             foreach (GimmickData data in mapData.Gimmicks)
             {
                 HexTileMap.Gimmicks.Add(data.Target.GridPos, data);
+                
+                // 기존 타일 연결
+                if (data.Type == GimmickType.PieceChange)
+                {
+                    Piece nowPiece = HexTile.GetTile(data.Target.GridPos)?.GetPiece(data.Effect.Direction) ?? null;
+                    data.Effect.PrePiece = nowPiece ? nowPiece.BaseData.type : PieceType.None;
+                }
             }
             
             // 날씨 추가

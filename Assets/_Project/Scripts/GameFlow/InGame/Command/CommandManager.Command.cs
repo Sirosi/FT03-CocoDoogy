@@ -1,5 +1,7 @@
 using CocoDoogy.Tile;
 using CocoDoogy.GameFlow.InGame.Weather;
+using CocoDoogy.Tile.Gimmick.Data;
+using CocoDoogy.Tile.Piece;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command
@@ -12,7 +14,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         }
         public static void Trigger(Vector2Int gridPos)
         {
-            ExecuteCommand(CommandType.Trigger, gridPos);
+            ExecuteCommand(CommandType.Trigger, gridPos, false);
         }
         
         
@@ -39,6 +41,14 @@ namespace CocoDoogy.GameFlow.InGame.Command
         public static void Weather(WeatherType weather)
         {
             ExecuteCommand(CommandType.Weather, (WeatherManager.NowWeather, weather));
+        }
+        public static void GimmickTileRotate(Vector2Int gridPos, HexRotate rotate)
+        {
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.TileRotate, (int)rotate, 0, 0, HexDirection.East), false);
+        }
+        public static void GimmickPieceChange(Vector2Int gridPos, HexDirection direction, PieceType newPiece, PieceType oldPiece, HexDirection lookDirection)
+        {
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceChange, (int)direction, (int)newPiece, (int)oldPiece, lookDirection), false);
         }
     }
 }

@@ -1,5 +1,6 @@
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
+using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
 using CocoDoogy.Tile.Piece.Trigger;
@@ -38,6 +39,10 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             Piece centerPiece = tile.GetPiece(HexDirection.Center);
             if (!centerPiece) return true;
             if (centerPiece.BaseData.type is not (PieceType.Switch or PieceType.Button)) return true;
+            
+            // 이미 눌린 버튼은 다시 누를 수 없음
+            TriggerPieceBase triggerPiece = centerPiece.GetComponent<TriggerPieceBase>();
+            if (centerPiece.BaseData.type is PieceType.Button && triggerPiece.IsOn) return true;
 
             // TODO: Trigger 동작가능 버튼에 Event를 연결하는 식으로 해야 할 것 같음.
             gridPos = PlayerHandler.GridPos;
@@ -51,6 +56,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (type != CallbackType.Yes) return;
             
             CommandManager.Trigger(gridPos);
+            GimmickExecutor.ExecuteFromTrigger(gridPos);
         }
     }
 }

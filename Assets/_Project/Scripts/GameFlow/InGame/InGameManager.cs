@@ -37,15 +37,15 @@ namespace CocoDoogy.GameFlow.InGame
             private set;
         }
 
-        public static int RefillCount
+        public static int RefillPoint
         {
-            get => Instance?.refillCount ?? 0;
+            get => Instance?.refillPoint ?? 0;
             private set
             {
                 if (!IsValid) return;
 
-                Instance.refillCount = value;
-                OnRefillCountChanged?.Invoke(Instance.refillCount);
+                Instance.refillPoint = value;
+                OnRefillCountChanged?.Invoke(Instance.refillPoint);
             }
         }
         public static int ActionPoint
@@ -68,7 +68,7 @@ namespace CocoDoogy.GameFlow.InGame
         private Camera mainCamera = null;
         private bool touched = false;
 
-        private int refillCount = 0;
+        private int refillPoint = 0;
         private int actionPoint = 0;
 
         private readonly IPhase[] turnPhases =
@@ -117,6 +117,9 @@ namespace CocoDoogy.GameFlow.InGame
                             {
                                 CommandManager.Move(direction);
                                 
+                                // TODO:
+                                //  1. 날씨 판정을 여기서 하는데, 옮겨야 함
+                                //  2. Weather가 변경하자마자 CommandManager에서 ProcessPhase를 하면서 무한 Weather에 걸림
                                 int min = InGameManager.ConsumedActionPoints - InGameManager.LastConsumeActionPoint + 1;
                                 int max = InGameManager.ConsumedActionPoints;
             
@@ -157,6 +160,8 @@ namespace CocoDoogy.GameFlow.InGame
             }
             MapSaveLoader.Apply(mapJson);
 
+            RefillPoint = HexTileMap.RefillPoint;
+            ActionPoint = HexTileMap.ActionPoint;
             CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
             CommandManager.Weather(HexTileMap.DefaultWeather);
             ProcessPhase();
@@ -165,7 +170,7 @@ namespace CocoDoogy.GameFlow.InGame
         private void Clear()
         {
             LastConsumeActionPoint = 0;
-            RefillCount = 0;
+            RefillPoint = 0;
             ActionPoint = 0;
         }
 
@@ -174,7 +179,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static void RefillActionPoint()
         {
-            RefillCount++;
+            RefillPoint--;
             ActionPoint = HexTileMap.ActionPoint;
         }
         /// <summary>
@@ -182,7 +187,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static void ClearActionPoint()
         {
-            RefillCount--;
+            RefillPoint++;
             ActionPoint = 0;
         }
 

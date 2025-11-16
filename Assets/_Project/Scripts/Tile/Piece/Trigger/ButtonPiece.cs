@@ -6,9 +6,12 @@ namespace CocoDoogy.Tile.Piece.Trigger
     /// Button용 트리거<br/>
     /// 동작 이후 몇 행동력 뒤에 장비를 정지함
     /// </summary>
-    public class ButtonPiece : TriggerPieceBase
+    public class ButtonPiece : TriggerPieceBase, ISpecialPiece
     {
         [SerializeField] private Transform buttonObject;
+
+
+        private int actionPoint = 0;
 
 
         public override void OnRelease(Piece data)
@@ -28,6 +31,15 @@ namespace CocoDoogy.Tile.Piece.Trigger
         {
             buttonObject.localPosition = Vector3.zero;
             IsOn = false;
+        }
+
+        public void OnDataInsert(string data)
+        {
+            
+        }
+
+        public void OnExecute()
+        {
         }
     }
 }
