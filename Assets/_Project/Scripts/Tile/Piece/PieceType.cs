@@ -30,6 +30,10 @@ namespace CocoDoogy.Tile.Piece
         /// 물 위에 뜬 상자
         /// </summary>
         FloatedCrate = 006,
+        /// <summary>
+        /// 발판형 버튼 위에 상자
+        /// </summary>
+        GravityCrate = 007,
 
         // 오브젝트
         /// <summary>

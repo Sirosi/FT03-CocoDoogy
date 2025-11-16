@@ -394,13 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6dae0b8edcabd4690eb408b686fb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainBgmEvent:
-    Guid:
-      Data1: 1056652163
-      Data2: 1260339331
-      Data3: 1274943367
-      Data4: -1011817880
-    Path: event:/MainBgm
+  bgmList: []
 --- !u!114 &2645735018059196249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +419,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece1467b44167c343bbb4ade6e31d7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemData: []
+  cashData: []
+  stampData: []
   tileData:
   - {fileID: 11400000, guid: 10a355761618d1c41af1aa2601864c67, type: 2}
   - {fileID: 11400000, guid: e444c73224af05f4d829c97839537cf9, type: 2}
@@ -443,6 +440,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 05d59deeb453744448f0a57d984ebde3, type: 2}
   - {fileID: 11400000, guid: 97ccd3564b4a66041ba33081f5174404, type: 2}
   - {fileID: 11400000, guid: d11a8d5cea36cbf478994f2c3440347c, type: 2}
+  - {fileID: 11400000, guid: d879caee80e1e7d488be9f5b8efa0f4a, type: 2}
   - {fileID: 11400000, guid: 486b79623ccc34a46b7ce3a27291aa0b, type: 2}
   - {fileID: 11400000, guid: 8d06a0c867fe8e44ab57d7b2b9d67bab, type: 2}
   - {fileID: 11400000, guid: b126a1f9f496fdf4394d4948a1ffda96, type: 2}
