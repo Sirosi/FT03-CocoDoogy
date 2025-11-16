@@ -1,3 +1,5 @@
+using CocoDoogy.GameFlow.InGame;
+using CocoDoogy.GameFlow.InGame.Phase.Passage;
 using UnityEngine;
 
 namespace CocoDoogy.Tile.Piece.Trigger
@@ -24,18 +26,33 @@ namespace CocoDoogy.Tile.Piece.Trigger
         {
             buttonObject.localPosition = Vector3.down * 0.1f;
             IsOn = true;
+
             // TODO: 버튼 누르는 소리가 들려야 함
-            // TODO: 타이머 돌려야 함
+            int actionPoints = InGameManager.ConsumedActionPoints + actionPoint;
+            InGameManager.Passages.Add(new ButtonPassage(actionPoints, Parent.GridPos));
         }
         public override void UnInteract()
         {
             buttonObject.localPosition = Vector3.zero;
             IsOn = false;
+
+            bool isDelete = false;
+            for (int i = 0;i < InGameManager.Passages.Count;i++)
+            {
+                PassageBase passage = InGameManager.Passages[i];
+                
+                if (passage is not ButtonPassage buttonPassage) continue;
+                if(buttonPassage.GridPos != Parent.GridPos) continue;
+                InGameManager.Passages.RemoveAt(i);
+                break;
+            }
         }
 
         public void OnDataInsert(string data)
         {
+            if (!int.TryParse(data, out int num)) return;
             
+            actionPoint = num;
         }
 
         public void OnExecute()

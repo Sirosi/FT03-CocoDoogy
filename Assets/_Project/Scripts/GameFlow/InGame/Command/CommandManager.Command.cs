@@ -12,9 +12,9 @@ namespace CocoDoogy.GameFlow.InGame.Command
         {
             ExecuteCommand(CommandType.Move, direction);
         }
-        public static void Trigger(Vector2Int gridPos)
+        public static void Trigger(Vector2Int gridPos, bool isUnInteract = false)
         {
-            ExecuteCommand(CommandType.Trigger, gridPos, false);
+            ExecuteCommand(CommandType.Trigger, (gridPos, isUnInteract), false);
         }
         
         
@@ -35,7 +35,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         }
         public static void Refill()
         {
-            ExecuteCommand(CommandType.Refill, (InGameManager.ActionPoint, PlayerHandler.GridPos));
+            ExecuteCommand(CommandType.Refill, (InGameManager.ActionPoints, PlayerHandler.GridPos));
         }
         
         public static void Weather(WeatherType weather)
