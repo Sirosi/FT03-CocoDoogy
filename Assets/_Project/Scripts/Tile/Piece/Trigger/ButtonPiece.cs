@@ -24,7 +24,7 @@ namespace CocoDoogy.Tile.Piece.Trigger
 
         public override void Interact()
         {
-            buttonObject.localPosition = Vector3.down * 0.1f;
+            buttonObject.localPosition = Vector3.down * 0.2f;
             IsOn = true;
 
             // TODO: 버튼 누르는 소리가 들려야 함
