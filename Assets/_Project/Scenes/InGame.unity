@@ -674,6 +674,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 870969360977218163, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+      propertyPath: resetButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 870969360977218163, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+      propertyPath: resetWindow
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 870969360977218163, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+      propertyPath: closeResetButton
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1346892744997241279, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -967,7 +979,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 20611414447078417, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
