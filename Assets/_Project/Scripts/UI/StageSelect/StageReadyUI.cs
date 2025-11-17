@@ -1,9 +1,12 @@
 using CocoDoogy.Data;
 using CocoDoogy.Network;
+using CocoDoogy.StageSelect.Item;
 using CocoDoogy.UI;
+using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.StageSelect;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +20,7 @@ namespace CocoDoogy.UI.StageSelect
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI title;
         
-        [Header("Stage Informations")]
+        [Header("Stage Information")]
         [SerializeField] private RectTransform page1;
         [SerializeField] private RectTransform page2;
         private bool isFirstPage;
@@ -30,15 +33,9 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private GameObject[] ranks;
         private TextMeshProUGUI[] rankTexts;
         private CommonButton[] replayButtons;
-        
-        [Header("Items")]
-        [SerializeField] private Toggle[] itemToggles;
-        private TextMeshProUGUI[] itemAmounts;
-        
-        [Header("Item Dictionaries")]
-        private IDictionary<string, object> itemDic;
-        private long[] itemCounts;
-        private bool[] isEquipped;
+
+        [Header("Item Toggle Handler")]
+        [SerializeField] private ItemToggleHandler itemToggleHandler;
         
         [Header("Buttons")]
         [SerializeField] private CommonButton pageChangeButton;
@@ -46,25 +43,11 @@ namespace CocoDoogy.UI.StageSelect
 
         private void Awake()
         {
-            itemAmounts = new TextMeshProUGUI[itemToggles.Length];
-            itemCounts = new long[itemToggles.Length];
-            isEquipped = new bool[itemToggles.Length];
-            
-            for (int i = 0; i < itemToggles.Length; ++i)
-            {
-                int index = i;
-                
-                itemAmounts[i] = itemToggles[i].GetComponentInChildren<TextMeshProUGUI>();
-                isEquipped[i] = false;
-
-                itemToggles[i].onValueChanged.AddListener(isOn => OnItemEquipped(index, isOn));
-            }
-            
             pageChangeButton.onClick.AddListener(OnPageChangeButtonClicked);
             startButton.onClick.AddListener(OnStartButtonClicked);
         }
 
-        private async void OnEnable()
+        private void OnEnable()
         {
             selectedStage = StageSelectManager.SelectedStage;
             title.text = $"Stage{selectedStage}";
@@ -73,46 +56,9 @@ namespace CocoDoogy.UI.StageSelect
             page1.gameObject.SetActive(true);
             page2.gameObject.SetActive(false);
             
-            
-            itemDic = await FirebaseManager.Instance.GetItemListAsync();
-            for (int i = 0; i < itemToggles.Length; ++i)
-            {
-                string key = $"item00{i + 1}";
-                long count = (long)itemDic[key];
-                
-                itemCounts[i] = count;
-                isEquipped[i] = false;
-
-                itemToggles[i].SetIsOnWithoutNotify(false);
-                itemAmounts[i].text = $"{count}개";
-            }
-
-
             StageInfoHelps();
         }
-
-
-
-        private void OnItemEquipped(int index, bool isOn)
-        {
-            isEquipped[index] = isOn;
-            
-            long count = itemCounts[index];
-            
-            if (isOn)
-            {
-                itemAmounts[index].text = $"{count - 1}개";
-            }
-            else
-            {
-                itemAmounts[index].text = $"{count}개";
-            }
-        }
         
-        
-        
-        
-
         private async void OnPageChangeButtonClicked()
         {
             if (isFirstPage)
@@ -128,9 +74,7 @@ namespace CocoDoogy.UI.StageSelect
                 isFirstPage = true;
             }
         }
-
-
-
+        
         private void StageInfoHelps()
         {
             StageInfo stageInfo = stageInfos[selectedStage - 1];
@@ -144,12 +88,28 @@ namespace CocoDoogy.UI.StageSelect
             }
         }
         
-        
-        
-        
-        private void OnStartButtonClicked()
+        private async void OnStartButtonClicked()
         {
-            Loading.LoadScene($"InGame");
+            bool isReady = await OnConsumeTicketAsync();
+            if (isReady)
+            {
+                itemToggleHandler.UseItem();
+                Loading.LoadScene($"InGame");
+            }
+            else
+            {
+                // TODO : 티켓이 부족하면 메세지를 띄우게만 해뒀는데 여기에서 상점으로 연결까지 할 수도?
+                MessageDialog.ShowMessage(
+                    "티켓 부족", 
+                    "티켓이 부족하여 게임을 진행할 수 없습니다.",
+                    DialogMode.Confirm,
+                    null);
+            }
+        }
+        
+        private async Task<bool> OnConsumeTicketAsync()
+        {
+            return await FirebaseManager.Instance.UseTicketAsync();
         }
     }
 }

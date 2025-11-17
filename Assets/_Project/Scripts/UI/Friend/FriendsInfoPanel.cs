@@ -1,4 +1,5 @@
 using CocoDoogy.UI.Popup;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace CocoDoogy.UI.Friend
     {
         private async void OnDeleteRequestAsync(string uid)
         {
-            var result = await Firebase.CallFriendFunctionAsync("deleteFriendsRequest", uid, "친구 삭제 실패");
+            IDictionary<string, object> result = await Firebase.CallFriendFunctionAsync("deleteFriendsRequest", uid, "친구 삭제 실패");
             bool success = (bool)result["success"];
 
             if (success)
@@ -17,14 +18,14 @@ namespace CocoDoogy.UI.Friend
             }
             else
             {
-                string reason = result.ContainsKey("reason") ? result["reason"].ToString() : "알 수 없는 이유";
+                string reason = result.TryGetValue("reason", out object value) ? value.ToString() : "알 수 없는 이유";
                 MessageDialog.ShowMessage("친구 삭제 실패", reason, DialogMode.Confirm, null);
             }
         }
         
-        private async void OnPresentRequestAsync(string uid)
+        private async void OnGiftRequestAsync(string uid)
         {
-            var result = await Firebase.CallFriendFunctionAsync("presentFriendsRequest", uid, "선물 보내기 실패");
+            IDictionary<string, object> result = await Firebase.CallFriendFunctionAsync("giftFriendsRequest", uid, "선물 보내기 실패");
             bool success = (bool)result["success"];
 
             if (success)
@@ -33,7 +34,7 @@ namespace CocoDoogy.UI.Friend
             }
             else
             {
-                string reason = result.ContainsKey("reason") ? result["reason"].ToString() : "알 수 없는 이유";
+                string reason = result.TryGetValue("reason", out object value) ? value.ToString() : "알 수 없는 이유";
                 MessageDialog.ShowMessage("선물 보내기 실패", reason, DialogMode.Confirm, null);
             }
         }
@@ -46,12 +47,10 @@ namespace CocoDoogy.UI.Friend
             }
 
             var requestDict = await Firebase.GetFriendRequestsAsync("friendsList");
-            foreach (var kvp in requestDict)
+            foreach ((string uid, string nickname) in requestDict)
             {
-                string uid = kvp.Key;
-                string nickname = kvp.Value;
-                var item = Instantiate(prefabItem, container);
-                item.GetComponent<FriendRequestItem>().FriendInit(nickname, uid, OnPresentRequestAsync,OnDeleteRequestAsync);
+                FriendRequestItem item = Instantiate(prefabItem, container);
+                item.GetComponent<FriendRequestItem>().FriendInit(nickname, uid, OnGiftRequestAsync,OnDeleteRequestAsync);
             }
         }
     }

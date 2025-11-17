@@ -111,7 +111,7 @@ namespace CocoDoogy.UI.UIManager
         }
         void OnQuitButtonClicked()
         {
-            Loading.LoadScene("StageSelectUITest");
+            Loading.LoadScene("UIConnectTest");
         }
     }
 }

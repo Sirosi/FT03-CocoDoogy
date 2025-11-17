@@ -3,7 +3,7 @@ const {fnConfig} = require("../../config");
 const admin = require("../../admin");
 const Request = require("../request/Request");
 
-class PresentFriendsRequest extends Request {
+class GiftFriendsRequest extends Request {
     async Operation(request) {
         const uid = request.auth.uid;
         const fuid = request.data.friendsUid;
@@ -48,8 +48,8 @@ class PresentFriendsRequest extends Request {
     }
 }
 
-exports.presentFriendsRequest = onCall(fnConfig, async (request) => {
-    const presenter = new PresentFriendsRequest();
+exports.giftFriendsRequest = onCall(fnConfig, async (request) => {
+    const presenter = new GiftFriendsRequest();
     return presenter.Operation(request);
 });
 

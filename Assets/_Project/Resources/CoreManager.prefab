@@ -419,9 +419,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece1467b44167c343bbb4ade6e31d7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: []
-  cashData: []
-  stampData: []
+  itemData:
+  - {fileID: 11400000, guid: cf2cdcc61f7af3c40ae74f249641df7e, type: 2}
+  - {fileID: 11400000, guid: 9977c4643fa872545aa7e2cfd4502856, type: 2}
+  - {fileID: 11400000, guid: 71e1d0dc13ee3b743adecc2ff15e3b88, type: 2}
+  cashData:
+  - {fileID: 11400000, guid: ac9ba659b74bb8b41a2e33d128542dd0, type: 2}
+  - {fileID: 11400000, guid: 36f2d91d6ab46f64c9e3c9728b58dc41, type: 2}
+  stampData:
+  - {fileID: 11400000, guid: 4fdf4c9e272c84345bc036b105bb3762, type: 2}
+  - {fileID: 11400000, guid: 62f5979cfb3beff4da1f1876fccc7888, type: 2}
+  - {fileID: 11400000, guid: 6386e37ee52e414478055e6106f44230, type: 2}
   tileData:
   - {fileID: 11400000, guid: 10a355761618d1c41af1aa2601864c67, type: 2}
   - {fileID: 11400000, guid: e444c73224af05f4d829c97839537cf9, type: 2}

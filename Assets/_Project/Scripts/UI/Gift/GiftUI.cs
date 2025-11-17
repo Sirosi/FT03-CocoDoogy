@@ -53,7 +53,7 @@ namespace CocoDoogy.UI.Gift
 
         private async void OnTakePresentAsync(string itemType)
         {
-            var result = await Firebase.TakePresentRequestAsync("takePresentRequest", itemType, "선물 받기 실패");
+            var result = await Firebase.TakeGiftRequestAsync(itemType);
             bool success = (bool)result["success"];
 
             if (success)
