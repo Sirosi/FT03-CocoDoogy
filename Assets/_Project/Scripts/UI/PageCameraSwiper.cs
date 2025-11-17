@@ -35,7 +35,7 @@ namespace CocoDoogy.UI
         [SerializeField] private float snapDuration = 0.5f;
 
         private Camera mainCamera;
-        private int currentIndex = 0;
+        private int currentIndex = 0; // 숲 = 0 , 물 , 눈 , 사막 = 4 (테마)
 
         private Vector2 startPos;
         private Vector2 lastPos;

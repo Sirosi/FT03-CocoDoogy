@@ -12,10 +12,6 @@ namespace CocoDoogy.Editor
         {
             BuildPlayerOptions buildPlayerOptions = new()
             {
-                scenes = new[]
-                {
-                    "Assets/_Project/Scenes/SampleScene.unity",
-                },
                 locationPathName = "./Builds/CocoDoogy.exe",
                 target = BuildTarget.StandaloneWindows64,
                 options = BuildOptions.Development,
@@ -23,21 +19,17 @@ namespace CocoDoogy.Editor
 
             BuildPipeline.BuildPlayer(buildPlayerOptions);
         }
-        
+
         [MenuItem("Build/Android")]
         public static void BuildForAndroid()
         {
             BuildPlayerOptions buildPlayerOptions = new()
             {
-                scenes = new[]
-                {
-                    "Assets/_Project/Scenes/SampleScene.unity",
-                },
                 locationPathName = "./Builds/CocoDoogy.apk",
                 target = BuildTarget.Android,
                 options = BuildOptions.Development,
             };
-            
+
             BuildPipeline.BuildPlayer(buildPlayerOptions);
         }
     }
