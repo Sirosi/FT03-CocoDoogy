@@ -19,7 +19,7 @@ namespace CocoDoogy.Tile.Piece
         
         public void OnDataInsert(string data)
         {
-            if (!bool.TryParse(data, out bool docked)) return;
+            if (!bool.TryParse(data, out bool docked)) docked = false;
             boatObject.SetActive(IsDocked = docked);
         }
 

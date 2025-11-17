@@ -229,19 +229,21 @@ namespace CocoDoogy.MapEditor.Controller
             HexTile selectedTile = HexTile.GetTile(gridPos);
             if (!selectedTile) return;
 
-            Piece centerPiece = PieceDeployPanel.SelectedTile.GetPiece(HexDirection.Center);
-            if (!centerPiece || !centerPiece.BaseData.hasTarget) return;
-
-            if (centerPiece.Target != null)
+            foreach (Piece piece in selectedTile.Pieces)
             {
-                HexTile preTile = HexTile.GetTile((Vector2Int)centerPiece.Target);
-                if (preTile)
+                if (!piece || !piece.BaseData.hasTarget) continue;
+                
+                if (piece.Target != null)
                 {
-                    preTile.OffOutline();
+                    HexTile preTile = HexTile.GetTile((Vector2Int)piece.Target);
+                    if (preTile)
+                    {
+                        preTile.OffOutline();
+                    }
                 }
+                piece.Target = gridPos;
             }
             
-            centerPiece.Target = gridPos;
             ClearOutlines();
             selectedTile.DrawOutline(Color.black);
         }
@@ -365,14 +367,16 @@ namespace CocoDoogy.MapEditor.Controller
 
             foreach(var tile in HexTile.Tiles.Values)
             {
-                Piece centerPiece = tile.GetPiece(HexDirection.Center);
-                if (!centerPiece || !centerPiece.BaseData.hasTarget) continue;
-                if (centerPiece.Target == null) continue;
-
-                HexTile targetTile = HexTile.GetTile((Vector2Int)centerPiece.Target);
-                if (!targetTile) continue;
-
-                targetTile.DrawOutline(Color.black);
+                foreach (Piece piece in tile.Pieces)
+                {
+                    if (!piece || !piece.BaseData.hasTarget) continue;
+                    if (piece.Target == null) continue;
+                    
+                    HexTile targetTile = HexTile.GetTile(piece.Target.Value);
+                    if (!targetTile) continue;
+                    targetTile.DrawOutline(Color.black);
+                    break;
+                }
             }
         }
     }

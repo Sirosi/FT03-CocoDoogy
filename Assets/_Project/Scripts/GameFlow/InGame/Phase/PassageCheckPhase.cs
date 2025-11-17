@@ -17,7 +17,6 @@ namespace CocoDoogy.GameFlow.InGame.Phase
         {
             if (!InGameManager.IsValid) return false;
 
-            Debug.Log(InGameManager.ConsumedActionPoints);
             // 바로 전에 동작했었다면, 무시
             if (lastWorkActionPoints == InGameManager.ConsumedActionPoints) return true;
             lastWorkActionPoints = InGameManager.ConsumedActionPoints;

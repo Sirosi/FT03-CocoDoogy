@@ -26,6 +26,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
         {
             ExecuteCommand(CommandType.Teleport, (PlayerHandler.GridPos, gridPos));
         }
+        public static void Sail(Vector2Int gridPos)
+        {
+            ExecuteCommand(CommandType.Sail, (PlayerHandler.GridPos, gridPos));
+        }
 
         
         

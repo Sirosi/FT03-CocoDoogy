@@ -244,12 +244,14 @@ namespace CocoDoogy.Tile
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public bool HasPiece(PieceType type)
+        public bool HasPiece(PieceType type, out Piece.Piece findedPiece)
         {
+            findedPiece = null;
             foreach (var piece in Pieces)
             {
                 if (piece && piece.BaseData.type == type)
                 {
+                    findedPiece = piece;
                     return true;
                 }
             }

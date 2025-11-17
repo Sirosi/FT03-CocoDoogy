@@ -8,7 +8,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
     /// <summary>
     /// 기믹과 관련된 처리를 하는 Command<br/>
-    /// GridPos(Vector2Int), Gimmick(GimmickType), MainData(int), SubData(int), PreSubData(int), LookDirection(HexDirection)<br/>
+    /// GridPos(Vector2Int), Gimmick(GimmickType), MainData(int), SubData(int), PreSubData(int), Dir(HexDirection), PreDIr(HexDirection), DidGimmick(bool)<br/>
     /// 
     /// </summary>
     public class GimmickCommand: CommandBase
@@ -23,7 +23,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public int PreSubData = 0;
         public HexDirection Dir = 0;
         public HexDirection PreDir = 0;
-        public bool DidGimmicked = false;
+        public bool DidGimmick = false;
         
         
         public GimmickCommand(object param) : base(CommandType.Gimmick, param)
@@ -36,7 +36,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             PreSubData = data.Item5;
             Dir = data.Item6;
             PreDir = data.Item7;
-            DidGimmicked = data.Item8;
+            DidGimmick = data.Item8;
         }
 
         
@@ -44,7 +44,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             HexTile tile = HexTile.GetTile(GridPos);
             GimmickData gimmick = HexTileMap.GetGimmick(GridPos);
-            if (DidGimmicked && gimmick != null)
+            if (DidGimmick && gimmick != null)
             {
                 gimmick.IsOn = !gimmick.IsOn;
             }
@@ -67,7 +67,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             HexTile tile = HexTile.GetTile(GridPos);
             GimmickData gimmick = HexTileMap.GetGimmick(GridPos);
-            if (DidGimmicked && gimmick != null)
+            if (DidGimmick && gimmick != null)
             {
                 gimmick.IsOn = !gimmick.IsOn;
             }

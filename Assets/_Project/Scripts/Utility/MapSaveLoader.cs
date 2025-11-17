@@ -54,11 +54,11 @@ namespace CocoDoogy.Utility
                     tileData.Pieces[i].Type = tile.Pieces[i].BaseData.type;
                     tileData.Pieces[i].Data = tile.Pieces[i].SpecialData;
                     
-                    if (tile.Pieces[i].Target == null) continue;
+                    if (!tile.Pieces[i].Target.HasValue) continue;
                     mapData.PieceToTargets.Add(new()
                     {
                         PiecePos = tile.GridPos,
-                        TargetPos = (Vector2Int)tile.Pieces[i].Target
+                        TargetPos = tile.Pieces[i].Target.Value
                     });
                 }
 
@@ -131,7 +131,12 @@ namespace CocoDoogy.Utility
             // 기물 목표 위치 연결
             foreach (var grids in mapData.PieceToTargets)
             {
-                HexTile.GetTile(grids.PiecePos).GetPiece(HexDirection.Center).Target = grids.TargetPos;
+                HexTile tile = HexTile.GetTile(grids.PiecePos);
+                foreach (Piece piece in tile.Pieces)
+                {
+                    if (!piece || !piece.BaseData.hasTarget) continue;
+                    piece.Target = grids.TargetPos;
+                }
             }
 
             // 기믹 연결

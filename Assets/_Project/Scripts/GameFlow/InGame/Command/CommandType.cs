@@ -27,6 +27,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// 순간이동처리
         /// </summary>
         Teleport = 22,
+        /// <summary>
+        /// 부두술을 이용한 항해
+        /// </summary>
+        Sail = 23,
         #endregion
         
         #region ◇ 시스템 조작 ◇
