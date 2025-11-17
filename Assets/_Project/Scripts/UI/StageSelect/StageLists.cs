@@ -1,6 +1,7 @@
 using CocoDoogy.UI;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CocoDoogy.UI.StageSelect
 {
@@ -28,6 +29,11 @@ namespace CocoDoogy.UI.StageSelect
             currentPage = 1;
             targetPos = viewPort.localPosition;
         }
+
+        private void OnEnable()
+        {
+            MovePage();
+        }
         
         private void PrevPage()
         {
@@ -52,6 +58,24 @@ namespace CocoDoogy.UI.StageSelect
         private void MovePage()
         {
             viewPort.DOLocalMove(targetPos, 0.25f).SetEase(Ease.OutCubic);
+
+            if (currentPage == maxPage)
+            {
+                nextButton.SetInteractable(false);
+            }
+            else
+            {
+                nextButton.SetInteractable(true);
+            }
+
+            if (currentPage <= 1)
+            {
+                prevButton.SetInteractable(false);
+            }
+            else
+            {
+                prevButton.SetInteractable(true);
+            }
         }
         
     }
