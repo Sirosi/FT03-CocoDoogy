@@ -33,7 +33,10 @@ namespace CocoDoogy.UI
 
         [Tooltip("전환 속도 (초 단위)")] 
         [SerializeField] private float snapDuration = 0.5f;
-
+        
+        // TODO : 이거 대충 기능만 만들어 둔거여서 나중에 수정 - 김영진
+        [SerializeField] private GameObject stageUI;
+        
         private Camera mainCamera;
         private int currentIndex = 0;
 
@@ -90,7 +93,7 @@ namespace CocoDoogy.UI
             if (Touchscreen.current == null) return;
 
             // 현재 터치 감지
-            if (TouchSystem.TouchCount > 0)
+            if (TouchSystem.TouchCount > 0 && !stageUI.activeSelf)
             {
                 lastPos = TouchSystem.TouchAverage;
 
@@ -209,7 +212,7 @@ namespace CocoDoogy.UI
             bool hasInput = Mouse.current.leftButton.isPressed;
             Vector2 inputPos = Mouse.current.position.ReadValue();
 
-            if (hasInput)
+            if (hasInput && !stageUI.activeSelf)
             {
                 lastPos = inputPos;
 

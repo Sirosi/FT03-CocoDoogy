@@ -1,39 +1,45 @@
-using CocoDoogy.UI;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace CocoDoogy.UI.StageSelect
 {
-    public class StageLists : MonoBehaviour
+    public class StageLists : MonoBehaviour, IEndDragHandler
     {
-        [Header("Buttons")]
-        [SerializeField] private CommonButton prevButton;
-        [SerializeField] private CommonButton nextButton;
-
         [Header("Stage Pages")]
         [SerializeField] private int maxPage;
-        [SerializeField] private RectTransform viewPort;
-        [SerializeField] private Vector3 pageStep;
         private int currentPage;
+        
+        [Header("Pages Movement")]
+        [SerializeField] private RectTransform contents;
+        [SerializeField] private Vector3 pageStep;
         private Vector3 targetPos;
+        float dragThreshould;
 
 
 
 
         private void Awake()
         {
-            prevButton.onClick.AddListener(PrevPage);
-            nextButton.onClick.AddListener(NextPage);
-            
             currentPage = 1;
-            targetPos = viewPort.localPosition;
+            targetPos = contents.localPosition;
+            dragThreshould = Screen.width / 15;
         }
 
-        private void OnEnable()
+        
+        
+        public void OnEndDrag(PointerEventData eventData)
         {
-            MovePage();
+            if (Mathf.Abs(eventData.position.x - eventData.pressPosition.x) > dragThreshould)
+            {
+                if (eventData.position.x > eventData.pressPosition.x) PrevPage();
+                else NextPage();
+            }
+            else MovePage();
         }
+
+        
         
         private void PrevPage()
         {
@@ -57,26 +63,7 @@ namespace CocoDoogy.UI.StageSelect
 
         private void MovePage()
         {
-            viewPort.DOLocalMove(targetPos, 0.25f).SetEase(Ease.OutCubic);
-
-            if (currentPage == maxPage)
-            {
-                nextButton.SetInteractable(false);
-            }
-            else
-            {
-                nextButton.SetInteractable(true);
-            }
-
-            if (currentPage <= 1)
-            {
-                prevButton.SetInteractable(false);
-            }
-            else
-            {
-                prevButton.SetInteractable(true);
-            }
+            contents.DOLocalMove(targetPos, 0.25f).SetEase(Ease.OutCubic);
         }
-        
     }
 }
