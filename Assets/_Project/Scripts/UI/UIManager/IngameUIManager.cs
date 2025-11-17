@@ -93,7 +93,7 @@ namespace CocoDoogy.UI.UIManager
         }
         void OnResetButtonClicked()
         {
-            Loading.LoadScene("InGameUiTest");
+            Loading.LoadScene("InGame");
         }
 
 
@@ -111,7 +111,7 @@ namespace CocoDoogy.UI.UIManager
         }
         void OnQuitButtonClicked()
         {
-            Loading.LoadScene("UIConnectTest");
+            Loading.LoadScene("Lobby");
         }
     }
 }
