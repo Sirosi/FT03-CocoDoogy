@@ -5,7 +5,7 @@ using TMPro;
 
 namespace CocoDoogy.UI.InGame
 {
-    public class RefillCountUI: MonoBehaviour
+    public class RefillPointUI: MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI text;
 
@@ -22,7 +22,7 @@ namespace CocoDoogy.UI.InGame
 
         private void OnRefillCountChanged(int point)
         {
-            text.SetText($"{(HexTileMap.RefillCount + 1 - point)} / {HexTileMap.RefillCount}");
+            text.SetText($"{point} / {HexTileMap.RefillPoint}");
         }
     }
 }

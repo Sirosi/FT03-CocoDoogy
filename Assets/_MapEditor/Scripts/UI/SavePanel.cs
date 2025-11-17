@@ -12,7 +12,7 @@ namespace CocoDoogy.MapEditor.UI
 {
     public class SavePanel: MonoBehaviour
     {
-        private const string FOLDER_PATH = "Assets/_Project/Resources/MapData/";
+        private const string FOLDER_PATH = "Assets/_Project/Data/StageData/MapData/";
 
 
         [Header("UI")]
@@ -71,7 +71,7 @@ namespace CocoDoogy.MapEditor.UI
                 return;
             }
             
-            HexTileMap.RefillCount = refillCount;
+            HexTileMap.RefillPoint = refillCount;
             HexTileMap.ActionPoint = actionPoint;
 
             Directory.CreateDirectory(FOLDER_PATH);
@@ -89,7 +89,7 @@ namespace CocoDoogy.MapEditor.UI
             MapSaveLoader.Apply(json);
 
             FileName = fileName;
-            refillCountInput.text = HexTileMap.RefillCount.ToString();
+            refillCountInput.text = HexTileMap.RefillPoint.ToString();
             actionPointInput.text = HexTileMap.ActionPoint.ToString();
         }
 

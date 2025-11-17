@@ -13,8 +13,8 @@ namespace CocoDoogy.Tile.Gimmick.Data
         /// </summary>
         PieceChange = 2,
         /// <summary>
-        /// 기물 제거
+        /// 기물 이동
         /// </summary>
-        PieceDestroy = 3,
+        PieceMove = 3,
     }
 }

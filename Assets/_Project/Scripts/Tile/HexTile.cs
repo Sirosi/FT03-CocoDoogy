@@ -342,6 +342,7 @@ namespace CocoDoogy.Tile
             HasTargetObstacle,
             CheckMyBridge,
             CheckTargetBridge,
+            CheckCrateMovable,
         };
         /// <summary>
         /// 타일이 없는지
@@ -361,6 +362,9 @@ namespace CocoDoogy.Tile
             
             return !hexTile.IsPlaceable;
         }
+        /// <summary>
+        /// 이동불가 장애물이 현재 타일에 존재하는지
+        /// </summary>
         private static bool HasMyObstacle(HexTile hexTile, HexDirection direction)
         {
             HexTile myTile = HexTile.GetTile(hexTile.GridPos.GetDirectionPos(direction));
@@ -369,7 +373,7 @@ namespace CocoDoogy.Tile
             return myTile.Pieces[(int)myDirection] && !myTile.Pieces[(int)myDirection].BaseData.canMove;
         }
         /// <summary>
-        /// 이동불가 장애물이 존재하는지
+        /// 이동불가 장애물이 목표 타일에 존재하는지
         /// </summary>
         private static bool HasTargetObstacle(HexTile hexTile, HexDirection direction) =>
             (hexTile.GetPiece(HexDirection.Center) &&                    // 센터에 기물이 존재하고,
@@ -399,6 +403,24 @@ namespace CocoDoogy.Tile
             {
                 return piece.LookDirection != direction && piece.LookDirection != direction.GetMirror();
             }
+            return false;
+        }
+        /// <summary>
+        /// 만약 해당 위치에 Crate가 있다면, 움직일 수 있는지
+        /// </summary>
+        private static bool CheckCrateMovable(HexTile hexTile, HexDirection direction)
+        {
+            Piece.Piece centerPiece = hexTile.GetPiece(HexDirection.Center);
+            if (!centerPiece || centerPiece.BaseData.type != PieceType.Crate) return false; // 없으면 문제 없음
+            
+            HexTile acrossTile = HexTile.GetTile(hexTile.GridPos.GetDirectionPos(direction.GetMirror()));
+            if (!acrossTile /*|| !acrossTile.CurrentData.canMove*/) return true; // 타일 상태 때문에 상자가 건너편으로 갈 수 없음
+            
+            Piece.Piece acrossCenterPiece = acrossTile.GetPiece(HexDirection.Center);
+            if (acrossCenterPiece) return true; // 물체가 있으면 갈 수가 없음.
+
+            // TODO: 추가적인 제약사항이 있을 수도 있음.
+            
             return false;
         }
         #endregion

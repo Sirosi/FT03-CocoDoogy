@@ -1,5 +1,6 @@
 using CocoDoogy.Data;
 using CocoDoogy.LifeCycle;
+using DG.Tweening;
 using Lean.Pool;
 using System;
 using UnityEngine;
@@ -84,6 +85,33 @@ namespace CocoDoogy.Tile.Piece
         #endregion
 
 
+        /// <summary>
+        /// 다른 Tile로 이동
+        /// </summary>
+        /// <param name="direction">현재 타일에서 움직일 타일의 상대 방향</param>
+        public void Move(HexDirection direction)
+        {
+            HexTile tile = HexTile.GetTile(Parent.GridPos.GetDirectionPos(direction));
+            if (!tile) return;
+
+            DOTween.Kill(this, true);
+
+            Vector3 prePos = Parent.GridPos.ToWorldPos() + DirectionPos.GetPos();
+            Parent.Pieces[(int)DirectionPos] = null;
+            tile.ConnectPiece(DirectionPos, this);
+            
+            // ConnectPiece 단에서 이미 위치를 이동해버리기 때문에 움직이는 효과를 주기 위해
+            // 기존의 위치로 강제로 이동을 해줘야 함.
+            transform.position = prePos;
+            transform.DOMove(tile.GridPos.ToWorldPos() + DirectionPos.GetPos(), Constants.MOVE_DURATION)
+                .SetId(this);
+        }
+
+
+        /// <summary>
+        /// Tile 내의 현재 위치 지정과 함께 위치 지정
+        /// </summary>
+        /// <param name="direction">Tile 내 위치</param>
         public void SetPosition(HexDirection direction)
         {
             transform.localPosition = (DirectionPos = direction).GetPos();
@@ -99,6 +127,11 @@ namespace CocoDoogy.Tile.Piece
             }
         }
         
+        /// <summary>
+        /// 내 부모인 Tile을 지정<br/>
+        /// <b>HexTile.ConnectPiece에서만 동작시켜야 함</b>
+        /// </summary>
+        /// <param name="parent"></param>
         public void SetParent(HexTile parent)
         {
             transform.parent = parent.PieceGroup;

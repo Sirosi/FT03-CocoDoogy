@@ -16,12 +16,6 @@ namespace CocoDoogy.Tile.Gimmick.Data
         public System.Collections.Generic.List<GimmickTrigger> Triggers = new();
 
 
-        /// <summary>
-        /// 해당 기믹이 동작상태인지 여부
-        /// </summary>
-        public bool IsTriggered { get; set; } = false;
-
-
         public GimmickTrigger GetTrigger(Vector2Int gridPos)
         {
             return Triggers.FirstOrDefault(trigger => trigger.GridPos == gridPos);

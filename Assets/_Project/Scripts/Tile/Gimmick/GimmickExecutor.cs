@@ -1,18 +1,22 @@
+using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile.Gimmick.Data;
+using CocoDoogy.Tile.Piece;
+using CocoDoogy.Tile.Piece.Trigger;
 using UnityEngine;
 
 namespace CocoDoogy.Tile.Gimmick
 {
     public static class GimmickExecutor
     {
-        public static void ExecuteFromTrigger(Vector2Int gridPos, bool isOn)
+        public static void ExecuteFromTrigger(Vector2Int gridPos)
         {
+            TriggerPieceBase triggerPiece = HexTile.GetTile(gridPos).GetPiece(HexDirection.Center)?.GetComponent<TriggerPieceBase>();
             GimmickData[] gimmicks = HexTileMap.GetTriggers(gridPos);
             if (gimmicks.Length <= 0) return;
 
             foreach (GimmickData gimmick in gimmicks)
             {
-                gimmick.GetTrigger(gridPos).IsTriggered = isOn;
+                gimmick.GetTrigger(gridPos).IsTriggered = triggerPiece.IsOn;
                     
                 bool gimmickOn = true;
                 foreach (var trigger in gimmick.Triggers)
@@ -24,24 +28,19 @@ namespace CocoDoogy.Tile.Gimmick
                     }
                 }
 
-                if (gimmick.IsTriggered == gimmickOn) continue; // 같으면 동작해선 안 됨
-                gimmick.IsTriggered = gimmickOn;
-                HexTile terget = HexTile.GetTile(gimmick.Target.GridPos);
-
+                HexTile target = HexTile.GetTile(gimmick.Target.GridPos);
                 switch(gimmick.Type)
                 {
                     case GimmickType.TileRotate:
-                        HexRotate rotate = gimmick.Effect.Rotate;
-                        if (!gimmick.IsTriggered)
-                        {
-                            rotate = rotate.GetMirror();
-                        }
-                        terget.Rotate(rotate);
+                        HexRotate rotate = gimmickOn ? gimmick.Effect.Rotate : gimmick.Effect.Rotate.GetMirror();
+                        CommandManager.GimmickTileRotate(target.GridPos, rotate);
                         break;
                     case GimmickType.PieceChange:
-                        // TODO: 기존 기물을 저장해야해서 좀 걸릴 듯 함
-                        break;
-                    case GimmickType.PieceDestroy:
+                        HexDirection direction = gimmick.Effect.Direction;
+                        PieceType newPiece = gimmickOn ? gimmick.Effect.NextPiece : gimmick.Effect.PrePiece;
+                        PieceType oldPiece = gimmickOn ? gimmick.Effect.PrePiece : gimmick.Effect.NextPiece;
+                        HexDirection lookDirection = gimmick.Effect.LookDirection;
+                        CommandManager.GimmickPieceChange(target.GridPos, direction, newPiece, oldPiece, lookDirection);
                         break;
                 }
             }

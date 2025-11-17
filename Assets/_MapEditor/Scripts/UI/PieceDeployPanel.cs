@@ -131,7 +131,7 @@ namespace CocoDoogy.MapEditor.UI
 
             if (direction != HexDirection.Center) return;
             targetButton.gameObject.SetActive(piece && piece.BaseData.hasTarget);
-            buttonLifeInput.gameObject.SetActive(piece.BaseData.type == PieceType.Button);
+            buttonLifeInput.gameObject.SetActive(piece && piece.BaseData.type == PieceType.Button);
         }
 
         

@@ -45,9 +45,14 @@ namespace CocoDoogy.GameFlow.InGame.Command
         Weather = 111,
         
         /// <summary>
-        /// 타일 회전
+        /// 기믹 동작
         /// </summary>
-        TileRotate = 121,
+        Gimmick = 121,
+        
+        /// <summary>
+        /// ActionPoints 회복
+        /// </summary>
+        Regen = 122,
         #endregion
     }
 }
