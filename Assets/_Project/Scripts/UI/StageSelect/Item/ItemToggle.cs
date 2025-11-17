@@ -59,6 +59,7 @@ namespace CocoDoogy.StageSelect.Item
             
             // 아이템 수량이 0이면 토글 비활성화
             itemToggle.interactable = CurrentAmount > 0;
+            itemToggle.SetIsOnWithoutNotify(false);
         }
 
         public async void Use()

@@ -20,7 +20,11 @@ namespace CocoDoogy.StageSelect.Item
         {
             InitAsync();
         }
-        
+
+        private void OnDisable()
+        {
+            ClearToggleEvent();
+        }
         // TODO : 경민씨가 만들어둔 기존 코드는 StageReadyUI에서 모든 기능을 다 하고 있는데 토글버튼이 하는 일을 분할해서 여기에 만들어야 함.
         //        1. 아이템 데이터를 읽어와서 여기서 적용하기 (Clear)
         //        2. 토글이 On이 되어있으면 아이템 사용개수를 -1, Off라면 원상태로 복구 (Clear)
@@ -42,6 +46,15 @@ namespace CocoDoogy.StageSelect.Item
                 itemToggles[i].OnToggleChanged += OnClickToggle;
             }
         }
+
+        private void ClearToggleEvent()
+        {
+            for (int i = 0; i < itemToggles.Length; i++)
+            {
+                itemToggles[i].OnToggleChanged -= OnClickToggle;
+            }
+        }
+        
         /// <summary>
         /// 토글 클릭 시 발생하는 이벤트 메서드
         /// </summary>
@@ -50,6 +63,7 @@ namespace CocoDoogy.StageSelect.Item
         private void OnClickToggle(ItemToggle toggle, bool isOn)
         {
             toggle.ItemAmountText = isOn ? $"{toggle.CurrentAmount - 1} 개" : $"{toggle.CurrentAmount} 개";
+            Debug.Log("asd");
         }
 
         public void UseItem()
