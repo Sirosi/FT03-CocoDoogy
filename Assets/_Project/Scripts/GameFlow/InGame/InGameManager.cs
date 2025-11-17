@@ -89,13 +89,14 @@ namespace CocoDoogy.GameFlow.InGame
         private readonly IPhase[] turnPhases =
         {
             new ClearCheckPhase(),
+            new PreGravityButtonPhase(),
             new TornadoCheckPhase(),
             new SlideCheckPhase(),
             new PassageCheckPhase(),
             new OutlineDrawPhase(),
-            new TriggerCheckPhase(),
             new CrateMovePhase(),
             new CrateProcessPhase(),
+            new TriggerCheckPhase(),
             new RegenCheckPhase(),
             new LockCheckPhase(),
             new ActionPointCheckPhase(),

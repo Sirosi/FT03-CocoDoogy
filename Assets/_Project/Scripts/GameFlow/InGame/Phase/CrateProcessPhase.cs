@@ -5,7 +5,7 @@ using CocoDoogy.Tile.Piece;
 namespace CocoDoogy.GameFlow.InGame.Phase
 {
     /// <summary>
-    /// Crate의 처리만 담당하는 거시기
+    /// Crate의 전환 처리
     /// </summary>
     public class CrateProcessPhase: IPhase
     {
@@ -24,11 +24,13 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 PieceType pieceType = centerPiece.BaseData.type;
                 if (tileType == TileType.Water && pieceType == PieceType.Crate)
                 {
-                    CommandManager.GimmickPieceChange(tile.GridPos, HexDirection.Center, PieceType.FloatedCrate, pieceType, centerPiece.LookDirection);
+                    CommandManager.GimmickPieceChange(tile.GridPos, HexDirection.Center, PieceType.FloatedCrate, pieceType,
+                        centerPiece.LookDirection, centerPiece.LookDirection);
                 }
                 else if (tileType == TileType.Ice && pieceType == PieceType.FloatedCrate)
                 {
-                    CommandManager.GimmickPieceChange(tile.GridPos, HexDirection.Center, PieceType.Crate, pieceType, centerPiece.LookDirection);
+                    CommandManager.GimmickPieceChange(tile.GridPos, HexDirection.Center, PieceType.Crate, pieceType,
+                        centerPiece.LookDirection, centerPiece.LookDirection);
                 }
             }
             

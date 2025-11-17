@@ -44,15 +44,15 @@ namespace CocoDoogy.GameFlow.InGame.Command
         }
         public static void GimmickTileRotate(Vector2Int gridPos, HexRotate rotate)
         {
-            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.TileRotate, (int)rotate, 0, 0, HexDirection.East), false);
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.TileRotate, (int)rotate, 0, 0, HexDirection.East, HexDirection.East), false);
         }
-        public static void GimmickPieceChange(Vector2Int gridPos, HexDirection direction, PieceType newPiece, PieceType oldPiece, HexDirection lookDirection)
+        public static void GimmickPieceChange(Vector2Int gridPos, HexDirection direction, PieceType newPiece, PieceType oldPiece, HexDirection lookDirection, HexDirection preLookDirection)
         {
-            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceChange, (int)direction, (int)newPiece, (int)oldPiece, lookDirection), false);
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceChange, (int)direction, (int)newPiece, (int)oldPiece, lookDirection, preLookDirection), false);
         }
         public static void GimmickPieceMove(Vector2Int gridPos, HexDirection pieceDir, HexDirection moveDir)
         {
-            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceMove, (int)pieceDir, 0, 0, moveDir), false);
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceMove, (int)pieceDir, 0, 0, moveDir, moveDir.GetMirror()), false);
         }
         public static void Regen(int regen)
         {

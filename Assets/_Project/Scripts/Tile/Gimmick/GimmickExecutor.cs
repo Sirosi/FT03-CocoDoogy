@@ -28,6 +28,9 @@ namespace CocoDoogy.Tile.Gimmick
                     }
                 }
 
+                if (gimmick.IsOn == gimmickOn) return;
+                gimmick.IsOn = gimmickOn;
+
                 HexTile target = HexTile.GetTile(gimmick.Target.GridPos);
                 switch(gimmick.Type)
                 {
@@ -39,8 +42,9 @@ namespace CocoDoogy.Tile.Gimmick
                         HexDirection direction = gimmick.Effect.Direction;
                         PieceType newPiece = gimmickOn ? gimmick.Effect.NextPiece : gimmick.Effect.PrePiece;
                         PieceType oldPiece = gimmickOn ? gimmick.Effect.PrePiece : gimmick.Effect.NextPiece;
-                        HexDirection lookDirection = gimmick.Effect.LookDirection;
-                        CommandManager.GimmickPieceChange(target.GridPos, direction, newPiece, oldPiece, lookDirection);
+                        HexDirection lookDirection = gimmickOn ? gimmick.Effect.LookDirection : gimmick.Effect.PreLookDirection;
+                        HexDirection preLookDirection = gimmickOn ? gimmick.Effect.PreLookDirection : gimmick.Effect.LookDirection;
+                        CommandManager.GimmickPieceChange(target.GridPos, direction, newPiece, oldPiece, lookDirection, preLookDirection);
                         break;
                 }
             }

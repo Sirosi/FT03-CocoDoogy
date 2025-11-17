@@ -144,6 +144,7 @@ namespace CocoDoogy.Utility
                 {
                     Piece nowPiece = HexTile.GetTile(data.Target.GridPos)?.GetPiece(data.Effect.Direction) ?? null;
                     data.Effect.PrePiece = nowPiece ? nowPiece.BaseData.type : PieceType.None;
+                    data.Effect.PreLookDirection = nowPiece ? nowPiece.LookDirection : HexDirection.East;
                 }
             }
             

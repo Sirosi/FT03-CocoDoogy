@@ -15,5 +15,9 @@ namespace CocoDoogy.Tile.Gimmick.Data
         /// Map Load시에 갱신되는 필드
         /// </summary>
         [NonSerialized] public PieceType PrePiece = PieceType.None;
+        /// <summary>
+        /// Map Load시에 갱신되는 필드
+        /// </summary>
+        [NonSerialized] public HexDirection PreLookDirection = HexDirection.East;
     }
 }
