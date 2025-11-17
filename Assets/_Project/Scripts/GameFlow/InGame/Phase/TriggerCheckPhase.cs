@@ -21,6 +21,9 @@ namespace CocoDoogy.GameFlow.InGame.Phase
         {
             if (!InGameManager.IsValid) return false;
 
+            // 플레이어 시작 위치에 Trigger같은 걸 두면 안 됨
+            // Trigger에 도착한 순간에 ActionPoints가 0이 되면, 그사이에 gridPos가 갱신되는 문제를 해결하기 위함
+            if (HexTileMap.StartPos == PlayerHandler.GridPos) return true;
             // 같은 타일에서 무한하게 동작하지 않게 하기 위한 예외처리
             if (gridPos == PlayerHandler.GridPos) return true;
             gridPos = PlayerHandler.GridPos;

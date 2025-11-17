@@ -12,7 +12,7 @@ namespace CocoDoogy.MapEditor.UI
 {
     public class SavePanel: MonoBehaviour
     {
-        private const string FOLDER_PATH = "Assets/_Project/Resources/MapData/";
+        private const string FOLDER_PATH = "Assets/_Project/Data/StageData/MapData/";
 
 
         [Header("UI")]
