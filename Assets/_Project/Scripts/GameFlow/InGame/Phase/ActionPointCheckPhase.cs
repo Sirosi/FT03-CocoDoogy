@@ -19,15 +19,22 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             {
                 if (InGameManager.RefillPoints <= 1)
                 {
-                    // TODO: 상징적인 패배를 넣어야 함.
-                    MessageDialog.ShowMessage("미아", "집을 영구적으로 잃었습니다.", DialogMode.Confirm, _ => SceneManager.LoadScene("Lobby"));
+                    ProcessDefeat();
                     return false;
                 }
                 CommandManager.Refill();
-                return false;
             }
 
-            return true;
+            if (InGameManager.RefillPoints > 0) return true;
+            
+            // TODO: 상징적인 패배를 넣어야 함.
+            ProcessDefeat();
+            return false;
+        }
+
+        private void ProcessDefeat()
+        {
+            MessageDialog.ShowMessage("미아", "집을 영구적으로 잃었습니다.", DialogMode.Confirm, _ => SceneManager.LoadScene("Lobby"));
         }
     }
 }
