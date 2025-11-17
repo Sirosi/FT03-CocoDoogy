@@ -9,8 +9,8 @@ namespace CocoDoogy.Data
     {
         private readonly Dictionary<TileType, HexTileData> tiles = new();
         private readonly Dictionary<PieceType, PieceData> pieces = new();
-        
-        
+
+
         [SerializeField] private HexTileData[] tileData;
         [SerializeField] private PieceData[] pieceData;
 
@@ -30,19 +30,19 @@ namespace CocoDoogy.Data
                 pieces.Add(data.type, data);
             }
         }
-        
-        
+
+
         public static HexTileData GetTileData(TileType type)
         {
             if (Instance == null) return null;
-            
+
             return Instance.tiles.GetValueOrDefault(type);
         }
-        
+
         public static PieceData GetPieceData(PieceType type)
         {
             if (Instance == null) return null;
-            
+
             return Instance.pieces.GetValueOrDefault(type);
         }
     }
