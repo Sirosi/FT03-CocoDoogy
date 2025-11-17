@@ -3,7 +3,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using CocoDoogy.Core;
 
 namespace CocoDoogy.Core.Editor
 {
