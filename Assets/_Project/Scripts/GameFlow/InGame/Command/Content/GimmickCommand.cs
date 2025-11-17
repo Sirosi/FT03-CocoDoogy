@@ -23,11 +23,12 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public int PreSubData = 0;
         public HexDirection Dir = 0;
         public HexDirection PreDir = 0;
+        public bool DidGimmicked = false;
         
         
         public GimmickCommand(object param) : base(CommandType.Gimmick, param)
         {
-            var data = ((Vector2Int, GimmickType, int, int, int, HexDirection, HexDirection))param;
+            var data = ((Vector2Int, GimmickType, int, int, int, HexDirection, HexDirection, bool))param;
             GridPos = data.Item1;
             Gimmick = data.Item2;
             MainData = data.Item3;
@@ -35,6 +36,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             PreSubData = data.Item5;
             Dir = data.Item6;
             PreDir = data.Item7;
+            DidGimmicked = data.Item8;
         }
 
         
@@ -42,9 +44,9 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             HexTile tile = HexTile.GetTile(GridPos);
             GimmickData gimmick = HexTileMap.GetGimmick(GridPos);
-            if (gimmick != null)
+            if (DidGimmicked && gimmick != null)
             {
-                gimmick.IsOn = true;
+                gimmick.IsOn = !gimmick.IsOn;
             }
                 
             switch (Gimmick)
@@ -65,9 +67,9 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             HexTile tile = HexTile.GetTile(GridPos);
             GimmickData gimmick = HexTileMap.GetGimmick(GridPos);
-            if (gimmick != null)
+            if (DidGimmicked && gimmick != null)
             {
-                gimmick.IsOn = false;
+                gimmick.IsOn = !gimmick.IsOn;
             }
             
             switch (Gimmick)
@@ -76,7 +78,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
                     tile.Rotate((HexRotate)(-MainData));
                     break;
                 case GimmickType.PieceChange:
-                    tile.SetPiece((HexDirection)MainData, (PieceType)PreSubData, Dir);
+                    tile.SetPiece((HexDirection)MainData, (PieceType)PreSubData, PreDir);
                     break;
                 case GimmickType.PieceMove:
                     tile = HexTile.GetTile(GridPos.GetDirectionPos(Dir));

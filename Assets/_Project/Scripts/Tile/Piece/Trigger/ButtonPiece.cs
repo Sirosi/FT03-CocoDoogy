@@ -13,7 +13,7 @@ namespace CocoDoogy.Tile.Piece.Trigger
         [SerializeField] private Transform buttonObject;
 
 
-        private int actionPoint = 0;
+        private int actionPoints = 0;
 
 
         public override void OnRelease(Piece data)
@@ -28,7 +28,8 @@ namespace CocoDoogy.Tile.Piece.Trigger
             IsOn = true;
 
             // TODO: 버튼 누르는 소리가 들려야 함
-            int actionPoints = InGameManager.ConsumedActionPoints + actionPoint;
+            int actionPoints = InGameManager.ConsumedActionPoints + this.actionPoints;
+            print(actionPoints);
             InGameManager.Passages.Add(new ButtonPassage(actionPoints, Parent.GridPos));
         }
         public override void UnInteract()
@@ -52,7 +53,7 @@ namespace CocoDoogy.Tile.Piece.Trigger
         {
             if (!int.TryParse(data, out int num)) return;
             
-            actionPoint = num;
+            actionPoints = num;
         }
 
         public void OnExecute()
