@@ -15,6 +15,18 @@ namespace CocoDoogy.GameFlow.InGame.Weather
         /// 폭설<br/>
         /// 눈 -> 폭설, 물 -> 얼음
         /// </summary>
-        Snow = 2
+        Snow = 2,
+        /// <summary>
+        /// 우박
+        /// </summary>
+        Wind = 3,
+        /// <summary>
+        /// 신기루
+        /// </summary>
+        Mirage = 4,
+        /// <summary>
+        /// 강풍
+        /// </summary>
+        Hail = 5,
     }
 }
