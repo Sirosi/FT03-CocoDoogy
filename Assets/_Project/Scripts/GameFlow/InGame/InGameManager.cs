@@ -95,8 +95,9 @@ namespace CocoDoogy.GameFlow.InGame
             new OutlineDrawPhase(),
             new TriggerCheckPhase(),
             new CrateMovePhase(),
-            new ActionPointCheckPhase(),
             new CrateProcessPhase(),
+            new RegenCheckPhase(),
+            new ActionPointCheckPhase(),
             new LockCheckPhase(),
         };
 
@@ -196,15 +197,21 @@ namespace CocoDoogy.GameFlow.InGame
             ActionPoints = 0;
         }
 
-        public static void RegenActionPoint(int regen)
+        public static void RegenActionPoint(int regen, bool containConsume = true)
         {
-            ConsumedActionPoints -= regen;
+            if (containConsume)
+            {
+                ConsumedActionPoints -= regen;
+            }
             ActionPoints += regen;
         }
-        public static void ConsumeActionPoint(int consume)
+        public static void ConsumeActionPoint(int consume, bool containConsume = true)
         {
-            LastConsumeActionPoints = consume;
-            ConsumedActionPoints += consume;
+            if (containConsume)
+            {
+                LastConsumeActionPoints = consume;
+                ConsumedActionPoints += consume;
+            }
             ActionPoints -= consume;
         }
 

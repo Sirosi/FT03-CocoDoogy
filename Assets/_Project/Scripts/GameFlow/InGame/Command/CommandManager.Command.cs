@@ -54,5 +54,9 @@ namespace CocoDoogy.GameFlow.InGame.Command
         {
             ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceMove, (int)pieceDir, 0, 0, moveDir), false);
         }
+        public static void Regen(int regen)
+        {
+            ExecuteCommand(CommandType.Regen, regen, false);
+        }
     }
 }

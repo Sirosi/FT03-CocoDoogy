@@ -48,6 +48,11 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// 기믹 동작
         /// </summary>
         Gimmick = 121,
+        
+        /// <summary>
+        /// ActionPoints 회복
+        /// </summary>
+        Regen = 122,
         #endregion
     }
 }
