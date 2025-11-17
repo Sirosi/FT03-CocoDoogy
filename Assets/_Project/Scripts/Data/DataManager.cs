@@ -3,7 +3,6 @@ using CocoDoogy.Network;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
 using Firebase.Firestore;
-using Mono.Cecil;
 using System;
 using System.Linq;
 using UnityEditor;
@@ -12,24 +11,24 @@ using UnityEngine;
 namespace CocoDoogy.Data
 {
     public partial class DataManager : Singleton<DataManager>
-    { 
+    {
         //TODO : 아이템 데이터를 넣어서 여기서 itemId를 가져와 DB와 비교한 다음 ShopItem을 생성하도록
         [SerializeField] private ItemData[] itemData;
         [SerializeField] private ItemData[] cashData;
         [SerializeField] private ItemData[] stampData;
-        
+
         public UserData UserData { get; private set; }
-        
+
         //데이터가 변경되면 불러오는 이벤트 입니다. UI에서 구독하면 자동으로 업데이트가 가능합니다.
         public event Action OnUserDataLoaded;
 
         private ListenerRegistration publicListener;
         private ListenerRegistration privateListener;
-        
+
         private bool isPublicDataLoaded = false;
         private bool isPrivateDataLoaded = false;
 
-        
+
 #if UNITY_EDITOR
         void Reset()
         {
