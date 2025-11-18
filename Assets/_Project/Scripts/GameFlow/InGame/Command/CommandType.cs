@@ -56,7 +56,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// <summary>
         /// ActionPoints 회복
         /// </summary>
-        Regen = 122,
+        Increase = 122,
         #endregion
     }
 }

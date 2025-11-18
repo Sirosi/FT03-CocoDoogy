@@ -61,7 +61,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         
         public static void Regen(int regen)
         {
-            ExecuteCommand(CommandType.Regen, regen, false);
+            ExecuteCommand(CommandType.Increase, regen, false);
         }
     }
 }

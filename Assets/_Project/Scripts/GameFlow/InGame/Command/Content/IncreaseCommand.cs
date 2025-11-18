@@ -1,6 +1,8 @@
+using CocoDoogy.Tile;
+
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
-    public class RegenCommand: CommandBase
+    public class IncreaseCommand: CommandBase
     {
         public override bool IsUserCommand => false;
 
@@ -8,7 +10,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public int Regen = 0;
         
         
-        public RegenCommand(object param) : base(CommandType.Regen, param)
+        public IncreaseCommand(object param) : base(CommandType.Increase, param)
         {
             Regen = (int)param;
         }
@@ -16,11 +18,13 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         
         public override void Execute()
         {
+            HexTileMap.ActionPoint += Regen;
             InGameManager.RegenActionPoint(Regen, false);
         }
 
         public override void Undo()
         {
+            HexTileMap.ActionPoint -= Regen;
             InGameManager.ConsumeActionPoint(Regen, false);
         }
     }
