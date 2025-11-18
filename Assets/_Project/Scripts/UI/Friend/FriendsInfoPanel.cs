@@ -52,6 +52,16 @@ namespace CocoDoogy.UI.Friend
                 FriendRequestItem item = Instantiate(prefabItem, container);
                 item.GetComponent<FriendRequestItem>().FriendInit(nickname, uid, OnGiftRequestAsync,OnDeleteRequestAsync);
             }
+            
+            if (requestDict.Count < 1)
+            {
+                nullMessage.gameObject.SetActive(true);
+                nullMessage.text = "이런, 나는 친구가 없습니다!";
+            }
+            else
+            {
+                nullMessage.gameObject.SetActive(false);
+            }
         }
     }
 }

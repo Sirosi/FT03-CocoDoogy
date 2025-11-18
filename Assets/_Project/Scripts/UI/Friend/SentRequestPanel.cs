@@ -42,6 +42,16 @@ namespace CocoDoogy.UI.Friend
                 var item = Instantiate(prefabItem, container);
                 item.GetComponent<FriendRequestItem>().SentInit(nickname, uid, OnCancelRequestAsync);
             }
+            
+            if (requestDict.Count < 1)
+            {
+                nullMessage.gameObject.SetActive(true);
+                nullMessage.text = "이런, 나는 아직 아무도 찾지 못했습니다!";
+            }
+            else
+            {
+                nullMessage.gameObject.SetActive(false);
+            }
         }
     }
 }

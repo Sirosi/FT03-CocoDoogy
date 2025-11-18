@@ -16,6 +16,8 @@ namespace CocoDoogy.UI
         private Image image;
         private Color buttonColor;
 
+        public bool interactable = true;
+        
         private bool isHovered = false;
 
         
@@ -27,17 +29,39 @@ namespace CocoDoogy.UI
             buttonColor = image.color;
         }
 
+
+        public void SetInteractable(bool value)
+        {
+            interactable = value;
+
+            if (!interactable)
+            {
+                image.DOColor(new Color(1, 1, 1, 0.5f), 0.2f).SetEase(Ease.OutCubic).SetId(this);
+                rect.localScale = Vector3.one;
+            }
+            else
+            {
+                image.DOColor(buttonColor, 0.2f).SetEase(Ease.OutBack).SetId(this);
+            }
+        }
+        
         
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (!interactable) return;
+            
             isHovered = true;
         }
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!interactable) return;
+            
             isHovered = false;
         }
         public void OnPointerDown(PointerEventData data)
         {
+            if (!interactable) return;
+            
             DOTween.Kill(this);
             
             rect.DOScale(0.95f, 0.15f).SetEase(Ease.OutCubic).SetId(this);
@@ -46,6 +70,8 @@ namespace CocoDoogy.UI
 
         public void OnPointerUp(PointerEventData data)
         {
+            if (!interactable) return;
+            
             DOTween.Kill(this);
             
             Sequence sequence = DOTween.Sequence();
@@ -54,7 +80,7 @@ namespace CocoDoogy.UI
             sequence.Append(rect.DOScale(Vector2.one, 0.1f).SetEase(Ease.OutCubic));
             sequence.SetId(this);
             sequence.Play();
-            
+
             image.DOColor(buttonColor, 0.2f).SetEase(Ease.OutBack).SetId(this);
             
             if (!isHovered) return;

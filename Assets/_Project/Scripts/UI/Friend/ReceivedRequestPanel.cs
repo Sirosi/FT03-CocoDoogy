@@ -61,6 +61,16 @@ namespace CocoDoogy.UI.Friend
                 var item = Instantiate(prefabItem, container);
                 item.GetComponent<FriendRequestItem>().ReceivedInit(nickname, uid, OnAcceptRequestAsync, OnRejectRequestAsync);
             }
+            
+            if (requestDict.Count < 1)
+            {
+                nullMessage.gameObject.SetActive(true);
+                nullMessage.text = "이런, 아무도 나를 원하지 않습니다!";
+            }
+            else
+            {
+                nullMessage.gameObject.SetActive(false);
+            }
         }
     }
 }

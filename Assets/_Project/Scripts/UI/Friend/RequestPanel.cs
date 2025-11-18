@@ -1,5 +1,6 @@
 using CocoDoogy.Network;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 namespace CocoDoogy.UI.Friend
@@ -8,6 +9,7 @@ namespace CocoDoogy.UI.Friend
     {
         [SerializeField] protected Transform container;
         [SerializeField] protected FriendRequestItem prefabItem;
+        [SerializeField] protected TextMeshProUGUI nullMessage;
         protected FirebaseManager Firebase => FirebaseManager.Instance;
         
         public void Refresh() => _ = RefreshPanelAsync();
