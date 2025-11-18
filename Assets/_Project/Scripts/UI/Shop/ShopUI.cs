@@ -43,7 +43,14 @@ namespace CocoDoogy.UI.Shop
             InitTabs();
         }
         
-        public override void ClosePanel() => WindowAnimation.SwipeWindow(transform as RectTransform);
+        public override void ClosePanel()
+        {
+            if (!purchasePanel.gameObject.activeSelf && !confirmPanel.gameObject.activeSelf)
+            {
+                WindowAnimation.SwipeWindow(transform as RectTransform);
+            }
+        }
+
         public void OpenPurchasePanel(ItemData itemData) => purchasePanel.Open(itemData, OnPurchaseRequest);
         private void OnPurchaseRequest(ItemData itemData, int quantity) => _ = ExecutePurchaseAsync(itemData, quantity);
         
