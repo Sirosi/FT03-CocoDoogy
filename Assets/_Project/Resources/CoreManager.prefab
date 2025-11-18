@@ -394,7 +394,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6dae0b8edcabd4690eb408b686fb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmList: []
+  bgmList:
+  - type: 1
+    eventReference:
+      Guid:
+        Data1: -1871572123
+        Data2: 1227680373
+        Data3: -611299399
+        Data4: 87268680
+      Path: event:/Bgm/Lobby
+  - type: 2
+    eventReference:
+      Guid:
+        Data1: 2017684373
+        Data2: 1112196163
+        Data3: 1949523112
+        Data4: 832450301
+      Path: event:/Bgm/Forest
+  - type: 3
+    eventReference:
+      Guid:
+        Data1: 1479585846
+        Data2: 1314546440
+        Data3: -1306047864
+        Data4: 1078399764
+      Path: event:/Bgm/Watery
+  - type: 4
+    eventReference:
+      Guid:
+        Data1: -1134364399
+        Data2: 1273195752
+        Data3: -688535678
+        Data4: 852089143
+      Path: event:/Bgm/Winter
+  - type: 5
+    eventReference:
+      Guid:
+        Data1: 2042359656
+        Data2: 1126332024
+        Data3: -1223441242
+        Data4: -1398206895
+      Path: event:/Bgm/Desert
 --- !u!114 &2645735018059196249
 MonoBehaviour:
   m_ObjectHideFlags: 0
