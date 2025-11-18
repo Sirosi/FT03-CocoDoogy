@@ -50,6 +50,8 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             {
                 gridPos = destination;
                 CommandManager.Sail(destination);
+                
+                InGameManager.ProcessPhase();
             }
         }
     }

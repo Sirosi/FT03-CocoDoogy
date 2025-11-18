@@ -1,3 +1,4 @@
+using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.LifeCycle;
 using CocoDoogy.UI.Popup;
 using UnityEngine;
@@ -71,7 +72,8 @@ namespace CocoDoogy.Tile.Piece
         }
         private void OnRotated(HexTile tile, HexRotate rotate)
         {
-            piece.transform.parent = tile.transform;
+            Vector3 prePos = piece.transform.position;
+            Quaternion preRot = piece.transform.rotation;
             piece.LookDirection = LookDirection.AddRotate(rotate);
             Parent.Pieces[(int)HexDirection.Center] = null;
             
@@ -81,6 +83,10 @@ namespace CocoDoogy.Tile.Piece
             if (nextParent)
             {
                 Parent = HexTile.GetTile(nextParentPos);
+                Parent.ConnectPiece(HexDirection.Center, piece);
+                piece.transform.position = prePos;
+                piece.transform.rotation = preRot;
+                piece.transform.parent = tile.transform;
             }
             else
             {

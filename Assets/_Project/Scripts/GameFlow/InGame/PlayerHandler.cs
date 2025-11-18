@@ -12,8 +12,6 @@ namespace CocoDoogy.GameFlow.InGame
 {
     public class PlayerHandler: Singleton<PlayerHandler>
     {
-        private static readonly Stack<HexTile> filledTiles = new();
-
         public static Vector2Int GridPos
         {
             get => Instance?.gridPos ?? Vector2Int.zero;
@@ -22,24 +20,6 @@ namespace CocoDoogy.GameFlow.InGame
                 if (!IsValid) return;
 
                 Instance.gridPos = value;
-
-                while (filledTiles.Count > 0)
-                {
-                    filledTiles.Pop().OffOutline();
-                }
-
-                Vector2Int gridPos = Instance.gridPos = value;
-                HexTile tile = HexTile.GetTile(gridPos);
-                List<Vector2Int> canPoses = tile.CanMovePoses();
-                // 갈 수 있는 타일 색칠
-                foreach (var canPos in canPoses)
-                {
-                    HexTile canTile = HexTile.GetTile(canPos);
-                    if (!canTile) continue;
-
-                    canTile.DrawOutline(Color.green);
-                    filledTiles.Push(canTile);
-                }
             }
         }
 
@@ -87,8 +67,6 @@ namespace CocoDoogy.GameFlow.InGame
         public static void Clear()
         {
             if (!IsValid) return;
-
-            filledTiles.Clear();
         }
 
 
