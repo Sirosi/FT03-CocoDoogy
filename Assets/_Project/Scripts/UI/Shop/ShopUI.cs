@@ -138,6 +138,16 @@ namespace CocoDoogy.UI.Shop
         #endregion
 
         # region < InfoUI에서 버튼에 연결하기 위한 메서드 >
+
+        public void OpenItemShopUI()
+        {
+            OpenPanel();
+            itemShop.Change(true);
+            stampShop.Change(false);
+            jemShop.Change(false);
+            ToggleTab(itemShop.transform);
+            OnClickButton(itemShopButton);
+        }
         public void OpenJemShopUI()
         {
             OpenPanel();

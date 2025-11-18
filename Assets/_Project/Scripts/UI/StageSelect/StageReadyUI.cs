@@ -28,9 +28,6 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private GameObject[] ranks;
         private TextMeshProUGUI[] rankTexts;
         private CommonButton[] replayButtons;
-
-        [Header("Item Toggle Handler")]
-        [SerializeField] private ItemToggleHandler itemToggleHandler;
         
         [Header("Buttons")]
         [SerializeField] private CommonButton pageChangeButton;
@@ -88,7 +85,6 @@ namespace CocoDoogy.UI.StageSelect
             bool isReady = await OnConsumeTicketAsync();
             if (isReady)
             {
-                itemToggleHandler.UseItem();
                 Loading.LoadScene($"InGame");
             }
             else
