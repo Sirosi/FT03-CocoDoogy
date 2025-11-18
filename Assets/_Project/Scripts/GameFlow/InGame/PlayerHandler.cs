@@ -1,6 +1,8 @@
 using CocoDoogy.Animation;
 using CocoDoogy.Core;
 using CocoDoogy.Tile;
+using CocoDoogy.Tile.Gimmick;
+using CocoDoogy.Tile.Piece;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -97,6 +99,12 @@ namespace CocoDoogy.GameFlow.InGame
         public static void Deploy(Vector2Int gridPos)
         {
             if (!IsValid) return;
+
+            // 추후 Move 및 Slide에서 사용할지 고민 좀 해봐야할 듯 함
+            if(HexTile.GetTile(GridPos).HasPiece(PieceType.GravityButton, out _))
+            {
+                GimmickExecutor.ExecuteFromTrigger(gridPos); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
+            }
 
             DOTween.Kill(Instance, true);
             GridPos = gridPos;
