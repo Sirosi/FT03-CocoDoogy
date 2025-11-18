@@ -113,7 +113,6 @@ namespace CocoDoogy.GameFlow.InGame
 
         void Update()
         {
-            // TODO: 리팩토링 필요
             if (TouchSystem.TouchCount > 0)
             {
                 if (touched) return;
@@ -148,6 +147,9 @@ namespace CocoDoogy.GameFlow.InGame
         /// <param name="mapJson"></param>
         public static void DrawMap(string mapJson)
         {
+            // TODO:
+            //  1. DrawMap을 다른 곳으로 옮기는 게 좋아 보임
+            //  2. Map 그리는 클래스와 게임 진행 클리스를 분리해야 함
             if (!IsValid) return;
             
             Instance.Clear();
