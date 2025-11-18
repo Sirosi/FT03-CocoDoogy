@@ -1,4 +1,5 @@
 using CocoDoogy.Network;
+using CocoDoogy.UI.Popup;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -64,8 +65,6 @@ namespace CocoDoogy.StageSelect.Item
 
         public async void Use()
         {
-            if (!itemToggle.isOn) return;
-
             IDictionary<string, object> result = await FirebaseManager.Instance.UseItemAsync(ItemId);
             bool success = (bool)result["success"];
             if (success)
@@ -78,5 +77,34 @@ namespace CocoDoogy.StageSelect.Item
                 Debug.Log("아이템 사용 실패");
             }
         }
+        // TODO : 아이템 사용을 로비가 아닌 인게임에서 선택하게 하므로 MessageDialog를 사용해서 
+        //        아이템 사용 문구를 띄우고 Yes 선택 시 아이템이 사용되도록 - 김영진
+        // public void OnClickUseItemButton()
+        // {
+        //     if (!itemToggle.isOn) return;
+        //     
+        //     
+        //     MessageDialog.ShowMessage(
+        //         "아이템 정보",
+        //         "아이템 설명",
+        //         DialogMode.YesNo,
+        //         Use);
+        // }
+
+        // private async void Use(CallbackType callbackType)
+        // {
+        //     if (callbackType != CallbackType.Yes) return;
+        //     IDictionary<string, object> result = await FirebaseManager.Instance.UseItemAsync(ItemId);
+        //     bool success = (bool)result["success"];
+        //     if (success)
+        //     {
+        //         // TODO : 아이템 사용 시 인게임에서 어떻게 나올지 
+        //         Debug.Log("아이템 사용 성공");
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("아이템 사용 실패");
+        //     }
+        // }
     }
 }

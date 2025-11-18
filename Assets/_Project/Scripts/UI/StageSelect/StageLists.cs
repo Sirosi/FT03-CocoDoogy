@@ -13,8 +13,8 @@ namespace CocoDoogy.UI.StageSelect
         
         [Header("Pages Movement")]
         [SerializeField] private RectTransform contents;
-        [SerializeField] private Vector3 pageStep;
         private Vector3 targetPos;
+        private Vector3 pageStep;
         float dragThreshould;
 
 
@@ -23,7 +23,9 @@ namespace CocoDoogy.UI.StageSelect
         private void Awake()
         {
             currentPage = 1;
-            targetPos = contents.localPosition;
+            targetPos = contents.anchoredPosition;
+            float pageWidth = ((RectTransform)contents.GetChild(0)).rect.width;
+            pageStep = new Vector3(pageWidth, 0, 0);
             dragThreshould = Screen.width / 15;
         }
 
@@ -63,7 +65,7 @@ namespace CocoDoogy.UI.StageSelect
 
         private void MovePage()
         {
-            contents.DOLocalMove(targetPos, 0.25f).SetEase(Ease.OutCubic);
+            contents.DOLocalMove(targetPos, 0.5f).SetEase(Ease.OutCubic);
         }
     }
 }
