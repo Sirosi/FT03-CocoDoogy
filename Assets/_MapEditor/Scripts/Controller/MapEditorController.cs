@@ -229,7 +229,7 @@ namespace CocoDoogy.MapEditor.Controller
             HexTile selectedTile = HexTile.GetTile(gridPos);
             if (!selectedTile) return;
 
-            foreach (Piece piece in selectedTile.Pieces)
+            foreach (Piece piece in PieceDeployPanel.SelectedTile.Pieces)
             {
                 if (!piece || !piece.BaseData.hasTarget) continue;
                 
