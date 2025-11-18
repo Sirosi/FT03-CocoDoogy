@@ -79,15 +79,20 @@ namespace CocoDoogy.GameFlow.InGame
             if (!IsValid) return;
 
             // 추후 Move 및 Slide에서 사용할지 고민 좀 해봐야할 듯 함
+            Vector2Int? preGravityButton = null;
             if(HexTile.GetTile(GridPos)?.HasPiece(PieceType.GravityButton, out _) ?? false)
             {
-                GimmickExecutor.ExecuteFromTrigger(gridPos); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
+                preGravityButton = GridPos;
             }
 
             Instance.transform.parent = null;
             DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.transform.position = gridPos.ToWorldPos();
+            if(preGravityButton.HasValue)
+            {
+                GimmickExecutor.ExecuteFromTrigger(preGravityButton.Value); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
+            }
             OnBehaviourCompleted();
         }
 
