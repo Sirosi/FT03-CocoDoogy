@@ -1,9 +1,11 @@
 using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Phase;
+using CocoDoogy.GameFlow.InGame.Phase.Passage;
 using CocoDoogy.Tile;
 using CocoDoogy.Utility;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
@@ -29,36 +31,49 @@ namespace CocoDoogy.GameFlow.InGame
             }
         }
 
-        public static int LastConsumeActionPoint { get; private set; } = 0;
-        
+        /// <summary>
+        /// 마지막으로 소모된 ActionPoints
+        /// </summary>
+        public static int LastConsumeActionPoints { get; private set; } = 0;
+        /// <summary>
+        /// Map 시작 후, 소모된 ActionPoints
+        /// </summary>
         public static int ConsumedActionPoints
         {
             get;
             private set;
         }
 
-        public static int RefillCount
+        /// <summary>
+        /// 남은 RefillPoints
+        /// </summary>
+        public static int RefillPoints
         {
-            get => Instance?.refillCount ?? 0;
+            get => Instance?.refillPoints ?? 0;
             private set
             {
                 if (!IsValid) return;
 
-                Instance.refillCount = value;
-                OnRefillCountChanged?.Invoke(Instance.refillCount);
+                Instance.refillPoints = value;
+                OnRefillCountChanged?.Invoke(Instance.refillPoints);
             }
         }
-        public static int ActionPoint
+        /// <summary>
+        /// Refill전까지 남은 ActionPoints 
+        /// </summary>
+        public static int ActionPoints
         {
-            get => Instance?.actionPoint ?? 0;
+            get => Instance?.actionPoints ?? 0;
             private set
             {
                 if (!IsValid) return;
 
-                Instance.actionPoint = value;
-                OnActionPointChanged?.Invoke(Instance.actionPoint);
+                Instance.actionPoints = value;
+                OnActionPointChanged?.Invoke(Instance.actionPoints);
             }
         }
+        public static List<PassageBase> Passages { get; } = new();
+        
         /// <summary>
         /// InGame에서 사용할 MapData
         /// </summary>
@@ -68,19 +83,24 @@ namespace CocoDoogy.GameFlow.InGame
         private Camera mainCamera = null;
         private bool touched = false;
 
-        private int refillCount = 0;
-        private int actionPoint = 0;
+        private int refillPoints = 0;
+        private int actionPoints = 0;
 
         private readonly IPhase[] turnPhases =
         {
             new ClearCheckPhase(),
+            new PreGravityButtonPhase(),
             new TornadoCheckPhase(),
             new SlideCheckPhase(),
-            new WeatherCheckPhase(),
+            new PassageCheckPhase(),
             new OutlineDrawPhase(),
+            new CrateMovePhase(),
+            new CrateProcessPhase(),
             new TriggerCheckPhase(),
-            new ActionPointCheckPhase(),
+            new RegenCheckPhase(),
+            new DeckCheckPhase(),
             new LockCheckPhase(),
+            new ActionPointCheckPhase(),
         };
 
 
@@ -106,30 +126,13 @@ namespace CocoDoogy.GameFlow.InGame
                     HexTile selectedTile = hit.collider.GetComponentInParent<HexTile>();
                     if (!selectedTile) return;
 
+                    HexDirection? direction = PlayerHandler.GridPos.GetRelativeDirection(selectedTile.GridPos);
+                    if (!direction.HasValue) return;
+                    
                     HexTile playerTile = HexTile.GetTile(PlayerHandler.GridPos);
-                    for (int i = 0; i < 6; i++)
-                    {
-                        HexDirection direction = (HexDirection)i;
-
-                        if (selectedTile.GridPos == playerTile.GridPos.GetDirectionPos(direction))
-                        {
-                            if (playerTile.CanMove(direction))
-                            {
-                                CommandManager.Move(direction);
-                                
-                                int min = InGameManager.ConsumedActionPoints - InGameManager.LastConsumeActionPoint + 1;
-                                int max = InGameManager.ConsumedActionPoints;
-            
-                                foreach (var weather in HexTileMap.Weathers)
-                                {
-                                    if (!weather.Key.IsBetween(min, max)) continue;
-                                    CommandManager.Weather(weather.Value);
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
+                    if (!playerTile.CanMove(direction.Value)) return;
+                    
+                    CommandManager.Move(direction.Value);
                 }
             }
             else
@@ -157,16 +160,26 @@ namespace CocoDoogy.GameFlow.InGame
             }
             MapSaveLoader.Apply(mapJson);
 
+            RefillPoints = HexTileMap.RefillPoint;
+            ActionPoints = HexTileMap.ActionPoint;
             CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
             CommandManager.Weather(HexTileMap.DefaultWeather);
+
+            foreach (var weather in HexTileMap.Weathers)
+            {
+                Passages.Add(new WeatherPassage(weather.Key, weather.Value));
+            }
+            
             ProcessPhase();
         }
 
         private void Clear()
         {
-            LastConsumeActionPoint = 0;
-            RefillCount = 0;
-            ActionPoint = 0;
+            Passages.Clear();
+            LastConsumeActionPoints = 0;
+            ConsumedActionPoints = 0;
+            RefillPoints = 0;
+            ActionPoints = 0;
         }
 
         /// <summary>
@@ -174,28 +187,34 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static void RefillActionPoint()
         {
-            RefillCount++;
-            ActionPoint = HexTileMap.ActionPoint;
+            RefillPoints--;
+            ActionPoints = HexTileMap.ActionPoint;
         }
         /// <summary>
         /// 역초기화 동작
         /// </summary>
         public static void ClearActionPoint()
         {
-            RefillCount--;
-            ActionPoint = 0;
+            RefillPoints++;
+            ActionPoints = 0;
         }
 
-        public static void RegenActionPoint(int regen)
+        public static void RegenActionPoint(int regen, bool containConsume = true)
         {
-            ConsumedActionPoints -= regen;
-            ActionPoint += regen;
+            if (containConsume)
+            {
+                ConsumedActionPoints -= regen;
+            }
+            ActionPoints += regen;
         }
-        public static void ConsumeActionPoint(int consume)
+        public static void ConsumeActionPoint(int consume, bool containConsume = true)
         {
-            LastConsumeActionPoint = consume;
-            ConsumedActionPoints += consume;
-            ActionPoint -= consume;
+            if (containConsume)
+            {
+                LastConsumeActionPoints = consume;
+                ConsumedActionPoints += consume;
+            }
+            ActionPoints -= consume;
         }
 
         // ReSharper disable Unity.PerformanceAnalysis

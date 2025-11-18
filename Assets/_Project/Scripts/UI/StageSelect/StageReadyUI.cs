@@ -1,15 +1,10 @@
 using CocoDoogy.Data;
 using CocoDoogy.Network;
 using CocoDoogy.StageSelect.Item;
-using CocoDoogy.UI;
 using CocoDoogy.UI.Popup;
-using CocoDoogy.UI.StageSelect;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CocoDoogy.UI.StageSelect
 {
@@ -27,7 +22,7 @@ namespace CocoDoogy.UI.StageSelect
         
         [Header("StageInfo Helps")]
         [SerializeField] private RectTransform content;
-        [SerializeField] private StageInfo[] stageInfos;
+        [SerializeField] private StageData[] stageInfos;
         
         [Header("Ranks")]
         [SerializeField] private GameObject[] ranks;
@@ -77,15 +72,15 @@ namespace CocoDoogy.UI.StageSelect
         
         private void StageInfoHelps()
         {
-            StageInfo stageInfo = stageInfos[selectedStage - 1];
+            StageData stageInfo = stageInfos[selectedStage - 1];
             for (int i = content.childCount - 1; i >= 0; --i)
             {
                 Destroy(content.GetChild(i).gameObject);
             }
-            foreach (var prefab in stageInfo.contentPrefabs)
-            {
-                Instantiate(prefab, content);
-            }
+            // foreach (var prefab in stageInfo.contentPrefabs)
+            // {
+            //     Instantiate(prefab, content);
+            // }
         }
         
         private async void OnStartButtonClicked()

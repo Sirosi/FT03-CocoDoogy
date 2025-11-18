@@ -30,7 +30,7 @@ namespace CocoDoogy.Utility
             // Map 정보 저장
             Map mapData = new()
             {
-                RefillCount = HexTileMap.RefillCount,
+                RefillCount = HexTileMap.RefillPoint,
                 ActionPoint = HexTileMap.ActionPoint,
                 DefaultWeather = HexTileMap.DefaultWeather,
                 StartPos = HexTileMap.StartPos,
@@ -54,11 +54,11 @@ namespace CocoDoogy.Utility
                     tileData.Pieces[i].Type = tile.Pieces[i].BaseData.type;
                     tileData.Pieces[i].Data = tile.Pieces[i].SpecialData;
                     
-                    if (tile.Pieces[i].Target == null) continue;
+                    if (!tile.Pieces[i].Target.HasValue) continue;
                     mapData.PieceToTargets.Add(new()
                     {
                         PiecePos = tile.GridPos,
-                        TargetPos = (Vector2Int)tile.Pieces[i].Target
+                        TargetPos = tile.Pieces[i].Target.Value
                     });
                 }
 
@@ -99,7 +99,7 @@ namespace CocoDoogy.Utility
             Map mapData = JsonUtility.FromJson<Map>(json);
 
             // Map 정보 적용
-            HexTileMap.RefillCount = mapData.RefillCount;
+            HexTileMap.RefillPoint = mapData.RefillCount;
             HexTileMap.ActionPoint = mapData.ActionPoint;
             HexTileMap.DefaultWeather = mapData.DefaultWeather;
             HexTileMap.StartPos = mapData.StartPos;
@@ -131,13 +131,26 @@ namespace CocoDoogy.Utility
             // 기물 목표 위치 연결
             foreach (var grids in mapData.PieceToTargets)
             {
-                HexTile.GetTile(grids.PiecePos).GetPiece(HexDirection.Center).Target = grids.TargetPos;
+                HexTile tile = HexTile.GetTile(grids.PiecePos);
+                foreach (Piece piece in tile.Pieces)
+                {
+                    if (!piece || !piece.BaseData.hasTarget) continue;
+                    piece.Target = grids.TargetPos;
+                }
             }
 
             // 기믹 연결
             foreach (GimmickData data in mapData.Gimmicks)
             {
                 HexTileMap.Gimmicks.Add(data.Target.GridPos, data);
+                
+                // 기존 타일 연결
+                if (data.Type == GimmickType.PieceChange)
+                {
+                    Piece nowPiece = HexTile.GetTile(data.Target.GridPos)?.GetPiece(data.Effect.Direction) ?? null;
+                    data.Effect.PrePiece = nowPiece ? nowPiece.BaseData.type : PieceType.None;
+                    data.Effect.PreLookDirection = nowPiece ? nowPiece.LookDirection : HexDirection.East;
+                }
             }
             
             // 날씨 추가

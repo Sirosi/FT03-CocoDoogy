@@ -1,5 +1,7 @@
 using CocoDoogy.Tile;
 using CocoDoogy.GameFlow.InGame.Weather;
+using CocoDoogy.Tile.Gimmick.Data;
+using CocoDoogy.Tile.Piece;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command
@@ -10,9 +12,9 @@ namespace CocoDoogy.GameFlow.InGame.Command
         {
             ExecuteCommand(CommandType.Move, direction);
         }
-        public static void Trigger(Vector2Int gridPos)
+        public static void Trigger(Vector2Int gridPos, bool isUnInteract = false)
         {
-            ExecuteCommand(CommandType.Trigger, gridPos);
+            ExecuteCommand(CommandType.Trigger, (gridPos, isUnInteract), false);
         }
         
         
@@ -24,6 +26,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
         {
             ExecuteCommand(CommandType.Teleport, (PlayerHandler.GridPos, gridPos));
         }
+        public static void Sail(Vector2Int gridPos)
+        {
+            ExecuteCommand(CommandType.Sail, (PlayerHandler.GridPos, gridPos));
+        }
 
         
         
@@ -33,12 +39,29 @@ namespace CocoDoogy.GameFlow.InGame.Command
         }
         public static void Refill()
         {
-            ExecuteCommand(CommandType.Refill, (InGameManager.ActionPoint, PlayerHandler.GridPos));
+            ExecuteCommand(CommandType.Refill, (InGameManager.ActionPoints, PlayerHandler.GridPos));
         }
         
         public static void Weather(WeatherType weather)
         {
             ExecuteCommand(CommandType.Weather, (WeatherManager.NowWeather, weather));
+        }
+        public static void GimmickTileRotate(Vector2Int gridPos, HexRotate rotate, bool didGimmicked = false)
+        {
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.TileRotate, (int)rotate, 0, 0, HexDirection.East, HexDirection.East, didGimmicked), false);
+        }
+        public static void GimmickPieceChange(Vector2Int gridPos, HexDirection direction, PieceType newPiece, PieceType oldPiece, HexDirection lookDirection, HexDirection preLookDirection, bool didGimmicked = false)
+        {
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceChange, (int)direction, (int)newPiece, (int)oldPiece, lookDirection, preLookDirection, didGimmicked), false);
+        }
+        public static void GimmickPieceMove(Vector2Int gridPos, HexDirection pieceDir, HexDirection moveDir, bool didGimmicked = false)
+        {
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceMove, (int)pieceDir, 0, 0, moveDir, moveDir.GetMirror(), didGimmicked), false);
+        }
+        
+        public static void Regen(int regen)
+        {
+            ExecuteCommand(CommandType.Regen, regen, false);
         }
     }
 }

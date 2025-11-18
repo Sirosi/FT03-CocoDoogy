@@ -37,6 +37,7 @@ namespace CocoDoogy.UI.IntroAndLogin
         /// </summary>
         private void ShakeTitleImage()
         {
+            startButton.interactable = false;
             rect = titleImage.GetComponent<RectTransform>();
             Vector2 originalPos = rect.anchoredPosition;
 

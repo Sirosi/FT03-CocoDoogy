@@ -27,6 +27,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// 순간이동처리
         /// </summary>
         Teleport = 22,
+        /// <summary>
+        /// 부두술을 이용한 항해
+        /// </summary>
+        Sail = 23,
         #endregion
         
         #region ◇ 시스템 조작 ◇
@@ -45,9 +49,14 @@ namespace CocoDoogy.GameFlow.InGame.Command
         Weather = 111,
         
         /// <summary>
-        /// 타일 회전
+        /// 기믹 동작
         /// </summary>
-        TileRotate = 121,
+        Gimmick = 121,
+        
+        /// <summary>
+        /// ActionPoints 회복
+        /// </summary>
+        Regen = 122,
         #endregion
     }
 }

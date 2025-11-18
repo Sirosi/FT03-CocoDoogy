@@ -28,7 +28,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// <param name="type"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static CommandBase ExecuteCommand(CommandType type, object param)
+        public static CommandBase ExecuteCommand(CommandType type, object param, bool processCheck = true)
         {
             CommandBase result = null;
             try
@@ -37,11 +37,16 @@ namespace CocoDoogy.GameFlow.InGame.Command
                 {
                     CommandType.Move => new MoveCommand(param),
                     CommandType.Trigger => new TriggerCommand(param),
+                    
                     CommandType.Slide => new SlideCommand(param),
                     CommandType.Teleport => new TeleportCommand(param),
+                    CommandType.Sail => new SailCommand(param),
+                    
                     CommandType.Deploy => new DeployCommand(param),
                     CommandType.Refill => new RefillCommand(param),
                     CommandType.Weather => new WeatherCommand(param),
+                    CommandType.Gimmick => new GimmickCommand(param),
+                    CommandType.Regen => new RegenCommand(param),
                     _ => null
                 };
 
@@ -51,7 +56,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     Executed.Push(result);
                     Undid.Clear();
 
-                    InGameManager.ProcessPhase();
+                    if (processCheck)
+                    {
+                        InGameManager.ProcessPhase();
+                    }
                 }
             }
             catch (InvalidCastException e)

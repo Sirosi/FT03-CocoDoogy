@@ -22,13 +22,16 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
         {
             get
             {
-                bool result = SelectedGimmick.Effect.PieceType != PieceType.None;
+                /*bool result = SelectedGimmick.Effect.PieceType != PieceType.None;
                 if(!result)
                 {
                     MessageDialog.ShowMessage("저장 실패", "설치할 기물을 설정해야 합니다.", DialogMode.Confirm, null);
                 }
 
-                return result;
+                return result;*/
+                // GimmickType.Destroy를 없애서 이렇게 처리해야 함
+                // PieceType.None은 Destroy랑 동일하게 동작함
+                return true;
             }
         }
 
@@ -101,10 +104,10 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
                 }
             }
 
-            // 배치할 기물 미리 넣기
+            // 배치한 기물 미리 넣기
             for (int i = 0; i < pieceDropdown.options.Count; i++)
             {
-                if (pieceDropdown.options[i].text == SelectedGimmick.Effect.PieceType.ToString())
+                if (pieceDropdown.options[i].text == SelectedGimmick.Effect.NextPiece.ToString())
                 {
                     pieceDropdown.SetValueWithoutNotify(i);
                     break;
@@ -129,7 +132,9 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
         private void OnPieceChanged(int idx)
         {
             PieceType piece = Enum.Parse<PieceType>(pieceDropdown.options[idx].text);
-            SelectedGimmick.Effect.PieceType = piece;
+            SelectedGimmick.Effect.NextPiece = piece;
+
+            print(piece);
         }
         #endregion
     }

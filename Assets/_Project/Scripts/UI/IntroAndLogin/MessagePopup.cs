@@ -23,7 +23,7 @@ namespace CocoDoogy.UI.IntroAndLogin
 
             var tcs = new TaskCompletionSource<bool>();
             
-            DOTween.To(() => 1f, x => SetAlpha(x), 0f, fadeDuration)
+            DOTween.To(() => 1f, SetAlpha, 0f, fadeDuration)
                 .SetDelay(duration)
                 .OnComplete(() =>
                 {

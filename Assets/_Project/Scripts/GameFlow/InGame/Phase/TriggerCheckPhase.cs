@@ -1,5 +1,6 @@
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
+using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
 using CocoDoogy.Tile.Piece.Trigger;
@@ -13,23 +14,26 @@ namespace CocoDoogy.GameFlow.InGame.Phase
     /// </summary>
     public class TriggerCheckPhase: IPhase
     {
-        private Vector2Int gridPos = Vector2Int.zero;
+        private Vector2Int? gridPos = null;
         
         
         public bool OnPhase()
         {
             if (!InGameManager.IsValid) return false;
 
+            // 플레이어 시작 위치에 Trigger같은 걸 두면 안 됨
+            // Trigger에 도착한 순간에 ActionPoints가 0이 되면, 그사이에 gridPos가 갱신되는 문제를 해결하기 위함
+            if (HexTileMap.StartPos == PlayerHandler.GridPos) return true;
             // 같은 타일에서 무한하게 동작하지 않게 하기 위한 예외처리
             if (gridPos == PlayerHandler.GridPos) return true;
             gridPos = PlayerHandler.GridPos;
 
             // 해당 타일에 기믹과 관련된 트리거 존재 확인
-            GimmickData[] data = HexTileMap.GetTriggers(gridPos);
+            GimmickData[] data = HexTileMap.GetTriggers(gridPos.Value);
             if (data.Length <= 0) return true;
 
             // 타일 존재 확인
-            HexTile tile = HexTile.GetTile(gridPos);
+            HexTile tile = HexTile.GetTile(gridPos.Value);
             if (!tile) return true;
 
             // 중앙 기물 확인
@@ -38,8 +42,11 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             Piece centerPiece = tile.GetPiece(HexDirection.Center);
             if (!centerPiece) return true;
             if (centerPiece.BaseData.type is not (PieceType.Switch or PieceType.Button)) return true;
+            
+            // 이미 눌린 버튼은 다시 누를 수 없음
+            TriggerPieceBase triggerPiece = centerPiece.GetComponent<TriggerPieceBase>();
+            if (centerPiece.BaseData.type is PieceType.Button && triggerPiece.IsOn) return true;
 
-            // TODO: Trigger 동작가능 버튼에 Event를 연결하는 식으로 해야 할 것 같음.
             gridPos = PlayerHandler.GridPos;
             MessageDialog.ShowMessage("기믹 동작", "해당 타일에 있는 래버를 당길거야?", DialogMode.YesNo, OnTriggerControlled);
 
@@ -48,9 +55,12 @@ namespace CocoDoogy.GameFlow.InGame.Phase
 
         private void OnTriggerControlled(CallbackType type)
         {
-            if (type != CallbackType.Yes) return;
-            
-            CommandManager.Trigger(gridPos);
+            if (type == CallbackType.Yes)
+            {
+                CommandManager.Trigger(gridPos.Value);
+                GimmickExecutor.ExecuteFromTrigger(gridPos.Value);
+            }
+            gridPos = null;
         }
     }
 }
