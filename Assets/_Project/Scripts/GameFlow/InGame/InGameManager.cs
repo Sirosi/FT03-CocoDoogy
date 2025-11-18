@@ -170,6 +170,8 @@ namespace CocoDoogy.GameFlow.InGame
                 Passages.Add(new WeatherPassage(weather.Key, weather.Value));
             }
             
+            Camera.main.transform.position = new Vector3(HexTileMap.StartPos.x, 5, HexTileMap.StartPos.y - 3);
+            
             ProcessPhase();
         }
 

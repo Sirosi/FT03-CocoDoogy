@@ -1,3 +1,5 @@
+using CocoDoogy.Tile;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -18,7 +20,7 @@ namespace CocoDoogy
             if (mainCamera == null)
                 mainCamera = Camera.main;
         }
-
+        
         private void Update()
         {
             if (Touchscreen.current != null)

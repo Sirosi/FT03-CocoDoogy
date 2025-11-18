@@ -1011,9 +1011,9 @@ GameObject:
   m_Component:
   - component: {fileID: 698154202}
   - component: {fileID: 698154201}
-  - component: {fileID: 698154200}
   - component: {fileID: 698154203}
   - component: {fileID: 698154204}
+  - component: {fileID: 698154205}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1021,14 +1021,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &698154200
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698154199}
-  m_Enabled: 1
 --- !u!20 &698154201
 Camera:
   m_ObjectHideFlags: 0
@@ -1164,6 +1156,20 @@ MonoBehaviour:
   dilateQuality: 0
   blurIterations: 1
   blurType: 1
+--- !u!114 &698154205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698154199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &731194125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,6 +1321,130 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[0].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[1].type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[3].type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[4].type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[0].eventReference.Path
+      value: event:/Bgm/Lobby
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[1].eventReference.Path
+      value: event:/Bgm/Forest
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[2].eventReference.Path
+      value: event:/Bgm/Watery
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[3].eventReference.Path
+      value: event:/Bgm/Winter
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[4].eventReference.Path
+      value: event:/Bgm/Desert
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[0].eventReference.Guid.Data1
+      value: -1871572123
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[0].eventReference.Guid.Data2
+      value: 1227680373
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[0].eventReference.Guid.Data3
+      value: -611299399
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[0].eventReference.Guid.Data4
+      value: 87268680
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[1].eventReference.Guid.Data1
+      value: 2017684373
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[1].eventReference.Guid.Data2
+      value: 1112196163
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[1].eventReference.Guid.Data3
+      value: 1949523112
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[1].eventReference.Guid.Data4
+      value: 832450301
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[2].eventReference.Guid.Data1
+      value: 1479585846
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[2].eventReference.Guid.Data2
+      value: 1314546440
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[2].eventReference.Guid.Data3
+      value: -1306047864
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[2].eventReference.Guid.Data4
+      value: 1078399764
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[3].eventReference.Guid.Data1
+      value: -1134364399
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[3].eventReference.Guid.Data2
+      value: 1273195752
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[3].eventReference.Guid.Data3
+      value: -688535678
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[3].eventReference.Guid.Data4
+      value: 852089143
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[4].eventReference.Guid.Data1
+      value: 2042359656
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[4].eventReference.Guid.Data2
+      value: 1126332024
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[4].eventReference.Guid.Data3
+      value: -1223441242
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: bgmList.Array.data[4].eventReference.Guid.Data4
+      value: -1398206895
+      objectReference: {fileID: 0}
     - target: {fileID: 2781120245806770429, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
       propertyPath: sfxList.Array.size
       value: 40
@@ -2102,6 +2232,10 @@ PrefabInstance:
     - target: {fileID: 4760158169667054291, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
       propertyPath: m_Name
       value: AudioSetting
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760158169667054291, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
