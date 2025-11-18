@@ -7,6 +7,9 @@ using CocoDoogy.Utility;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using Pointer = System.Reflection.Pointer;
 
 namespace CocoDoogy.GameFlow.InGame
 {
@@ -113,6 +116,7 @@ namespace CocoDoogy.GameFlow.InGame
 
         void Update()
         {
+            if (IsPointerOverUI()) return;
             // TODO: 리팩토링 필요
             if (TouchSystem.TouchCount > 0)
             {
@@ -228,6 +232,28 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 if (!phase.OnPhase()) break;
             }
+        }
+        
+        /// <summary>
+        /// UI위로 클릭하면 게임에 영향을 주지 않게 하는 메서드
+        /// </summary>
+        /// <returns></returns>
+        private bool IsPointerOverUI()
+        {
+            if (EventSystem.current.IsPointerOverGameObject()) // 에디터
+                return true;
+            
+            if (Touchscreen.current != null) // 빌드
+            {
+                foreach (var touch in Touchscreen.current.touches)
+                {
+                    if (touch.isInProgress &&
+                        EventSystem.current.IsPointerOverGameObject(touch.touchId.ReadValue()))
+                        return true;
+                }
+            }
+
+            return false;
         }
     }
 }
