@@ -38,7 +38,6 @@ namespace CocoDoogy
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 canMoveCamera = !ObjectCheck(Mouse.current.position.ReadValue());
-                Debug.Log("canMoveCamera: " + canMoveCamera);
                 prevPos = Mouse.current.position.ReadValue();
             }
 
