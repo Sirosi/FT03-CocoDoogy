@@ -93,7 +93,6 @@ namespace CocoDoogy.GameFlow.InGame
             new TornadoCheckPhase(),
             new SlideCheckPhase(),
             new PassageCheckPhase(),
-            new OutlineDrawPhase(),
             new CrateMovePhase(),
             new CrateProcessPhase(),
             new TriggerCheckPhase(),
@@ -101,6 +100,7 @@ namespace CocoDoogy.GameFlow.InGame
             new DeckCheckPhase(),
             new LockCheckPhase(),
             new ActionPointCheckPhase(),
+            new OutlineDrawPhase(),
         };
 
 

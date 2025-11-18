@@ -59,6 +59,8 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             {
                 CommandManager.Trigger(gridPos.Value);
                 GimmickExecutor.ExecuteFromTrigger(gridPos.Value);
+                
+                InGameManager.ProcessPhase();
             }
             gridPos = null;
         }

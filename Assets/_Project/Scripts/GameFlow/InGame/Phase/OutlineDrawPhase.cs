@@ -32,6 +32,19 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 filledTiles.Push(gimmickTile);
             }
 
+            Vector2Int gridPos = PlayerHandler.GridPos;
+            HexTile tile = HexTile.GetTile(gridPos);
+            List<Vector2Int> canPoses = tile.CanMovePoses();
+            // 갈 수 있는 타일 색칠
+            foreach (var canPos in canPoses)
+            {
+                HexTile canTile = HexTile.GetTile(canPos);
+                if (!canTile) continue;
+
+                canTile.DrawOutline(Color.green);
+                filledTiles.Push(canTile);
+            }
+
             HexTile destination = HexTile.GetTile(HexTileMap.EndPos);
             destination.DrawOutline(Color.purple);
             filledTiles.Push(destination);
