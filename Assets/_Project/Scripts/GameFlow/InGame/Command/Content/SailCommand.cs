@@ -52,14 +52,14 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             PlayerHandler.Deploy(PrePos);
             
             // 출발지 정리
-            HexTile tile = HexTile.GetTile(PrePos);
+            HexTile tile = HexTile.GetTile(NextPos);
             if (tile.HasPiece(PieceType.Deck, out Piece destoPiece))
             {
                 destoPiece.GetComponent<DeckPiece>().IsDocked = false;
             }
                 
             // 도착지 정리
-            tile = HexTile.GetTile(NextPos);
+            tile = HexTile.GetTile(PrePos);
             tile.HasPiece(PieceType.Deck, out Piece piece);
             piece.GetComponent<DeckPiece>().IsDocked = true;
         }

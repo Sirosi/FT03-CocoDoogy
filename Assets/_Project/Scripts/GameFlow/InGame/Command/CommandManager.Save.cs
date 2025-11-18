@@ -50,7 +50,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     CommandType.Refill => JsonUtility.FromJson<RefillCommand>(data.DataJson),
                     CommandType.Weather => JsonUtility.FromJson<WeatherCommand>(data.DataJson),
                     CommandType.Gimmick => JsonUtility.FromJson<GimmickCommand>(data.DataJson),
-                    CommandType.Regen => JsonUtility.FromJson<RegenCommand>(data.DataJson),
+                    CommandType.Increase => JsonUtility.FromJson<IncreaseCommand>(data.DataJson),
                     _ => null
                 };
 

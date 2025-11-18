@@ -5,7 +5,6 @@ using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace CocoDoogy.Tile
@@ -15,8 +14,13 @@ namespace CocoDoogy.Tile
     /// </summary>
     public class HexTileMap : Singleton<HexTileMap>
     {
+        /// <summary>
+        /// 맵 초기화 가능 회수
+        /// </summary>
         public static int RefillPoint { get; set; } = 3;
-        
+        /// <summary>
+        /// 맵 최대 행동력
+        /// </summary>
         public static int ActionPoint { get; set; } = 5;
         
         public static Vector2Int StartPos { get; set; } = Vector2Int.zero;
