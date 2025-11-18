@@ -46,7 +46,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     CommandType.Refill => new RefillCommand(param),
                     CommandType.Weather => new WeatherCommand(param),
                     CommandType.Gimmick => new GimmickCommand(param),
-                    CommandType.Regen => new RegenCommand(param),
+                    CommandType.Increase => new IncreaseCommand(param),
                     _ => null
                 };
 
