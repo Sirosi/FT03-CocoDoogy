@@ -30,7 +30,7 @@ namespace CocoDoogy.UI.StageSelect
             {
                 star.SetActive(starSize-- > 0);
             }
-            
+            startButton = GetComponent<CommonButton>();
             startButton.onClick.AddListener(OnButtonClicked);
         }
 

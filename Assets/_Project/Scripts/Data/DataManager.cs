@@ -62,6 +62,10 @@ namespace CocoDoogy.Data
             weatherData = guids
                 .Select(guid => AssetDatabase.LoadAssetAtPath<WeatherData>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
+            guids = AssetDatabase.FindAssets("t:StageData");
+            stageData = guids
+                .Select(guid => AssetDatabase.LoadAssetAtPath<StageData>(AssetDatabase.GUIDToAssetPath(guid)))
+                .ToArray();
         }
 #endif
         protected override void Awake()

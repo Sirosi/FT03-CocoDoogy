@@ -317,11 +317,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad0f11c214e44438a3d509142d7529a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 6497694282808918929}
+  data: {fileID: 0}
   clearStars:
   - {fileID: 4526598719905088840}
   - {fileID: 5053392819420798846}
   - {fileID: 7820053204339605162}
+  startButton: {fileID: 0}
 --- !u!114 &6497694282808918929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +338,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls: []
+  interactable: 1
 --- !u!222 &8400240908133504639
 CanvasRenderer:
   m_ObjectHideFlags: 0

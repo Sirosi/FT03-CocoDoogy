@@ -31,7 +31,6 @@ namespace CocoDoogy.UI.StageSelect
         [Header("Stages")]
         [SerializeField] private GameObject[] stages;
         [SerializeField] private Sprite lockedSprite;
-        private CommonButton[] stageButtons;
         private Image[] stageIcons;
         
         [Header("StageOptions")]
@@ -51,22 +50,6 @@ namespace CocoDoogy.UI.StageSelect
             isStageSelect = true;
             isStageReady = false;
             
-            
-            
-            stageButtons = new CommonButton[stages.Length];
-            stageIcons = new Image[stages.Length];
-            for (int i = 0; i < stages.Length; ++i)
-            {
-                stageButtons[i] = stages[i].GetComponent<CommonButton>();
-                stageIcons[i] = stages[i].GetComponent<Image>();
-                
-                LockStage(i);
-                int index = i + 1;
-                stageButtons[i].onClick.AddListener(()=> OnStageButtonClicked(index));
-            }
-            
-            
-            
             backButton.onClick.AddListener(OnBackButtonClicked);
         }
         
@@ -82,22 +65,22 @@ namespace CocoDoogy.UI.StageSelect
             }
         }
         
-        private void OnStageButtonClicked(int index)
-        {
-            if (index <= clearedStages)
-            {
-                SelectedStage = index;
-                
-                if (stageReadyUI.gameObject.activeSelf) return;
-                stageReadyUI.gameObject.SetActive(true);
-                isStageSelect = false;
-                isStageReady = true;
-            }
-            else
-            {
-                MessageDialog.ShowMessage($"STAGE {index}","이전 스테이지를 클리어해주세요!", DialogMode.Confirm, (_) => Debug.Log("Refused"));
-            }
-        }
+        //private void OnStageButtonClicked(int index)
+        //{
+        //    if (index <= clearedStages)
+        //    {
+        //        SelectedStage = index;
+        //        
+        //        if (stageReadyUI.gameObject.activeSelf) return;
+        //        stageReadyUI.gameObject.SetActive(true);
+        //        isStageSelect = false;
+        //        isStageReady = true;
+        //    }
+        //    else
+        //    {
+        //        MessageDialog.ShowMessage($"STAGE {index}","이전 스테이지를 클리어해주세요!", DialogMode.Confirm, (_) => Debug.Log("Refused"));
+        //    }
+        //}
 
         
         

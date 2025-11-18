@@ -1,3 +1,4 @@
+using CocoDoogy.Core;
 using CocoDoogy.Data;
 using CocoDoogy.Network;
 using CocoDoogy.StageSelect.Item;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace CocoDoogy.UI.StageSelect
 {
-    public class StageReadyUI : MonoBehaviour
+    public class StageReadyUI : Singleton<StageReadyUI>
     {
         private int selectedStage;
         
@@ -33,6 +34,10 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private CommonButton pageChangeButton;
         [SerializeField] private CommonButton startButton;
 
+
+        private StageData stageData = null;
+        
+
         private void Awake()
         {
             pageChangeButton.onClick.AddListener(OnPageChangeButtonClicked);
@@ -50,6 +55,30 @@ namespace CocoDoogy.UI.StageSelect
             
             StageInfoHelps();
         }
+
+
+        public static void Show(StageData stage)
+        {
+            if (!Instance) return;
+            
+            Instance.gameObject.SetActive(true);
+            
+            Instance.DrawInfo(stage);
+        }
+
+        private void DrawInfo(StageData stage)
+        {
+            stageData = stage;
+            
+            title.text = $"Stage {(int)stage.theme}-{stage.index}";
+            
+            isFirstPage = true;
+            page1.gameObject.SetActive(true);
+            page2.gameObject.SetActive(false);
+            
+            StageInfoHelps();
+        }
+        
         
         private async void OnPageChangeButtonClicked()
         {
@@ -74,10 +103,6 @@ namespace CocoDoogy.UI.StageSelect
             {
                 Destroy(content.GetChild(i).gameObject);
             }
-            // foreach (var prefab in stageInfo.contentPrefabs)
-            // {
-            //     Instantiate(prefab, content);
-            // }
         }
         
         private async void OnStartButtonClicked()
