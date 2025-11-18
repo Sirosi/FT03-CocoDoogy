@@ -1,10 +1,8 @@
-using CocoDoogy.GameFlow.InGame;
-
 namespace CocoDoogy.Tile.Piece.Trigger
 {
-    public class GravityButtonPiece: TriggerPieceBase
+    public class GravityCrate: TriggerPieceBase
     {
-        public override bool IsOn => PlayerHandler.GridPos == Parent.GridPos;
+        public override bool IsOn => true;
         
         
         public override void OnRelease(Piece data)

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6093763007588430299}
   - component: {fileID: 5939108585846716739}
-  - component: {fileID: -8535476904083192882}
+  - component: {fileID: -7207009444321321036}
   m_Layer: 0
   m_Name: P007_GravityCrate
   m_TagString: Untagged
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62f2f59572244bc8d1b3b7d01f7e434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-8535476904083192882
+--- !u!114 &-7207009444321321036
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,10 +56,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1347294110585473445}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09995bfd51167474c9efe023fdbd71e2, type: 3}
+  m_Script: {fileID: 11500000, guid: eec1476cf0e04b4893140321cede1011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cask: {fileID: 0}
 --- !u!1001 &1412293797175031276
 PrefabInstance:
   m_ObjectHideFlags: 0

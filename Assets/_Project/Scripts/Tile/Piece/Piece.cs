@@ -96,15 +96,62 @@ namespace CocoDoogy.Tile.Piece
 
             DOTween.Kill(this, true);
 
+            Piece centerPiece = tile.GetPiece(HexDirection.Center);
+            PieceType centerType =  centerPiece ? centerPiece.BaseData.type : PieceType.None;
+            if (BaseData.type == PieceType.Crate && centerType == PieceType.GravityButton)
+            {
+                MoveToGravityButton(tile);
+            }
+            else if (BaseData.type == PieceType.GravityCrate)
+            {
+                if (centerType == PieceType.GravityButton)
+                {
+                    MoveButtonToButton(tile);
+                }
+                else
+                {
+                    MoveFromGravityButton(tile);
+                }
+            }
+            else
+            {
+                MoveDefault(tile);
+            }
+        }
+
+        private void MoveDefault(HexTile nextTile)
+        {
             Vector3 prePos = Parent.GridPos.ToWorldPos() + DirectionPos.GetPos();
             Parent.Pieces[(int)DirectionPos] = null;
-            tile.ConnectPiece(DirectionPos, this);
+            nextTile.ConnectPiece(DirectionPos, this);
             
             // ConnectPiece 단에서 이미 위치를 이동해버리기 때문에 움직이는 효과를 주기 위해
             // 기존의 위치로 강제로 이동을 해줘야 함.
             transform.position = prePos;
-            transform.DOMove(tile.GridPos.ToWorldPos() + DirectionPos.GetPos(), Constants.MOVE_DURATION)
+            transform.DOMove(nextTile.GridPos.ToWorldPos() + DirectionPos.GetPos(), Constants.MOVE_DURATION)
                 .SetId(this);
+        }
+
+        private void MoveToGravityButton(HexTile nextTile)
+        {
+            Piece piece = nextTile.SetPiece(HexDirection.Center, PieceType.GravityCrate, LookDirection);
+            piece.transform.position = Parent.GridPos.ToWorldPos() + DirectionPos.GetPos();
+            piece.transform.DOMove(nextTile.GridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(piece);
+            Release();
+        }
+        private void MoveFromGravityButton(HexTile nextTile)
+        {
+            Piece piece = nextTile.SetPiece(HexDirection.Center, PieceType.Crate, LookDirection);
+            piece.transform.position = Parent.GridPos.ToWorldPos() + DirectionPos.GetPos();
+            piece.transform.DOMove(nextTile.GridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(piece);
+            Parent.SetPiece(HexDirection.Center, PieceType.GravityButton, LookDirection);
+        }
+        private void MoveButtonToButton(HexTile nextTile)
+        {
+            Piece piece = nextTile.SetPiece(HexDirection.Center, PieceType.GravityCrate, LookDirection);
+            piece.transform.position = Parent.GridPos.ToWorldPos() + DirectionPos.GetPos();
+            piece.transform.DOMove(nextTile.GridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(piece);
+            Parent.SetPiece(HexDirection.Center, PieceType.GravityButton, LookDirection);
         }
 
 
@@ -119,7 +166,7 @@ namespace CocoDoogy.Tile.Piece
             if (DirectionPos == HexDirection.Center) // Center Piece는 바라보는 방향 계산식이 다름
             {
                 HexRotate rotate = (HexRotate)LookDirection;
-                transform.rotation = Quaternion.Euler(0, -(int)rotate * 60, 0); // 120을 더하는 이유는 NW 모서리가 기본적으로 120도 돌아가야하기 때문
+                transform.rotation = Quaternion.Euler(0, -(int)rotate * 60, 0);
             }
             else
             {

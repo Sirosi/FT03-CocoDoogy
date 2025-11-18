@@ -111,6 +111,7 @@ namespace CocoDoogy.MapEditor.UI
         {
             if (!SelectedTile) return;
 
+            targetButton.gameObject.SetActive(false);
             for (int i = 0; i < 7; i++)
             {
                 DrawPiece((HexDirection)i);
@@ -129,8 +130,11 @@ namespace CocoDoogy.MapEditor.UI
             PieceIcon slotIcon = slotIcons[(int)direction];
             slotIcon.SetPiece(piece);
 
+            if (piece && piece.BaseData.hasTarget)
+            {
+                targetButton.gameObject.SetActive(true);
+            }
             if (direction != HexDirection.Center) return;
-            targetButton.gameObject.SetActive(piece && piece.BaseData.hasTarget);
             buttonLifeInput.gameObject.SetActive(piece && piece.BaseData.type == PieceType.Button);
         }
 

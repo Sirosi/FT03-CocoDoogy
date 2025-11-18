@@ -40,6 +40,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     
                     CommandType.Slide => new SlideCommand(param),
                     CommandType.Teleport => new TeleportCommand(param),
+                    CommandType.Sail => new SailCommand(param),
                     
                     CommandType.Deploy => new DeployCommand(param),
                     CommandType.Refill => new RefillCommand(param),
