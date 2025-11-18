@@ -2,6 +2,7 @@ using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.GameFlow.InGame.Phase.Passage;
+using CocoDoogy.Test;
 using CocoDoogy.Tile;
 using CocoDoogy.Utility;
 using System;
@@ -100,7 +101,6 @@ namespace CocoDoogy.GameFlow.InGame
             new DeckCheckPhase(),
             new LockCheckPhase(),
             new ActionPointCheckPhase(),
-            new OutlineDrawPhase(),
         };
 
 
@@ -175,6 +175,7 @@ namespace CocoDoogy.GameFlow.InGame
 
         private void Clear()
         {
+            OutlineForTest.Clear();
             Passages.Clear();
             LastConsumeActionPoints = 0;
             ConsumedActionPoints = 0;
@@ -226,6 +227,8 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 if (!phase.OnPhase()) break;
             }
+            // TODO: 추후 삭제 필요
+            OutlineForTest.Draw();
         }
     }
 }

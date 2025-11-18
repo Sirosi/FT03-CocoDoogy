@@ -84,6 +84,7 @@ namespace CocoDoogy.GameFlow.InGame
                 GimmickExecutor.ExecuteFromTrigger(gridPos); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
             }
 
+            Instance.transform.parent = null;
             DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.transform.position = gridPos.ToWorldPos();
@@ -98,10 +99,11 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (!IsValid) return;
 
+            Instance.transform.parent = null;
+            DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Moving);
-            DOTween.Kill(Instance, true);
-            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance).OnStepComplete(OnBehaviourCompleted);
+            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance).OnComplete(OnBehaviourCompleted);
         }
         /// <summary>
         /// 미끄러지듯 이동
@@ -111,10 +113,11 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (!IsValid) return;
 
+            Instance.transform.parent = null;
+            DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Slide);
-            DOTween.Kill(Instance, true);
-            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance).OnStepComplete(OnBehaviourCompleted);
+            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance).OnComplete(OnBehaviourCompleted);
         }
 
 
