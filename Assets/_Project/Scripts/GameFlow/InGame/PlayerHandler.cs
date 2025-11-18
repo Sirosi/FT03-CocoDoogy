@@ -89,7 +89,7 @@ namespace CocoDoogy.GameFlow.InGame
             DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.transform.position = gridPos.ToWorldPos();
-            if(preGravityButton.HasValue)
+            if(preGravityButton.HasValue) // 실제 기존 발판 리셋하는 곳
             {
                 GimmickExecutor.ExecuteFromTrigger(preGravityButton.Value); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
             }
