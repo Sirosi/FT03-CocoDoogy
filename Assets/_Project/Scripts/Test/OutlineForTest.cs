@@ -23,13 +23,13 @@ namespace CocoDoogy.Test
                 filledTiles.Pop().OffOutline();
             }
             
-            // 기믹이 존재하는 타일이면, 빨간색으로
+            /*// 기믹이 존재하는 타일이면, 빨간색으로
             foreach (var data in HexTileMap.Gimmicks.Values)
             {
                 HexTile gimmickTile = HexTile.GetTile(data.Target.GridPos);
                 gimmickTile.DrawOutline(Color.red);
                 filledTiles.Push(gimmickTile);
-            }
+            }*/
 
             Vector2Int gridPos = PlayerHandler.GridPos;
             HexTile tile = HexTile.GetTile(gridPos);
