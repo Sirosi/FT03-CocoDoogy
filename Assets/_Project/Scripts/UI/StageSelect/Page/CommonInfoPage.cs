@@ -17,7 +17,7 @@ namespace CocoDoogy.UI.StageSelect.Page
             List<GameObject> stars = new();
             foreach (Transform child in transform.Find("Stars"))
             {
-                stars.Add(child.gameObject);
+                stars.Add(child.GetChild(0).gameObject);
             }
             clearStars = stars.ToArray();
         }
