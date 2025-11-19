@@ -7,7 +7,8 @@ namespace CocoDoogy.MiniGame
     public class MiniGameManager : Singleton<MiniGameManager>
     {
         [SerializeField] private MiniGameBase[] miniGames;
-
+        [SerializeField] private GameObject backGround;
+        public GameObject BackGround => backGround;
         protected override void Awake()
         {
             base.Awake();
@@ -24,6 +25,7 @@ namespace CocoDoogy.MiniGame
         public static void OpenRandomGame(System.Action callback)
         {
             Instance.gameObject.SetActive(true);
+            Instance.backGround.SetActive(true);
             
             Theme nowTheme = Theme.Forest; // TODO: 나중에 맵 데이터에서 호출하게 변경
 
