@@ -79,11 +79,11 @@ namespace CocoDoogy.UI
         private Theme GetThemeByIndex(int index)
         {
             switch (index)
-            {
+            { // TODO: 여기 다 뜯어 고쳐야 함
                 case 0: return Theme.Forest;
-                case 1: return Theme.Sand;
-                case 2: return Theme.Water;
-                case 3: return Theme.Snow;
+                case 1: return Theme.Water;
+                case 2: return Theme.Snow;
+                case 3: return Theme.Sand;
                 default: return Theme.None;
             }
         }

@@ -17,5 +17,12 @@ namespace CocoDoogy
         /// 타일 이동 시간
         /// </summary>
         public const float MOVE_DURATION = 1f;
+
+
+        public static class Prefs
+        {
+            // TODO: 임시 기능이라 날려야함
+            public const string REPLAY = "Replay";
+        }
     }
 }

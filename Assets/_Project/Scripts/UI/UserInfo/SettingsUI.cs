@@ -12,7 +12,7 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private RectTransform settingsWindow;
         
         [Header("Buttons")]
-        [SerializeField] private CommonButton closeButton;
+        [SerializeField] private Button closeButton;
         
         [Header("Volume Icons")]
         [SerializeField] private Image masterIcon;
