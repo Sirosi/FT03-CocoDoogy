@@ -39,10 +39,6 @@ namespace CocoDoogy.UI.UIManager
             openPauseButton.onClick.AddListener(OnOpenPauseButtonClicked);
             openQuitButton.onClick.AddListener(OnOpenQuitButtonClicked);
             
-            openResetButton.onClick.AddListener(OnOpenResetButtonClicked);
-            closeResetButton.onClick.AddListener(OnCloseResetButtonClicked);
-            resetButton.onClick.AddListener(OnResetButtonClicked);
-            
             resumeButton.onClick.AddListener(OnResumeButtonClicked);
             pauseQuitButton.onClick.AddListener(OnOpenQuitButtonClicked);
             
@@ -76,15 +72,6 @@ namespace CocoDoogy.UI.UIManager
             quitWindow.gameObject.SetActive(true);
         }
 
-        
-        void OnOpenResetButtonClicked()
-        {
-            resetWindow.gameObject.SetActive(true);
-        }
-        void OnCloseResetButtonClicked()
-        {
-            WindowAnimation.CloseWindow(resetWindow);
-        }
         void OnResetButtonClicked()
         {
             Loading.LoadScene("InGame");

@@ -58,11 +58,13 @@ namespace CocoDoogy.UI.StageSelect
         {
             if (starSize < 0)
             {
+                startButton.interactable = false;
                 startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
                 starGroup.gameObject.SetActive(false);
                 return;
             }
             
+            startButton.interactable = true;
             startButton.GetComponentInChildren<Image>().sprite = defaultSprite;
             starGroup.gameObject.SetActive(true);
             

@@ -14,37 +14,57 @@ namespace CocoDoogy.UI.StageSelect
 {
     public class StageSelectManager : Singleton<StageSelectManager>
     {
+        public static int SelectedStage;
+        
+        
         [Header("Main UIs")]
         [SerializeField] private RectTransform lobbyUIPanel;
         [SerializeField] private RectTransform stageSelectUIPanel;
         
-        
         [Header("UI Elements")]
         [SerializeField] private StageSwap stageSwap;
         [SerializeField] private StageInfoPanel stageInfoPanel;
-        private bool isStageSelect;
-        private bool isStageReady;
         
         [Header("Menu Buttons")]
         [SerializeField] private CommonButton backButton;
         
         [Header("Stages")]
         [SerializeField] private Sprite lockedSprite;
-        private Image[] stageIcons;
         
         [Header("StageOptions")]
         [SerializeField] private int clearedStages;
-        public static int SelectedStage;
-            
+
+
+        private Theme nowTheme = Theme.None;
+        private bool isStageSelect;
+        private bool isStageReady;
+        private Image[] stageIcons;
+        
+        
         protected override void Awake()
         {
             base.Awake();
+
+            PageCameraSwiper.OnStartPageChanged += OnChangedTheme;
             
             stageInfoPanel.gameObject.SetActive(false);
             isStageSelect = true;
             isStageReady = false;
             
             backButton.onClick.AddListener(OnBackButtonClicked);
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            
+            PageCameraSwiper.OnStartPageChanged -= OnChangedTheme;
+        }
+
+
+        private void OnChangedTheme(Theme theme)
+        {
+            nowTheme = theme;
         }
         
         //private void OnStageButtonClicked(int index)
