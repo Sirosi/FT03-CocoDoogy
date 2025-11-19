@@ -1035,6 +1035,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: -440
       objectReference: {fileID: 0}
+    - target: {fileID: 7614615356170794714, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+      propertyPath: m_Padding.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7614615356170794714, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+      propertyPath: m_Padding.z
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7614615356170794714, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+      propertyPath: m_Softness.x
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8455601198182998384, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1074,6 +1086,14 @@ PrefabInstance:
     - target: {fileID: 8760806092973999178, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946045215677523578, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+      propertyPath: m_Padding.m_Left
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946045215677523578, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+      propertyPath: m_Padding.m_Right
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
