@@ -39,6 +39,15 @@ namespace CocoDoogy.GameFlow.InGame.Command
         }
         public static void Refill()
         {
+            foreach(var piece in Piece.Pieces)
+            {
+                DeckPiece deck = piece.GetComponent<DeckPiece>();
+                if(!deck) continue;
+                if(deck.IsDocked == deck.PreDocked) continue;
+
+                ExecuteCommand(CommandType.DeckReset, (piece.Parent.GridPos, deck.PreDocked), false);
+            }
+
             ExecuteCommand(CommandType.Refill, (InGameManager.ActionPoints, PlayerHandler.GridPos));
         }
         
