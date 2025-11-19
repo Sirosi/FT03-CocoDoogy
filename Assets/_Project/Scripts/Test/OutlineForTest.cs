@@ -16,7 +16,7 @@ namespace CocoDoogy.Test
         public static void Clear() => filledTiles.Clear();
         public static void Draw()
         {
-            #if UNITY_EDITOR
+            //#if UNITY_EDITOR
             // 기존에 Outline이 들어간 타일 색 제거 
             while (filledTiles.Count > 0)
             {
@@ -47,7 +47,7 @@ namespace CocoDoogy.Test
             HexTile destination = HexTile.GetTile(HexTileMap.EndPos);
             destination.DrawOutline(Color.purple);
             filledTiles.Push(destination);
-            #endif
+            //#endif
         }
     }
 }
