@@ -17,6 +17,7 @@ namespace CocoDoogy.MiniGame
         [SerializeField] Sprite diggedSprite;
         Image image;
         public bool detected = false;
+        bool digged = false; //파진것인지 체크
 
         private ToyFindMiniGame parent = null;
 
@@ -32,6 +33,7 @@ namespace CocoDoogy.MiniGame
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if(digged) return;
             //모든 레이캐스트를 따와서 레이캐스트에 부딪친게 자신이고 haveToy가 True면 toyPrefab이미지 생성후 랜덤 toySprite로 이미지 교체
             List<RaycastResult> raycastResults = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventData, raycastResults);
@@ -39,13 +41,13 @@ namespace CocoDoogy.MiniGame
             {
                 SfxManager.PlaySfx(SfxType.Minigame_DigSand);
                 MiniGameParticleManager.Instance.ParticleDigging(transform.position, transform);
-                if (result.gameObject == gameObject&&haveToy==true&&detected)
+                if (result.gameObject == gameObject && haveToy && detected)
                 {
                     GameObject GO = Instantiate(toyPrefab, gameObject.transform);
                     Image toyImage = GO.GetComponent<Image>();
                     toyImage.sprite = toySprites[Random.Range(0, toySprites.Length)];
                     image.sprite = diggedSprite;
-
+                    digged = true;
                     //클리어판단
                     SfxManager.PlaySfx(SfxType.UI_PopUp);
                     parent.RemoveToy(tileID);
