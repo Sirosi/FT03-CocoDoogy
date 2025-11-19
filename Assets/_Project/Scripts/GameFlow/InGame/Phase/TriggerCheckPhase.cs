@@ -50,7 +50,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             gridPos = PlayerHandler.GridPos;
             MessageDialog.ShowMessage("기믹 동작", "해당 타일에 있는 래버를 당길거야?", DialogMode.YesNo, OnTriggerControlled);
 
-            return true;
+            return false;
         }
 
         private void OnTriggerControlled(CallbackType type)
@@ -60,6 +60,10 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 CommandManager.Trigger(gridPos.Value);
                 GimmickExecutor.ExecuteFromTrigger(gridPos.Value);
                 
+                InGameManager.ProcessPhase();
+            }
+            else
+            {
                 InGameManager.ProcessPhase();
             }
             gridPos = null;
