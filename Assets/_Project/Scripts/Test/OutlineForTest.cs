@@ -16,20 +16,20 @@ namespace CocoDoogy.Test
         public static void Clear() => filledTiles.Clear();
         public static void Draw()
         {
-            #if UNITY_EDITOR
+            //#if UNITY_EDITOR
             // 기존에 Outline이 들어간 타일 색 제거 
             while (filledTiles.Count > 0)
             {
                 filledTiles.Pop().OffOutline();
             }
             
-            // 기믹이 존재하는 타일이면, 빨간색으로
+            /*// 기믹이 존재하는 타일이면, 빨간색으로
             foreach (var data in HexTileMap.Gimmicks.Values)
             {
                 HexTile gimmickTile = HexTile.GetTile(data.Target.GridPos);
                 gimmickTile.DrawOutline(Color.red);
                 filledTiles.Push(gimmickTile);
-            }
+            }*/
 
             Vector2Int gridPos = PlayerHandler.GridPos;
             HexTile tile = HexTile.GetTile(gridPos);
@@ -47,7 +47,7 @@ namespace CocoDoogy.Test
             HexTile destination = HexTile.GetTile(HexTileMap.EndPos);
             destination.DrawOutline(Color.purple);
             filledTiles.Push(destination);
-            #endif
+            //#endif
         }
     }
 }
