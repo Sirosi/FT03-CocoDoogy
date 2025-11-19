@@ -17,7 +17,7 @@ namespace CocoDoogy
         private VCA vcaSfx;
         private VCA vcaBgm;
 
-        public static event Action OnVolumeChanged = null;
+        //public static event Action OnVolumeChanged = null;
         
         protected override void Awake()
         {
@@ -30,7 +30,7 @@ namespace CocoDoogy
             vcaSfx = RuntimeManager.GetVCA(VcaSfxPath);
             vcaBgm = RuntimeManager.GetVCA(VcaBgmPath);
             
-            OnVolumeChanged?.Invoke();
+            //OnVolumeChanged?.Invoke();
         }
 
         public void SetMasterVolume(float volume)

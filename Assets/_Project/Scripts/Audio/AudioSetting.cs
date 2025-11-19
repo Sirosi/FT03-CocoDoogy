@@ -54,9 +54,13 @@ public class AudioSetting : Singleton<AudioSetting>
 
         DontDestroyOnLoad(gameObject);
 
-        VolumeController.OnVolumeChanged += AwakeAudioSetting;
+        //VolumeController.OnVolumeChanged += AwakeAudioSetting;
     }
 
+    private void Start()
+    {
+        AwakeAudioSetting();
+    }
 
     private static void OnMasterSave(float value)
     {
@@ -80,8 +84,8 @@ public class AudioSetting : Singleton<AudioSetting>
         OnBgmChanged += OnBgmSave;
         OnSfxChanged += OnSfxSave;
 
-        MasterVolume = PlayerPrefs.GetFloat("MasterVolume");
-        BgmVolume = PlayerPrefs.GetFloat("BgmVolume");
-        SfxVolume = PlayerPrefs.GetFloat("SfxVolume");
+        MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.75f);
+        BgmVolume = PlayerPrefs.GetFloat("BgmVolume", 0.75f);
+        SfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
     }
 }
