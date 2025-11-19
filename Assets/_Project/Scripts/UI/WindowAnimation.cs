@@ -1,5 +1,6 @@
 using CocoDoogy.Audio;
 using DG.Tweening;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -25,14 +26,16 @@ namespace CocoDoogy.UI
             sequence.AppendCallback(() => rt.gameObject.SetActive(false));
         }
 
-        public static async Task TurnPage(RectTransform rt)
+        public static void TurnPage(RectTransform rt, Action callback = null)
         {
             rt.DOKill();
             Sequence sequence = DOTween.Sequence();
             sequence.Append(rt.DOScale(new Vector2(0, 1), 0.5f).SetEase(Ease.OutCubic));
-            sequence.AppendCallback(() => rt.gameObject.SetActive(false));
-            
-            await sequence.AsyncWaitForCompletion();
+            sequence.AppendCallback(() =>
+            {
+                rt.gameObject.SetActive(false);
+                callback?.Invoke();
+            });
         }
     }
 }

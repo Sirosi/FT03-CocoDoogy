@@ -1,3 +1,5 @@
+using CocoDoogy.Core;
+using CocoDoogy.Data;
 using CocoDoogy.UI;
 using CocoDoogy.UI.Popup;
 using DG.Tweening;
@@ -10,18 +12,16 @@ using UnityEngine.EventSystems;
 
 namespace CocoDoogy.UI.StageSelect
 {
-    public class StageSelectManager : MonoBehaviour
+    public class StageSelectManager : Singleton<StageSelectManager>
     {
-        public static StageSelectManager Instance { get; private set; }
-
         [Header("Main UIs")]
         [SerializeField] private RectTransform lobbyUIPanel;
         [SerializeField] private RectTransform stageSelectUIPanel;
         
         
         [Header("UI Elements")]
-        [SerializeField] private RectTransform stageSelectUI;
-        [SerializeField] private RectTransform stageReadyUI;
+        [SerializeField] private StageSwap stageSwap;
+        [SerializeField] private StageInfoPanel stageInfoPanel;
         private bool isStageSelect;
         private bool isStageReady;
         
@@ -29,7 +29,6 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private CommonButton backButton;
         
         [Header("Stages")]
-        [SerializeField] private GameObject[] stages;
         [SerializeField] private Sprite lockedSprite;
         private Image[] stageIcons;
         
@@ -37,32 +36,15 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private int clearedStages;
         public static int SelectedStage;
             
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            Instance = this;
+            base.Awake();
             
-            stageReadyUI.gameObject.SetActive(false);
+            stageInfoPanel.gameObject.SetActive(false);
             isStageSelect = true;
             isStageReady = false;
             
             backButton.onClick.AddListener(OnBackButtonClicked);
-        }
-        
-        private void LockStage(int index)
-        {
-            if (index >= clearedStages)
-            {
-                stageIcons[index].sprite = lockedSprite;
-                foreach (Transform child in stages[index].transform)
-                {
-                    child.gameObject.SetActive(false);
-                }
-            }
         }
         
         //private void OnStageButtonClicked(int index)
@@ -93,11 +75,19 @@ namespace CocoDoogy.UI.StageSelect
             }
             if (isStageReady)
             {
-                WindowAnimation.SwipeWindow(stageReadyUI);
+                WindowAnimation.SwipeWindow(stageInfoPanel.transform as RectTransform);
                 
                 isStageSelect = true;
                 isStageReady = false;
             }
+        }
+
+
+        public static void ShowReadyView(StageData data)
+        {
+            if (!Instance) return;
+            
+            Instance.stageInfoPanel.Show(data);
         }
     }
 }

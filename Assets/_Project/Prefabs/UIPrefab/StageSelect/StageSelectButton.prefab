@@ -317,12 +317,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad0f11c214e44438a3d509142d7529a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  stageNumberText: {fileID: 8738577333382991349}
+  startButton: {fileID: 6497694282808918929}
+  starGroup: {fileID: 4240126153524678774}
   clearStars:
   - {fileID: 4526598719905088840}
   - {fileID: 5053392819420798846}
   - {fileID: 7820053204339605162}
-  startButton: {fileID: 0}
+  defaultSprite: {fileID: 21300000, guid: 6699d803cb100ab409b9aba0042e1f05, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 04ea54a00b2aa13459140be70cc33d00, type: 3}
 --- !u!114 &6497694282808918929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,7 +372,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 6699d803cb100ab409b9aba0042e1f05, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -669,7 +672,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 1-11
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 97e8c70db00c76841b0471dbf037335f, type: 2}
   m_sharedMaterial: {fileID: 8056748052174156069, guid: 97e8c70db00c76841b0471dbf037335f, type: 2}
@@ -696,8 +699,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -706,7 +709,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 10
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
