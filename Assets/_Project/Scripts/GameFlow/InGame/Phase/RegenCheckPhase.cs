@@ -12,7 +12,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (!InGameManager.IsValid) return false;
 
             Piece centerPiece = HexTile.GetTile(PlayerHandler.GridPos)?.GetPiece(HexDirection.Center);
-            if (!centerPiece || centerPiece.BaseData.type is not (PieceType.Field or PieceType.House)) return true;
+            if (!centerPiece || centerPiece.BaseData.type is not (PieceType.Field or PieceType.House or PieceType.Oasis)) return true;
             
             CommandManager.Regen(centerPiece.BaseData.type == PieceType.Field ? 1 : 2);
             CommandManager.GimmickPieceChange(PlayerHandler.GridPos, HexDirection.Center, PieceType.None,
