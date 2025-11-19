@@ -14,12 +14,12 @@ namespace CocoDoogy.Tile.Gimmick.Data
         public GimmickTarget Target = new();
         public GimmickEffect Effect = new();
         public System.Collections.Generic.List<GimmickTrigger> Triggers = new();
-
-
+        
+        
         /// <summary>
         /// 해당 기믹이 동작상태인지 여부
         /// </summary>
-        public bool IsTriggered { get; set; } = false;
+        public bool IsOn { get; set; } = false;
 
 
         public GimmickTrigger GetTrigger(Vector2Int gridPos)

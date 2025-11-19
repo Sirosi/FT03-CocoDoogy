@@ -1,4 +1,5 @@
 using CocoDoogy.Network.Ticket;
+using Firebase.Functions;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -12,12 +13,12 @@ namespace CocoDoogy.Network
     {
         private const long RechargeIntervalMs = 1 * 60 * 1000; // TODO: 지금은 1분 주기로 실행되게 되어있는데 나중에 10분 or 30분 주기로 변경 예정
         private const int MaxRegenTicket = 5;
-        public int TotalTicket => CurrentTicket + BonusTicket;
-        
-        public int CurrentTicket { get; private set; }
-        public int BonusTicket { get; private set; }
-        public long? LastTicketTimestamp { get; private set; } = 0;
-        public TimeSpan TimeUntilNextTicket { get; private set; } = TimeSpan.Zero;
+        private int TotalTicket => CurrentTicket + BonusTicket;
+
+        private int CurrentTicket { get; set; }
+        private int BonusTicket { get; set; }
+        private long? LastTicketTimestamp { get; set; } = 0;
+        private TimeSpan TimeUntilNextTicket { get; set; } = TimeSpan.Zero;
         
         private long serverTimeOffset = 0;
         
@@ -41,15 +42,13 @@ namespace CocoDoogy.Network
             if (response.ServerTime is not null)
             { // 서버와 클라이언트 간의 시간차이 계산
                 serverTimeOffset = Convert.ToInt64(response.ServerTime) - DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                Debug.Log($"serverTimeOffset: {serverTimeOffset}");
             }
             LastTicketTimestamp = response.LastTicketTime != null ? Convert.ToInt64(response.LastTicketTime) : null;
             
-            // TODO : 나중에 삭제
-            if (response.Added > 0)
-                Debug.Log($"티켓 {response.Added}개 충전됨. 총 {TotalTicket}개 ({CurrentTicket} + {BonusTicket})");
-            else
-                Debug.Log($"티켓 상태 갱신됨.총 {TotalTicket}개 ({CurrentTicket} + {BonusTicket})");
+            // TODO : 로그 확인용이므로 나중에 삭제
+            Debug.Log(response.Added > 0
+                ? $"티켓 {response.Added}개 충전됨. 총 {TotalTicket}개 ({CurrentTicket} + {BonusTicket})"
+                : $"티켓 상태 갱신됨.총 {TotalTicket}개 ({CurrentTicket} + {BonusTicket})");
         }
 
         /// <summary>
@@ -82,7 +81,7 @@ namespace CocoDoogy.Network
 
             try
             {
-                var result = await Functions.GetHttpsCallable("consumeTicket").CallAsync();
+                HttpsCallableResult result = await Functions.GetHttpsCallable("consumeTicket").CallAsync();
                 string json = JsonConvert.SerializeObject(result.Data);
                 TicketResponse response = JsonConvert.DeserializeObject<TicketResponse>(json);
 
@@ -98,7 +97,7 @@ namespace CocoDoogy.Network
         }
 
         /// <summary>
-        /// 게임이 실행되고 무한 반복되는 코루틴 메서드 <\br>
+        /// 게임이 실행되고 무한 반복되는 코루틴 메서드 <br/>
         /// 일정 주기마다 RechargeTicketAsync를 실행시킴
         /// </summary>
         /// <returns></returns>

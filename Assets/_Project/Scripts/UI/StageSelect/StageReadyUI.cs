@@ -1,9 +1,10 @@
-using CocoDoogy.UI;
-using CocoDoogy.UI.StageSelect;
-using System;
+using CocoDoogy.Data;
+using CocoDoogy.Network;
+using CocoDoogy.StageSelect.Item;
+using CocoDoogy.UI.Popup;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CocoDoogy.UI.StageSelect
 {
@@ -14,23 +15,22 @@ namespace CocoDoogy.UI.StageSelect
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI title;
         
-        [Header("Stage Informations")]
+        [Header("Stage Information")]
         [SerializeField] private RectTransform page1;
         [SerializeField] private RectTransform page2;
         private bool isFirstPage;
         
-        [Header("Tips")]
-        
+        [Header("StageInfo Helps")]
+        [SerializeField] private RectTransform content;
+        [SerializeField] private StageData[] stageInfos;
         
         [Header("Ranks")]
         [SerializeField] private GameObject[] ranks;
         private TextMeshProUGUI[] rankTexts;
         private CommonButton[] replayButtons;
-        
-        [Header("Items")]
-        [SerializeField] private Toggle[] itemToggles;
-        private TextMeshProUGUI[] itemAmounts;
-        private bool[] isEquipped;
+
+        [Header("Item Toggle Handler")]
+        [SerializeField] private ItemToggleHandler itemToggleHandler;
         
         [Header("Buttons")]
         [SerializeField] private CommonButton pageChangeButton;
@@ -38,19 +38,6 @@ namespace CocoDoogy.UI.StageSelect
 
         private void Awake()
         {
-            itemAmounts = new TextMeshProUGUI[itemToggles.Length];
-            isEquipped = new bool[itemToggles.Length];
-            
-            for (int i = 0; i < itemToggles.Length; ++i)
-            {
-                int index = i;
-                
-                itemAmounts[i] = itemToggles[i].GetComponentInChildren<TextMeshProUGUI>();
-                isEquipped[i] = itemToggles[i].isOn;
-
-                itemToggles[i].onValueChanged.AddListener(isOn => OnItemEquipped(index, isOn));
-            }
-            
             pageChangeButton.onClick.AddListener(OnPageChangeButtonClicked);
             startButton.onClick.AddListener(OnStartButtonClicked);
         }
@@ -63,24 +50,10 @@ namespace CocoDoogy.UI.StageSelect
             isFirstPage = true;
             page1.gameObject.SetActive(true);
             page2.gameObject.SetActive(false);
+            
+            StageInfoHelps();
         }
-
-
-
-        private void OnItemEquipped(int index, bool isOn)
-        {
-            if (isOn)
-            {
-                itemAmounts[index].text = $"{2-1}개";
-            }
-            else
-            {
-                itemAmounts[index].text = $"2개";
-            }
-        }
-
-
-
+        
         private async void OnPageChangeButtonClicked()
         {
             if (isFirstPage)
@@ -96,10 +69,43 @@ namespace CocoDoogy.UI.StageSelect
                 isFirstPage = true;
             }
         }
-            
-        private void OnStartButtonClicked()
+        
+        private void StageInfoHelps()
         {
-            Loading.LoadScene($"Stage{selectedStage}");
+            StageData stageInfo = stageInfos[selectedStage - 1];
+            for (int i = content.childCount - 1; i >= 0; --i)
+            {
+                Destroy(content.GetChild(i).gameObject);
+            }
+            // foreach (var prefab in stageInfo.contentPrefabs)
+            // {
+            //     Instantiate(prefab, content);
+            // }
+        }
+        
+        private async void OnStartButtonClicked()
+        {
+            bool isReady = await OnConsumeTicketAsync();
+            if (isReady)
+            {
+                // TODO : 아이템 사용을 인게임에서 선택할 수 있게 하게 되었으므로 기능 이전 필요
+                // itemToggleHandler.UseItem();
+                Loading.LoadScene($"InGame");
+            }
+            else
+            {
+                // TODO : 티켓이 부족하면 메세지를 띄우게만 해뒀는데 여기에서 상점으로 연결까지 할 수도?
+                MessageDialog.ShowMessage(
+                    "티켓 부족", 
+                    "티켓이 부족하여 게임을 진행할 수 없습니다.",
+                    DialogMode.Confirm,
+                    null);
+            }
+        }
+        
+        private async Task<bool> OnConsumeTicketAsync()
+        {
+            return await FirebaseManager.Instance.UseTicketAsync();
         }
     }
 }

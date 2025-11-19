@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2980521033877854311}
   - component: {fileID: 1695443584056481468}
+  - component: {fileID: 7360703002485740282}
   m_Layer: 0
   m_Name: P004_Deck
   m_TagString: Untagged
@@ -46,6 +47,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62f2f59572244bc8d1b3b7d01f7e434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7360703002485740282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798713855981304466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb83965fc9424d7e8e1e2950535a757e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boatObject: {fileID: 8323934838893387521}
 --- !u!1001 &1593102555266352079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -136,6 +150,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: boat_03
       objectReference: {fileID: 0}
+    - target: {fileID: 4601872337998453258, guid: ad496db4c5492bd4db0ca446b79d126a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7809813727333640654, guid: ad496db4c5492bd4db0ca446b79d126a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -200,5 +218,10 @@ PrefabInstance:
 --- !u!4 &2322630442103467205 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7809813727333640654, guid: ad496db4c5492bd4db0ca446b79d126a, type: 3}
+  m_PrefabInstance: {fileID: 5501617674282927371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8323934838893387521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4601872337998453258, guid: ad496db4c5492bd4db0ca446b79d126a, type: 3}
   m_PrefabInstance: {fileID: 5501617674282927371}
   m_PrefabAsset: {fileID: 0}

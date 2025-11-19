@@ -50,7 +50,6 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
                 new TMP_Dropdown.OptionData(GimmickType.None.ToString()),
                 new TMP_Dropdown.OptionData(GimmickType.TileRotate.ToString()),
                 new TMP_Dropdown.OptionData(GimmickType.PieceChange.ToString()),
-                new TMP_Dropdown.OptionData(GimmickType.PieceDestroy.ToString()),
             });
 
             gimmickTypeDropdown.onValueChanged.AddListener(OnGimmickTypeChanged);
@@ -71,7 +70,7 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
             SelectedGimmick = HexTileMap.GetGimmick(gridPos);
             if (SelectedGimmick is null) // 기믹이 없던 위치라면
             {
-                HexTileMap.Instance.Gimmicks.Add(gridPos, SelectedGimmick = new());
+                HexTileMap.Gimmicks.Add(gridPos, SelectedGimmick = new());
                 SelectedGimmick.Target.GridPos = gridPos;
             }
             tileInfoText.text = $"{HexTile.GetTile(gridPos).CurrentData.type} {gridPos}";
@@ -111,6 +110,11 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
 
             try
             {
+                if (type == GimmickType.None)
+                {
+                    // 적절한 삭제 아이콘을 줘야할 것 같음
+                    return;
+                }
                 effectPages[(int)type - 1].Show();
             }
             catch (IndexOutOfRangeException e)

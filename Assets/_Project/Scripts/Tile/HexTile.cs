@@ -34,12 +34,13 @@ namespace CocoDoogy.Tile
         {
             get
             {
-                Piece.Piece centerPiece = Pieces[(int)HexDirection.Center];
+                Piece.Piece centerPiece = GetPiece(HexDirection.Center);
 
-                bool canMove = CurrentData.canMove;
+                bool canTileMove = CurrentData.canMove;
+                bool canPieceMove = !centerPiece || centerPiece.BaseData.canMove;
                 bool canPiece = centerPiece &&
                                 centerPiece.BaseData.type is PieceType.Bridge or PieceType.FloatedCrate;
-                return canMove | canPiece;
+                return canTileMove && canPieceMove || canPiece;
             }
         }
 
@@ -200,9 +201,10 @@ namespace CocoDoogy.Tile
             }
 
             // Center는 LookDirection 회전만 해줘야 함
-            if (Pieces[(int)HexDirection.Center])
+            Piece.Piece centerPiece = GetPiece(HexDirection.Center);
+            if (centerPiece)
             {
-                Pieces[(int)HexDirection.Center].LookDirection = Pieces[(int)HexDirection.Center].LookDirection.AddRotate(rotate);
+                centerPiece.LookDirection = centerPiece.LookDirection.AddRotate(rotate);
             }
 
             OnRotateChanged?.Invoke(this, rotate);
@@ -237,9 +239,35 @@ namespace CocoDoogy.Tile
 
 
         #region ◇ 기물 관련 기능 ◇
+        /// <summary>
+        /// 해당 기물을 갖고 있는지 확인
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public bool HasPiece(PieceType type, out Piece.Piece findedPiece)
+        {
+            findedPiece = null;
+            foreach (var piece in Pieces)
+            {
+                if (piece && piece.BaseData.type == type)
+                {
+                    findedPiece = piece;
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        /// <summary>
+        /// 해당 기물을 연결
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="piece"></param>
+        /// <returns></returns>
         public Piece.Piece ConnectPiece(HexDirection direction, Piece.Piece piece)
         {
-            if (Pieces[(int)direction])
+            var prePiece = GetPiece(direction);
+            if (prePiece && prePiece != piece)
             {
                 RemovePiece(direction);
             }
@@ -254,6 +282,7 @@ namespace CocoDoogy.Tile
         /// 해당 위치에 기물 추가
         /// </summary>
         /// <param name="direction"></param>
+        /// 
         /// <param name="pieceType"></param>
         /// <returns></returns>
         public Piece.Piece SetPiece(HexDirection direction, PieceType pieceType, HexDirection lookDirection)
@@ -340,6 +369,7 @@ namespace CocoDoogy.Tile
             HasTargetObstacle,
             CheckMyBridge,
             CheckTargetBridge,
+            CheckCrateMovable,
         };
         /// <summary>
         /// 타일이 없는지
@@ -359,6 +389,9 @@ namespace CocoDoogy.Tile
             
             return !hexTile.IsPlaceable;
         }
+        /// <summary>
+        /// 이동불가 장애물이 현재 타일에 존재하는지
+        /// </summary>
         private static bool HasMyObstacle(HexTile hexTile, HexDirection direction)
         {
             HexTile myTile = HexTile.GetTile(hexTile.GridPos.GetDirectionPos(direction));
@@ -367,11 +400,11 @@ namespace CocoDoogy.Tile
             return myTile.Pieces[(int)myDirection] && !myTile.Pieces[(int)myDirection].BaseData.canMove;
         }
         /// <summary>
-        /// 이동불가 장애물이 존재하는지
+        /// 이동불가 장애물이 목표 타일에 존재하는지
         /// </summary>
         private static bool HasTargetObstacle(HexTile hexTile, HexDirection direction) =>
-            (hexTile.Pieces[(int)HexDirection.Center] &&                    // 센터에 기물이 존재하고,
-            !hexTile.Pieces[(int)HexDirection.Center].BaseData.canMove) ||  // 움직일 수 없는지
+            (hexTile.GetPiece(HexDirection.Center) &&                    // 센터에 기물이 존재하고,
+            !hexTile.GetPiece(HexDirection.Center).BaseData.canMove) ||  // 움직일 수 없는지
             (hexTile.Pieces[(int)direction] &&                              // 그 방향에 기물이 존재하고,
             !hexTile.Pieces[(int)direction].BaseData.canMove);              // 움직일 수 없는지
         /// <summary>
@@ -380,7 +413,7 @@ namespace CocoDoogy.Tile
         private static bool CheckMyBridge(HexTile hexTile, HexDirection direction)
         {
             HexTile myTile = HexTile.GetTile(hexTile.GridPos.GetDirectionPos(direction));
-            Piece.Piece piece = myTile.Pieces[(int)HexDirection.Center];
+            Piece.Piece piece = myTile.GetPiece(HexDirection.Center);
             if (piece && piece.BaseData.type == PieceType.Bridge)
             {
                 return piece.LookDirection != direction && piece.LookDirection != direction.GetMirror();
@@ -392,11 +425,38 @@ namespace CocoDoogy.Tile
         /// </summary>
         private static bool CheckTargetBridge(HexTile hexTile, HexDirection direction)
         {
-            Piece.Piece piece = hexTile.Pieces[(int)HexDirection.Center];
+            Piece.Piece piece = hexTile.GetPiece(HexDirection.Center);
             if (piece && piece.BaseData.type == PieceType.Bridge)
             {
                 return piece.LookDirection != direction && piece.LookDirection != direction.GetMirror();
             }
+            return false;
+        }
+        /// <summary>
+        /// 만약 해당 위치에 Crate가 있다면, 움직일 수 있는지
+        /// </summary>
+        private static bool CheckCrateMovable(HexTile hexTile, HexDirection direction)
+        {
+            Piece.Piece centerPiece = hexTile.GetPiece(HexDirection.Center);
+            if (!centerPiece || centerPiece.BaseData.type is not (PieceType.Crate or PieceType.GravityCrate)) return false; // 없으면 문제 없음
+            
+            HexTile acrossTile = HexTile.GetTile(hexTile.GridPos.GetDirectionPos(direction.GetMirror()));
+            if (!acrossTile /*|| !acrossTile.CurrentData.canMove*/) return true; // 타일 상태 때문에 상자가 건너편으로 갈 수 없음
+            
+            // 목표 타일의 중간에 발판이 아닌 기물이 존재하는지
+            Piece.Piece acrossCenterPiece = acrossTile.GetPiece(HexDirection.Center);
+            if (acrossCenterPiece && acrossCenterPiece.BaseData.type != PieceType.GravityButton) return true; // 발판이 아닌 물체가 있으면 갈 수가 없음.
+
+            // 현재 타일의 진행 방향에 장애물 있는지
+            HexDirection tilePath = direction.GetMirror();
+            bool canTilePath = hexTile.GetPiece(tilePath)?.BaseData.canMove ?? true;
+            if(!canTilePath) return true;
+            
+            // 목표 타일의 진행 방향에 장애물이 있는지
+            HexDirection acrossPath = direction;
+            bool canAcrossPath = acrossTile.GetPiece(acrossPath)?.BaseData.canMove ?? true;
+            if(!canAcrossPath) return true;
+            
             return false;
         }
         #endregion

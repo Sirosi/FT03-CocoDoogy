@@ -1,5 +1,6 @@
 using CocoDoogy.Tile;
 using CocoDoogy.LifeCycle;
+using CocoDoogy.Tile.Piece;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,24 @@ namespace CocoDoogy
             foreach (var v in releases)
             {
                 result += v.OnRelease;
+            }
+            return result;
+        }
+        public static Action<string> GetInserts(this IEnumerable<ISpecialPiece> inserts)
+        {
+            Action<string> result = null;
+            foreach (var v in inserts)
+            {
+                result += v.OnDataInsert;
+            }
+            return result;
+        }
+        public static Action GetExecutes(this IEnumerable<ISpecialPiece> inserts)
+        {
+            Action result = null;
+            foreach (var v in inserts)
+            {
+                result += v.OnExecute;
             }
             return result;
         }
@@ -129,6 +148,25 @@ namespace CocoDoogy
                 _ => 0,
             };
             return result;
+        }
+
+        /// <summary>
+        /// 목표가 인접했다면, 현재 위치에서 어느 방향에 존재하는지 방향 반환
+        /// </summary>
+        /// <param name="gridPos"></param>
+        /// <param name="targetPos"></param>
+        /// <returns></returns>
+        public static HexDirection? GetRelativeDirection(this Vector2Int gridPos, Vector2Int targetPos)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                HexDirection direction = (HexDirection)i;
+                if (targetPos == gridPos.GetDirectionPos(direction))
+                {
+                    return direction;
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -247,6 +285,11 @@ namespace CocoDoogy
         public static void SetEnable(this MonoBehaviour component, bool enable)
         {
             component.enabled = enable;
+        }
+
+        public static bool IsBetween(this int value, int min, int max)
+        {
+            return min <= value && value <= max;
         }
     }
 }

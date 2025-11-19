@@ -3,6 +3,7 @@ using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
 using CocoDoogy.Tile.Piece.Trigger;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
@@ -16,11 +17,14 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         /// 트리거 위치
         /// </summary>
         public Vector2Int GridPos = Vector2Int.zero;
+        public bool IsUnInteract = false;
 
 
         public TriggerCommand(object param): base(CommandType.Trigger, param)
         {
-            GridPos = (Vector2Int)param;
+            var data = ((Vector2Int, bool))param;
+            GridPos = data.Item1;
+            IsUnInteract = data.Item2;
         }
 
 
@@ -31,7 +35,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
                 HexTile tile = HexTile.GetTile(GridPos);
                 if (!tile) return null;
 
-                Piece piece = tile.Pieces[(int)HexDirection.Center];
+                Piece piece = tile.GetPiece(HexDirection.Center);
                 if (!piece) return null;
 
                 TriggerPieceBase result = piece.GetComponent<TriggerPieceBase>();
@@ -46,8 +50,14 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             TriggerPieceBase trigger = TriggerPiece;
             if (!trigger) return;
 
-            trigger.Interact();
-            GimmickExecutor.ExecuteFromTrigger(GridPos, trigger.IsOn);
+            if (!IsUnInteract)
+            {
+                trigger.Interact();
+            }
+            else
+            {
+                trigger.UnInteract();
+            }
         }
 
         public override void Undo()
@@ -55,8 +65,14 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             TriggerPieceBase trigger = TriggerPiece;
             if (!trigger) return;
 
-            trigger.UnInteract();
-            GimmickExecutor.ExecuteFromTrigger(GridPos, trigger.IsOn);
+            if (!IsUnInteract)
+            {
+                trigger.UnInteract();
+            }
+            else
+            {
+                trigger.Interact();
+            }
         }
     }
 }

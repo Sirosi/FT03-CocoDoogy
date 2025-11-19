@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
+    /// <summary>
+    /// 게임 시작 배치에 대한 Command<br/>
+    /// GridPos(Vector2Int), LookDirection(HexDirection)
+    /// </summary>
     [System.Serializable]
     public class DeployCommand: CommandBase
     {

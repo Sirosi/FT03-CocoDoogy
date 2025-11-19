@@ -1,5 +1,4 @@
-using CocoDoogy.Weather;
-using UnityEngine;
+using CocoDoogy.GameFlow.InGame.Weather;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {

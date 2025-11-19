@@ -4,6 +4,7 @@ using CocoDoogy.MapEditor.UI.GimmickConnector;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
 using CocoDoogy.UI;
+using TMPro;
 using UnityEngine;
 
 namespace CocoDoogy.MapEditor.UI
@@ -22,9 +23,10 @@ namespace CocoDoogy.MapEditor.UI
         [SerializeField] private CommonButton cwRotateButton;
         [SerializeField] private PieceIcon[] slotIcons;
 
-        [Header("Connect Buttons")]
+        [Header("Connect UIs")]
         [SerializeField] private CommonButton gimmickButton;
         [SerializeField] private CommonButton targetButton;
+        [SerializeField] private TMP_InputField buttonLifeInput;
 
 
         public static HexTile SelectedTile = null;
@@ -41,6 +43,7 @@ namespace CocoDoogy.MapEditor.UI
             cwRotateButton.onClick.AddListener(OnCWRotateClicked);
             gimmickButton.onClick.AddListener(OnGimmickButtonClicked);
             targetButton.onClick.AddListener(OnTargetButtonClicked);
+            buttonLifeInput.onValueChanged.AddListener(OnButtonLifeChanged);
         }
         void OnDestroy()
         {
@@ -108,6 +111,7 @@ namespace CocoDoogy.MapEditor.UI
         {
             if (!SelectedTile) return;
 
+            targetButton.gameObject.SetActive(false);
             for (int i = 0; i < 7; i++)
             {
                 DrawPiece((HexDirection)i);
@@ -122,12 +126,16 @@ namespace CocoDoogy.MapEditor.UI
             if (!SelectedTile) return;
 
             // 사용할 데이터 세팅
-            Piece piece = SelectedTile.Pieces[(int)direction];
+            Piece piece = SelectedTile.GetPiece(direction);
             PieceIcon slotIcon = slotIcons[(int)direction];
             slotIcon.SetPiece(piece);
 
+            if (piece && piece.BaseData.hasTarget)
+            {
+                targetButton.gameObject.SetActive(true);
+            }
             if (direction != HexDirection.Center) return;
-            targetButton.gameObject.SetActive(piece && piece.BaseData.hasTarget);
+            buttonLifeInput.gameObject.SetActive(piece && piece.BaseData.type == PieceType.Button);
         }
 
         
@@ -159,6 +167,12 @@ namespace CocoDoogy.MapEditor.UI
         private void OnTargetButtonClicked()
         {
             MapEditorController.EditMode = MapEditMode.PieceTargetMode;
+        }
+
+        private void OnButtonLifeChanged(string newValue)
+        {
+            if (int.TryParse(newValue, out int num)) return;
+            // TODO: 아직 완성되지 않음
         }
         
         /// <summary>

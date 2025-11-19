@@ -1,26 +1,44 @@
+using CocoDoogy.Data;
+using CocoDoogy.GameFlow.InGame;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CocoDoogy.UI.StageSelect
 {
     public class StageSelectButton: MonoBehaviour
     {
+        [SerializeField] private StageData data;
+        
         [SerializeField] private GameObject[] clearStars = null;
+        [SerializeField] private CommonButton startButton;
+
+
+        private StageData stageData = null;
 
 
         void Awake()
         {
-            // TODO: Init에 인자를 넣는 시점에 제거
-            Init();
+            if (!data) return;
+            Init(data, 3);
         }
         
 
-        public void Init() // TODO: 나중에 초기화용 인자 필요
+        public void Init(StageData data, int starSize)
         {
-            int starSize = 3; // TODO: 나중에 인자로 가야 함
+            stageData = data;
             foreach (GameObject star in clearStars)
             {
                 star.SetActive(starSize-- > 0);
             }
+            
+            startButton.onClick.AddListener(OnButtonClicked);
+        }
+
+
+        private void OnButtonClicked()
+        {
+            InGameManager.MapData = stageData.mapData.text;
+            SceneManager.LoadScene("InGame"); // TODO: 임시 기능
         }
     }
 }

@@ -394,13 +394,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6dae0b8edcabd4690eb408b686fb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainBgmEvent:
-    Guid:
-      Data1: 1056652163
-      Data2: 1260339331
-      Data3: 1274943367
-      Data4: -1011817880
-    Path: event:/MainBgm
+  bgmList:
+  - type: 1
+    eventReference:
+      Guid:
+        Data1: -1871572123
+        Data2: 1227680373
+        Data3: -611299399
+        Data4: 87268680
+      Path: event:/Bgm/Lobby
+  - type: 2
+    eventReference:
+      Guid:
+        Data1: 2017684373
+        Data2: 1112196163
+        Data3: 1949523112
+        Data4: 832450301
+      Path: event:/Bgm/Forest
+  - type: 3
+    eventReference:
+      Guid:
+        Data1: 1479585846
+        Data2: 1314546440
+        Data3: -1306047864
+        Data4: 1078399764
+      Path: event:/Bgm/Watery
+  - type: 4
+    eventReference:
+      Guid:
+        Data1: -1134364399
+        Data2: 1273195752
+        Data3: -688535678
+        Data4: 852089143
+      Path: event:/Bgm/Winter
+  - type: 5
+    eventReference:
+      Guid:
+        Data1: 2042359656
+        Data2: 1126332024
+        Data3: -1223441242
+        Data4: -1398206895
+      Path: event:/Bgm/Desert
 --- !u!114 &2645735018059196249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +459,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece1467b44167c343bbb4ade6e31d7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemData:
+  - {fileID: 11400000, guid: cf2cdcc61f7af3c40ae74f249641df7e, type: 2}
+  - {fileID: 11400000, guid: 9977c4643fa872545aa7e2cfd4502856, type: 2}
+  - {fileID: 11400000, guid: 71e1d0dc13ee3b743adecc2ff15e3b88, type: 2}
+  cashData:
+  - {fileID: 11400000, guid: ac9ba659b74bb8b41a2e33d128542dd0, type: 2}
+  - {fileID: 11400000, guid: 36f2d91d6ab46f64c9e3c9728b58dc41, type: 2}
+  stampData:
+  - {fileID: 11400000, guid: 4fdf4c9e272c84345bc036b105bb3762, type: 2}
+  - {fileID: 11400000, guid: 62f5979cfb3beff4da1f1876fccc7888, type: 2}
+  - {fileID: 11400000, guid: 6386e37ee52e414478055e6106f44230, type: 2}
   tileData:
   - {fileID: 11400000, guid: 10a355761618d1c41af1aa2601864c67, type: 2}
   - {fileID: 11400000, guid: e444c73224af05f4d829c97839537cf9, type: 2}
@@ -443,6 +488,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 05d59deeb453744448f0a57d984ebde3, type: 2}
   - {fileID: 11400000, guid: 97ccd3564b4a66041ba33081f5174404, type: 2}
   - {fileID: 11400000, guid: d11a8d5cea36cbf478994f2c3440347c, type: 2}
+  - {fileID: 11400000, guid: d879caee80e1e7d488be9f5b8efa0f4a, type: 2}
   - {fileID: 11400000, guid: 486b79623ccc34a46b7ce3a27291aa0b, type: 2}
   - {fileID: 11400000, guid: 8d06a0c867fe8e44ab57d7b2b9d67bab, type: 2}
   - {fileID: 11400000, guid: b126a1f9f496fdf4394d4948a1ffda96, type: 2}
@@ -452,6 +498,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5741ab3793f0d54448f90e3a6010cdd0, type: 2}
   - {fileID: 11400000, guid: c659cd36e24cb6843946e62e090363a7, type: 2}
   - {fileID: 11400000, guid: 62d8c3354581f204585ab8a6af2e8274, type: 2}
+  weatherData:
+  - {fileID: 11400000, guid: d15ea31344eb49e4db4465d64cd68482, type: 2}
+  - {fileID: 11400000, guid: f229f0107e941a04082610c90dd9ae34, type: 2}
+  - {fileID: 11400000, guid: 24eac19685ee56342949300be81272b6, type: 2}
+  - {fileID: 11400000, guid: b9f99e3a48fb58043912f42b203837be, type: 2}
 --- !u!114 &8884511360502333469
 MonoBehaviour:
   m_ObjectHideFlags: 0
