@@ -9,6 +9,7 @@ namespace CocoDoogy.Tile.Piece
     /// <summary>
     /// 다리용
     /// </summary>
+    [RequireComponent(typeof(Piece))]
     public class BridgePiece: MonoBehaviour, ISpawn<Piece>, IRelease<Piece>
     {
         private HexDirection LookDirection => piece.LookDirection;

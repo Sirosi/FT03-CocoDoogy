@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace CocoDoogy.Tile.Piece
 {
+    [RequireComponent(typeof(Piece))]
     public class OasisPiece: MonoBehaviour
     {
         [SerializeField] private GameObject defaultObject;

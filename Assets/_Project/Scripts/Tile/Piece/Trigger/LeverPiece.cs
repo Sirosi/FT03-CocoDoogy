@@ -3,10 +3,10 @@ using UnityEngine;
 namespace CocoDoogy.Tile.Piece.Trigger
 {
     /// <summary>
-    /// SwitchType용 트리거<br/>
+    /// LeverType용 트리거<br/>
     /// 토글 형태로 동작
     /// </summary>
-    public class SwitchPiece : TriggerPieceBase
+    public class LeverPiece : TriggerPieceBase
     {
         [SerializeField] private Transform lever;
 
@@ -16,7 +16,7 @@ namespace CocoDoogy.Tile.Piece.Trigger
             get => isOn;
             set
             {
-                lever.rotation = Quaternion.Euler(0, 0, (isOn = value) ? 60 : 0);
+                lever.rotation = Quaternion.Euler(0, (isOn = value) ? 180 : 0, 0);
             }
         }
 
