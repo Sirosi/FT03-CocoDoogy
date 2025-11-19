@@ -57,6 +57,11 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// ActionPoints 회복
         /// </summary>
         Increase = 122,
+
+        /// <summary>
+        /// Refill 시, 부두의 배 리턴
+        /// </summary>
+        DeckReset = 123,
         #endregion
     }
 }

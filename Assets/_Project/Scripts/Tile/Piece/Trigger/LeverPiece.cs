@@ -16,7 +16,7 @@ namespace CocoDoogy.Tile.Piece.Trigger
             get => isOn;
             set
             {
-                lever.rotation = Quaternion.Euler(0, (isOn = value) ? 180 : 0, 0);
+                lever.localRotation = Quaternion.Euler(0, (isOn = value) ? 180 : 0, 0);
             }
         }
 

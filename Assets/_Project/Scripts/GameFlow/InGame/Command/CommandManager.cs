@@ -48,6 +48,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     CommandType.Weather => new WeatherCommand(param),
                     CommandType.Gimmick => new GimmickCommand(param),
                     CommandType.Increase => new IncreaseCommand(param),
+                    CommandType.DeckReset => new DeckResetCommand(param),
                     _ => null
                 };
 
