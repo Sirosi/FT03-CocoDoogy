@@ -22,14 +22,8 @@ public class WeatherEffectTester : MonoBehaviour
         if (Keyboard.current[Key.Digit3].wasPressedThisFrame)
             TestWeather(WeatherType.Snow);
         
-        if (Keyboard.current[Key.Digit4].wasPressedThisFrame)
-            TestWeather(WeatherType.Wind);
-        
         if (Keyboard.current[Key.Digit5].wasPressedThisFrame)
             TestWeather(WeatherType.Mirage);
-        
-        if (Keyboard.current[Key.Digit6].wasPressedThisFrame)
-            TestWeather(WeatherType.Hail);
     }
 
     private void TestWeather(WeatherType weatherType)
