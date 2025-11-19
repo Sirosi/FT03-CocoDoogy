@@ -19,7 +19,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if(!centerPiece) return true;
 
             gridPos = PlayerHandler.GridPos;
-            if (centerPiece || centerPiece.BaseData.type == PieceType.House)
+            if (centerPiece && centerPiece.BaseData.type == PieceType.House)
             {
                 MiniGameManager.OpenRandomGame(IncreaseActionPoints);
                 return false; 
