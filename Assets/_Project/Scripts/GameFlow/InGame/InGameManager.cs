@@ -2,6 +2,7 @@ using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.GameFlow.InGame.Phase.Passage;
+using CocoDoogy.Test;
 using CocoDoogy.Tile;
 using CocoDoogy.Utility;
 using System;
@@ -93,7 +94,6 @@ namespace CocoDoogy.GameFlow.InGame
             new TornadoCheckPhase(),
             new SlideCheckPhase(),
             new PassageCheckPhase(),
-            new OutlineDrawPhase(),
             new CrateMovePhase(),
             new CrateProcessPhase(),
             new TriggerCheckPhase(),
@@ -113,7 +113,6 @@ namespace CocoDoogy.GameFlow.InGame
 
         void Update()
         {
-            // TODO: 리팩토링 필요
             if (TouchSystem.TouchCount > 0)
             {
                 if (touched) return;
@@ -148,6 +147,9 @@ namespace CocoDoogy.GameFlow.InGame
         /// <param name="mapJson"></param>
         public static void DrawMap(string mapJson)
         {
+            // TODO:
+            //  1. DrawMap을 다른 곳으로 옮기는 게 좋아 보임
+            //  2. Map 그리는 클래스와 게임 진행 클리스를 분리해야 함
             if (!IsValid) return;
             
             Instance.Clear();
@@ -175,6 +177,7 @@ namespace CocoDoogy.GameFlow.InGame
 
         private void Clear()
         {
+            OutlineForTest.Clear();
             Passages.Clear();
             LastConsumeActionPoints = 0;
             ConsumedActionPoints = 0;
@@ -226,6 +229,8 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 if (!phase.OnPhase()) break;
             }
+            // TODO: 추후 삭제 필요
+            OutlineForTest.Draw();
         }
     }
 }

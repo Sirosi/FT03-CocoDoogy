@@ -1,24 +1,43 @@
 using CocoDoogy.GameFlow.InGame.Command;
+using CocoDoogy.MiniGame;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
+using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Phase
 {
     // TODO: 임시 Phase
     public class RegenCheckPhase: IPhase
     {
+        private Vector2Int gridPos = Vector2Int.zero;
+        
         public bool OnPhase()
         {
             if (!InGameManager.IsValid) return false;
 
             Piece centerPiece = HexTile.GetTile(PlayerHandler.GridPos)?.GetPiece(HexDirection.Center);
-            if (!centerPiece || centerPiece.BaseData.type is not (PieceType.Field or PieceType.House)) return true;
+            if(!centerPiece) return true;
+
+            gridPos = PlayerHandler.GridPos;
+            if (centerPiece && centerPiece.BaseData.type == PieceType.House)
+            {
+                MiniGameManager.OpenRandomGame(IncreaseActionPoints);
+                return false; 
+            }
+
+            if (!centerPiece || centerPiece.BaseData.type is not (PieceType.Field or PieceType.Oasis)) return true;
+            IncreaseActionPoints();
+
             
+            return true;
+        }
+
+        private void IncreaseActionPoints()
+        {
+            Piece centerPiece = HexTile.GetTile(PlayerHandler.GridPos)?.GetPiece(HexDirection.Center);
             CommandManager.Regen(centerPiece.BaseData.type == PieceType.Field ? 1 : 2);
             CommandManager.GimmickPieceChange(PlayerHandler.GridPos, HexDirection.Center, PieceType.None,
                 centerPiece.BaseData.type, centerPiece.LookDirection, centerPiece.LookDirection);
-            
-            return true;
         }
     }
 }

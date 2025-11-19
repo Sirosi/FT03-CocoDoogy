@@ -41,7 +41,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             // GravityButton은 다른 식으로 동작함
             Piece centerPiece = tile.GetPiece(HexDirection.Center);
             if (!centerPiece) return true;
-            if (centerPiece.BaseData.type is not (PieceType.Switch or PieceType.Button)) return true;
+            if (centerPiece.BaseData.type is not (PieceType.Lever or PieceType.Button)) return true;
             
             // 이미 눌린 버튼은 다시 누를 수 없음
             TriggerPieceBase triggerPiece = centerPiece.GetComponent<TriggerPieceBase>();
@@ -50,7 +50,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             gridPos = PlayerHandler.GridPos;
             MessageDialog.ShowMessage("기믹 동작", "해당 타일에 있는 래버를 당길거야?", DialogMode.YesNo, OnTriggerControlled);
 
-            return true;
+            return false;
         }
 
         private void OnTriggerControlled(CallbackType type)
@@ -59,6 +59,12 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             {
                 CommandManager.Trigger(gridPos.Value);
                 GimmickExecutor.ExecuteFromTrigger(gridPos.Value);
+                
+                InGameManager.ProcessPhase();
+            }
+            else
+            {
+                InGameManager.ProcessPhase();
             }
             gridPos = null;
         }

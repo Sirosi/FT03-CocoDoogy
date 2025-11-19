@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace CocoDoogy.Tile.Piece
 {
+    [RequireComponent(typeof(Piece))]
     public class OasisPiece: MonoBehaviour
     {
         [SerializeField] private GameObject defaultObject;
@@ -23,8 +24,11 @@ namespace CocoDoogy.Tile.Piece
 
         private void OnWeatherChanged(WeatherType type)
         {
-            defaultObject.SetActive(type != WeatherType.Mirage);
-            mirageObject.SetActive(type == WeatherType.Mirage);
+            // TODO: 추후 원복해야 함
+            //defaultObject.SetActive(type != WeatherType.Mirage);
+            //mirageObject.SetActive(type == WeatherType.Mirage);
+            defaultObject.SetActive(false);
+            mirageObject.SetActive(true);
         }
     }
 }

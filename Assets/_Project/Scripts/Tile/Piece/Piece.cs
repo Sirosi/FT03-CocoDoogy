@@ -3,12 +3,16 @@ using CocoDoogy.LifeCycle;
 using DG.Tweening;
 using Lean.Pool;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CocoDoogy.Tile.Piece
 {
     public class Piece: MonoBehaviour
     {
+        public static readonly List<Piece> Pieces = new();
+
+
         public PieceData BaseData { get; private set; } = null;
         public HexTile Parent { get; private set; } = null;
         public HexDirection DirectionPos { get; private set; } = HexDirection.East;
@@ -30,7 +34,7 @@ namespace CocoDoogy.Tile.Piece
             }
         }
 
-        public bool IsTrigger => BaseData && BaseData.type is PieceType.Switch or PieceType.Button or PieceType.GravityButton;
+        public bool IsTrigger => BaseData && BaseData.type is PieceType.Lever or PieceType.Button or PieceType.GravityButton;
         
         
         /// <summary>
@@ -56,6 +60,12 @@ namespace CocoDoogy.Tile.Piece
         
         
         #region ◇ LifeCycle ◇
+        void OnDestroy()
+        {
+            Pieces.Remove(this);
+        }
+
+
         private void Init(Piece data)
         {
             hasInit = true;
@@ -70,6 +80,7 @@ namespace CocoDoogy.Tile.Piece
         private void Spawn(PieceData data)
         {
             BaseData = data;
+            Pieces.Add(this);
         }
         public void Release()
         {
@@ -79,6 +90,7 @@ namespace CocoDoogy.Tile.Piece
             Parent = null;
             Target = null;
             
+            Pieces.Remove(this);
             onRelease?.Invoke(this);
             LeanPool.Despawn(this);
         }

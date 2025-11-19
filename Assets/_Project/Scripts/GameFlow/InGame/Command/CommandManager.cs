@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using CocoDoogy.GameFlow.InGame.Command.Content;
+using CocoDoogy.Test;
 
 namespace CocoDoogy.GameFlow.InGame.Command
 {
@@ -47,6 +48,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     CommandType.Weather => new WeatherCommand(param),
                     CommandType.Gimmick => new GimmickCommand(param),
                     CommandType.Increase => new IncreaseCommand(param),
+                    CommandType.DeckReset => new DeckResetCommand(param),
                     _ => null
                 };
 
@@ -129,6 +131,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                 Undid.Push(result);
                 break;
             }
+            OutlineForTest.Draw();
 
             return result;
         }
@@ -145,6 +148,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                 Executed.Push(result);
                 break;
             }
+            OutlineForTest.Draw();
 
             return result;
         }
