@@ -28,7 +28,8 @@ namespace CocoDoogy.UI.IntroAndLogin
         
         private void Awake()
         {
-            startButton.onClick.AddListener(ShakeTitleImage);
+            ShakeTitleImage();
+            startButton.onClick.AddListener(ConvertLoginUI);
             BlickText();
         }
 
@@ -37,7 +38,6 @@ namespace CocoDoogy.UI.IntroAndLogin
         /// </summary>
         private void ShakeTitleImage()
         {
-            startButton.interactable = false;
             rect = titleImage.GetComponent<RectTransform>();
             Vector2 originalPos = rect.anchoredPosition;
 
@@ -45,7 +45,7 @@ namespace CocoDoogy.UI.IntroAndLogin
 
             seq.Append(rect.DOAnchorPosY(originalPos.y + moveAmount, titleDuration))
                 .Append(rect.DOAnchorPosY(originalPos.y - moveAmount, titleDuration))
-                .Append(rect.DOAnchorPosY(originalPos.y, titleDuration)).OnComplete(ConvertLoginUI);
+                .Append(rect.DOAnchorPosY(originalPos.y, titleDuration));
         }
 
         /// <summary>
@@ -64,6 +64,7 @@ namespace CocoDoogy.UI.IntroAndLogin
         /// </summary>
         private void ConvertLoginUI()
         {
+            startButton.interactable = false;
             IntroUIManager.Instance.LoginUI.OpenPanel();
             touchToStartText.gameObject.SetActive(false);
         }

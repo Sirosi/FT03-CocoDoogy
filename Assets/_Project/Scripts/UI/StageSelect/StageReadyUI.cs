@@ -88,7 +88,8 @@ namespace CocoDoogy.UI.StageSelect
             bool isReady = await OnConsumeTicketAsync();
             if (isReady)
             {
-                itemToggleHandler.UseItem();
+                // TODO : 아이템 사용을 인게임에서 선택할 수 있게 하게 되었으므로 기능 이전 필요
+                // itemToggleHandler.UseItem();
                 Loading.LoadScene($"InGame");
             }
             else
