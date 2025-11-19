@@ -39,13 +39,13 @@ namespace CocoDoogy.MiniGame
             {
                 SfxManager.PlaySfx(SfxType.Minigame_DigSand);
                 MiniGameParticleManager.Instance.ParticleDigging(transform.position, transform);
-                if (result.gameObject == gameObject&&haveToy==true&&detected)
+                if (result.gameObject == gameObject && haveToy && !detected)
                 {
                     GameObject GO = Instantiate(toyPrefab, gameObject.transform);
                     Image toyImage = GO.GetComponent<Image>();
                     toyImage.sprite = toySprites[Random.Range(0, toySprites.Length)];
                     image.sprite = diggedSprite;
-
+            
                     //클리어판단
                     SfxManager.PlaySfx(SfxType.UI_PopUp);
                     parent.RemoveToy(tileID);
