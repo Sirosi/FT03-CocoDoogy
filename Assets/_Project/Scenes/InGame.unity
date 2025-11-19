@@ -272,6 +272,9 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   moveSpeed: 0.5
   zoomSpeed: 10
+  uiLayerMask:
+    serializedVersion: 2
+    m_Bits: 32
 --- !u!4 &335330930
 Transform:
   m_ObjectHideFlags: 0
@@ -1933,14 +1936,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2237289094780422460, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867251072266917659, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867251072266917659, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

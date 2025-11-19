@@ -1,6 +1,7 @@
 using CocoDoogy.Tile;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
@@ -14,7 +15,8 @@ namespace CocoDoogy
         
         private Vector2 prevPos;
         private bool canMoveCamera = false;
-
+        [SerializeField] private LayerMask uiLayerMask;
+        
         private void Awake()
         {
             if (mainCamera == null)
@@ -23,6 +25,7 @@ namespace CocoDoogy
         
         private void Update()
         {
+            if (IsPointerOverUI()) return;
             if (Touchscreen.current != null)
             {
                 HandleTouch();
@@ -129,6 +132,22 @@ namespace CocoDoogy
 
             mainCamera.fieldOfView -= diff * zoomSpeed * Time.deltaTime;
             mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView, 20, 80);
+        }
+        
+        private bool IsPointerOverUI()
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return true;
+            }
+
+            if (Input.touchCount > 0)
+            {
+                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                    return true;
+            }
+
+            return false;
         }
     }
 }
