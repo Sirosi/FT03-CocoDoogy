@@ -60,6 +60,12 @@ namespace CocoDoogy.Tile.Piece
         
         
         #region ◇ LifeCycle ◇
+        void OnDestroy()
+        {
+            Pieces.Remove(this);
+        }
+
+
         private void Init(Piece data)
         {
             hasInit = true;
