@@ -3,6 +3,7 @@ using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.StageSelect.Page;
+using System;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -32,20 +33,29 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private CommonButton replayButton; // TODO: 테스트용 버튼
 
 
+        public bool IsOpened { get; private set; } = false;
+
+
         private StageData stageData = null;
 
 
-        protected void Awake()
+        void Awake()
         {
             pageChangeButton.onClick.AddListener(OnPageChangeButtonClicked);
             startButton.onClick.AddListener(OnStartButtonClicked);
+        }
+
+        void OnDisable()
+        {
+            IsOpened = false;
         }
 
 
         public void Show(StageData data)
         {
             if (!data) return;
-            
+
+            IsOpened = true;
             gameObject.SetActive(true);
 
             title.text = (stageData = data).stageName;
