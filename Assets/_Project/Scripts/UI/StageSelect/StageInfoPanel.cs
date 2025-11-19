@@ -1,4 +1,5 @@
 using CocoDoogy.Data;
+using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.StageSelect.Page;
@@ -69,9 +70,11 @@ namespace CocoDoogy.UI.StageSelect
         
         private async void OnStartButtonClicked()
         {
+            startButton.interactable = false;
             bool isReady = await OnConsumeTicketAsync();
             if (isReady)
             {
+                InGameManager.MapData = stageData.mapData.text;
                 Loading.LoadScene("InGame");
             }
             else
@@ -82,6 +85,7 @@ namespace CocoDoogy.UI.StageSelect
                     "티켓이 부족하여 게임을 진행할 수 없습니다.",
                     DialogMode.Confirm,
                     null);
+                startButton.interactable = true;
             }
         }
         

@@ -22,7 +22,7 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private RectTransform stageSelectUIPanel;
         
         [Header("UI Elements")]
-        [SerializeField] private StageSwap stageSwap;
+        [SerializeField] private StageListPage stageListPage;
         [SerializeField] private StageInfoPanel stageInfoPanel;
         
         [Header("Menu Buttons")]
@@ -64,7 +64,7 @@ namespace CocoDoogy.UI.StageSelect
 
         private void OnChangedTheme(Theme theme)
         {
-            nowTheme = theme;
+            stageListPage.DrawButtons(nowTheme = theme, 1);
         }
         
         //private void OnStageButtonClicked(int index)

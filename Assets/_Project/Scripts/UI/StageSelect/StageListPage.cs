@@ -9,7 +9,7 @@ namespace CocoDoogy.UI.StageSelect
 {
     public class StageListPage: MonoBehaviour
     {
-        public const int LIST_SIZE = 5;
+        public const int LIST_SIZE = 100;
         
         
         [SerializeField] private StageSelectButton stageButtonPrefab;

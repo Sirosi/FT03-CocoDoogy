@@ -76,7 +76,7 @@ namespace CocoDoogy.UI.StageSelect
                 star.SetActive(starSize-- > 0);
             }
             
-            stageNumberText.text = $"{(int)Mathf.Sqrt((int)data.theme)}-{data.index}";
+            stageNumberText.text = $"{data.stageName}";
         }
 
 
