@@ -88,12 +88,12 @@ namespace CocoDoogy.UI.StageSelect
         
         private void OnBackButtonClicked()
         {
-            if (isStageSelect)
+            if (!stageInfoPanel.IsOpened)
             {
                 WindowAnimation.SwipeWindow(stageSelectUIPanel);
                 lobbyUIPanel.gameObject.SetActive(true);
             }
-            if (isStageReady)
+            else
             {
                 WindowAnimation.SwipeWindow(stageInfoPanel.transform as RectTransform);
                 
