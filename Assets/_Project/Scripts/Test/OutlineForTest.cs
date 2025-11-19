@@ -1,23 +1,22 @@
+using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.Tile;
-using CocoDoogy.Tile.Gimmick.Data;
-using CocoDoogy.Tile.Piece;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CocoDoogy.GameFlow.InGame.Phase
+namespace CocoDoogy.Test
 {
     /// <summary>
     /// 고정적으로 들어가야하는 기믹 등을 탐색하기 위한 Outline
     /// </summary>
-    public class OutlineDrawPhase: IPhase
+    public static class OutlineForTest
     {
-        private readonly Stack<HexTile> filledTiles = new();
+        private static readonly Stack<HexTile> filledTiles = new();
         
-        
-        public bool OnPhase()
-        {
-            if (!InGameManager.IsValid) return false;
 
+        public static void Clear() => filledTiles.Clear();
+        public static void Draw()
+        {
+            #if UNITY_EDITOR
             // 기존에 Outline이 들어간 타일 색 제거 
             while (filledTiles.Count > 0)
             {
@@ -48,8 +47,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             HexTile destination = HexTile.GetTile(HexTileMap.EndPos);
             destination.DrawOutline(Color.purple);
             filledTiles.Push(destination);
-            
-            return true;
+            #endif
         }
     }
 }

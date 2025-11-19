@@ -443,10 +443,19 @@ namespace CocoDoogy.Tile
             HexTile acrossTile = HexTile.GetTile(hexTile.GridPos.GetDirectionPos(direction.GetMirror()));
             if (!acrossTile /*|| !acrossTile.CurrentData.canMove*/) return true; // 타일 상태 때문에 상자가 건너편으로 갈 수 없음
             
+            // 목표 타일의 중간에 발판이 아닌 기물이 존재하는지
             Piece.Piece acrossCenterPiece = acrossTile.GetPiece(HexDirection.Center);
             if (acrossCenterPiece && acrossCenterPiece.BaseData.type != PieceType.GravityButton) return true; // 발판이 아닌 물체가 있으면 갈 수가 없음.
 
-            // TODO: 추가적인 제약사항이 있을 수도 있음.
+            // 현재 타일의 진행 방향에 장애물 있는지
+            HexDirection tilePath = direction.GetMirror();
+            bool canTilePath = hexTile.GetPiece(tilePath)?.BaseData.canMove ?? true;
+            if(!canTilePath) return true;
+            
+            // 목표 타일의 진행 방향에 장애물이 있는지
+            HexDirection acrossPath = direction;
+            bool canAcrossPath = acrossTile.GetPiece(acrossPath)?.BaseData.canMove ?? true;
+            if(!canAcrossPath) return true;
             
             return false;
         }

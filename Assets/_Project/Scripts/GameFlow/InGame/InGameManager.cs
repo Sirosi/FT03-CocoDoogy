@@ -2,6 +2,7 @@ using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.GameFlow.InGame.Phase.Passage;
+using CocoDoogy.Test;
 using CocoDoogy.Tile;
 using CocoDoogy.Utility;
 using System;
@@ -17,8 +18,8 @@ namespace CocoDoogy.GameFlow.InGame
     {
         public static event Action<int> OnActionPointChanged = null;
         public static event Action<int> OnRefillCountChanged = null;
-        
-        
+
+
         /// <summary>
         /// 현재 인게임이 정상적인(= 플레이 가능) 상태인지 체크
         /// </summary>
@@ -62,7 +63,7 @@ namespace CocoDoogy.GameFlow.InGame
             }
         }
         /// <summary>
-        /// Refill전까지 남은 ActionPoints 
+        /// Refill전까지 남은 ActionPoints
         /// </summary>
         public static int ActionPoints
         {
@@ -76,7 +77,7 @@ namespace CocoDoogy.GameFlow.InGame
             }
         }
         public static List<PassageBase> Passages { get; } = new();
-        
+
         /// <summary>
         /// InGame에서 사용할 MapData
         /// </summary>
@@ -103,7 +104,6 @@ namespace CocoDoogy.GameFlow.InGame
             new DeckCheckPhase(),
             new LockCheckPhase(),
             new ActionPointCheckPhase(),
-            new OutlineDrawPhase(),
         };
 
 
@@ -132,10 +132,10 @@ namespace CocoDoogy.GameFlow.InGame
 
                     HexDirection? direction = PlayerHandler.GridPos.GetRelativeDirection(selectedTile.GridPos);
                     if (!direction.HasValue) return;
-                    
+
                     HexTile playerTile = HexTile.GetTile(PlayerHandler.GridPos);
                     if (!playerTile.CanMove(direction.Value)) return;
-                    
+
                     CommandManager.Move(direction.Value);
                 }
             }
@@ -152,8 +152,11 @@ namespace CocoDoogy.GameFlow.InGame
         /// <param name="mapJson"></param>
         public static void DrawMap(string mapJson)
         {
+            // TODO:
+            //  1. DrawMap을 다른 곳으로 옮기는 게 좋아 보임
+            //  2. Map 그리는 클래스와 게임 진행 클리스를 분리해야 함
             if (!IsValid) return;
-            
+
             Instance.Clear();
             CommandManager.Clear();
 
@@ -173,14 +176,15 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 Passages.Add(new WeatherPassage(weather.Key, weather.Value));
             }
-            
+
             Camera.main.transform.position = new Vector3(HexTileMap.StartPos.x, 5, HexTileMap.StartPos.y - 3);
-            
+
             ProcessPhase();
         }
 
         private void Clear()
         {
+            OutlineForTest.Clear();
             Passages.Clear();
             LastConsumeActionPoints = 0;
             ConsumedActionPoints = 0;
@@ -232,8 +236,10 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 if (!phase.OnPhase()) break;
             }
+            // TODO: 추후 삭제 필요
+            OutlineForTest.Draw();
         }
-        
+
         /// <summary>
         /// UI위로 클릭하면 게임에 영향을 주지 않게 하는 메서드
         /// </summary>
@@ -242,7 +248,7 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (EventSystem.current.IsPointerOverGameObject()) // 에디터
                 return true;
-            
+
             if (Touchscreen.current != null) // 빌드
             {
                 foreach (var touch in Touchscreen.current.touches)

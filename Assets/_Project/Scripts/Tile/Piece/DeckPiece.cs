@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace CocoDoogy.Tile.Piece
 {
+    [RequireComponent(typeof(Piece))]
     public class DeckPiece: MonoBehaviour, ISpecialPiece
     {
         [SerializeField] private GameObject boatObject;
