@@ -1,4 +1,5 @@
 using CocoDoogy.Core;
+using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.GameFlow.InGame.Phase.Passage;
@@ -82,7 +83,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// InGame에서 사용할 MapData
         /// </summary>
         public static string MapData { get; set; } = null;
-
+        public static StageData StageData { get; set; } = null;
 
         private Camera mainCamera = null;
         private bool touched = false;
@@ -105,6 +106,7 @@ namespace CocoDoogy.GameFlow.InGame
             new LockCheckPhase(),
             new ActionPointCheckPhase(),
         };
+        
 
 
         void Start()
