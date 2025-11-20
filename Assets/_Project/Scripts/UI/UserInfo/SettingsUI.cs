@@ -59,8 +59,12 @@ namespace CocoDoogy.UI.UserInfo
             sfxVolume.value = AudioSetting.SfxVolume;
         }
         
-        public override void ClosePanel() => WindowAnimation.SwipeWindow(settingsWindow);
-        
+        public override void ClosePanel()
+        {
+            WindowAnimation.SwipeWindow(settingsWindow);
+            PageCameraSwiper.IsSwipeable = true;
+        }
+
         void MasterControl(float value)
         {
             if (value <= 0)

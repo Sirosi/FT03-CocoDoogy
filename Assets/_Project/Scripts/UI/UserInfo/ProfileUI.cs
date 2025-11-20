@@ -21,7 +21,12 @@ namespace CocoDoogy
             _ = RefreshUIAsync();
         }
         
-        public override void ClosePanel() => WindowAnimation.CloseWindow(profileWindow);
+        public override void ClosePanel()
+        {
+            WindowAnimation.CloseWindow(profileWindow);
+            PageCameraSwiper.IsSwipeable = true;
+        }
+
 
         
         private async Task RefreshUIAsync()
