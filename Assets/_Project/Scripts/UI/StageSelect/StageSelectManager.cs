@@ -3,6 +3,7 @@ using CocoDoogy.Data;
 using CocoDoogy.UI;
 using CocoDoogy.UI.Popup;
 using DG.Tweening;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -14,9 +15,6 @@ namespace CocoDoogy.UI.StageSelect
 {
     public class StageSelectManager : Singleton<StageSelectManager>
     {
-        public static int SelectedStage;
-        
-        
         [Header("Main UIs")]
         [SerializeField] private RectTransform lobbyUIPanel;
         [SerializeField] private RectTransform stageSelectUIPanel;
@@ -36,8 +34,6 @@ namespace CocoDoogy.UI.StageSelect
 
 
         private Theme nowTheme = Theme.None;
-        private bool isStageSelect;
-        private bool isStageReady;
         private Image[] stageIcons;
         
         
@@ -48,10 +44,13 @@ namespace CocoDoogy.UI.StageSelect
             PageCameraSwiper.OnStartPageChanged += OnChangedTheme;
             
             stageInfoPanel.gameObject.SetActive(false);
-            isStageSelect = true;
-            isStageReady = false;
             
             backButton.onClick.AddListener(OnBackButtonClicked);
+        }
+
+        private void OnEnable()
+        {
+            PageCameraSwiper.IsSwipeable = false;
         }
 
         protected override void OnDestroy()
@@ -67,24 +66,6 @@ namespace CocoDoogy.UI.StageSelect
             stageListPage.DrawButtons(nowTheme = theme, 1);
         }
         
-        //private void OnStageButtonClicked(int index)
-        //{
-        //    if (index <= clearedStages)
-        //    {
-        //        SelectedStage = index;
-        //        
-        //        if (stageReadyUI.gameObject.activeSelf) return;
-        //        stageReadyUI.gameObject.SetActive(true);
-        //        isStageSelect = false;
-        //        isStageReady = true;
-        //    }
-        //    else
-        //    {
-        //        MessageDialog.ShowMessage($"STAGE {index}","이전 스테이지를 클리어해주세요!", DialogMode.Confirm, (_) => Debug.Log("Refused"));
-        //    }
-        //}
-
-        
         
         private void OnBackButtonClicked()
         {
@@ -92,13 +73,11 @@ namespace CocoDoogy.UI.StageSelect
             {
                 WindowAnimation.SwipeWindow(stageSelectUIPanel);
                 lobbyUIPanel.gameObject.SetActive(true);
+                PageCameraSwiper.IsSwipeable = true;
             }
             else
             {
                 WindowAnimation.SwipeWindow(stageInfoPanel.transform as RectTransform);
-                
-                isStageSelect = true;
-                isStageReady = false;
             }
         }
 

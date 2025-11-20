@@ -33,7 +33,12 @@ namespace CocoDoogy.UI.Gift
             getAllButton.onClick.AddListener(OnGetAllButtonClicked);
             confirmButton.onClick.AddListener(OnConfirmButtonClicked);
         }
-        public override void ClosePanel() => WindowAnimation.SwipeWindow(giftWindow);
+        public override void ClosePanel()
+        {
+            WindowAnimation.SwipeWindow(giftWindow);
+            PageCameraSwiper.IsSwipeable = true;
+        }
+
         public void SubscriptionEvent() => _ = RefreshPanelAsync();
         private void OnGetAllButtonClicked() => getGiftWindow.gameObject.SetActive(true);
         private void OnConfirmButtonClicked() =>  WindowAnimation.CloseWindow(getGiftWindow);
