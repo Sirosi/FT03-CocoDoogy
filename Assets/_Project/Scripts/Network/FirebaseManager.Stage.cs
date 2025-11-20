@@ -1,5 +1,7 @@
 using Firebase.Extensions;
 using Firebase.Firestore;
+using Firebase.Functions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,9 +14,32 @@ namespace CocoDoogy.Network
     {
         // TODO : 스테이지 관련 Firebase Functions 사용하는 메서드 추가 예정
 
-        public static async Task<string> ClearStageAsync()
+        /// <summary>
+        /// 스테이지를 클리어하면 작동하는 메서드.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<IDictionary<string, object>> ClearStageAsync(int theme, int level, int remainAP,
+            float clearTime)
         {
-            return null;
+            try
+            {
+                Dictionary<string, object> data = new()
+                {
+                    { "theme", Extensions.Hex2(theme) },
+                    { "level", Extensions.Hex2(level) },
+                    { "remainAP", remainAP },
+                    { "clearTime", clearTime }
+                };
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("clearStage").CallAsync(data);
+
+                string json = JsonConvert.SerializeObject(result.Data);
+                return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"스테이지 클리어 저장 실패: {e.Message}");
+                throw;
+            }
         }
 
         /// <summary>
@@ -35,6 +60,7 @@ namespace CocoDoogy.Network
                 {
                     Debug.Log(snap.Id);
                 }
+
                 return null;
             }
             catch (Exception e)
