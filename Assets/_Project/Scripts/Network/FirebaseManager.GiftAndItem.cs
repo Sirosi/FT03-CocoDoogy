@@ -20,16 +20,16 @@ namespace CocoDoogy.Network
         /// <param name="quantity"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<IDictionary<string, object>> PurchaseWithCashMoneyAsync(string itemId, int quantity)
+        public static async Task<IDictionary<string, object>> PurchaseWithCashMoneyAsync(string itemId, int quantity)
         {
-            if (!IsFirebaseReady) throw new Exception("Firebase가 초기화되지 않았습니다.");
+            if (!Instance.IsFirebaseReady) throw new Exception("Firebase가 초기화되지 않았습니다.");
             Dictionary<string, object> data = new()
             {
                 { "itemId", itemId }, { "itemQuantity", Convert.ToInt32(quantity) }
             };
             try
             {
-                HttpsCallableResult result = await Functions.GetHttpsCallable("purchaseWithCashMoney").CallAsync(data);
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("purchaseWithCashMoney").CallAsync(data);
                 string json = JsonConvert.SerializeObject(result.Data);
                 IDictionary<string, object> dict = JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
                 return dict;
@@ -41,12 +41,12 @@ namespace CocoDoogy.Network
             }
         }
 
-        public async Task<IDictionary<string, object>> TakeGiftRequestAsync(string giftId)
+        public static async Task<IDictionary<string, object>> TakeGiftRequestAsync(string giftId)
         {
             try
             {
                 Dictionary<string, object> data = new() { { "giftId", giftId } };
-                HttpsCallableResult result = await Functions.GetHttpsCallable("takePresentRequest").CallAsync(data);
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("takePresentRequest").CallAsync(data);
 
                 string json = JsonConvert.SerializeObject(result.Data);
                 return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
@@ -58,12 +58,12 @@ namespace CocoDoogy.Network
             }
         }
 
-        public async Task<IDictionary<string, object>> UseItemAsync(string itemId)
+        public static async Task<IDictionary<string, object>> UseItemAsync(string itemId)
         {
             try
             {
                 Dictionary<string, object> data = new() { { "itemId", itemId } };
-                HttpsCallableResult result = await Functions.GetHttpsCallable("useItem").CallAsync(data);
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("useItem").CallAsync(data);
 
                 string json = JsonConvert.SerializeObject(result.Data);
                 return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
@@ -75,10 +75,10 @@ namespace CocoDoogy.Network
             }
         }
         
-        public async Task<List<IDictionary<string, object>>> GetGiftListAsync()
+        public static async Task<List<IDictionary<string, object>>> GetGiftListAsync()
         {
-            string userId = Auth.CurrentUser.UserId;
-            DocumentSnapshot userDoc = await Firestore
+            string userId = Instance.Auth.CurrentUser.UserId;
+            DocumentSnapshot userDoc = await Instance.Firestore
                 .Collection("users")
                 .Document(userId)
                 .Collection("private")
@@ -104,10 +104,10 @@ namespace CocoDoogy.Network
         /// <summary>
         /// Firebase Firestore에서 현재 로그인한 유저의 itemDic을 읽어와 반환하는 메서드
         /// </summary>
-        public async Task<IDictionary<string, object>> GetItemListAsync()
+        public static async Task<IDictionary<string, object>> GetItemListAsync()
         {
-            string userId = Auth.CurrentUser.UserId;
-            DocumentSnapshot userDoc = await Firestore
+            string userId = Instance.Auth.CurrentUser.UserId;
+            DocumentSnapshot userDoc = await Instance.Firestore
                 .Collection("users")
                 .Document(userId)
                 .Collection("private")

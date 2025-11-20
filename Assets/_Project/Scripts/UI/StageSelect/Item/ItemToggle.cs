@@ -65,7 +65,7 @@ namespace CocoDoogy.StageSelect.Item
 
         public async void Use()
         {
-            IDictionary<string, object> result = await FirebaseManager.Instance.UseItemAsync(ItemId);
+            IDictionary<string, object> result = await FirebaseManager.UseItemAsync(ItemId);
             bool success = (bool)result["success"];
             if (success)
             {
