@@ -512,6 +512,10 @@ PrefabInstance:
       propertyPath: stageUI
       value: 
       objectReference: {fileID: 185375026}
+    - target: {fileID: 6857404779267394986, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: snapThreshold
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7177815490040504817, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -754,7 +758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4367447102055042953, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 4408723474467878767, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
       propertyPath: m_Pivot.x
@@ -836,24 +840,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8438139365554866535, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      propertyPath: m_text
-      value: Play!
-      objectReference: {fileID: 0}
-    - target: {fileID: 8438139365554866535, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 97e8c70db00c76841b0471dbf037335f, type: 2}
-    - target: {fileID: 8438139365554866535, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      propertyPath: m_fontStyle
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8438139365554866535, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 8056748052174156069, guid: 97e8c70db00c76841b0471dbf037335f, type: 2}
-    - target: {fileID: 8438139365554866535, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      propertyPath: m_hasFontAssetChanged
+    - target: {fileID: 6630853618105649414, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

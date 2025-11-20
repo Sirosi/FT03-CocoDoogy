@@ -55,6 +55,11 @@ namespace CocoDoogy.UI.StageSelect
             backButton.onClick.AddListener(OnBackButtonClicked);
         }
 
+        private void OnEnable()
+        {
+            PageCameraSwiper.IsSwipeable = false;
+        }
+        
         protected override void OnDestroy()
         {
             base.OnDestroy();
