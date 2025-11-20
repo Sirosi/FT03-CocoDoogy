@@ -29,7 +29,6 @@ exports.clearStage = onCall(fnConfig, async (request) => {
             theme,
             level,
             // replayData: JSON.stringify(replayData),
-            clearedAt: admin.firestore.FieldValue.serverTimestamp()
         };
 
         if (!doc.exists) {

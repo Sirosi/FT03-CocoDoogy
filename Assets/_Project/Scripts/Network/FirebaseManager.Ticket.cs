@@ -71,7 +71,7 @@ namespace CocoDoogy.Network
         /// 티켓을 사용하는 메서드
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> UseTicketAsync()
+        public static async Task<bool> UseTicketAsync()
         {
             // TODO : 티켓 구매 시 TotalTicket에 영향을 주게 변경해야함. 
             // if (TotalTicket <= 0)
@@ -82,11 +82,11 @@ namespace CocoDoogy.Network
 
             try
             {
-                HttpsCallableResult result = await Functions.GetHttpsCallable("consumeTicket").CallAsync();
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("consumeTicket").CallAsync();
                 string json = JsonConvert.SerializeObject(result.Data);
                 TicketResponse response = JsonConvert.DeserializeObject<TicketResponse>(json);
 
-                if (response.Success) UpdateTicketState(result.Data);
+                if (response.Success) Instance.UpdateTicketState(result.Data);
                 
                 return response.Success;
             }

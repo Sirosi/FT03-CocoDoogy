@@ -65,7 +65,7 @@ namespace CocoDoogy.Network.UI
         }
         private async void OnConsumeTicketAsync()
         {
-            bool check = await Firebase.UseTicketAsync();
+            bool check = await FirebaseManager.UseTicketAsync();
             if (check)
             {
                 Debug.Log("success");

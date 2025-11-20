@@ -15,7 +15,6 @@ namespace CocoDoogy
         
         private Vector2 prevPos;
         private bool canMoveCamera = false;
-        [SerializeField] private LayerMask uiLayerMask;
         
         private void Awake()
         {

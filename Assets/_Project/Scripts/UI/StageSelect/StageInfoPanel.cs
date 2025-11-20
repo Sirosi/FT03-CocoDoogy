@@ -85,6 +85,7 @@ namespace CocoDoogy.UI.StageSelect
             if (isReady)
             {
                 InGameManager.MapData = stageData.mapData.text;
+                InGameManager.StageData = stageData;
                 Loading.LoadScene("InGame");
             }
             else
@@ -102,14 +103,7 @@ namespace CocoDoogy.UI.StageSelect
         private async Task<bool> OnConsumeTicketAsync()
         {
             // TODO: 나중에 UseTicketAsync를 static 형태로 변경해야 함
-            try
-            {
-                return await FirebaseManager.Instance.UseTicketAsync();
-            }
-            catch
-            {
-                return true;
-            }
+            return await FirebaseManager.UseTicketAsync();
         }
     }
 }

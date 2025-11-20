@@ -1,9 +1,12 @@
+using CocoDoogy.Data;
+using CocoDoogy.UI.StageSelect;
 using Firebase.Extensions;
 using Firebase.Firestore;
 using Firebase.Functions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -25,8 +28,8 @@ namespace CocoDoogy.Network
             {
                 Dictionary<string, object> data = new()
                 {
-                    { "theme", Extensions.Hex2(theme) },
-                    { "level", Extensions.Hex2(level) },
+                    { "theme", theme.Hex2() },
+                    { "level", level.Hex2() },
                     { "remainAP", remainAP },
                     { "clearTime", clearTime }
                 };
@@ -43,30 +46,30 @@ namespace CocoDoogy.Network
         }
 
         /// <summary>
-        /// 클리어한 스테이지 정보를 찾아 가장 마지막으로 클리어한 스테이지를 반환.
+        /// 클리어 한 스테이지 정보를 찾아 가장 최근에 클리어한 스테이지를 반환.
         /// </summary>
         /// <returns></returns>
-        public static async Task<string> GetLastClearStage()
+        public static async Task GetLastClearStage(string theme)
         {
             try
             {
                 var snapshot = await Instance.Firestore
                     .Collection($"users/{Instance.Auth.CurrentUser.UserId}/stageInfo")
-                    .WhereEqualTo("cleared", true)
+                    .WhereEqualTo("theme", theme)
                     .OrderByDescending(FieldPath.DocumentId)
                     .Limit(1)
                     .GetSnapshotAsync();
-                foreach (var snap in snapshot)
+                if (snapshot.Documents.Any())
                 {
-                    Debug.Log(snap.Id);
+                    var doc = snapshot.Documents.FirstOrDefault();
+                    // Firestore 데이터를 StageInfo 객체로 변환
+                    StageInfo stage = doc.ConvertTo<StageInfo>();
+                    StageSelectManager.LastClearedStage = stage;
                 }
-
-                return null;
             }
             catch (Exception e)
             {
                 Debug.LogError($"사용자 검색 실패: {e.Message}");
-                return null;
             }
         }
     }
