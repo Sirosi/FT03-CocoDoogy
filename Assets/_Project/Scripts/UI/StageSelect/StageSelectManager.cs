@@ -1,5 +1,6 @@
 using CocoDoogy.Core;
 using CocoDoogy.Data;
+using CocoDoogy.Network;
 using CocoDoogy.UI;
 using CocoDoogy.UI.Popup;
 using DG.Tweening;
@@ -15,6 +16,12 @@ namespace CocoDoogy.UI.StageSelect
 {
     public class StageSelectManager : Singleton<StageSelectManager>
     {
+        public static int SelectedStage;
+        /// <summary>
+        /// 해당 계정이 가장 마지막에 클리어한 가장 높은 스테이지
+        /// </summary>
+        public static StageInfo LastClearedStage { get; set; } 
+        
         [Header("Main UIs")]
         [SerializeField] private RectTransform lobbyUIPanel;
         [SerializeField] private RectTransform stageSelectUIPanel;
@@ -46,11 +53,6 @@ namespace CocoDoogy.UI.StageSelect
             stageInfoPanel.gameObject.SetActive(false);
             
             backButton.onClick.AddListener(OnBackButtonClicked);
-        }
-
-        private void OnEnable()
-        {
-            PageCameraSwiper.IsSwipeable = false;
         }
 
         protected override void OnDestroy()
