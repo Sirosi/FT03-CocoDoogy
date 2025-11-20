@@ -27,7 +27,7 @@ namespace CocoDoogy.Test
                 commonButton.onClick.AddListener(() =>
                 {
                     string json = data.text;
-                    InGameManager.MapData = json;
+                    //InGameManager.MapData = json;
                     SceneManager.LoadScene("InGame");
                 });
             }
