@@ -2,6 +2,7 @@ using CocoDoogy.Data;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.Shop.Category;
+using CocoDoogy.UI.StageSelect;
 using CocoDoogy.UI.UserInfo;
 using System;
 using System.Collections.Generic;
@@ -48,7 +49,10 @@ namespace CocoDoogy.UI.Shop
             if (!purchasePanel.gameObject.activeSelf && !confirmPanel.gameObject.activeSelf)
             {
                 WindowAnimation.SwipeWindow(transform as RectTransform);
-                PageCameraSwiper.IsSwipeable = true;
+                if (!StageSelectManager.Instance.gameObject.activeSelf)
+                {
+                    PageCameraSwiper.IsSwipeable = true;
+                }
             }
         }
 
