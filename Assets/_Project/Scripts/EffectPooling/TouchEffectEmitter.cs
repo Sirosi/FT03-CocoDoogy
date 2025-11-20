@@ -13,11 +13,11 @@ namespace CocoDoogy
         [Tooltip("터치 이펙트 프리팹")]
         public GameObject touchEffectPrefab;
 
-        [Header("Optional")]
-        [Tooltip("Emit effect at all finger touches, or only main finger one")]
+        [Header("설정")]
+        [Tooltip("터치 중복 처리")]
         public bool onlyOneFinger = false;
 
-        [Tooltip("UI canvas / rect root")]
+        [Tooltip("UI canvas")]
         public RectTransform customCanvasRect;
 
 

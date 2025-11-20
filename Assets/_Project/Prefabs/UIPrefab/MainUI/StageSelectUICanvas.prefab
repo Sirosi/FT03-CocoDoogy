@@ -4209,6 +4209,7 @@ GameObject:
   - component: {fileID: 5626852230804233851}
   - component: {fileID: 7346899557755379843}
   - component: {fileID: 2221928894362760617}
+  - component: {fileID: 2557267765703646293}
   m_Layer: 5
   m_Name: StageSelectUICanvas
   m_TagString: Untagged
@@ -4304,6 +4305,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2557267765703646293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7535404518205819107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a568962c6e0c49a4d81b063abb73fb24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchEffectPrefab: {fileID: 2322220917563826550, guid: 1746761676261dd458f073587443f9cb, type: 3}
+  onlyOneFinger: 1
+  customCanvasRect: {fileID: 403234852484668696}
 --- !u!1 &7577748518044044876
 GameObject:
   m_ObjectHideFlags: 0

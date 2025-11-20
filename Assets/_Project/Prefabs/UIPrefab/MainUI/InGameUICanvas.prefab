@@ -3394,6 +3394,7 @@ GameObject:
   - component: {fileID: 6289281609975681454}
   - component: {fileID: 1152392287007011934}
   - component: {fileID: 8867288469741286159}
+  - component: {fileID: 7574131072978252659}
   m_Layer: 5
   m_Name: InGameUICanvas
   m_TagString: Untagged
@@ -3485,6 +3486,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7574131072978252659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4168050596403063163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a568962c6e0c49a4d81b063abb73fb24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchEffectPrefab: {fileID: 2322220917563826550, guid: 1746761676261dd458f073587443f9cb, type: 3}
+  onlyOneFinger: 1
+  customCanvasRect: {fileID: 7203037875511119113}
 --- !u!1 &4398254163004816085
 GameObject:
   m_ObjectHideFlags: 0
@@ -4034,25 +4050,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cbc1119ad0a1294ab8da4a2aa4b3008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openSettingsButton: {fileID: 431297806209150073}
-  closeSettingsButton: {fileID: 5842992901283269539}
-  openPauseButton: {fileID: 2427227859799900262}
-  openQuitButton: {fileID: 2136869062134112735}
-  openResetButton: {fileID: 2595294123911981515}
-  closeResetButton: {fileID: 7125923133260068074}
-  resetButton: {fileID: 2697557061683371170}
-  resumeButton: {fileID: 3674662362427871623}
-  pauseQuitButton: {fileID: 1636937126889805737}
+  openSettingsButton: {fileID: 0}
+  openPauseButton: {fileID: 0}
+  openQuitButton: {fileID: 0}
+  openResetButton: {fileID: 0}
+  closeResetButton: {fileID: 0}
+  resetButton: {fileID: 0}
+  resumeButton: {fileID: 0}
+  pauseQuitButton: {fileID: 0}
   volumeSlider: {fileID: 8865691524515208216}
-  backButton: {fileID: 7349753889775007607}
-  quitButton: {fileID: 8980144774290969958}
-  againButton: {fileID: 3964462147468027674}
-  nextStageButton: {fileID: 1978104774135152560}
-  restartButton: {fileID: 7678157355097271417}
-  homeButton: {fileID: 8308271228759159920}
-  popupBackground: {fileID: 9199757824514731306}
-  pauseBackground: {fileID: 5778535770178184882}
-  quitBackground: {fileID: 2862259213266814535}
+  backButton: {fileID: 0}
+  quitButton: {fileID: 0}
+  againButton: {fileID: 0}
+  nextStageButton: {fileID: 0}
+  restartButton: {fileID: 0}
+  homeButton: {fileID: 0}
   settingsWindow: {fileID: 6054505380206544867}
   resetWindow: {fileID: 8754595600364844200}
   pauseWindow: {fileID: 5157475927917278485}
@@ -7444,39 +7456,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64f7c4295a07f1f4eae11006509146f2, type: 3}
---- !u!114 &2136869062134112735 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2108855459567829315, guid: 64f7c4295a07f1f4eae11006509146f2, type: 3}
-  m_PrefabInstance: {fileID: 64044117644648604}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2427227859799900262 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2399496290555109626, guid: 64f7c4295a07f1f4eae11006509146f2, type: 3}
-  m_PrefabInstance: {fileID: 64044117644648604}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5842992901283269539 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5905904521883151167, guid: 64f7c4295a07f1f4eae11006509146f2, type: 3}
-  m_PrefabInstance: {fileID: 64044117644648604}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &6054505380206544867 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6117695176238344063, guid: 64f7c4295a07f1f4eae11006509146f2, type: 3}
