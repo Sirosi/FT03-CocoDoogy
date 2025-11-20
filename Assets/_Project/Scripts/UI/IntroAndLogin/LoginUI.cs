@@ -24,9 +24,6 @@ namespace CocoDoogy.UI.IntroAndLogin
         [SerializeField] private Button anonymousLoginButton;
         
         private LoginViewModel loginVM;
-        
-        private FirebaseManager Firebase => FirebaseManager.Instance;
-
 
         private void Awake()
         {
@@ -44,7 +41,7 @@ namespace CocoDoogy.UI.IntroAndLogin
             googleLoginButton.interactable = false;
             anonymousLoginButton.interactable = false;
             
-            Firebase.SubscribeOnFirebaseInitialized(() =>
+            FirebaseManager.SubscribeOnFirebaseInitialized(() =>
             {
                 authProvider.InitGoogleSignIn();
                 googleLoginButton.interactable = true;

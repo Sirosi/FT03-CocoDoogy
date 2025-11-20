@@ -49,7 +49,7 @@ namespace CocoDoogy.UI.Gift
             {
                 Destroy(child.gameObject);
             }
-            var requestDict = await Firebase.GetGiftListAsync();
+            var requestDict = await FirebaseManager.GetGiftListAsync();
             foreach (var kvp in requestDict)
             {
                 var item = Instantiate(prefabItem, container);
@@ -72,7 +72,7 @@ namespace CocoDoogy.UI.Gift
 
         private async void OnTakePresentAsync(string itemType)
         {
-            var result = await Firebase.TakeGiftRequestAsync(itemType);
+            var result = await FirebaseManager.TakeGiftRequestAsync(itemType);
             bool success = (bool)result["success"];
 
             if (success)

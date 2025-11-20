@@ -37,7 +37,7 @@ namespace CocoDoogy.StageSelect.Item
         /// </summary>
         private async void InitAsync()
         {
-            IDictionary<string, object> itemDictionary = await FirebaseManager.Instance.GetItemListAsync();
+            IDictionary<string, object> itemDictionary = await FirebaseManager.GetItemListAsync();
             IReadOnlyList<ItemData> itemData = DataManager.Instance.ItemData;
             for (int i = 0; i < itemDictionary.Count; i++)
             {

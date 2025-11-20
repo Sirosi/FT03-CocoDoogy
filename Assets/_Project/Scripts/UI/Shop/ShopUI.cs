@@ -64,7 +64,7 @@ namespace CocoDoogy.UI.Shop
         {
             try
             {
-                var result = await FirebaseManager.Instance.PurchaseWithCashMoneyAsync(itemData.itemId, quantity);
+                var result = await FirebaseManager.PurchaseWithCashMoneyAsync(itemData.itemId, quantity);
 
                 bool success = result.ContainsKey("success") && (bool)result["success"];
 

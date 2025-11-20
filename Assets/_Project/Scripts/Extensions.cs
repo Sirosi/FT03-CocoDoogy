@@ -291,5 +291,16 @@ namespace CocoDoogy
         {
             return min <= value && value <= max;
         }
+
+        /// <summary>
+        /// int값을 2자리의 16진수로 변환하여 string 값으로 반환하는 메서드 <br/>
+        /// ex) 15 -> 0F, 26 -> 1A ... 로 변환하여 반환함.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string Hex2(int value)
+        {
+            return value.ToString("X2"); 
+        }
     }
 }
