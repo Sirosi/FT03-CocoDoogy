@@ -748,18 +748,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2749407098203092276, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2749407098203092276, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2749407098203092276, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3919051124573194543, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
       propertyPath: m_Name
       value: Lobby
@@ -848,18 +836,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8674734102794503005, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1023780913205972590, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4145038904680375636, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1749850689}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
 --- !u!1 &901437109 stripped
 GameObject:
@@ -1066,25 +1046,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1749850682 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4145038904680375636, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-  m_PrefabInstance: {fileID: 901437108}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1749850689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749850682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding: {x: 150, y: 0, z: 150, w: 0}
-  m_Softness: {x: 50, y: 50}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
