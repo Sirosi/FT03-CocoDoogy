@@ -3,6 +3,7 @@ using FMOD.Studio;
 using FMODUnity;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CocoDoogy.Audio
 {
@@ -28,14 +29,14 @@ namespace CocoDoogy.Audio
             DontDestroyOnLoad(gameObject);
             
             //인스턴스 생성
-            InitializeDictionary();
+            Init();
             
             PlayBgm(BgmType.LobbyBgm);
         }
 
-        private static void InitializeDictionary()
+        private static void Init()
         {
-            if (!HasInstance)
+            if (!Instance)
             {
                 Debug.LogWarning("InitializeDictionary : 인스턴스가 존재하지 않습니다!");
                 return;
@@ -46,6 +47,15 @@ namespace CocoDoogy.Audio
                 EventInstance bgmInstance = RuntimeManager.CreateInstance(bgmType.eventReference);
                 Instance.bgmDictionary.Add(bgmType.type, bgmInstance);
             }
+            
+            //SceneManager의 이벤트를 구독해서 실행 (메서드는 따로 만들어야함)
+            SceneManager.sceneLoaded += (scene, mode) =>
+            {
+                if (scene.name == "Lobby")
+                {
+                    PlayBgm(BgmType.LobbyBgm);
+                }
+            };
         }
 
         protected override void OnDestroy()
@@ -66,7 +76,7 @@ namespace CocoDoogy.Audio
         /// <param name="bgmType"></param>
         public static void PlayBgm(BgmType bgmType)
         {
-            if (!HasInstance)
+            if (!Instance)
             {
                 Debug.LogWarning("ToggleBgm : 인스턴스가 존재하지 않습니다!");
                 return;
@@ -92,7 +102,7 @@ namespace CocoDoogy.Audio
         /// <param name="fadeOut">true면 fadeout 아니면 false면 즉시종료</param>
         public static void MuteBgm(bool fadeOut = true)
         {
-            if (!HasInstance) return;
+            if (!Instance) return;
             
             foreach (var BgmType in Instance.bgmDictionary)
             {
