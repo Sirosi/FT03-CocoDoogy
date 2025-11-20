@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.Network;
@@ -59,6 +60,8 @@ namespace CocoDoogy.UI.StageSelect
             gameObject.SetActive(true);
 
             title.text = (stageData = data).stageName;
+            
+            BgmManager.PrepareStageBgm(data.theme);
             
             commonInfoPage.Show(stageData);
             detailInfoPage.Close();

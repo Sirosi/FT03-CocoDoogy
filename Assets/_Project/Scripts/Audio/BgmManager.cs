@@ -15,6 +15,12 @@ namespace CocoDoogy.Audio
         [Header("BGMList")]
         public List<BgmReference> bgmList = new();
 
+        [Header("Bgm Setting By theme")] 
+        [SerializeField] private List<ThemeBgm> themeBgmSettings;
+        
+        private Dictionary<Theme, BgmType> themeBgmDict = new();
+        private BgmType nextBgmToPlay = BgmType.LobbyBgm; //Bgm 캐싱
+        
         //런타임에서 빠른 검색을 위해서 만든 딕셔너리
         private Dictionary<BgmType, EventInstance> bgmDictionary = new();
         
@@ -28,36 +34,14 @@ namespace CocoDoogy.Audio
             if (Instance != this) return;
             DontDestroyOnLoad(gameObject);
             
-            //인스턴스 생성
-            Init();
+            //초기화 작업
+            InitThemeBgmDict();
+            InitBgmDictionary();
+            InitSceneManager();
             
             PlayBgm(BgmType.LobbyBgm);
         }
-
-        private static void Init()
-        {
-            if (!Instance)
-            {
-                Debug.LogWarning("InitializeDictionary : 인스턴스가 존재하지 않습니다!");
-                return;
-            }
-
-            foreach (var bgmType in Instance.bgmList)
-            {
-                EventInstance bgmInstance = RuntimeManager.CreateInstance(bgmType.eventReference);
-                Instance.bgmDictionary.Add(bgmType.type, bgmInstance);
-            }
-            
-            //SceneManager의 이벤트를 구독해서 실행 (메서드는 따로 만들어야함)
-            SceneManager.sceneLoaded += (scene, mode) =>
-            {
-                if (scene.name == "Lobby")
-                {
-                    PlayBgm(BgmType.LobbyBgm);
-                }
-            };
-        }
-
+        
         protected override void OnDestroy()
         {
             base.OnDestroy();
@@ -66,9 +50,6 @@ namespace CocoDoogy.Audio
                 bgmType.Value.release();
             }
         }
-        
-        //1. BgmType에 맞는 Bgm만 튼다.
-        //2. 나머지는 다 끈다? 
         
         /// <summary>
         /// BgmType에 맞는 Bgm만 틉니다.
@@ -116,5 +97,65 @@ namespace CocoDoogy.Audio
                 }
             }
         }
+
+        public static void PrepareStageBgm(Theme theme)
+        {
+            if (!Instance) return;
+
+            if (Instance.themeBgmDict.TryGetValue(theme, out var bgmType))
+            {
+                Instance.nextBgmToPlay = bgmType;
+            }
+            else
+            {
+                Instance.nextBgmToPlay = BgmType.LobbyBgm;
+            }
+        }
+        
+        #region Init
+        //theme와 bgmType이 서로 다른 Enum을 쓰기 때문에 매칭했습니다.
+        private void InitThemeBgmDict()
+        {
+            foreach (var themeBgm in themeBgmSettings)
+            {
+                if (!themeBgmDict.ContainsKey(themeBgm.theme) && themeBgm.theme != Theme.None)
+                {
+                    themeBgmDict.Add(themeBgm.theme, themeBgm.bgmType);
+                }
+            }
+        }
+        
+        //BgmType과 EventInstance를 매칭 시켜 줍니다.
+        private static void InitBgmDictionary()
+        {
+            if (!Instance)
+            {
+                Debug.LogWarning("InitializeDictionary : 인스턴스가 존재하지 않습니다!");
+                return;
+            }
+
+            foreach (var bgmType in Instance.bgmList)
+            {
+                EventInstance bgmInstance = RuntimeManager.CreateInstance(bgmType.eventReference);
+                Instance.bgmDictionary.Add(bgmType.type, bgmInstance);
+            }
+        }
+
+        //여기서 Scene이 바뀔때 bgm도 바뀌도록 이벤트에 구독합니다.
+        private void InitSceneManager()
+        {
+            //SceneManager의 이벤트를 구독 (메서드는 따로 만들어야함)
+            SceneManager.sceneLoaded += (scene, mode) =>
+            {
+                if (scene.name == "InGame" && Instance.nextBgmToPlay != BgmType.None)
+                {
+                    PlayBgm(Instance.nextBgmToPlay);
+                    Instance.nextBgmToPlay = BgmType.None;
+                }
+                //else에서 로비씬으로 돌아올 떄는 다시 로비브금을 재생하게 할 수도 있음
+                //하지만 현재로써 너무 자주 바뀌기 때문에 플레이 경험에 악영향을 미칠 수 있다고 판단 했습니다.
+            };
+        }
+        #endregion
     }
 }
