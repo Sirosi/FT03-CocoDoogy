@@ -25,7 +25,7 @@ exports.clearStage = onCall(fnConfig, async (request) => {
 
         const newData = {
             clearTime,
-            remainActionPoint: remainAP,
+            remainAP,
             theme,
             level,
             // replayData: JSON.stringify(replayData),

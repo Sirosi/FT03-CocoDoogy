@@ -55,16 +55,30 @@ namespace CocoDoogy.Network
             {
                 var snapshot = await Instance.Firestore
                     .Collection($"users/{Instance.Auth.CurrentUser.UserId}/stageInfo")
-                    .WhereEqualTo("theme", theme)
-                    .OrderByDescending(FieldPath.DocumentId)
-                    .Limit(1)
                     .GetSnapshotAsync();
-                if (snapshot.Documents.Any())
+
+                // TODO : 이거 무조건 1개만 가져와서 그걸 기준으로 하기 떄문에 어떤걸 넣던 1-1만 나옴 수정해야함.
+                var lastStageDoc = snapshot.Documents
+                    .Select(doc => new {
+                        Doc = doc,
+                        IdValue = Convert.ToInt32(doc.Id, 16),
+                    })
+                    .OrderByDescending(x => x.IdValue)
+                    .FirstOrDefault()?.Doc;
+                
+                if (lastStageDoc is { Exists: true })
                 {
-                    var doc = snapshot.Documents.FirstOrDefault();
+                    DocumentSnapshot doc = snapshot.Documents.FirstOrDefault();
                     // Firestore 데이터를 StageInfo 객체로 변환
-                    StageInfo stage = doc.ConvertTo<StageInfo>();
-                    StageSelectManager.LastClearedStage = stage;
+                    if (doc != null)
+                    {
+                        StageInfo stage = doc.ConvertTo<StageInfo>();
+                        StageSelectManager.LastClearedStage = stage;
+                    }
+                }
+                else
+                {
+                    StageSelectManager.LastClearedStage = null;
                 }
             }
             catch (Exception e)

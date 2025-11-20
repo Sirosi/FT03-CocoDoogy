@@ -48,23 +48,27 @@ namespace CocoDoogy.UI.StageSelect
         {
             base.Awake();
 
-            PageCameraSwiper.OnStartPageChanged += OnChangedTheme;
+            PageCameraSwiper.OnStartPageChanged += OnChangedThemeAsync;
             
             stageInfoPanel.gameObject.SetActive(false);
             
             backButton.onClick.AddListener(OnBackButtonClicked);
         }
-
+        private void OnEnable()
+        {
+            PageCameraSwiper.IsSwipeable = false;
+        }
         protected override void OnDestroy()
         {
             base.OnDestroy();
             
-            PageCameraSwiper.OnStartPageChanged -= OnChangedTheme;
+            PageCameraSwiper.OnStartPageChanged -= OnChangedThemeAsync;
         }
 
 
-        private void OnChangedTheme(Theme theme)
+        private async void OnChangedThemeAsync(Theme theme)
         {
+            await FirebaseManager.GetLastClearStage(((int)theme).Hex2());
             stageListPage.DrawButtons(nowTheme = theme, 1);
         }
         
