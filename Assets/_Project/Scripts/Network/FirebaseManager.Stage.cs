@@ -49,7 +49,7 @@ namespace CocoDoogy.Network
         /// 클리어 한 스테이지 정보를 찾아 가장 최근에 클리어한 스테이지를 반환.
         /// </summary>
         /// <returns></returns>
-        public static async Task GetLastClearStage(string theme)
+        public static async Task GetLastClearStage()
         {
             try
             {
@@ -57,33 +57,24 @@ namespace CocoDoogy.Network
                     .Collection($"users/{Instance.Auth.CurrentUser.UserId}/stageInfo")
                     .GetSnapshotAsync();
 
-                // TODO : 이거 무조건 1개만 가져와서 그걸 기준으로 하기 떄문에 어떤걸 넣던 1-1만 나옴 수정해야함.
-                var lastStageDoc = snapshot.Documents
-                    .Select(doc => new {
+                // 유저가 클리어한 정보를 내림차순으로 정리하여 가장 첫번째 정보를 반환 (가장 높은 스테이지 찾기)
+                var lastDoc = snapshot.Documents
+                    .Select(doc => new
+                    {
                         Doc = doc,
-                        IdValue = Convert.ToInt32(doc.Id, 16),
+                        IdValue = Convert.ToInt32(doc.Id, 16)
                     })
                     .OrderByDescending(x => x.IdValue)
-                    .FirstOrDefault()?.Doc;
+                    .First().Doc;
+
+                // StageInfo로 변환
+                StageInfo stage = lastDoc.ConvertTo<StageInfo>();
                 
-                if (lastStageDoc is { Exists: true })
-                {
-                    DocumentSnapshot doc = snapshot.Documents.FirstOrDefault();
-                    // Firestore 데이터를 StageInfo 객체로 변환
-                    if (doc != null)
-                    {
-                        StageInfo stage = doc.ConvertTo<StageInfo>();
-                        StageSelectManager.LastClearedStage = stage;
-                    }
-                }
-                else
-                {
-                    StageSelectManager.LastClearedStage = null;
-                }
+                StageSelectManager.LastClearedStage = stage;
             }
-            catch (Exception e)
+            catch
             {
-                Debug.LogError($"사용자 검색 실패: {e.Message}");
+                StageSelectManager.LastClearedStage = null;
             }
         }
     }

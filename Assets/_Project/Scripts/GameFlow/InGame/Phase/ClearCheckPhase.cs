@@ -19,8 +19,8 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (PlayerHandler.GridPos == HexTileMap.EndPos)
             {
                 // TODO : FirebaseManager.ClearStageAsync 추가
-                _ = FirebaseManager.ClearStageAsync(InGameManager.StageData.theme.ToIndex(),
-                    InGameManager.StageData.index, InGameManager.ActionPoints, 10.5f);
+                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex(),
+                    InGameManager.Stage.index, InGameManager.ActionPoints, 10.5f);
                 
                 MessageDialog.ShowMessage("승리", "그래, 이긴 걸로 하자!", DialogMode.Confirm,
                     _ => SceneManager.LoadScene("Lobby"));

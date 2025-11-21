@@ -15,8 +15,7 @@ using UnityEngine.EventSystems;
 namespace CocoDoogy.UI.StageSelect
 {
     public class StageSelectManager : Singleton<StageSelectManager>
-    {
-        public static int SelectedStage;
+    {   
         /// <summary>
         /// 해당 계정이 가장 마지막에 클리어한 가장 높은 스테이지
         /// </summary>
@@ -66,9 +65,8 @@ namespace CocoDoogy.UI.StageSelect
         }
 
 
-        private async void OnChangedThemeAsync(Theme theme)
+        private void OnChangedThemeAsync(Theme theme)
         {
-            await FirebaseManager.GetLastClearStage(((int)theme).Hex2());
             stageListPage.DrawButtons(nowTheme = theme, 1);
         }
         
