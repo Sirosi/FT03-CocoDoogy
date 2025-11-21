@@ -1,6 +1,5 @@
 using CocoDoogy.Core;
 using CocoDoogy.Data;
-using CocoDoogy.GameFlow.InGame;
 using Lean.Pool;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,13 +33,6 @@ namespace CocoDoogy.UI.StageSelect
                 spawnedButtons.Push(stageButton);
                 if (spawnedButtons.Count >= LIST_SIZE) break;
             }
-        }
-
-
-        private void OnStageButtonClicked(StageData data)
-        {
-            InGameManager.MapData = data.mapData.text;
-            Loading.LoadScene("InGame"); // TODO: 임시 기능
         }
     }
 }

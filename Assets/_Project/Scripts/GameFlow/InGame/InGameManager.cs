@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using Pointer = System.Reflection.Pointer;
 
 namespace CocoDoogy.GameFlow.InGame
 {
@@ -77,13 +76,28 @@ namespace CocoDoogy.GameFlow.InGame
                 OnActionPointChanged?.Invoke(Instance.actionPoints);
             }
         }
-        public static List<PassageBase> Passages { get; } = new();
 
+        public static List<PassageBase> Passages { get; } = new();
         /// <summary>
-        /// InGame에서 사용할 MapData
+        /// InGame에서 사용되는 StageData
         /// </summary>
-        public static string MapData { get; set; } = null;
-        public static StageData StageData { get; set; } = null;
+        public static StageData Stage
+        {
+            get => stageData;
+            set
+            {
+                stageData = value;
+                MapData = stageData ? stageData.mapData.text : null;
+            }
+        }
+        /// <summary>
+        /// InGame에서 사용되는 MapData
+        /// </summary>
+        public static string MapData { get; private set; } = null;
+
+
+        private static StageData stageData = null;
+
 
         private Camera mainCamera = null;
         private bool touched = false;
@@ -106,7 +120,6 @@ namespace CocoDoogy.GameFlow.InGame
             new LockCheckPhase(),
             new ActionPointCheckPhase(),
         };
-        
 
 
         void Start()

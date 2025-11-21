@@ -84,8 +84,7 @@ namespace CocoDoogy.UI.StageSelect
             bool isReady = await OnConsumeTicketAsync();
             if (isReady)
             {
-                InGameManager.MapData = stageData.mapData.text;
-                InGameManager.StageData = stageData;
+                InGameManager.Stage = stageData;
                 Loading.LoadScene("InGame");
             }
             else
