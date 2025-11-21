@@ -18,13 +18,12 @@ namespace CocoDoogy
         public bool onlyOneFinger = false;
 
         [Tooltip("UI canvas")]
-        public RectTransform customCanvasRect;
-
+        public RectTransform canvasRect;
 
         private void Start()
         {
-            if (customCanvasRect == null)
-                customCanvasRect = GetComponent<RectTransform>();
+            if (canvasRect == null)
+                canvasRect = GetComponent<RectTransform>();
         }
 
 
@@ -90,11 +89,11 @@ namespace CocoDoogy
         private void SpawnTouchEffect(Vector2 screenPosition)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                customCanvasRect, screenPosition, null, out Vector2 anchoredPos
+                canvasRect, screenPosition, null, out Vector2 anchoredPos
             );
 
             // Instantiate 대신 LeanPool.Spawn 사용
-            GameObject effect = LeanPool.Spawn(touchEffectPrefab, transform);
+            GameObject effect = LeanPool.Spawn(touchEffectPrefab, canvasRect.transform);
 
             // RectTransform 위치 세팅
             effect.GetComponent<RectTransform>().anchoredPosition = anchoredPos;

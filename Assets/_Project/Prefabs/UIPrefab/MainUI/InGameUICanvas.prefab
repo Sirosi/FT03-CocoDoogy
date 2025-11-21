@@ -3394,7 +3394,6 @@ GameObject:
   - component: {fileID: 6289281609975681454}
   - component: {fileID: 1152392287007011934}
   - component: {fileID: 8867288469741286159}
-  - component: {fileID: 7574131072978252659}
   m_Layer: 5
   m_Name: InGameUICanvas
   m_TagString: Untagged
@@ -3486,21 +3485,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7574131072978252659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4168050596403063163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a568962c6e0c49a4d81b063abb73fb24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  touchEffectPrefab: {fileID: 2322220917563826550, guid: 1746761676261dd458f073587443f9cb, type: 3}
-  onlyOneFinger: 1
-  customCanvasRect: {fileID: 7203037875511119113}
 --- !u!1 &4398254163004816085
 GameObject:
   m_ObjectHideFlags: 0
