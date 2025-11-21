@@ -29,7 +29,7 @@ public class ToyFindMiniGame : MiniGameBase
 
         protected override void ShowRemainCount()
         {
-            remainCount.text = "남은 장난감"+toies.Count.ToString();
+            remainCount.text = "남은 장난감: "+toies.Count.ToString();
         }
 
         protected override void OnOpenInit()

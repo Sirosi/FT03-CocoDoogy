@@ -32,7 +32,7 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
 
         protected override void ShowRemainCount()
         {
-            remainCount.text = "정렬되지 않은 코트"+clearedCoatCount.Count.ToString();
+            remainCount.text = "정렬되지 않은 코트: "+clearedCoatCount.Count.ToString();
         }
 
         protected override void Disable()

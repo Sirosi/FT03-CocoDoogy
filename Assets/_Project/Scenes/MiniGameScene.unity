@@ -487,6 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmList: []
+  themeBgmSettings: []
 --- !u!4 &1007779799
 Transform:
   m_ObjectHideFlags: 0
@@ -936,6 +937,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6251021480520612358, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
+      propertyPath: themeFlag
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7927797770611124324, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
       propertyPath: themeFlag
       value: 0
       objectReference: {fileID: 0}
