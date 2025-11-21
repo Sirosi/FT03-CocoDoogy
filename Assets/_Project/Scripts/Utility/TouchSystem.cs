@@ -16,7 +16,10 @@ namespace CocoDoogy.Utility
         }
 
 
-        public static InputType CurrentInputType {get; private set;} = InputType.None;
+        /// <summary>
+        /// 현재 Input 모드
+        /// </summary>
+        public static InputType CurrentInputType { get; private set; } = InputType.None;
 
 
         public static Vector2 TouchAverage
@@ -42,6 +45,29 @@ namespace CocoDoogy.Utility
                     default:
                         return Vector2.zero;
                 }
+            }
+        }
+        public static float DistanceAverage
+        {
+            get
+            {
+                if(CurrentInputType == InputType.Touch)
+                {
+                    Vector2 center = TouchAverage;
+                    float average = 0f;
+                    int count = 0;
+                    foreach (var touch in Touchscreen.current.touches)
+                    {
+                        if (touch.phase.value is TouchPhase.Began or TouchPhase.Moved)
+                        {
+                            average += Vector2.Distance(center, touch.position.value);
+                            count++;
+                        }
+                    }
+                    return average / count;
+                }
+                
+                return 0f;
             }
         }
 
