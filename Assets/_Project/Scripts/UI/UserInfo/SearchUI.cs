@@ -14,7 +14,7 @@ namespace CocoDoogy
         [SerializeField] private SearchWindowPopup searchWindow;
 
         [Header("Search Window Popup Buttons")] 
-        [SerializeField] private CommonButton closeThisButton;
+        [SerializeField] private Button closeThisButton;
         [SerializeField] private CommonButton searchButton;
 
         private void Awake()

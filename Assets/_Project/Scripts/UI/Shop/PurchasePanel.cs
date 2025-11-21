@@ -26,6 +26,7 @@ namespace CocoDoogy.UI.Shop
         [Header("Purchase & Cancel Buttons")]
         [SerializeField] private CommonButton purchaseButton;
         [SerializeField] private CommonButton cancelButton;
+        [SerializeField] private Button backGround;
 
         private ItemData currentItem;
         private int quantity = 1;
@@ -40,6 +41,7 @@ namespace CocoDoogy.UI.Shop
 
             purchaseButton.onClick.AddListener(OnClickPurchase);
             cancelButton.onClick.AddListener(OnClickCancel);
+            backGround.onClick.AddListener(OnClickCancel);
         }
 
         public void Open(ItemData itemData, Action<ItemData, int> purchaseCallback)
