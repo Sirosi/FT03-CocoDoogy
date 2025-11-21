@@ -74,6 +74,10 @@ namespace CocoDoogy
 
             Vector3 move = new Vector3(-delta.x, 0, -delta.y) * (moveSpeed * Time.deltaTime);
             mainCamera.transform.Translate(move, Space.World);
+
+            // 카메라 최대크기 제약
+            mainCamera.transform.position = Vector3.Min(mainCamera.transform.position, HexTileMap.MaxPoint);
+            mainCamera.transform.position = Vector3.Max(mainCamera.transform.position, HexTileMap.MinPoint);
         }
         #endregion
         
