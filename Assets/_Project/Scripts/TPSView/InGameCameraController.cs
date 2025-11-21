@@ -13,12 +13,12 @@ namespace CocoDoogy
         [SerializeField] private Camera mainCamera;
         [SerializeField] private float moveSpeed = 10f;
         [SerializeField] private float zoomSpeed = 3f;
-        
-        
-        private void Awake()
+
+
+        private void Start()
         {
-            if (mainCamera == null)
-                mainCamera = Camera.main;
+            if (!mainCamera) return;
+            mainCamera = Camera.main;
         }
         
         private void Update()
@@ -29,6 +29,24 @@ namespace CocoDoogy
             Zoom();
         }
 
+
+        private bool IsPointerOverUI()
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return true;
+            }
+
+            if (Input.touchCount > 0)
+            {
+                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                    return true;
+            }
+
+            return false;
+        }
+
+        #region ◇ Move ◇
         private bool hasMoving = false;
         private Vector2 prevPos = Vector2.zero;
         private int lastTouchcount = 0;
@@ -57,7 +75,9 @@ namespace CocoDoogy
             Vector3 move = new Vector3(-delta.x, 0, -delta.y) * (moveSpeed * Time.deltaTime);
             mainCamera.transform.Translate(move, Space.World);
         }
+        #endregion
         
+        #region ◇ Zoom ◇
         private bool hasZooming = false;
         private float preDistance = 0f;
         private void Zoom()
@@ -95,21 +115,6 @@ namespace CocoDoogy
             mainCamera.fieldOfView -= delta / Screen.height * zoomSpeed;
             mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView, 20, 80);
         }
-        
-        private bool IsPointerOverUI()
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return true;
-            }
-
-            if (Input.touchCount > 0)
-            {
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                    return true;
-            }
-
-            return false;
-        }
+        #endregion
     }
 }
