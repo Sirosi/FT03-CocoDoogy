@@ -13,6 +13,12 @@ namespace CocoDoogy.MiniGame
 
         void Start()
         {
+            SetOntlineVisible();
+        }
+
+        void SetOntlineVisible()
+        {
+            outline.effectColor = Color.white;
             outline.effectDistance = new Vector2(10, 10);
         }
 
@@ -27,7 +33,7 @@ namespace CocoDoogy.MiniGame
         public override void OnEndDrag(PointerEventData eventData)
         {
             base.OnEndDrag(eventData);
-
+            SetOntlineVisible();
             List<RaycastResult> raylist = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventData, raylist);
             bool iswindowSlot = false;
