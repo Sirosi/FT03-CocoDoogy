@@ -1346,6 +1346,50 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.data[0].theme
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.data[1].theme
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.data[2].theme
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.data[3].theme
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.data[4].theme
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.data[0].bgmType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.data[1].bgmType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.data[2].bgmType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.data[3].bgmType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
+      propertyPath: themeBgmSettings.Array.data[4].bgmType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 201153019253216142, guid: f336cf372dd36eb4caabd1645a2e65eb, type: 3}
       propertyPath: bgmList.Array.data[0].eventReference.Path
       value: event:/Bgm/Lobby
       objectReference: {fileID: 0}
