@@ -1,6 +1,9 @@
 using CocoDoogy.Animation;
+using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using CocoDoogy.Tile;
+using CocoDoogy.Tile.Gimmick;
+using CocoDoogy.Tile.Piece;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -10,8 +13,6 @@ namespace CocoDoogy.GameFlow.InGame
 {
     public class PlayerHandler: Singleton<PlayerHandler>
     {
-        private static readonly Stack<HexTile> filledTiles = new();
-
         public static Vector2Int GridPos
         {
             get => Instance?.gridPos ?? Vector2Int.zero;
@@ -20,24 +21,6 @@ namespace CocoDoogy.GameFlow.InGame
                 if (!IsValid) return;
 
                 Instance.gridPos = value;
-
-                while (filledTiles.Count > 0)
-                {
-                    filledTiles.Pop().OffOutline();
-                }
-
-                Vector2Int gridPos = Instance.gridPos = value;
-                HexTile tile = HexTile.GetTile(gridPos);
-                List<Vector2Int> canPoses = tile.CanMovePoses();
-                // 갈 수 있는 타일 색칠
-                foreach (var canPos in canPoses)
-                {
-                    HexTile canTile = HexTile.GetTile(canPos);
-                    if (!canTile) continue;
-
-                    canTile.DrawOutline(Color.green);
-                    filledTiles.Push(canTile);
-                }
             }
         }
 
@@ -85,8 +68,6 @@ namespace CocoDoogy.GameFlow.InGame
         public static void Clear()
         {
             if (!IsValid) return;
-
-            filledTiles.Clear();
         }
 
 
@@ -98,9 +79,21 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (!IsValid) return;
 
+            // 추후 Move 및 Slide에서 사용할지 고민 좀 해봐야할 듯 함
+            Vector2Int? preGravityButton = null;
+            if(HexTile.GetTile(GridPos)?.HasPiece(PieceType.GravityButton, out _) ?? false)
+            {
+                preGravityButton = GridPos;
+            }
+
+            Instance.transform.parent = null;
             DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.transform.position = gridPos.ToWorldPos();
+            if(preGravityButton.HasValue) // 실제 기존 발판 리셋하는 곳
+            {
+                GimmickExecutor.ExecuteFromTrigger(preGravityButton.Value); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
+            }
             OnBehaviourCompleted();
         }
 
@@ -112,10 +105,22 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (!IsValid) return;
 
+            Instance.transform.parent = null;
+            DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Moving);
             DOTween.Kill(Instance, true);
-            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance).OnStepComplete(OnBehaviourCompleted);
+            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION)
+                .SetId(Instance)
+                .OnStepComplete(() => {
+                        OnBehaviourCompleted();
+                        HexTile currentTile = HexTile.GetTile(gridPos);
+                        if (currentTile != null && currentTile.CurrentData.stepSfx != SfxType.None)
+                        {
+                            SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
+                        }
+                    }
+                    );
         }
         /// <summary>
         /// 미끄러지듯 이동
@@ -125,10 +130,11 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (!IsValid) return;
 
+            Instance.transform.parent = null;
+            DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Slide);
-            DOTween.Kill(Instance, true);
-            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance).OnStepComplete(OnBehaviourCompleted);
+            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance).OnComplete(OnBehaviourCompleted);
         }
 
 

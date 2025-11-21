@@ -1,5 +1,8 @@
+using CocoDoogy.Core;
+using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
+using CocoDoogy.UI.StageSelect;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,14 +12,23 @@ namespace CocoDoogy.Data
     {
         private readonly Dictionary<TileType, HexTileData> tiles = new();
         private readonly Dictionary<PieceType, PieceData> pieces = new();
+        private readonly Dictionary<WeatherType, WeatherData> weathers = new();
 
-
+        private readonly Dictionary<Theme, List<StageData>> stageList = new();
+        private readonly Dictionary<(Theme, int), StageData> stageDict = new();
+        
+        
         [SerializeField] private HexTileData[] tileData;
         [SerializeField] private PieceData[] pieceData;
+        [SerializeField] private WeatherData[] weatherData;
+        [SerializeField] private StageData[] stageData;
 
 
         public static IEnumerable<TileType> TileTypes => Instance?.tiles.Keys;
         public static IEnumerable<PieceType> PieceTypes => Instance?.pieces.Keys;
+        public static IEnumerable<WeatherType> WeatherTypes => Instance?.weathers.Keys;
+        
+        public static IEnumerable<Theme> Themes => Instance?.stageList.Keys;
 
 
         private void InitTileData()
@@ -29,21 +41,56 @@ namespace CocoDoogy.Data
             {
                 pieces.Add(data.type, data);
             }
+            foreach (var data in weatherData)
+            {
+                weathers.Add(data.type, data);
+            }
+            foreach (var data in stageData)
+            {
+                if (!stageList.ContainsKey(data.theme))
+                {
+                    stageList.Add(data.theme, new());
+                }
+                stageList[data.theme].Add(data);
+                stageDict.Add((data.theme, data.index), data);
+            }
         }
-
-
+        
+        
         public static HexTileData GetTileData(TileType type)
         {
-            if (Instance == null) return null;
-
+            if (!Instance) return null;
+            
             return Instance.tiles.GetValueOrDefault(type);
         }
-
+        
         public static PieceData GetPieceData(PieceType type)
         {
-            if (Instance == null) return null;
-
+            if (!Instance) return null;
+            
             return Instance.pieces.GetValueOrDefault(type);
+        }
+
+        public static WeatherData GetWeatherData(WeatherType type)
+        {
+            if (!Instance) return null;
+            
+            return Instance.weathers.GetValueOrDefault(type);
+        }
+
+        public static List<StageData> GetStageData(Theme theme)
+        {
+            if (!Instance) return null;
+
+            Debug.Log(Instance.stageList.GetValueOrDefault(theme));
+            
+            return Instance.stageList.GetValueOrDefault(theme);
+        }
+        public static StageData GetStageData(Theme theme, int index)
+        {
+            if (!Instance) return null;
+
+            return Instance.stageDict.GetValueOrDefault((theme, index));
         }
     }
 }

@@ -38,7 +38,6 @@ namespace CocoDoogy.MiniGame
         {
             clearCallback = callback;
             gameObject.SetActive(true);
-
             OnOpenInit();
         }
 
@@ -55,6 +54,7 @@ namespace CocoDoogy.MiniGame
             {
                 Disable();
                 gameObject.SetActive(false);
+                MiniGameManager.Instance.BackGround.SetActive(false);
                 clearCallback?.Invoke();
             });
             

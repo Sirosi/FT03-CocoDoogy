@@ -1,10 +1,10 @@
 using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame;
+using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace CocoDoogy.Tile
@@ -14,13 +14,25 @@ namespace CocoDoogy.Tile
     /// </summary>
     public class HexTileMap : Singleton<HexTileMap>
     {
+        /// <summary>
+        /// 맵 초기화 가능 회수
+        /// </summary>
+        public static int RefillPoint { get; set; } = 3;
+        /// <summary>
+        /// 맵 최대 행동력
+        /// </summary>
+        public static int ActionPoint { get; set; } = 5;
+        
+        public static Vector2Int StartPos { get; set; } = Vector2Int.zero;
+        public static Vector2Int EndPos { get; set; } = Vector2Int.zero;
+        public static WeatherType DefaultWeather { get; set; } = WeatherType.Sunny;
+        
+        public static Dictionary<Vector2Int, GimmickData> Gimmicks { get; } = new();
+        public static Dictionary<int, WeatherType> Weathers { get; } = new();
+        
+        
         [SerializeField] private Transform tileGroup;
 
-
-        public Vector2Int StartPos { get; set; } = Vector2Int.zero;
-        public Vector2Int EndPos { get; set; } = Vector2Int.zero;
-
-        public Dictionary<Vector2Int, GimmickData> Gimmicks { get; } = new();
 
         private Transform TileParent => tileGroup ? tileGroup : transform;
 
@@ -30,7 +42,7 @@ namespace CocoDoogy.Tile
         /// </summary>
         /// <param name="gridPos"></param>
         /// <returns></returns>
-        public static GimmickData GetGimmick(Vector2Int gridPos) => Instance?.Gimmicks.GetValueOrDefault(gridPos);
+        public static GimmickData GetGimmick(Vector2Int gridPos) => Gimmicks.GetValueOrDefault(gridPos);
         /// <summary>
         /// 해당 GridPos를 트리거로 사용하는 Gimmick 반환
         /// </summary>
@@ -40,13 +52,13 @@ namespace CocoDoogy.Tile
         {
             if (!Instance) return null;
 
-            return Instance.Gimmicks.Values.Where(data => data.ContainsTrigger(gridPos)).ToArray();
+            return Gimmicks.Values.Where(data => data.ContainsTrigger(gridPos)).ToArray();
         }
         /// <summary>
         /// 해당 GridPos에 기믹이 존재하면, 기믹 제거
         /// </summary>
         /// <param name="gridPos"></param>
-        public static void RemoveGimmick(Vector2Int gridPos) => Instance?.Gimmicks.Remove(gridPos);
+        public static void RemoveGimmick(Vector2Int gridPos) => Gimmicks.Remove(gridPos);
         
         
         /// <summary>
@@ -97,7 +109,7 @@ namespace CocoDoogy.Tile
             if (!Instance) return;
 
             HexTile.Tiles.GetValueOrDefault(gridPos)?.Release();
-            Instance.Gimmicks.Remove(gridPos);
+            Gimmicks.Remove(gridPos);
         }
         /// <summary>
         /// 해당 Tile을 제거
@@ -131,9 +143,10 @@ namespace CocoDoogy.Tile
                 tiles[i].Release();
             }
             
-            Instance.StartPos = Vector2Int.zero;
-            Instance.EndPos = Vector2Int.zero;
-            Instance.Gimmicks.Clear();
+            StartPos = Vector2Int.zero;
+            EndPos = Vector2Int.zero;
+            Gimmicks.Clear();
+            Weathers.Clear();
         }
     }
 }

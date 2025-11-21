@@ -1,64 +1,67 @@
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CocoDoogy.UI
 {
-    public class CommonButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
+    /// <summary>
+    /// Tween 효과를 주는 Button Component
+    /// </summary>
+    [RequireComponent(typeof(Image))]
+    public class CommonButton : Button
     {
-        [SerializeField] public UnityEvent onClick;
-        
-        
         private RectTransform rect;
-        private Image image;
         private Color buttonColor;
 
-        private bool isHovered = false;
 
-        
-        void Awake()
+        #if UNITY_EDITOR
+        protected override void Reset()
         {
+            base.Reset();
+
+            interactable = true;
+            transition = Transition.None;
+        }
+        #endif
+
+        protected override void Awake()
+        {
+            base.Awake();
+
             rect = GetComponent<RectTransform>();
             image = GetComponent<Image>();
 
             buttonColor = image.color;
         }
 
-        
-        public void OnPointerEnter(PointerEventData eventData)
+
+        #region ◇ Tween효과 ◇
+        public override void OnPointerDown(PointerEventData data)
         {
-            isHovered = true;
-        }
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            isHovered = false;
-        }
-        public void OnPointerDown(PointerEventData data)
-        {
+            if (!interactable) return;
+
             DOTween.Kill(this);
-            
+
             rect.DOScale(0.95f, 0.15f).SetEase(Ease.OutCubic).SetId(this);
             image.DOColor(buttonColor * 0.8f, 0.15f).SetEase(Ease.OutCubic).SetId(this);
         }
 
-        public void OnPointerUp(PointerEventData data)
+        public override void OnPointerUp(PointerEventData data)
         {
+            if (!interactable) return;
+
             DOTween.Kill(this);
-            
+
             Sequence sequence = DOTween.Sequence();
             sequence.Append(rect.DOScale(new Vector2(1.1f, 0.9f), 0.1f).SetEase(Ease.OutCubic));
             sequence.Append(rect.DOScale(new Vector2(0.9f, 1.1f), 0.1f).SetEase(Ease.OutCubic));
             sequence.Append(rect.DOScale(Vector2.one, 0.1f).SetEase(Ease.OutCubic));
             sequence.SetId(this);
             sequence.Play();
-            
+
             image.DOColor(buttonColor, 0.2f).SetEase(Ease.OutBack).SetId(this);
-            
-            if (!isHovered) return;
-            onClick?.Invoke();
         }
+        #endregion
     }
 }

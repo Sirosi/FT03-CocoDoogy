@@ -1,7 +1,9 @@
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace CocoDoogy.UI.Gift
@@ -9,7 +11,7 @@ namespace CocoDoogy.UI.Gift
     public class GiftUI : UIPanel
     {
         [Header("Buttons")]
-        [SerializeField] private CommonButton closeThisButton;
+        [SerializeField] private Button closeThisButton;
         [SerializeField] private CommonButton getAllButton;
         [SerializeField] private CommonButton confirmButton;
         
@@ -20,6 +22,9 @@ namespace CocoDoogy.UI.Gift
         [SerializeField] private RectTransform container;
         [SerializeField] private GiftItem prefabItem;
         
+        [Header("Null Message")]
+        [SerializeField] private TextMeshProUGUI nullMessage;
+        
         FirebaseManager Firebase => FirebaseManager.Instance;
         
         private void Awake()
@@ -28,19 +33,28 @@ namespace CocoDoogy.UI.Gift
             getAllButton.onClick.AddListener(OnGetAllButtonClicked);
             confirmButton.onClick.AddListener(OnConfirmButtonClicked);
         }
-        public override void OpenPanel() => gameObject.SetActive(true);
-        protected override void ClosePanel() => WindowAnimation.SwipeWindow(giftWindow);
+        public override void ClosePanel()
+        {
+            WindowAnimation.SwipeWindow(giftWindow);
+            PageCameraSwiper.IsSwipeable = true;
+        }
+
         public void SubscriptionEvent() => _ = RefreshPanelAsync();
         private void OnGetAllButtonClicked() => getGiftWindow.gameObject.SetActive(true);
         private void OnConfirmButtonClicked() =>  WindowAnimation.CloseWindow(getGiftWindow);
 
+        private void OnEnable()
+        {
+            _ = RefreshPanelAsync();
+        }
+        
         private async Task RefreshPanelAsync()
         {
             foreach (Transform child in container)
             {
                 Destroy(child.gameObject);
             }
-            var requestDict = await Firebase.GetGiftListAsync();
+            var requestDict = await FirebaseManager.GetGiftListAsync();
             foreach (var kvp in requestDict)
             {
                 var item = Instantiate(prefabItem, container);
@@ -49,11 +63,21 @@ namespace CocoDoogy.UI.Gift
                     kvp["giftCount"].ToString()
                     ,OnTakePresentAsync);
             }
+            
+            if (requestDict.Count < 1)
+            {
+                nullMessage.gameObject.SetActive(true);
+                nullMessage.text = "이런, 아무도 나에게 선물을 주지 않습니다!";
+            }
+            else
+            {
+                nullMessage.gameObject.SetActive(false);
+            }
         }
 
         private async void OnTakePresentAsync(string itemType)
         {
-            var result = await Firebase.TakePresentRequestAsync("takePresentRequest", itemType, "선물 받기 실패");
+            var result = await FirebaseManager.TakeGiftRequestAsync(itemType);
             bool success = (bool)result["success"];
 
             if (success)

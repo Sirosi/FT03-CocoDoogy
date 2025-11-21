@@ -2,6 +2,7 @@ using CocoDoogy.Data;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.Shop.Category;
+using CocoDoogy.UI.StageSelect;
 using CocoDoogy.UI.UserInfo;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace CocoDoogy.UI.Shop
         [Header("Purchase Item Button")] [SerializeField] private List<ShopItem> shopItems;
         [Header("Purchase Panel")] [SerializeField] private PurchasePanel purchasePanel;
         [Header("Confirm Panel")] [SerializeField] private ConfirmPanel confirmPanel;
-        [Header("Close Button")] [SerializeField] private CommonButton closeButton;
+        [Header("Close Button")] [SerializeField] private Button closeButton;
 
         [Header("Categories")] 
         [SerializeField] private ShopCategory itemShop;
@@ -37,19 +38,38 @@ namespace CocoDoogy.UI.Shop
             stampShopButton.onClick.AddListener(OnClickStampShopButton);
             jemShopButton.onClick.AddListener(OnClickJemShopButton);
         }
+
         private void OnEnable()
         {
             InitTabs();
-        } 
-        public override void OpenPanel() => gameObject.SetActive(true);
-        protected override void ClosePanel() => WindowAnimation.SwipeWindow(transform as RectTransform);
+        }
+        
+        public override void ClosePanel()
+        {
+            if (!purchasePanel.gameObject.activeSelf && !confirmPanel.gameObject.activeSelf)
+            {
+                WindowAnimation.SwipeWindow(transform as RectTransform);
+                if (!StageSelectManager.Instance.gameObject.activeSelf)
+                {
+                    PageCameraSwiper.IsSwipeable = true;
+                }
+            }
+        }
+
         public void OpenPurchasePanel(ItemData itemData) => purchasePanel.Open(itemData, OnPurchaseRequest);
         private void OnPurchaseRequest(ItemData itemData, int quantity) => _ = ExecutePurchaseAsync(itemData, quantity);
+        
+        /// <summary>
+        /// 구매를 실행하는 메서드. itemData에서 DB에 검색할 내용인 아이템ID를 가져와서 DB에 전송.<br/>
+        /// PurchaseWithCashMoneyAsync를 통해서 Firebase Functions의 기능을 사용. DB 내에서 결제 처리 후 결과를 반환하여 사용함.
+        /// </summary>
+        /// <param name="itemData"></param>
+        /// <param name="quantity"></param>
         private async Task ExecutePurchaseAsync(ItemData itemData, int quantity)
         {
             try
             {
-                var result = await FirebaseManager.Instance.PurchaseWithCashMoneyAsync(itemData.itemId, quantity);
+                var result = await FirebaseManager.PurchaseWithCashMoneyAsync(itemData.itemId, quantity);
 
                 bool success = result.ContainsKey("success") && (bool)result["success"];
 
@@ -89,7 +109,6 @@ namespace CocoDoogy.UI.Shop
             
             ChangeUITabs.ChangeTab(clicked, true);
         }
-        // TODO : Info UI 버튼에서 이쪽으로 연결되게 해야함. 
         
         private void OnClickItemShopButton()
         {
@@ -120,6 +139,38 @@ namespace CocoDoogy.UI.Shop
             
             targetPanel.gameObject.SetActive(true);
             currentActivePanel = targetPanel;
+        }
+        #endregion
+
+        # region < InfoUI에서 버튼에 연결하기 위한 메서드 >
+
+        public void OpenItemShopUI()
+        {
+            OpenPanel();
+            itemShop.Change(true);
+            stampShop.Change(false);
+            jemShop.Change(false);
+            ToggleTab(itemShop.transform);
+            OnClickButton(itemShopButton);
+        }
+        public void OpenJemShopUI()
+        {
+            OpenPanel();
+            itemShop.Change(false);
+            stampShop.Change(false);
+            jemShop.Change(true);
+            ToggleTab(jemShop.transform);
+            OnClickButton(jemShopButton);
+        }
+
+        public void OpenStampShopUI()
+        {
+            OpenPanel();
+            itemShop.Change(false);
+            stampShop.Change(true);
+            jemShop.Change(false);
+            ToggleTab(stampShop.transform);
+            OnClickButton(stampShopButton);
         }
         #endregion
     }

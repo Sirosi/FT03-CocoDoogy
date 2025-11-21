@@ -1,9 +1,11 @@
 using CocoDoogy.Tile;
 using CocoDoogy.LifeCycle;
+using CocoDoogy.Tile.Piece;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using CocoDoogy.Core;
 
 namespace CocoDoogy
 {
@@ -12,7 +14,7 @@ namespace CocoDoogy
     /// </summary>
     public static class Extensions
     {
-        #region ◇ LifeCycle IEnumerable to Action ◇
+        #region ◇ LifeCycle ◇
         public static Action<T> GetEvents<T>(this IEnumerable<IInit<T>> inits)
         {
             Action<T> result = null;
@@ -40,9 +42,27 @@ namespace CocoDoogy
             }
             return result;
         }
+        public static Action<string> GetInserts(this IEnumerable<ISpecialPiece> inserts)
+        {
+            Action<string> result = null;
+            foreach (var v in inserts)
+            {
+                result += v.OnDataInsert;
+            }
+            return result;
+        }
+        public static Action GetExecutes(this IEnumerable<ISpecialPiece> inserts)
+        {
+            Action result = null;
+            foreach (var v in inserts)
+            {
+                result += v.OnExecute;
+            }
+            return result;
+        }
         #endregion
-        
-        #region ◇ ActionMap Event Add & Remove ◇
+
+        #region ◇ ActionMap ◇
         public static void AddAction(this InputActionMap actionMap, string actionName, Action<InputAction.CallbackContext> callback)
         {
             InputAction inputAction = actionMap.FindAction(actionName);
@@ -96,7 +116,8 @@ namespace CocoDoogy
         }
         #endregion
 
-        #region ◇ HexTile GirdPos & HexDirection & HexRotate ◇
+        #region ◇ HexTile ◇
+        #region ◇◇ From Vector ◇◇
         /// <summary>
         /// GridPos에서 Direction의 GridPos값을 반환
         /// </summary>
@@ -129,6 +150,25 @@ namespace CocoDoogy
                 _ => 0,
             };
             return result;
+        }
+
+        /// <summary>
+        /// 목표가 인접했다면, 현재 위치에서 어느 방향에 존재하는지 방향 반환
+        /// </summary>
+        /// <param name="gridPos"></param>
+        /// <param name="targetPos"></param>
+        /// <returns></returns>
+        public static HexDirection? GetRelativeDirection(this Vector2Int gridPos, Vector2Int targetPos)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                HexDirection direction = (HexDirection)i;
+                if (targetPos == gridPos.GetDirectionPos(direction))
+                {
+                    return direction;
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -166,7 +206,9 @@ namespace CocoDoogy
             
             return new Vector2Int(x, y);
         }
+        #endregion
 
+        #region ◇◇ From Hex~ ◇◇
         /// <summary>
         /// Hex 회전 값을 World Rotation으로 변경
         /// </summary>
@@ -227,6 +269,7 @@ namespace CocoDoogy
            return (HexDirection)result;
         }
         #endregion
+        #endregion
 
 
         /// <summary>
@@ -244,9 +287,51 @@ namespace CocoDoogy
             return result;
         }
 
+        /// <summary>
+        /// Theme를 Indexing이 유리한 형태로 변경
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <returns></returns>
+        public static int ToIndex(this Theme theme) => theme switch
+        {
+            Theme.Forest => 0,
+            Theme.Water => 1,
+            Theme.Snow => 2,
+            Theme.Sand => 3,
+            _ => -1
+        };
+
+        /// <summary>
+        /// Enable을 Method형태로 제공
+        /// </summary>
+        /// <param name="component"></param>
+        /// <param name="enable"></param>
         public static void SetEnable(this MonoBehaviour component, bool enable)
         {
             component.enabled = enable;
+        }
+
+        /// <summary>
+        /// 정수가 min과 max 사이에 존재하는 수인지 확인
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static bool IsBetween(this int value, int min, int max)
+        {
+            return min <= value && value <= max;
+        }
+
+        /// <summary>
+        /// int값을 2자리의 16진수로 변환하여 string 값으로 반환하는 메서드 <br/>
+        /// ex) 15 -> 0F, 26 -> 1A ... 로 변환하여 반환함.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string Hex2(int value)
+        {
+            return value.ToString("X2"); 
         }
     }
 }

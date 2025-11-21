@@ -1,6 +1,9 @@
+using CocoDoogy.Core;
+using CocoDoogy.Data;
 using CocoDoogy.UI;
 using CocoDoogy.UI.Popup;
 using DG.Tweening;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -10,101 +13,80 @@ using UnityEngine.EventSystems;
 
 namespace CocoDoogy.UI.StageSelect
 {
-    public class StageSelectManager : MonoBehaviour
+    public class StageSelectManager : Singleton<StageSelectManager>
     {
-        public static StageSelectManager Instance { get; private set; }
+        [Header("Main UIs")]
+        [SerializeField] private RectTransform lobbyUIPanel;
+        [SerializeField] private RectTransform stageSelectUIPanel;
         
         [Header("UI Elements")]
-        [SerializeField] private RectTransform stageSelectUI;
-        [SerializeField] private RectTransform stageReadyUI;
-        private bool isStageSelect;
-        private bool isStageReady;
+        [SerializeField] private StageListPage stageListPage;
+        [SerializeField] private StageInfoPanel stageInfoPanel;
         
         [Header("Menu Buttons")]
         [SerializeField] private CommonButton backButton;
         
         [Header("Stages")]
-        [SerializeField] private GameObject[] stages;
         [SerializeField] private Sprite lockedSprite;
-        private CommonButton[] stageButtons;
-        private Image[] stageIcons;
         
         [Header("StageOptions")]
         [SerializeField] private int clearedStages;
-        public static int SelectedStage;
-            
-        private void Awake()
+
+
+        private Theme nowTheme = Theme.None;
+        private Image[] stageIcons;
+        
+        
+        protected override void Awake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            Instance = this;
+            base.Awake();
+
+            PageCameraSwiper.OnStartPageChanged += OnChangedTheme;
             
-            isStageSelect = true;
-            isStageReady = false;
-            
-            
-            
-            stageButtons = new CommonButton[stages.Length];
-            stageIcons = new Image[stages.Length];
-            for (int i = 0; i < stages.Length; ++i)
-            {
-                stageButtons[i] = stages[i].GetComponent<CommonButton>();
-                stageIcons[i] = stages[i].GetComponent<Image>();
-                
-                LockStage(i);
-                int index = i + 1;
-                stageButtons[i].onClick.AddListener(()=> OnStageButtonClicked(index));
-            }
-            
-            
+            stageInfoPanel.gameObject.SetActive(false);
             
             backButton.onClick.AddListener(OnBackButtonClicked);
         }
-        
-        private void LockStage(int index)
+
+        private void OnEnable()
         {
-            if (index >= clearedStages)
-            {
-                stageIcons[index].sprite = lockedSprite;
-                foreach (Transform child in stages[index].transform)
-                {
-                    child.gameObject.SetActive(false);
-                }
-            }
-        }
-        
-        private void OnStageButtonClicked(int index)
-        {
-            if (index <= clearedStages)
-            {
-                SelectedStage = index;
-                
-                if (stageReadyUI.gameObject.activeSelf) return;
-                stageReadyUI.gameObject.SetActive(true);
-                isStageSelect = false;
-                isStageReady = true;
-            }
-            else
-            {
-                MessageDialog.ShowMessage($"STAGE {index}","이전 스테이지를 클리어해주세요!", DialogMode.Confirm, (_) => Debug.Log("Refused"));
-            }
+            PageCameraSwiper.IsSwipeable = false;
         }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            
+            PageCameraSwiper.OnStartPageChanged -= OnChangedTheme;
+        }
+
+
+        private void OnChangedTheme(Theme theme)
+        {
+            stageListPage.DrawButtons(nowTheme = theme, 1);
+        }
         
         
         private void OnBackButtonClicked()
         {
-            if (isStageSelect) Loading.LoadScene("MainUITest");
-            if (isStageReady)
+            if (!stageInfoPanel.IsOpened)
             {
-                WindowAnimation.SwipeWindow(stageReadyUI);
-                
-                isStageSelect = true;
-                isStageReady = false;
+                WindowAnimation.SwipeWindow(stageSelectUIPanel);
+                lobbyUIPanel.gameObject.SetActive(true);
+                PageCameraSwiper.IsSwipeable = true;
             }
+            else
+            {
+                WindowAnimation.SwipeWindow(stageInfoPanel.transform as RectTransform);
+            }
+        }
+
+
+        public static void ShowReadyView(StageData data)
+        {
+            if (!Instance) return;
+            
+            Instance.stageInfoPanel.Show(data);
         }
     }
 }

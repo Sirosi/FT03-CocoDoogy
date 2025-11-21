@@ -29,7 +29,6 @@ namespace CocoDoogy.Network
 
         /// <summary>
         /// 파이어베이스 초기화가 완료 후에 작동하는 이벤트
-        /// GoogleLogin.cs -> Firebase.OnFirebaseInitialized += InitGoogleConfig; 이런식으로 사용하면 될 듯
         /// </summary>
         public event Action OnFirebaseInitialized;
 
@@ -70,14 +69,14 @@ namespace CocoDoogy.Network
         }
 
         /// <summary>
-        /// LoginUI 에서 OnFirebaseInitialized에 이벤트를 넣어야하는데 이벤트를 넣기 전에 
+        /// LoginUI 에서 OnFirebaseInitialized에 이벤트를 넣어야하는데 이벤트를 넣기 전, <br/>
         /// OnFirebaseInitialized?.Invoke() 부분이 실행될 수 있기 때문에 파악 후 이벤트 실행 or 넣기 
         /// </summary>
         /// <param name="callback"></param>
-        public void SubscribeOnFirebaseInitialized(Action callback)
+        public static void SubscribeOnFirebaseInitialized(Action callback)
         {
-            if (IsFirebaseReady) callback?.Invoke();
-            else OnFirebaseInitialized += callback;
+            if (Instance.IsFirebaseReady) callback?.Invoke();
+            else Instance.OnFirebaseInitialized += callback;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace CocoDoogy
         public static void LoadScene(string sceneName)
         {
             nextScene = sceneName;
-            SceneManager.LoadScene("LoadingTest");
+            SceneManager.LoadScene("Loading");
         }
 
         void Start()

@@ -15,7 +15,7 @@ namespace CocoDoogy.Data
         {
             if (DataManager.Instance != null)
             {
-                DataManager.Instance.OnUserDataLoaded += UpdateUI;
+                DataManager.Instance.OnPrivateUserDataLoaded += UpdateUI;
 
                 if (DataManager.Instance.UserData != null)
                 {
@@ -33,7 +33,7 @@ namespace CocoDoogy.Data
         {
             if (DataManager.Instance != null)
             {
-                DataManager.Instance.OnUserDataLoaded -= UpdateUI;
+                DataManager.Instance.OnPrivateUserDataLoaded -= UpdateUI;
             }
         }
         

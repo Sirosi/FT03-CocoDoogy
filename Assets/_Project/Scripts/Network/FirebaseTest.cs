@@ -27,7 +27,7 @@ namespace CocoDoogy.Network.UI
             googleLoginButton.interactable = false;
             anonymousLoginButton.interactable = false;
 
-            Firebase.SubscribeOnFirebaseInitialized(() =>
+            FirebaseManager.SubscribeOnFirebaseInitialized(() =>
             {
                 authProvider.InitGoogleSignIn();
                 googleLoginButton.interactable = true;
@@ -49,7 +49,8 @@ namespace CocoDoogy.Network.UI
         {
             loginPanel.SetActive(false);
 
-            // TODO : 일정 시간마다 티켓 정상적으로 획득되는지 테스트 용
+            // 로그인에 성공 후 실행되며 게임이 종료될 때까지 실행
+            // 일정 시간마다 실행되며 해당 시간이 지나면 티켓이 생성되도록 함.
             StartCoroutine(Firebase.UpdateLocalTimerCoroutine());
         }
 

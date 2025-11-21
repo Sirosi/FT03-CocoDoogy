@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using CocoDoogy.GameFlow.InGame.Command.Content;
-using CocoDoogy.Weather;
-using CocoDoogy.Tile;
-using Newtonsoft.Json;
+using CocoDoogy.Test;
 
 namespace CocoDoogy.GameFlow.InGame.Command
 {
@@ -31,7 +29,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// <param name="type"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static CommandBase ExecuteCommand(CommandType type, object param)
+        public static CommandBase ExecuteCommand(CommandType type, object param, bool processCheck = true)
         {
             CommandBase result = null;
             try
@@ -40,10 +38,17 @@ namespace CocoDoogy.GameFlow.InGame.Command
                 {
                     CommandType.Move => new MoveCommand(param),
                     CommandType.Trigger => new TriggerCommand(param),
+                    
                     CommandType.Slide => new SlideCommand(param),
-                    CommandType.Tornado => new TornadoCommand(param),
+                    CommandType.Teleport => new TeleportCommand(param),
+                    CommandType.Sail => new SailCommand(param),
+                    
                     CommandType.Deploy => new DeployCommand(param),
+                    CommandType.Refill => new RefillCommand(param),
                     CommandType.Weather => new WeatherCommand(param),
+                    CommandType.Gimmick => new GimmickCommand(param),
+                    CommandType.Increase => new IncreaseCommand(param),
+                    CommandType.DeckReset => new DeckResetCommand(param),
                     _ => null
                 };
 
@@ -53,7 +58,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     Executed.Push(result);
                     Undid.Clear();
 
-                    InGameManager.ProcessPhase();
+                    if (processCheck)
+                    {
+                        InGameManager.ProcessPhase();
+                    }
                 }
             }
             catch (InvalidCastException e)
@@ -123,6 +131,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                 Undid.Push(result);
                 break;
             }
+            OutlineForTest.Draw();
 
             return result;
         }
@@ -139,6 +148,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                 Executed.Push(result);
                 break;
             }
+            OutlineForTest.Draw();
 
             return result;
         }

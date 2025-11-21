@@ -20,9 +20,13 @@ namespace CocoDoogy
             closeButton.onClick.AddListener(ClosePanel);
             _ = RefreshUIAsync();
         }
+        
+        public override void ClosePanel()
+        {
+            WindowAnimation.CloseWindow(profileWindow);
+            PageCameraSwiper.IsSwipeable = true;
+        }
 
-        public override void OpenPanel() => gameObject.SetActive(true);
-        protected override void ClosePanel() => WindowAnimation.CloseWindow(profileWindow);
 
         
         private async Task RefreshUIAsync()

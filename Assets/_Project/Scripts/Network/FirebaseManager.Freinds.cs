@@ -1,3 +1,5 @@
+using Firebase.Firestore;
+using Firebase.Functions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,12 +10,20 @@ namespace CocoDoogy.Network
 {
     public partial class FirebaseManager
     {
-        public async Task<IDictionary<string, object>> CallFriendFunctionAsync(string functionName, string friendsUid, string errorMessage)
+        /// <summary>
+        /// 친구 관련으로 Firebase Functions 기능을 사용하는 메서드.<br/>
+        /// 비슷한 내용으로 여러개 만들어지는 것을 방지하고자 Functions의 함수를 이름으로 받아 사용 
+        /// </summary>
+        /// <param name="functionName">Firebase Functions 이름</param>
+        /// <param name="friendsUid">보내는 친구 uid(FindUserByNicknameAsync에서 찾아서 넣음)</param>
+        /// <param name="errorMessage">Firebase Functions에 맞는 에러 문구</param>
+        /// <returns></returns>
+        public static async Task<IDictionary<string, object>> CallFriendFunctionAsync(string functionName, string friendsUid, string errorMessage)
         {
             try
             {
-                var data = new Dictionary<string, object> { { "friendsUid", friendsUid } };
-                var result = await Functions.GetHttpsCallable(functionName).CallAsync(data);
+                Dictionary<string, object> data = new() { { "friendsUid", friendsUid } };
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable(functionName).CallAsync(data);
 
                 string json = JsonConvert.SerializeObject(result.Data);
                 return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
@@ -31,12 +41,12 @@ namespace CocoDoogy.Network
         /// </summary>
         /// <param name="nickname"></param>
         /// <returns></returns>
-        public async Task<string> FindUserByNicknameAsync(string nickname)
+        public static async Task<string> FindUserByNicknameAsync(string nickname)
         {
             try
             {
-                var docRef = Firestore.Collection("nicknames").Document(nickname);
-                var snapshot = await docRef.GetSnapshotAsync();
+                DocumentReference docRef = Instance.Firestore.Collection("nicknames").Document(nickname);
+                DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
             
                 if (snapshot.Exists)
                 {
@@ -59,37 +69,38 @@ namespace CocoDoogy.Network
         /// 현재 로그인한 유저가 받은 친구 추가 요청을 모두 Dictionary에 담아 반환 
         /// </summary>
         /// <returns></returns>
-        public async Task<Dictionary<string, string>> GetFriendRequestsAsync(string request)
+        public static async Task<Dictionary<string, string>> GetFriendRequestsAsync(string request)
         {
             try
             {
-                var userDoc = Firestore
-                    .Collection("users").Document(Auth.CurrentUser.UserId)
+                var userDoc = Instance.Firestore
+                    .Collection("users").Document(Instance.Auth.CurrentUser.UserId)
                     .Collection("private").Document("data");
                 
-                var snapshot = await userDoc.GetSnapshotAsync();
+                DocumentSnapshot snapshot = await userDoc.GetSnapshotAsync();
 
-                if (snapshot.Exists && snapshot.TryGetValue(request, out Dictionary<string, object> dictionary))
+                if (!snapshot.Exists || !snapshot.TryGetValue(request, out Dictionary<string, object> dictionary))
                 {
-                    var result = new Dictionary<string, string>();
-                    foreach (var key in dictionary)
-                    {
-                        if (key.Value is Dictionary<string, object> friendData && friendData.TryGetValue("nickName", out object nickname))
-                        {
-                            result[key.Key] = nickname.ToString();
-                        }
-                        else if (key.Value is Dictionary<string, object> giftData && giftData.TryGetValue("giftList", out object gift))
-                        {
-                            result[key.Key] = gift.ToString();
-                        } 
-                        else if (key.Value is string value)
-                        {
-                            result[key.Key] = value;
-                        }
-                    }
-                    return result;
+                    return new Dictionary<string, string>();
                 }
-                return new Dictionary<string, string>();
+
+                Dictionary<string, string> result = new Dictionary<string, string>();
+                foreach (KeyValuePair<string, object> key in dictionary)
+                {
+                    if (key.Value is Dictionary<string, object> friendData && friendData.TryGetValue("nickName", out object nickname))
+                    { // FirebaseStore에서 nickName 필드를 가져와서 Dictionary에 넣음 -> 친구 리스트에 넣을 닉네임을 가져오는 용도
+                        result[key.Key] = nickname.ToString();
+                    }
+                    else if (key.Value is Dictionary<string, object> giftData && giftData.TryGetValue("giftList", out object gift))
+                    { // FirebaseStore에서 gift 필드를 가져와서 Dictionary에 넣음 -> 선물 리스트에 넣을 선물 목록을 가져오는 용도
+                        result[key.Key] = gift.ToString();
+                    } 
+                    else if (key.Value is string value)
+                    { // 그외 모든 필드의 내용을 넣음 -> 그외 다른 
+                        result[key.Key] = value;
+                    }
+                }
+                return result;
             }
             catch (Exception e)
             {

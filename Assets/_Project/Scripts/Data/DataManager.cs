@@ -1,9 +1,11 @@
 using CocoDoogy.Core;
+using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Network;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
 using Firebase.Firestore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -11,24 +13,40 @@ using UnityEngine;
 namespace CocoDoogy.Data
 {
     public partial class DataManager : Singleton<DataManager>
-    {
+    { 
         //TODO : 아이템 데이터를 넣어서 여기서 itemId를 가져와 DB와 비교한 다음 ShopItem을 생성하도록
         [SerializeField] private ItemData[] itemData;
         [SerializeField] private ItemData[] cashData;
         [SerializeField] private ItemData[] stampData;
-
+        
         public UserData UserData { get; private set; }
+        /// <summary>
+        /// itemData에 있는 정보를 다른 클래스에서 사용하기 위한 변수 <br/>
+        /// 지금은 ItemToggleHandler에서 아이템 버튼에 아이템 정보를 찾아넣기 위해 사용 중.
+        /// </summary>
+        public IReadOnlyList<ItemData> ItemData => itemData;
+        /// <summary>
+        /// Firebase Store의 Document 내부의 필드에 변화가 생기면 발생하는 이벤트. public Doc 하위 필드 변경시 발생
+        /// </summary>
+        public event Action OnPublicUserDataLoaded;
+        /// <summary>
+        /// Firebase Store의 Document 내부의 필드에 변화가 생기면 발생하는 이벤트. private Doc 하위 필드 변경시 발생
+        /// </summary>
+        public event Action OnPrivateUserDataLoaded;
 
-        //데이터가 변경되면 불러오는 이벤트 입니다. UI에서 구독하면 자동으로 업데이트가 가능합니다.
-        public event Action OnUserDataLoaded;
-
+        /// <summary>
+        /// Firebase Store의 Document 내부의 필드에 변화를 감지하는 리스너. public Doc 하위 필드 변경시 발생
+        /// </summary>
         private ListenerRegistration publicListener;
+        /// <summary>
+        /// Firebase Store의 Document 내부의 필드에 변화를 감지하는 리스너. private Doc 하위 필드 변경시 발생
+        /// </summary>
         private ListenerRegistration privateListener;
-
-        private bool isPublicDataLoaded = false;
-        private bool isPrivateDataLoaded = false;
-
-
+        
+        /// <summary>
+        /// Firebase의 변화를 알리는 Listener가 중복으로 생성되는것을 방지하기 위한 변수
+        /// </summary>
+        private PrivateUserData lastPrivateData;
 #if UNITY_EDITOR
         void Reset()
         {
@@ -40,10 +58,16 @@ namespace CocoDoogy.Data
             pieceData = guids
                 .Select(guid => AssetDatabase.LoadAssetAtPath<PieceData>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
+            guids = AssetDatabase.FindAssets("t:WeatherData");
+            weatherData = guids
+                .Select(guid => AssetDatabase.LoadAssetAtPath<WeatherData>(AssetDatabase.GUIDToAssetPath(guid)))
+                .ToArray();
+            guids = AssetDatabase.FindAssets("t:StageData");
+            stageData = guids
+                .Select(guid => AssetDatabase.LoadAssetAtPath<StageData>(AssetDatabase.GUIDToAssetPath(guid)))
+                .ToArray();
         }
 #endif
-
-
         protected override void Awake()
         {
             base.Awake();
@@ -54,23 +78,10 @@ namespace CocoDoogy.Data
             }
         }
 
-
-        /// <summary>
-        /// 게임 실행 시, DontDestroy해야 하는 모든 Manager 스크립트를 갖고 있는<br/>
-        /// CoreManager 생성 메소드
-        /// </summary>
-        [RuntimeInitializeOnLoadMethod]
-        private static void InitializeRuntime()
-        {
-            Instantiate(Resources.Load<GameObject>("CoreManager")).name = "CoreManager";
-        }
-
-
         //실시간 리스너 구독
         public void StartListeningForUserData(string userId)
         {
             StopListening();
-
             publicListener = CreateListener(userId, "public", "profile", true);
             privateListener = CreateListener(userId, "private", "data", false);
         }
@@ -80,24 +91,12 @@ namespace CocoDoogy.Data
             var docRef = FirebaseManager.Instance.Firestore
                 .Collection("users").Document(userId)
                 .Collection(collection).Document(document);
-
-            if (isPublic)
-            {
-                publicListener?.Stop();
-            }
-            else
-            {
-                privateListener?.Stop();
-            }
-
+            
             var listener = docRef.Listen(snapshot =>
             {
                 try
                 {
-                    if (snapshot.Metadata.HasPendingWrites)
-                        return;
-
-                    if (!snapshot.Exists) return;
+                    if (!snapshot.Exists || snapshot.Metadata.HasPendingWrites) return;
 
                     if (UserData == null)
                     {
@@ -107,20 +106,23 @@ namespace CocoDoogy.Data
 
                     if (isPublic)
                     {
-                        UserData.PublicUserData = snapshot.ConvertTo<PublicUserData>();
-                        Debug.Log("PublicUserData");
-                        isPublicDataLoaded = true;
+                        var newPublicData = snapshot.ConvertTo<PublicUserData>();
+                        if (UserData.PublicUserData != null && UserData.PublicUserData.Equals(newPublicData)) return;
+
+                        UserData.PublicUserData = newPublicData;
+                        Debug.Log("PublicUserData 업데이트됨");
+                        OnPublicUserDataLoaded?.Invoke();
                     }
                     else
                     {
-                        UserData.PrivateUserData = snapshot.ConvertTo<PrivateUserData>();
-                        Debug.Log("PrivateUserData");
-                        isPrivateDataLoaded = true;
-                    }
+                        var newPrivateData = snapshot.ConvertTo<PrivateUserData>();
+                        
+                        if (lastPrivateData != null && lastPrivateData.Equals(newPrivateData)) return;
 
-                    if (isPrivateDataLoaded && isPublicDataLoaded)
-                    {
-                        OnUserDataLoaded?.Invoke();
+                        lastPrivateData = newPrivateData;
+                        UserData.PrivateUserData = newPrivateData;
+                        Debug.Log("PrivateUserData 업데이트됨");
+                        OnPrivateUserDataLoaded?.Invoke();
                     }
                 }
                 catch (Exception e)
@@ -128,16 +130,7 @@ namespace CocoDoogy.Data
                     Debug.LogError($"실시간 데이터 동기화 중 오류 발생: {e.Message}");
                 }
             });
-
-            if (isPublic)
-            {
-                publicListener = listener;
-            }
-            else
-            {
-                privateListener = listener;
-            }
-
+            
             return listener;
         }
 
@@ -148,7 +141,14 @@ namespace CocoDoogy.Data
             privateListener?.Stop();
             privateListener = null;
         }
-
+    
+        /// <summary>
+        /// Intro -> Lobby 씬 전환 시 이벤트 구독 전에 이벤트가 실행되서 이벤트를 실행시키기 위한 메서드 
+        /// </summary>
+        public void InvokePrivateUserData()
+        {
+            OnPrivateUserDataLoaded?.Invoke();
+        }
         protected override void OnDestroy()
         {
             base.OnDestroy();

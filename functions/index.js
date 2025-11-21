@@ -28,11 +28,14 @@ const {cancelFriendsRequest} = require(
 const {deleteFriendsRequest} = require(
     "./functions/friends/deleteFriendsRequest",
 );
-const {presentFriendsRequest} = require(
-    "./functions/friends/presentFriendsRequest",
+const {giftFriendsRequest} = require(
+    "./functions/friends/giftFriendsRequest",
 );
 const {takePresentRequest} = require(
     "./functions/take/takePresentRequest",
+);
+const {useItem} = require(
+    "./functions/item/useItem",
 );
 
 exports.takeInGameMoney = takeInGameMoney;
@@ -48,5 +51,6 @@ exports.receiveFriendsRequest = receiveFriendsRequest;
 exports.rejectFriendsRequest = rejectFriendsRequest;
 exports.cancelFriendsRequest = cancelFriendsRequest;
 exports.deleteFriendsRequest = deleteFriendsRequest;
-exports.presentFriendsRequest = presentFriendsRequest;
+exports.giftFriendsRequest = giftFriendsRequest;
 exports.takePresentRequest = takePresentRequest;
+exports.useItem = useItem;

@@ -12,7 +12,7 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private RectTransform settingsWindow;
         
         [Header("Buttons")]
-        [SerializeField] private CommonButton closeButton;
+        [SerializeField] private Button closeButton;
         
         [Header("Volume Icons")]
         [SerializeField] private Image masterIcon;
@@ -59,9 +59,12 @@ namespace CocoDoogy.UI.UserInfo
             sfxVolume.value = AudioSetting.SfxVolume;
         }
         
-        public override void OpenPanel() => gameObject.SetActive(true);
-        protected override void ClosePanel() => WindowAnimation.SwipeWindow(settingsWindow);
-        
+        public override void ClosePanel()
+        {
+            WindowAnimation.SwipeWindow(settingsWindow);
+            PageCameraSwiper.IsSwipeable = true;
+        }
+
         void MasterControl(float value)
         {
             if (value <= 0)

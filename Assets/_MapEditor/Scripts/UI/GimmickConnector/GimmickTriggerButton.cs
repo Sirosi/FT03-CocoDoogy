@@ -45,7 +45,7 @@ namespace CocoDoogy.MapEditor.GimmickConnector
             target = triggerData;
 
             HexTile tile = HexTile.GetTile(target.GridPos);
-            Piece centerPiece = tile.Pieces[(int)HexDirection.Center];
+            Piece centerPiece = tile.GetPiece(HexDirection.Center);
             text.text = $"{tile.CurrentData.type} {target.GridPos}({(centerPiece ? centerPiece.BaseData.type : "<color=red><b>ERROR</b></color>")})";
             reverseToggle.SetIsOnWithoutNotify(target.IsReversed);
         }

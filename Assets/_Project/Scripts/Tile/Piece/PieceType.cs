@@ -6,9 +6,9 @@ namespace CocoDoogy.Tile.Piece
 
         // 트리거 그룹
         /// <summary>
-        /// On/Off 스위치
+        /// On/Off 레버
         /// </summary>
-        Switch = 001,
+        Lever = 001,
         /// <summary>
         /// 일정시간동안 동작하는 Trigger형 버튼
         /// </summary>
@@ -30,6 +30,10 @@ namespace CocoDoogy.Tile.Piece
         /// 물 위에 뜬 상자
         /// </summary>
         FloatedCrate = 006,
+        /// <summary>
+        /// 발판형 버튼 위에 상자
+        /// </summary>
+        GravityCrate = 007,
 
         // 오브젝트
         /// <summary>
