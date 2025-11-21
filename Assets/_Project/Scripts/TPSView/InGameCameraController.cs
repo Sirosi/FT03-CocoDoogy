@@ -34,7 +34,7 @@ namespace CocoDoogy
         private bool hasMoving = false;
         private void Move()
         {
-            if(!hasMoving && TouchSystem.TouchCount > 0) // Touch Began
+            if(!hasMoving && TouchSystem.TouchCount == 1) // Touch Began
             {
                 hasMoving = true;
                 prevPos = TouchSystem.TouchAverage;
@@ -87,7 +87,7 @@ namespace CocoDoogy
 
             if(!hasZooming) return;
             float currentDistance = TouchSystem.DistanceAverage;
-            float distance = currentDistance - pivotDistance;
+            float distance = (currentDistance - pivotDistance) / pivotDistance;
 
             mainCamera.fieldOfView -= distance * zoomSpeed;
             mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView, 20, 80);

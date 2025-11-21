@@ -104,7 +104,32 @@ namespace CocoDoogy.UI.StageSelect
             
             ApplyLockedState(unlocked);
         }
-
+        // public void Init(StageData data, int starSize, Action<StageData> actionCallback)
+        // {
+        //     if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
+        //         StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
+        //     {
+        //         startButton.interactable = false;
+        //         startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
+        //         starGroup.gameObject.SetActive(false);
+        //         stageNumberText.text = $"{data.stageName}";
+        //         return;
+        //     }
+        //
+        //     startButton.interactable = true;
+        //     startButton.GetComponentInChildren<Image>().sprite = defaultSprite;
+        //     starGroup.gameObject.SetActive(true);
+        //
+        //     stageData = data;
+        //     callback = actionCallback;
+        //
+        //     foreach (GameObject star in clearStars)
+        //     {
+        //         star.SetActive(starSize-- > 0);
+        //     }
+        //
+        //     stageNumberText.text = $"{data.stageName}";
+        // }
         private void ApplyLockedState(bool locked)
         {
             startButton.interactable = !locked;
