@@ -2,6 +2,7 @@ using CocoDoogy.Data;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.Shop.Category;
+using CocoDoogy.UI.StageSelect;
 using CocoDoogy.UI.UserInfo;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,18 @@ namespace CocoDoogy.UI.Shop
             InitTabs();
         }
         
-        public override void ClosePanel() => WindowAnimation.SwipeWindow(transform as RectTransform);
+        public override void ClosePanel()
+        {
+            if (!purchasePanel.gameObject.activeSelf && !confirmPanel.gameObject.activeSelf)
+            {
+                WindowAnimation.SwipeWindow(transform as RectTransform);
+                if (!StageSelectManager.Instance.gameObject.activeSelf)
+                {
+                    PageCameraSwiper.IsSwipeable = true;
+                }
+            }
+        }
+
         public void OpenPurchasePanel(ItemData itemData) => purchasePanel.Open(itemData, OnPurchaseRequest);
         private void OnPurchaseRequest(ItemData itemData, int quantity) => _ = ExecutePurchaseAsync(itemData, quantity);
         
@@ -57,7 +69,7 @@ namespace CocoDoogy.UI.Shop
         {
             try
             {
-                var result = await FirebaseManager.Instance.PurchaseWithCashMoneyAsync(itemData.itemId, quantity);
+                var result = await FirebaseManager.PurchaseWithCashMoneyAsync(itemData.itemId, quantity);
 
                 bool success = result.ContainsKey("success") && (bool)result["success"];
 
@@ -131,6 +143,16 @@ namespace CocoDoogy.UI.Shop
         #endregion
 
         # region < InfoUI에서 버튼에 연결하기 위한 메서드 >
+
+        public void OpenItemShopUI()
+        {
+            OpenPanel();
+            itemShop.Change(true);
+            stampShop.Change(false);
+            jemShop.Change(false);
+            ToggleTab(itemShop.transform);
+            OnClickButton(itemShopButton);
+        }
         public void OpenJemShopUI()
         {
             OpenPanel();

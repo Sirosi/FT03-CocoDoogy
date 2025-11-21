@@ -30,11 +30,11 @@ namespace CocoDoogy.Core
         private int ThemeToIndex(Theme theme)
         {
             switch (theme)
-            {
+            { // TODO: 여기 다 뜯어 고쳐야 함
                 case Theme.Forest: return 0;
-                case Theme.Sand: return 1;
-                case Theme.Water: return 2;
-                case Theme.Snow: return 3;
+                case Theme.Water: return 1;
+                case Theme.Snow: return 2;
+                case Theme.Sand: return 3;
                 default: return 0;
             }
         }

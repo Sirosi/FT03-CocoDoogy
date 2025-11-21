@@ -33,7 +33,12 @@ namespace CocoDoogy.UI.Gift
             getAllButton.onClick.AddListener(OnGetAllButtonClicked);
             confirmButton.onClick.AddListener(OnConfirmButtonClicked);
         }
-        public override void ClosePanel() => WindowAnimation.SwipeWindow(giftWindow);
+        public override void ClosePanel()
+        {
+            WindowAnimation.SwipeWindow(giftWindow);
+            PageCameraSwiper.IsSwipeable = true;
+        }
+
         public void SubscriptionEvent() => _ = RefreshPanelAsync();
         private void OnGetAllButtonClicked() => getGiftWindow.gameObject.SetActive(true);
         private void OnConfirmButtonClicked() =>  WindowAnimation.CloseWindow(getGiftWindow);
@@ -49,7 +54,7 @@ namespace CocoDoogy.UI.Gift
             {
                 Destroy(child.gameObject);
             }
-            var requestDict = await Firebase.GetGiftListAsync();
+            var requestDict = await FirebaseManager.GetGiftListAsync();
             foreach (var kvp in requestDict)
             {
                 var item = Instantiate(prefabItem, container);
@@ -72,7 +77,7 @@ namespace CocoDoogy.UI.Gift
 
         private async void OnTakePresentAsync(string itemType)
         {
-            var result = await Firebase.TakeGiftRequestAsync(itemType);
+            var result = await FirebaseManager.TakeGiftRequestAsync(itemType);
             bool success = (bool)result["success"];
 
             if (success)

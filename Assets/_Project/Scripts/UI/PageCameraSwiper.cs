@@ -34,8 +34,8 @@ namespace CocoDoogy.UI
         [Tooltip("전환 속도 (초 단위)")] 
         [SerializeField] private float snapDuration = 0.5f;
         
-        // TODO : 이거 대충 기능만 만들어 둔거여서 나중에 수정 - 김영진
-        [SerializeField] private GameObject stageUI;
+        //대충 끌어다 쓰기 위한 스와이프 가능 여부
+        public static bool IsSwipeable = true;
         
         private Camera mainCamera;
         private int currentIndex = 0;
@@ -60,6 +60,7 @@ namespace CocoDoogy.UI
             MoveToPageInstant(currentIndex);
             SetActivePage(currentIndex);
             NotifyPageChanged(GetThemeByIndex(currentIndex));
+            IsSwipeable = true;
         }
 
         void OnDestroy()
@@ -79,11 +80,11 @@ namespace CocoDoogy.UI
         private Theme GetThemeByIndex(int index)
         {
             switch (index)
-            {
+            { // TODO: 여기 다 뜯어 고쳐야 함
                 case 0: return Theme.Forest;
-                case 1: return Theme.Sand;
-                case 2: return Theme.Water;
-                case 3: return Theme.Snow;
+                case 1: return Theme.Water;
+                case 2: return Theme.Snow;
+                case 3: return Theme.Sand;
                 default: return Theme.None;
             }
         }
@@ -93,7 +94,7 @@ namespace CocoDoogy.UI
             if (Touchscreen.current == null) return;
 
             // 현재 터치 감지
-            if (TouchSystem.TouchCount > 0 && !stageUI.activeSelf)
+            if (TouchSystem.TouchCount > 0 && IsSwipeable)
             {
                 lastPos = TouchSystem.TouchAverage;
 
@@ -212,7 +213,7 @@ namespace CocoDoogy.UI
             bool hasInput = Mouse.current.leftButton.isPressed;
             Vector2 inputPos = Mouse.current.position.ReadValue();
 
-            if (hasInput && !stageUI.activeSelf)
+            if (hasInput && IsSwipeable)
             {
                 lastPos = inputPos;
 

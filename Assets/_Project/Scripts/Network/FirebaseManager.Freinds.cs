@@ -18,12 +18,12 @@ namespace CocoDoogy.Network
         /// <param name="friendsUid">보내는 친구 uid(FindUserByNicknameAsync에서 찾아서 넣음)</param>
         /// <param name="errorMessage">Firebase Functions에 맞는 에러 문구</param>
         /// <returns></returns>
-        public async Task<IDictionary<string, object>> CallFriendFunctionAsync(string functionName, string friendsUid, string errorMessage)
+        public static async Task<IDictionary<string, object>> CallFriendFunctionAsync(string functionName, string friendsUid, string errorMessage)
         {
             try
             {
                 Dictionary<string, object> data = new() { { "friendsUid", friendsUid } };
-                HttpsCallableResult result = await Functions.GetHttpsCallable(functionName).CallAsync(data);
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable(functionName).CallAsync(data);
 
                 string json = JsonConvert.SerializeObject(result.Data);
                 return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
@@ -41,11 +41,11 @@ namespace CocoDoogy.Network
         /// </summary>
         /// <param name="nickname"></param>
         /// <returns></returns>
-        public async Task<string> FindUserByNicknameAsync(string nickname)
+        public static async Task<string> FindUserByNicknameAsync(string nickname)
         {
             try
             {
-                DocumentReference docRef = Firestore.Collection("nicknames").Document(nickname);
+                DocumentReference docRef = Instance.Firestore.Collection("nicknames").Document(nickname);
                 DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
             
                 if (snapshot.Exists)
@@ -69,12 +69,12 @@ namespace CocoDoogy.Network
         /// 현재 로그인한 유저가 받은 친구 추가 요청을 모두 Dictionary에 담아 반환 
         /// </summary>
         /// <returns></returns>
-        public async Task<Dictionary<string, string>> GetFriendRequestsAsync(string request)
+        public static async Task<Dictionary<string, string>> GetFriendRequestsAsync(string request)
         {
             try
             {
-                var userDoc = Firestore
-                    .Collection("users").Document(Auth.CurrentUser.UserId)
+                var userDoc = Instance.Firestore
+                    .Collection("users").Document(Instance.Auth.CurrentUser.UserId)
                     .Collection("private").Document("data");
                 
                 DocumentSnapshot snapshot = await userDoc.GetSnapshotAsync();

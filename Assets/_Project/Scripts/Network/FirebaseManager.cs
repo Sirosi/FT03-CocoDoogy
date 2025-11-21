@@ -73,10 +73,10 @@ namespace CocoDoogy.Network
         /// OnFirebaseInitialized?.Invoke() 부분이 실행될 수 있기 때문에 파악 후 이벤트 실행 or 넣기 
         /// </summary>
         /// <param name="callback"></param>
-        public void SubscribeOnFirebaseInitialized(Action callback)
+        public static void SubscribeOnFirebaseInitialized(Action callback)
         {
-            if (IsFirebaseReady) callback?.Invoke();
-            else OnFirebaseInitialized += callback;
+            if (Instance.IsFirebaseReady) callback?.Invoke();
+            else Instance.OnFirebaseInitialized += callback;
         }
     }
 }

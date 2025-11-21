@@ -27,7 +27,7 @@ namespace CocoDoogy.Network.UI
             googleLoginButton.interactable = false;
             anonymousLoginButton.interactable = false;
 
-            Firebase.SubscribeOnFirebaseInitialized(() =>
+            FirebaseManager.SubscribeOnFirebaseInitialized(() =>
             {
                 authProvider.InitGoogleSignIn();
                 googleLoginButton.interactable = true;

@@ -11,7 +11,6 @@ namespace CocoDoogy.UI.UIManager
         [SerializeField] private CommonButton openPauseButton;
         [SerializeField] private CommonButton openQuitButton;
         
-        
         [Header("PauseWindow Buttons")]
         [SerializeField] private CommonButton resumeButton;
         [SerializeField] private CommonButton pauseQuitButton;
@@ -31,7 +30,6 @@ namespace CocoDoogy.UI.UIManager
         
         [Header("Option UI Elements")]
         [SerializeField] private RectTransform settingsWindow;
-        [SerializeField] private RectTransform resetWindow;
         [SerializeField] private RectTransform pauseWindow;
         [SerializeField] private RectTransform quitWindow;
 
@@ -40,7 +38,7 @@ namespace CocoDoogy.UI.UIManager
             openSettingsButton.onClick.AddListener(OnOpenSettingsButtonClicked);
             openPauseButton.onClick.AddListener(OnOpenPauseButtonClicked);
             openQuitButton.onClick.AddListener(OnOpenQuitButtonClicked);
-
+            
             resumeButton.onClick.AddListener(OnResumeButtonClicked);
             pauseQuitButton.onClick.AddListener(OnOpenQuitButtonClicked);
             
@@ -73,7 +71,7 @@ namespace CocoDoogy.UI.UIManager
         {
             quitWindow.gameObject.SetActive(true);
         }
-        
+
         void OnResetButtonClicked()
         {
             Loading.LoadScene("InGame");

@@ -51,7 +51,12 @@ namespace CocoDoogy.UI.Friend
             WindowAnimation.CloseWindow(searchWindowBg.transform);
         }
         
-        public override void ClosePanel() => WindowAnimation.SwipeWindow(friendsWindow);
+        public override void ClosePanel()
+        {
+            WindowAnimation.SwipeWindow(friendsWindow);
+            PageCameraSwiper.IsSwipeable = true;
+        }
+
         private void OnClickFriendSearch() =>searchWindowBg.SetActive(true);
         
         #region ChangeTabs
