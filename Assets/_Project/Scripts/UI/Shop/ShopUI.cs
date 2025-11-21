@@ -49,7 +49,9 @@ namespace CocoDoogy.UI.Shop
             if (!purchasePanel.gameObject.activeSelf && !confirmPanel.gameObject.activeSelf)
             {
                 WindowAnimation.SwipeWindow(transform as RectTransform);
-                if (!StageSelectManager.Instance.gameObject.activeSelf)
+                
+                var stageManager = StageSelectManager.Instance;
+                if (stageManager == null || !stageManager.gameObject.activeSelf)
                 {
                     PageCameraSwiper.IsSwipeable = true;
                 }
