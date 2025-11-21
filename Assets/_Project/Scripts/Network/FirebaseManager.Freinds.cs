@@ -20,6 +20,7 @@ namespace CocoDoogy.Network
         /// <returns></returns>
         public static async Task<IDictionary<string, object>> CallFriendFunctionAsync(string functionName, string friendsUid, string errorMessage)
         {
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
                 Dictionary<string, object> data = new() { { "friendsUid", friendsUid } };
@@ -33,6 +34,10 @@ namespace CocoDoogy.Network
                 Debug.LogError($"{errorMessage}: {e.Message}");
                 throw;
             }
+            finally
+            {
+                loading.Hide();
+            }
         }
         
         
@@ -43,6 +48,7 @@ namespace CocoDoogy.Network
         /// <returns></returns>
         public static async Task<string> FindUserByNicknameAsync(string nickname)
         {
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
                 DocumentReference docRef = Instance.Firestore.Collection("nicknames").Document(nickname);
@@ -62,6 +68,10 @@ namespace CocoDoogy.Network
                 Debug.LogError($"사용자 검색 실패: {e.Message}");
                 return null;
             }
+            finally
+            {
+                loading.Hide();
+            }
         }
         
         
@@ -71,6 +81,7 @@ namespace CocoDoogy.Network
         /// <returns></returns>
         public static async Task<Dictionary<string, string>> GetFriendRequestsAsync(string request)
         {
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
                 var userDoc = Instance.Firestore
@@ -106,6 +117,10 @@ namespace CocoDoogy.Network
             {
                 Debug.LogError($"친구 요청 목록 불러오기 실패: {e.Message}");
                 return new Dictionary<string, string>();
+            }
+            finally
+            {
+                loading.Hide();
             }
         }
     }

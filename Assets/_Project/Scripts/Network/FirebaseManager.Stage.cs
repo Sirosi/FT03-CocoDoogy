@@ -24,6 +24,7 @@ namespace CocoDoogy.Network
         public static async Task<IDictionary<string, object>> ClearStageAsync(int theme, int level, int remainAP,
             float clearTime)
         {
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
                 Dictionary<string, object> data = new()
@@ -42,6 +43,10 @@ namespace CocoDoogy.Network
             {
                 Debug.LogError($"스테이지 클리어 저장 실패: {e.Message}");
                 throw;
+            }
+            finally
+            {
+                loading.Hide();
             }
         }
 
