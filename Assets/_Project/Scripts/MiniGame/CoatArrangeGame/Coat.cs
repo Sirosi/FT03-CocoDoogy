@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace CocoDoogy.MiniGame
 {
@@ -15,7 +16,6 @@ namespace CocoDoogy.MiniGame
         private Vector2 originalAnchoredPos;
         private Transform originalParent;
         private CoatArrangeMiniGame parent;
-
         public void Init(CoatArrangeMiniGame coatArrangeMiniGame)
         {
             parent = coatArrangeMiniGame;
@@ -25,6 +25,12 @@ namespace CocoDoogy.MiniGame
         {
             base.Awake();
             rectTransform = GetComponent<RectTransform>();
+            image = GetComponent<Image>();
+        }
+
+        public void SetUnInteractable()
+        {
+            image.raycastTarget = false;
         }
 
         public override void OnPointerDown(PointerEventData eventData)
@@ -77,7 +83,7 @@ namespace CocoDoogy.MiniGame
                 rectTransform.anchoredPosition = otherAnchoredPos;
                 
                 SfxManager.PlaySfx(SfxType.Minigame_DropCloth);
-                parent?.OnCoatSwapped(thisCoatSlot, otherCoatSlot);
+                parent.OnCoatSwapped(thisCoatSlot, otherCoatSlot);
             }
             else
             {

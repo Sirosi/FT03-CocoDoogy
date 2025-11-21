@@ -23,7 +23,7 @@ namespace CocoDoogy.MiniGame
             // 스케일 초기화
             transform.localScale = Vector3.one;
             // DoTween 애니메이션 (살짝 튕기는 효과)
-            transform.DOScale(1.15f, 0.75f)
+            transform.DOScale(1.2f, 0.75f)
                 .SetEase(Ease.OutBack)
                 .SetLoops(-1, LoopType.Yoyo);
         }

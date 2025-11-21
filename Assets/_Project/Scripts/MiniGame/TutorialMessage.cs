@@ -9,20 +9,20 @@ namespace CocoDoogy.MiniGame
 {
     public class TutorialMessage : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI description;
         [SerializeField] private Image background;
 
         private float defaultalpha = 255f;
-        
+
+    
+
         /// <summary>
         /// 게임이름과 설명을 매개변수로받으면서 설명창 활성화 (1번이라도 실행되었으면 불가능하게)
         /// </summary>
         /// <param name="title"></param>
         /// <param name="desc"></param>
-        public void ShowTutorialExplain(string title, string desc)
+        public void ShowTutorialExplain(string desc)
         {
-            this.title.text = title;
             description.text = desc;
             transform.gameObject.SetActive(true);
             StartCoroutine(InActiveMessage());
@@ -30,10 +30,6 @@ namespace CocoDoogy.MiniGame
         
         private void OnEnable()
         {
-            var c1 = title.color;
-            c1.a = defaultalpha;
-            title.color = c1;
-
             var c2 = description.color;
             c2.a = defaultalpha;
             description.color = c2;
@@ -50,12 +46,11 @@ namespace CocoDoogy.MiniGame
         /// <returns></returns>
         IEnumerator InActiveMessage()
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(2.5f);
             //4초동안 DoTween으로 사라지기
-            title.DOFade(0f, 4f);
             description.DOFade(0f, 4f);
             background.DOFade(0f, 4f);
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(3f);
             transform.gameObject.SetActive(false);
         }
         

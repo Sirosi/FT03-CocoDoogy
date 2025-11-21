@@ -44,7 +44,7 @@ namespace CocoDoogy.MiniGame
             string key = $"TutorialShown_{selectedMiniGame.MiniGameID}";
             if (PlayerPrefs.GetInt(key, 0) == 0)
             {
-                Instance.tutorialMessage.ShowTutorialExplain(selectedMiniGame.tutorialExplainData.title, selectedMiniGame.tutorialExplainData.description);
+                Instance.tutorialMessage.ShowTutorialExplain(selectedMiniGame.tutorialExplainData.description);
             }
             PlayerPrefs.SetInt(key, 1);
             PlayerPrefs.Save();
@@ -71,7 +71,7 @@ namespace CocoDoogy.MiniGame
              string key = $"TutorialShown_{selectedMiniGame.MiniGameID}";
              if (PlayerPrefs.GetInt(key, 0) == 0)
              {
-                 Instance.tutorialMessage.ShowTutorialExplain(selectedMiniGame.tutorialExplainData.title, selectedMiniGame.tutorialExplainData.description);
+                 Instance.tutorialMessage.ShowTutorialExplain(selectedMiniGame.tutorialExplainData.description);
              }
              PlayerPrefs.SetInt(key, 1);
              PlayerPrefs.Save();
