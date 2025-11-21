@@ -2,7 +2,6 @@ using CocoDoogy.Utility;
 using UnityEngine;
 using DG.Tweening;
 using System;
-using UnityEngine.InputSystem;
 using CocoDoogy.Core;
 
 namespace CocoDoogy.UI
@@ -70,11 +69,7 @@ namespace CocoDoogy.UI
 
         void Update()
         {
-#if UNITY_EDITOR
-            HandleEditorSwipe();
-#else
-                Swipe();
-#endif
+            Swipe();
         }
 
         private Theme GetThemeByIndex(int index)
@@ -91,8 +86,6 @@ namespace CocoDoogy.UI
 
         private void Swipe()
         {
-            if (Touchscreen.current == null) return;
-
             // 현재 터치 감지
             if (TouchSystem.TouchCount > 0 && IsSwipeable)
             {
@@ -206,55 +199,5 @@ namespace CocoDoogy.UI
             OnStartPageChanged?.Invoke(theme);
             OnEndPageChanged?.Invoke(theme);
         }
-
-#if UNITY_EDITOR
-        private void HandleEditorSwipe()
-        {
-            bool hasInput = Mouse.current.leftButton.isPressed;
-            Vector2 inputPos = Mouse.current.position.ReadValue();
-
-            if (hasInput && IsSwipeable)
-            {
-                lastPos = inputPos;
-
-                if (!isDragging)
-                {
-                    isDragging = true;
-                    startPos = lastPos;
-                }
-
-                float deltaX = (lastPos.x - startPos.x) / Screen.width;
-                float dragPercent = Mathf.Clamp(deltaX * dragSensitivity, -1f, 1f);
-
-                int targetIndex = currentIndex;
-                if (dragPercent > 0 && currentIndex > 0)
-                    targetIndex = currentIndex - 1;
-                else if (dragPercent < 0 && currentIndex < cameraPoints.Length - 1)
-                    targetIndex = currentIndex + 1;
-
-                float weight = Mathf.Abs(dragPercent);
-
-                Transform currentPoint = cameraPoints[currentIndex];
-                Transform targetPoint = cameraPoints[targetIndex];
-
-                Vector3 blendedPos = Vector3.Lerp(currentPoint.position, targetPoint.position, weight);
-                Quaternion blendedRot = Quaternion.Slerp(currentPoint.rotation, targetPoint.rotation, weight);
-
-                mainCamera.transform.position =
-                    Vector3.Lerp(mainCamera.transform.position, blendedPos, Time.deltaTime * lerpSpeed);
-                mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, blendedRot,
-                    Time.deltaTime * lerpSpeed);
-            }
-            else if (isDragging)
-            {
-                isDragging = false;
-
-                float normalizedDrag = (lastPos.x - startPos.x) / Screen.width;
-                EvaluateSwipe(normalizedDrag);
-
-                startPos = lastPos;
-            }
-        }
-#endif
     }
 }
