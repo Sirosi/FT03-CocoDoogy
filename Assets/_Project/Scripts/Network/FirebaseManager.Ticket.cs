@@ -79,7 +79,7 @@ namespace CocoDoogy.Network
             //     Debug.LogWarning("로컬 확인: 사용 가능한 티켓이 없습니다.");
             //     return false;
             // }
-
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
                 HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("consumeTicket").CallAsync();
@@ -87,13 +87,17 @@ namespace CocoDoogy.Network
                 TicketResponse response = JsonConvert.DeserializeObject<TicketResponse>(json);
 
                 if (response.Success) Instance.UpdateTicketState(result.Data);
-                
+
                 return response.Success;
             }
             catch (Exception e)
             {
                 Debug.LogError("티켓 사용 함수 호출 실패: " + e.Message);
                 return false;
+            }
+            finally
+            {
+                loading.Hide();
             }
         }
 

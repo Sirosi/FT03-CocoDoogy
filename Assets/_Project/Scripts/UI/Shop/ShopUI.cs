@@ -30,6 +30,12 @@ namespace CocoDoogy.UI.Shop
         [SerializeField] private Button jemShopButton;
         
         private Transform currentActivePanel;
+        
+        
+        //스와이프 문제 수정용
+        [Header("Extra")]
+        [SerializeField] private GameObject stageSelectUI;
+        
         private void Awake()
         {
             closeButton.onClick.AddListener(ClosePanel);
@@ -46,13 +52,11 @@ namespace CocoDoogy.UI.Shop
         
         public override void ClosePanel()
         {
-            if (!purchasePanel.gameObject.activeSelf && !confirmPanel.gameObject.activeSelf)
+            WindowAnimation.SwipeWindow(transform as RectTransform);
+            
+            if (!stageSelectUI.activeSelf)
             {
-                WindowAnimation.SwipeWindow(transform as RectTransform);
-                if (!StageSelectManager.Instance.gameObject.activeSelf)
-                {
-                    PageCameraSwiper.IsSwipeable = true;
-                }
+                PageCameraSwiper.IsSwipeable = true;
             }
         }
 

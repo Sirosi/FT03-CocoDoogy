@@ -38,7 +38,7 @@ namespace CocoDoogy
             op.allowSceneActivation = false;
 
             float loadingTimer = 0f;
-            float additionalLoadingTime = 3f;
+            float additionalLoadingTime = 2f;
             
             while (!op.isDone)
             {

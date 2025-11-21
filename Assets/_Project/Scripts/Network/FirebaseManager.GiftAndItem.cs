@@ -22,14 +22,15 @@ namespace CocoDoogy.Network
         /// <exception cref="Exception"></exception>
         public static async Task<IDictionary<string, object>> PurchaseWithCashMoneyAsync(string itemId, int quantity)
         {
-            if (!Instance.IsFirebaseReady) throw new Exception("Firebase가 초기화되지 않았습니다.");
-            Dictionary<string, object> data = new()
-            {
-                { "itemId", itemId }, { "itemQuantity", Convert.ToInt32(quantity) }
-            };
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
-                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("purchaseWithCashMoney").CallAsync(data);
+                Dictionary<string, object> data = new()
+                {
+                    { "itemId", itemId }, { "itemQuantity", Convert.ToInt32(quantity) }
+                };
+                HttpsCallableResult result =
+                    await Instance.Functions.GetHttpsCallable("purchaseWithCashMoney").CallAsync(data);
                 string json = JsonConvert.SerializeObject(result.Data);
                 IDictionary<string, object> dict = JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
                 return dict;
@@ -39,10 +40,15 @@ namespace CocoDoogy.Network
                 Debug.LogError($"Firebase Function 호출 실패: {e.Message}");
                 throw;
             }
+            finally
+            {
+                loading.Hide();
+            }
         }
 
         public static async Task<IDictionary<string, object>> TakeGiftRequestAsync(string giftId)
         {
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
                 Dictionary<string, object> data = new() { { "giftId", giftId } };
@@ -56,10 +62,15 @@ namespace CocoDoogy.Network
                 Debug.LogError($"선물 받기 실패: {e.Message}");
                 throw;
             }
+            finally
+            {
+                loading.Hide();
+            }
         }
 
         public static async Task<IDictionary<string, object>> UseItemAsync(string itemId)
         {
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
                 Dictionary<string, object> data = new() { { "itemId", itemId } };
@@ -72,6 +83,10 @@ namespace CocoDoogy.Network
             {
                 Debug.LogError($"아이템 사용 실패: {e.Message}");
                 throw;
+            }
+            finally
+            {
+                loading.Hide();
             }
         }
         
