@@ -486,13 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6dae0b8edcabd4690eb408b686fb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainBgmEvent:
-    Guid:
-      Data1: 1056652163
-      Data2: 1260339331
-      Data3: 1274943367
-      Data4: -1011817880
-    Path: event:/MainBgm
+  bgmList: []
 --- !u!4 &1007779799
 Transform:
   m_ObjectHideFlags: 0
@@ -935,22 +929,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2237289094780422460, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867251072266917659, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867251072266917659, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8455527313235981829, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: themeFlag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8469531909645046368, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: themeFlag
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -17,6 +17,7 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
         [SerializeField] private Sprite[] coatSprites;
         [SerializeField] private Sprite backgroundSprite;
         private int coatCount = 4;
+        private List<CoatSlot> clearedCoatCount = new List<CoatSlot>();
         private readonly List<Vector2> initialPositions = new List<Vector2>();
         private readonly List<Sprite> initialSprites = new List<Sprite>();
 
@@ -27,6 +28,12 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
         private const float CoatWidthScale = 0.9f;            // 슬롯 대비 코트 크기 비율
         private const float HintSpacingRatio = 550f / 2280f; //힌트패널의 간격
         private const float HintYOffsetRatio = 375f / 1080f;
+        
+
+        protected override void ShowRemainCount()
+        {
+            remainCount.text = clearedCoatCount.Count.ToString();
+        }
 
         protected override void Disable()
         {
@@ -46,6 +53,7 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
             ResizePanel();
             SummonCoatAndCoatSlot();
             ShowHint();
+            remainCountCallback = ShowRemainCount;
         }
         protected override bool IsClear()
         {
@@ -204,13 +212,23 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
             if (slotA != null&& slotA.CheckID())
             {
                 MiniGameParticleManager.Instance.ParticleCoat(slotA.transform.position, slotA.transform);
+                clearedCoatCount.Add(slotA);
             }
-            ;
+            else
+            {
+                clearedCoatCount.Remove(slotA);
+            }
             
             if(slotB != null&& slotB.CheckID())
             {
                 MiniGameParticleManager.Instance.ParticleCoat(slotB.transform.position, slotB.transform);
-            };
+                clearedCoatCount.Add(slotB);
+            }
+            else
+            {
+                clearedCoatCount.Remove(slotB);
+            }
+            
             CheckClear();
         }
 
