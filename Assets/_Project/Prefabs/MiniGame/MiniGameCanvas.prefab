@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7261d9a09596bc94a814c0b65ae057da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  themeFlag: 0
+  themeFlag: -1
   background: {fileID: 2762294578044936128}
   remainCount: {fileID: 6818072742817200873}
   tutorialExplainData: {fileID: 11400000, guid: 0f0faea6380ca434f91bd7913f1fa8fb, type: 2}
@@ -520,7 +520,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e72d96fc86a99c4e9a9a593999a161a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  themeFlag: 0
+  themeFlag: -1
   background: {fileID: 3002086505985338286}
   remainCount: {fileID: 7744687893180722841}
   tutorialExplainData: {fileID: 11400000, guid: 9282ab9046530824199a5392f07a99d8, type: 2}
@@ -1025,7 +1025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7228523206035582962
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1519,7 +1519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672d6fe491b288849bd554e56aca39f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  themeFlag: 0
+  themeFlag: -1
   background: {fileID: 2921058373727947185}
   remainCount: {fileID: 1301781935679407728}
   tutorialExplainData: {fileID: 11400000, guid: 6402f84d4cb02cc419a97d579a4417e2, type: 2}
@@ -1716,7 +1716,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2063,7 +2063,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2199,7 +2199,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2433,7 +2433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651e9a42a055a0f48943cdebc37affc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  themeFlag: 0
+  themeFlag: -1
   background: {fileID: 446478441345911905}
   remainCount: {fileID: 4006926635205296755}
   tutorialExplainData: {fileID: 11400000, guid: 12575342c5ffd7c41a871482a8dc95f1, type: 2}
@@ -2518,8 +2518,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 645, y: 394}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: 584.83923, y: 394}
+  m_SizeDelta: {x: 270.3215, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3647210217914618499
 CanvasRenderer:
@@ -2592,7 +2592,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

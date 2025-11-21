@@ -53,7 +53,7 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
 
         protected override void ShowRemainCount()
         {
-            remainCount.text = dirties.Count.ToString();
+            remainCount.text = "남은 이물질"+dirties.Count.ToString();
         }
         
         protected override void Disable()

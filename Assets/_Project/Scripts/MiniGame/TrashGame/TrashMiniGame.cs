@@ -67,7 +67,7 @@ namespace CocoDoogy.MiniGame.TrashGame
 
         protected override void ShowRemainCount()
         {
-            remainCount.text = trashes.Count.ToString();
+            remainCount.text = "남은 쓰레기"+trashes.Count.ToString();
         }
 
         protected override bool IsClear() => trashes.Count <= 0;

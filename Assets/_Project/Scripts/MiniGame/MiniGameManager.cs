@@ -53,29 +53,29 @@ namespace CocoDoogy.MiniGame
         /// <summary>
         /// 테스트용 임시 실행 코드
         /// </summary>
-        public void OpenRandomGame()
-        {
-            Instance.gameObject.SetActive(true);
-            Instance.backGround.SetActive(true);
-
-            Theme nowTheme = Theme.Forest; // TODO: 나중에 맵 데이터에서 호출하게 변경
-
-            //nowTheme를 갖고 있는 게임을 가져옴//즉, 테마가 없는 게임은 모든 테마를 갖고있도록 설정해야 랜덤게임에 선택될수있음
-            MiniGameBase[] possibleGames = Instance.miniGames.Where(x => x.HasWithTheme(nowTheme)).ToArray();
-            int randomIdx = Random.Range(0, possibleGames.Length);
-
-            MiniGameBase selectedMiniGame = possibleGames[randomIdx];
-            selectedMiniGame.gameObject.SetActive(true);
-            //PlayerPrefs로 튜토리얼 설명여부저장
-            string key = $"TutorialShown_{selectedMiniGame.MiniGameID}";
-            if (PlayerPrefs.GetInt(key, 0) == 0)
-            {
-                Instance.tutorialMessage.ShowTutorialExplain(selectedMiniGame.tutorialExplainData.title, selectedMiniGame.tutorialExplainData.description);
-            }
-            PlayerPrefs.SetInt(key, 1);
-            PlayerPrefs.Save();
-            
-            selectedMiniGame.Open(()=> { });
-        }
+        // public void OpenRandomGame()
+        // {
+        //     Instance.gameObject.SetActive(true);
+        //     Instance.backGround.SetActive(true);
+        //
+        //     Theme nowTheme = Theme.Forest; // TODO: 나중에 맵 데이터에서 호출하게 변경
+        //
+        //     //nowTheme를 갖고 있는 게임을 가져옴//즉, 테마가 없는 게임은 모든 테마를 갖고있도록 설정해야 랜덤게임에 선택될수있음
+        //     MiniGameBase[] possibleGames = Instance.miniGames.Where(x => x.HasWithTheme(nowTheme)).ToArray();
+        //     int randomIdx = Random.Range(0, possibleGames.Length);
+        //
+        //     MiniGameBase selectedMiniGame = possibleGames[randomIdx];
+        //     selectedMiniGame.gameObject.SetActive(true);
+        //     //PlayerPrefs로 튜토리얼 설명여부저장
+        //     string key = $"TutorialShown_{selectedMiniGame.MiniGameID}";
+        //     if (PlayerPrefs.GetInt(key, 0) == 0)
+        //     {
+        //         Instance.tutorialMessage.ShowTutorialExplain(selectedMiniGame.tutorialExplainData.title, selectedMiniGame.tutorialExplainData.description);
+        //     }
+        //     PlayerPrefs.SetInt(key, 1);
+        //     PlayerPrefs.Save();
+        //     
+        //     selectedMiniGame.Open(()=> { });
+        // }
     }
 }

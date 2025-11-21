@@ -47,7 +47,7 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
             {
                 allcount = umbrella.needSwipeCount;
             }
-            remainCount.text = allcount.ToString();
+            remainCount.text = "남은 흔들기"+allcount.ToString();
         }
 
         protected override void Disable()
