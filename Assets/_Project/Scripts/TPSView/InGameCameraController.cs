@@ -10,6 +10,7 @@ namespace CocoDoogy
 {
     public class InGameCameraController : MonoBehaviour
     {
+        [SerializeField] private Transform cameraPivot;
         [SerializeField] private Camera mainCamera;
         [SerializeField] private float moveSpeed = 10f;
         [SerializeField] private float zoomSpeed = 3f;
@@ -17,8 +18,14 @@ namespace CocoDoogy
 
         private void Start()
         {
-            if (!mainCamera) return;
-            mainCamera = Camera.main;
+            if (!mainCamera)
+            {
+                mainCamera = Camera.main;
+            }
+            if (!cameraPivot)
+            {
+                cameraPivot = mainCamera.transform.parent;
+            }
         }
         
         private void Update()
@@ -73,11 +80,11 @@ namespace CocoDoogy
             prevPos = currentPos;
 
             Vector3 move = new Vector3(-delta.x, 0, -delta.y) * (moveSpeed * Time.deltaTime);
-            mainCamera.transform.Translate(move, Space.World);
+            cameraPivot.transform.Translate(move, Space.World);
 
             // 카메라 최대크기 제약
-            mainCamera.transform.position = Vector3.Min(mainCamera.transform.position, HexTileMap.MaxPoint);
-            mainCamera.transform.position = Vector3.Max(mainCamera.transform.position, HexTileMap.MinPoint);
+            cameraPivot.transform.position = Vector3.Min(cameraPivot.transform.position, HexTileMap.MaxPoint);
+            cameraPivot.transform.position = Vector3.Max(cameraPivot.transform.position, HexTileMap.MinPoint);
         }
         #endregion
         

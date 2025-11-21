@@ -105,8 +105,8 @@ namespace CocoDoogy.Utility
             HexTileMap.StartPos = mapData.StartPos;
             HexTileMap.EndPos = mapData.EndPos;
 
-            Vector2Int minPoint = new Vector2Int(int.MaxValue, int.MaxValue);
-            Vector2Int maxPoint = new Vector2Int(int.MinValue, int.MinValue);
+            Vector2Int minPoint = new(int.MaxValue, int.MaxValue);
+            Vector2Int maxPoint = new(int.MinValue, int.MinValue);
 
             HexTileMap.DefaultWeather = mapData.DefaultWeather;
 
@@ -115,11 +115,9 @@ namespace CocoDoogy.Utility
             {
                 Vector2Int gridPos = tile.GridPos;
                 HexTileMap.AddTile(tile.Type, gridPos);
-
-                minPoint.x = minPoint.x > gridPos.x ? gridPos.x : minPoint.x;
-                maxPoint.x = maxPoint.x < gridPos.x ? gridPos.x : maxPoint.x;
-                minPoint.y = minPoint.y > gridPos.y ? gridPos.y : minPoint.y;
-                maxPoint.y = maxPoint.y < gridPos.y ? gridPos.y : maxPoint.y;
+                
+                minPoint = Vector2Int.Min(minPoint, gridPos);
+                maxPoint = Vector2Int.Max(maxPoint, gridPos);
             }
 
             // 기물 설치
