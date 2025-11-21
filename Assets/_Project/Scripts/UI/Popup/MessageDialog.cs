@@ -46,9 +46,9 @@ namespace CocoDoogy.UI.Popup
             
             yesButton.onClick.AddListener(OnConfirmOrYesClick);
             noButton.onClick.AddListener(OnNoClick);
+            backGround.onClick.AddListener(OnNoClick);
             
             cancelButton.onClick.AddListener(OnCancelClick);
-            backGround.onClick.AddListener(OnCancelClick);
             
             inputConfirmButton.onClick.AddListener(OnInputConfirmClick);
             inputCancelButton.onClick.AddListener(OnInputCancelClick);
