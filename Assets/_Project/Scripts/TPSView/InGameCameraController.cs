@@ -16,24 +16,28 @@ namespace CocoDoogy
         [SerializeField] private float zoomSpeed = 3f;
 
 
-        private void Start()
+        void Awake()
         {
-            if (!mainCamera)
-            {
-                mainCamera = Camera.main;
-            }
-            if (!cameraPivot)
-            {
-                cameraPivot = mainCamera.transform.parent;
-            }
+            MapSaveLoader.OnMapLoaded += InitCameraPos;
         }
-        
-        private void Update()
+
+        void OnDestroy()
+        {
+            MapSaveLoader.OnMapLoaded -= InitCameraPos;
+        }
+
+        void Update()
         {
             if (IsPointerOverUI()) return;
 
             Move();
             Zoom();
+        }
+
+
+        private void InitCameraPos()
+        {
+            cameraPivot.transform.position = (HexTileMap.MaxPoint + HexTileMap.MinPoint) * 0.5f;
         }
 
 
