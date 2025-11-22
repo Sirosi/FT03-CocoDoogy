@@ -54,7 +54,7 @@ namespace CocoDoogy.Network
         /// 클리어 한 스테이지 정보를 찾아 가장 최근에 클리어한 스테이지를 반환.
         /// </summary>
         /// <returns></returns>
-        public static async Task GetLastClearStage()
+        public static async Task<StageInfo> GetLastClearStage()
         {
             try
             {
@@ -75,11 +75,11 @@ namespace CocoDoogy.Network
                 // StageInfo로 변환
                 StageInfo stage = lastDoc.ConvertTo<StageInfo>();
                 
-                StageSelectManager.LastClearedStage = stage;
+                return stage;
             }
             catch
             {
-                StageSelectManager.LastClearedStage = null;
+                return null;
             }
         }
     }
