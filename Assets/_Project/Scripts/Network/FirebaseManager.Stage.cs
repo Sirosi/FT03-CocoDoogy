@@ -15,8 +15,6 @@ namespace CocoDoogy.Network
 {
     public partial class FirebaseManager
     {
-        // TODO : 스테이지 관련 Firebase Functions 사용하는 메서드 추가 예정
-
         /// <summary>
         /// 스테이지를 클리어하면 작동하는 메서드.
         /// </summary>
