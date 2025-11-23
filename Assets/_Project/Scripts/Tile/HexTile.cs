@@ -1,4 +1,5 @@
 using CocoDoogy.Data;
+using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.LifeCycle;
 using CocoDoogy.Tile.Piece;
 using DG.Tweening;
@@ -364,6 +365,7 @@ namespace CocoDoogy.Tile
         private static readonly Func<HexTile, HexDirection, bool>[] CanMoveChecks =
         {
             HasNotTile,
+            HasNotActionPoints,
             CantMoveTile,
             HasMyObstacle,
             HasTargetObstacle,
@@ -371,10 +373,19 @@ namespace CocoDoogy.Tile
             CheckTargetBridge,
             CheckCrateMovable,
         };
+
         /// <summary>
         /// 타일이 없는지
         /// </summary>
         private static bool HasNotTile(HexTile hexTile, HexDirection direction) => hexTile == null;
+        /// <summary>
+        /// 이동에 필요한 충분한 행동력을 보유했는지
+        /// </summary>
+        private static bool HasNotActionPoints(HexTile hexTile, HexDirection direction)
+        {
+            HexTile myTile = HexTile.GetTile(hexTile.GridPos.GetDirectionPos(direction));
+            return myTile.CurrentData.moveCost > InGameManager.ActionPoints;
+        }
         /// <summary>
         /// 타일이 이동할 수 있는 타일인지, 그리고 다리조차 없는지
         /// </summary>
