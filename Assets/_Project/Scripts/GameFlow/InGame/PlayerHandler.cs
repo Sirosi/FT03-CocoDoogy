@@ -60,6 +60,7 @@ namespace CocoDoogy.GameFlow.InGame
 
         private Camera mainCamera = null;
         private bool touched = false;
+        private HexTile pointDownTile = null;
 
 
         protected override void Awake()
@@ -76,32 +77,48 @@ namespace CocoDoogy.GameFlow.InGame
         void Update()
         {
             if (TouchSystem.IsPointerOverUI) return;
-            // TODO: 리팩토링 필요
+            
             if (TouchSystem.TouchCount > 0)
             {
                 if (touched) return;
+                
                 touched = true;
-
                 Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
-                if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, LayerMask.GetMask("Tile")))
-                {
-                    // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                    HexTile selectedTile = hit.collider.GetComponentInParent<HexTile>();
-                    if (!selectedTile) return;
-
-                    HexDirection? direction = PlayerHandler.GridPos.GetRelativeDirection(selectedTile.GridPos);
-                    if (!direction.HasValue) return;
-
-                    HexTile playerTile = HexTile.GetTile(PlayerHandler.GridPos);
-                    if (!playerTile.CanMove(direction.Value)) return;
-
-                    CommandManager.Move(direction.Value);
-                }
+                pointDownTile = GetRayTile(ray);
             }
             else
             {
+                if (!touched) return;
+                
                 touched = false;
+                if (!pointDownTile) return;
+                
+                Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
+                HexTile pointUpTile = GetRayTile(ray);
+                if(pointDownTile != pointUpTile) return;
+                
+                HexDirection? direction = GridPos.GetRelativeDirection(pointUpTile.GridPos);
+                if (!direction.HasValue) return;
+
+                HexTile playerTile = HexTile.GetTile(GridPos);
+                if (!playerTile.CanMove(direction.Value)) return;
+
+                CommandManager.Move(direction.Value);
             }
+        }
+        /// <summary>
+        /// Ray에 부딪힌 HexTile을 반환
+        /// </summary>
+        /// <param name="ray"></param>
+        /// <returns></returns>
+        private HexTile GetRayTile(Ray ray)
+        {
+            HexTile result = null;
+            if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, LayerMask.GetMask("Tile")))
+            {
+                result = hit.collider.GetComponentInParent<HexTile>();                ;
+            }
+            return result;
         }
 
 
