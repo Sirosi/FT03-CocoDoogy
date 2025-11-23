@@ -1,9 +1,11 @@
 using CocoDoogy.Animation;
 using CocoDoogy.Audio;
 using CocoDoogy.Core;
+using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
+using CocoDoogy.Utility;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -56,12 +58,50 @@ namespace CocoDoogy.GameFlow.InGame
         private HexDirection lookDirection = HexDirection.East;
         private PlayerAnimHandler anim = null;
 
+        private Camera mainCamera = null;
+        private bool touched = false;
+
 
         protected override void Awake()
         {
             base.Awake();
 
             anim = GetComponentInChildren<PlayerAnimHandler>();
+        }
+        void Start()
+        {
+            mainCamera = Camera.main;
+        }
+
+        void Update()
+        {
+            if (TouchSystem.IsPointerOverUI) return;
+            // TODO: 리팩토링 필요
+            if (TouchSystem.TouchCount > 0)
+            {
+                if (touched) return;
+                touched = true;
+
+                Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
+                if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, LayerMask.GetMask("Tile")))
+                {
+                    // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+                    HexTile selectedTile = hit.collider.GetComponentInParent<HexTile>();
+                    if (!selectedTile) return;
+
+                    HexDirection? direction = PlayerHandler.GridPos.GetRelativeDirection(selectedTile.GridPos);
+                    if (!direction.HasValue) return;
+
+                    HexTile playerTile = HexTile.GetTile(PlayerHandler.GridPos);
+                    if (!playerTile.CanMove(direction.Value)) return;
+
+                    CommandManager.Move(direction.Value);
+                }
+            }
+            else
+            {
+                touched = false;
+            }
         }
 
 
@@ -112,16 +152,18 @@ namespace CocoDoogy.GameFlow.InGame
             DOTween.Kill(Instance, true);
             Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION)
                 .SetId(Instance)
-                .OnStepComplete(() => {
-                        OnBehaviourCompleted();
-                        HexTile currentTile = HexTile.GetTile(gridPos);
-                        if (currentTile != null && currentTile.CurrentData.stepSfx != SfxType.None)
-                        {
-                            SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
-                        }
-                    }
-                    );
+                .OnComplete(OnMoveComplete);
         }
+        private static void OnMoveComplete()
+        {
+            OnBehaviourCompleted();
+            HexTile currentTile = HexTile.GetTile(GridPos);
+            if (currentTile != null && currentTile.CurrentData.stepSfx != SfxType.None)
+            {
+                SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
+            }
+        }
+        
         /// <summary>
         /// 미끄러지듯 이동
         /// </summary>
