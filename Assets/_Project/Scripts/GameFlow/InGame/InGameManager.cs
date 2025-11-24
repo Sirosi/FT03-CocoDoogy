@@ -97,10 +97,7 @@ namespace CocoDoogy.GameFlow.InGame
 
 
         private static StageData stageData = null;
-
-
-        private Camera mainCamera = null;
-        private bool touched = false;
+        
 
         private int refillPoints = 0;
         private int actionPoints = 0;
@@ -124,40 +121,7 @@ namespace CocoDoogy.GameFlow.InGame
 
         void Start()
         {
-            mainCamera = Camera.main;
-
             DrawMap(MapData);
-        }
-
-        void Update()
-        {
-            if (IsPointerOverUI()) return;
-            // TODO: 리팩토링 필요
-            if (TouchSystem.TouchCount > 0)
-            {
-                if (touched) return;
-                touched = true;
-
-                Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
-                if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, LayerMask.GetMask("Tile")))
-                {
-                    // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                    HexTile selectedTile = hit.collider.GetComponentInParent<HexTile>();
-                    if (!selectedTile) return;
-
-                    HexDirection? direction = PlayerHandler.GridPos.GetRelativeDirection(selectedTile.GridPos);
-                    if (!direction.HasValue) return;
-
-                    HexTile playerTile = HexTile.GetTile(PlayerHandler.GridPos);
-                    if (!playerTile.CanMove(direction.Value)) return;
-
-                    CommandManager.Move(direction.Value);
-                }
-            }
-            else
-            {
-                touched = false;
-            }
         }
 
 
@@ -191,8 +155,6 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 Passages.Add(new WeatherPassage(weather.Key, weather.Value));
             }
-
-            Camera.main.transform.position = new Vector3(HexTileMap.StartPos.x, 5, HexTileMap.StartPos.y - 3);
 
             ProcessPhase();
         }
@@ -253,28 +215,6 @@ namespace CocoDoogy.GameFlow.InGame
             }
             // TODO: 추후 삭제 필요
             OutlineForTest.Draw();
-        }
-
-        /// <summary>
-        /// UI위로 클릭하면 게임에 영향을 주지 않게 하는 메서드
-        /// </summary>
-        /// <returns></returns>
-        private bool IsPointerOverUI()
-        {
-            if (EventSystem.current.IsPointerOverGameObject()) // 에디터
-                return true;
-
-            if (Touchscreen.current != null) // 빌드
-            {
-                foreach (var touch in Touchscreen.current.touches)
-                {
-                    if (touch.isInProgress &&
-                        EventSystem.current.IsPointerOverGameObject(touch.touchId.ReadValue()))
-                        return true;
-                }
-            }
-
-            return false;
         }
     }
 }

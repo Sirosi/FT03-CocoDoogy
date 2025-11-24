@@ -1,5 +1,8 @@
+using CocoDoogy.Network;
 using CocoDoogy.Tile;
 using CocoDoogy.UI.Popup;
+using System;
+using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
 namespace CocoDoogy.GameFlow.InGame.Phase
@@ -7,7 +10,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
     /// <summary>
     /// 클리어 여부 확인
     /// </summary>
-    public class ClearCheckPhase: IPhase
+    public class ClearCheckPhase : IPhase
     {
         public bool OnPhase()
         {
@@ -15,10 +18,15 @@ namespace CocoDoogy.GameFlow.InGame.Phase
 
             if (PlayerHandler.GridPos == HexTileMap.EndPos)
             {
-                MessageDialog.ShowMessage("승리", "그래, 이긴 걸로 하자!", DialogMode.Confirm, _ => SceneManager.LoadScene("Lobby"));
+                // TODO : FirebaseManager.ClearStageAsync 추가
+                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex(),
+                    InGameManager.Stage.index, InGameManager.ActionPoints, 10.5f);
+                
+                MessageDialog.ShowMessage("승리", "그래, 이긴 걸로 하자!", DialogMode.Confirm,
+                    _ => SceneManager.LoadScene("Lobby"));
                 return false;
             }
-            
+
             return true;
         }
     }

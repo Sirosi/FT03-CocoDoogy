@@ -9,8 +9,6 @@ namespace CocoDoogy.UI.StageSelect
     public class StageListPage: MonoBehaviour
     {
         public const int LIST_SIZE = 100;
-        
-        
         [SerializeField] private StageSelectButton stageButtonPrefab;
         [SerializeField] private Transform stageGroup;
 
@@ -30,7 +28,7 @@ namespace CocoDoogy.UI.StageSelect
                 if (data.index < start) continue; 
                 
                 StageSelectButton stageButton = LeanPool.Spawn(stageButtonPrefab, stageGroup);
-                stageButton.Init(data, 3, StageSelectManager.ShowReadyView);
+                stageButton.Init(data, 0, StageSelectManager.ShowReadyView);
                 
                 spawnedButtons.Push(stageButton);
                 if (spawnedButtons.Count >= LIST_SIZE) break;

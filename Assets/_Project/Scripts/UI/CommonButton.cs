@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -42,8 +43,9 @@ namespace CocoDoogy.UI
             if (!interactable) return;
 
             DOTween.Kill(this);
+            SfxManager.PlaySfx(SfxType.UI_ButtonDown);
 
-            rect.DOScale(0.95f, 0.15f).SetEase(Ease.OutCubic).SetId(this);
+            rect.DOScale(0.9f, 0.15f).SetEase(Ease.OutCubic).SetId(this);
             image.DOColor(buttonColor * 0.8f, 0.15f).SetEase(Ease.OutCubic).SetId(this);
         }
 
@@ -52,6 +54,7 @@ namespace CocoDoogy.UI
             if (!interactable) return;
 
             DOTween.Kill(this);
+            SfxManager.PlaySfx(SfxType.UI_ButtonUp1);
 
             Sequence sequence = DOTween.Sequence();
             sequence.Append(rect.DOScale(new Vector2(1.1f, 0.9f), 0.1f).SetEase(Ease.OutCubic));

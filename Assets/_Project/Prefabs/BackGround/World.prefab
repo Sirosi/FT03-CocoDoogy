@@ -1533,6 +1533,10 @@ PrefabInstance:
       value: PageCameraSwiper
       objectReference: {fileID: 0}
     - target: {fileID: 7715300542972112014, guid: 6c059a044cd263341841be5d0fef0d4c, type: 3}
+      propertyPath: snapThreshold
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715300542972112014, guid: 6c059a044cd263341841be5d0fef0d4c, type: 3}
       propertyPath: 'pages.Array.data[0]'
       value: 
       objectReference: {fileID: 5911636790965958225}

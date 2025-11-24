@@ -49,6 +49,11 @@ namespace CocoDoogy.UI.UIManager
             StartCoroutine(FirebaseManager.Instance.UpdateLocalTimerCoroutine());
         }
 
+        private void OnEnable()
+        {
+            _ = FirebaseManager.GetLastClearStage();
+        }
+        
         private IEnumerator Start()
         {
             // 해당 이벤트 추가는 로그인 후 되어야 되므로 UIManager에서 구독, 나중에 문제되면 DataManager.Instance가 null 아닐때 async로 변경해서 사용

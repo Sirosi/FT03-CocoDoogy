@@ -1,9 +1,11 @@
 using CocoDoogy.Animation;
 using CocoDoogy.Audio;
 using CocoDoogy.Core;
+using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
+using CocoDoogy.Utility;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -56,12 +58,67 @@ namespace CocoDoogy.GameFlow.InGame
         private HexDirection lookDirection = HexDirection.East;
         private PlayerAnimHandler anim = null;
 
+        private Camera mainCamera = null;
+        private bool touched = false;
+        private HexTile pointDownTile = null;
+
 
         protected override void Awake()
         {
             base.Awake();
 
             anim = GetComponentInChildren<PlayerAnimHandler>();
+        }
+        void Start()
+        {
+            mainCamera = Camera.main;
+        }
+
+        void Update()
+        {
+            if (TouchSystem.IsPointerOverUI) return;
+            
+            if (TouchSystem.TouchCount > 0)
+            {
+                if (touched) return;
+                
+                touched = true;
+                Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
+                pointDownTile = GetRayTile(ray);
+            }
+            else
+            {
+                if (!touched) return;
+                
+                touched = false;
+                if (!pointDownTile) return;
+                
+                Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
+                HexTile pointUpTile = GetRayTile(ray);
+                if(pointDownTile != pointUpTile) return;
+                
+                HexDirection? direction = GridPos.GetRelativeDirection(pointUpTile.GridPos);
+                if (!direction.HasValue) return;
+
+                HexTile playerTile = HexTile.GetTile(GridPos);
+                if (!playerTile.CanMove(direction.Value)) return;
+
+                CommandManager.Move(direction.Value);
+            }
+        }
+        /// <summary>
+        /// Ray에 부딪힌 HexTile을 반환
+        /// </summary>
+        /// <param name="ray"></param>
+        /// <returns></returns>
+        private HexTile GetRayTile(Ray ray)
+        {
+            HexTile result = null;
+            if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, LayerMask.GetMask("Tile")))
+            {
+                result = hit.collider.GetComponentInParent<HexTile>();                ;
+            }
+            return result;
         }
 
 
@@ -112,16 +169,18 @@ namespace CocoDoogy.GameFlow.InGame
             DOTween.Kill(Instance, true);
             Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION)
                 .SetId(Instance)
-                .OnStepComplete(() => {
-                        OnBehaviourCompleted();
-                        HexTile currentTile = HexTile.GetTile(gridPos);
-                        if (currentTile != null && currentTile.CurrentData.stepSfx != SfxType.None)
-                        {
-                            SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
-                        }
-                    }
-                    );
+                .OnComplete(OnMoveComplete);
         }
+        private static void OnMoveComplete()
+        {
+            OnBehaviourCompleted();
+            HexTile currentTile = HexTile.GetTile(GridPos);
+            if (currentTile != null && currentTile.CurrentData.stepSfx != SfxType.None)
+            {
+                SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
+            }
+        }
+        
         /// <summary>
         /// 미끄러지듯 이동
         /// </summary>

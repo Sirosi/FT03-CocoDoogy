@@ -84,8 +84,6 @@ namespace CocoDoogy.Core
             RenderSettings.haloStrength = preset.haloStrength;
             RenderSettings.flareStrength = preset.flareStrength;
             RenderSettings.flareFadeSpeed = preset.flareFadeSpeed;
-
-            Debug.Log($"[LightingManager] LightingPreset 적용 완료: {preset.name}");
         }
     }
 }

@@ -101,14 +101,23 @@ namespace CocoDoogy.Utility
             // Map 정보 적용
             HexTileMap.RefillPoint = mapData.RefillCount;
             HexTileMap.ActionPoint = mapData.ActionPoint;
-            HexTileMap.DefaultWeather = mapData.DefaultWeather;
+            
             HexTileMap.StartPos = mapData.StartPos;
             HexTileMap.EndPos = mapData.EndPos;
+
+            Vector2Int minPoint = new(int.MaxValue, int.MaxValue);
+            Vector2Int maxPoint = new(int.MinValue, int.MinValue);
+
+            HexTileMap.DefaultWeather = mapData.DefaultWeather;
 
             // 타일 설치
             foreach (MapTile tile in mapData.Tiles)
             {
-                HexTileMap.AddTile(tile.Type, tile.GridPos);
+                Vector2Int gridPos = tile.GridPos;
+                HexTileMap.AddTile(tile.Type, gridPos);
+                
+                minPoint = Vector2Int.Min(minPoint, gridPos);
+                maxPoint = Vector2Int.Max(maxPoint, gridPos);
             }
 
             // 기물 설치
@@ -158,6 +167,9 @@ namespace CocoDoogy.Utility
             {
                 HexTileMap.Weathers.Add(data.ActionPoint, data.Weather);
             }
+
+            HexTileMap.MinPoint = minPoint.ToWorldPos();
+            HexTileMap.MaxPoint = maxPoint.ToWorldPos();
 
             OnMapLoaded?.Invoke();
         }
