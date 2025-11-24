@@ -1,5 +1,6 @@
 using CocoDoogy.Audio;
 using CocoDoogy.Tile;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -13,16 +14,20 @@ namespace CocoDoogy.GameFlow.InGame
         [Tooltip("발소리 간격 (초)")]
         [SerializeField] private float footstepInterval = 0.3f;
 
-        [Tooltip("타일의 레이어")]
+        [Tooltip("타일의 레이어")] 
         [SerializeField] private LayerMask tileLayerMask;
-        
+
+        private void Start()
+        {
+            tileLayerMask = LayerMask.GetMask("Tile");
+        }
+
         public void StartFootstepSound()
         {
             if (_footstepCoroutine != null)
             {
                 StopCoroutine(_footstepCoroutine);
             }
-            Debug.Log("<color=green><b>[Footstep]</b> 코루틴을 시작합니다.</color>");
             _footstepCoroutine = StartCoroutine(PlayFootstepCoroutine());
         }
         
@@ -30,7 +35,6 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (_footstepCoroutine != null)
             {
-                Debug.Log("<color=red><b>[Footstep]</b> 코루틴을 중지합니다!</color>");
                 StopCoroutine(_footstepCoroutine);
                 _footstepCoroutine = null;
             }
