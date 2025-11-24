@@ -28,9 +28,15 @@ namespace CocoDoogy
             button.onClick.AddListener(() => OnClickEvent?.Invoke(this, ItemData));
         }
 
+        /// <summary>
+        /// 아이템 사용 메서드
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="itemData"></param>
         public async void UseItem(CallbackType type, ItemData itemData)
         {
             if (type != CallbackType.Yes) return;
+            
             IDictionary<string, object> result = await FirebaseManager.UseItemAsync(itemData.itemId);
             bool success = (bool)result["success"];
             if (success)
@@ -45,6 +51,11 @@ namespace CocoDoogy
             }
         }
 
+        /// <summary>
+        /// 아이템 구매 메서드 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="itemData"></param>
         public async Task PurchaseAsync(CallbackType type, ItemData itemData)
         {
             if (type != CallbackType.Yes) return;

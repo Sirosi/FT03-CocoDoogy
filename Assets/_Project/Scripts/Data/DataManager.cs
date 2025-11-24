@@ -25,7 +25,10 @@ namespace CocoDoogy.Data
         /// 지금은 ItemToggleHandler에서 아이템 버튼에 아이템 정보를 찾아넣기 위해 사용 중.
         /// </summary>
         public IReadOnlyList<ItemData> ItemData => itemData;
-
+        
+        /// <summary>
+        /// 현재 로그인한 계정의 아이템 보유 수량을 저장하기 위한 딕셔너리 
+        /// </summary>
         public Dictionary<ItemData, int> CurrentItem = new();
         
         /// <summary>
