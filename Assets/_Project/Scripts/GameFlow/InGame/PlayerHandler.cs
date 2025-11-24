@@ -15,6 +15,8 @@ namespace CocoDoogy.GameFlow.InGame
 {
     public class PlayerHandler: Singleton<PlayerHandler>
     {
+        public static int SandCount{ get; set; } = 0;
+
         public static Vector2Int GridPos
         {
             get => Instance?.gridPos ?? Vector2Int.zero;
@@ -138,6 +140,8 @@ namespace CocoDoogy.GameFlow.InGame
         public static void Clear()
         {
             if (!IsValid) return;
+
+            SandCount = 0;
         }
 
 

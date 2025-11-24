@@ -19,7 +19,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             {
                 InGameTimer.ToggleTimer();
                 
-                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex(),
+                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex() + 1,
                     InGameManager.Stage.index, InGameManager.ActionPoints, InGameTimer.CurrentTime);
                 
                 MessageDialog.ShowMessage("승리", "그래, 이긴 걸로 하자!", DialogMode.Confirm,

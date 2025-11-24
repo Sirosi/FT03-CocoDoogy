@@ -15,7 +15,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (!InGameManager.IsValid) return false;
             
             HexTile nextTile = HexTile.GetTile(PlayerHandler.GridPos);
-            if (InGameManager.ActionPoints < nextTile.CurrentData.moveCost)
+            if (InGameManager.ActionPoints < nextTile.CurrentData.RealMoveCost)
             {
                 if (InGameManager.RefillPoints <= 1)
                 {

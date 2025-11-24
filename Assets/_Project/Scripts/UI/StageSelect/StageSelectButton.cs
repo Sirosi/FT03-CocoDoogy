@@ -82,7 +82,7 @@ namespace CocoDoogy.UI.StageSelect
                 lastLevel = last.level?.Hex2Int() ?? 0;
             }
 
-            int dataTheme = data.theme.ToIndex();
+            int dataTheme = data.theme.ToIndex() + 1;
             int dataLevel = data.index;
             
             bool unlocked = true;

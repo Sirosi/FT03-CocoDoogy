@@ -11,6 +11,16 @@ namespace CocoDoogy.GameFlow.InGame.Command
         public static void Move(HexDirection direction)
         {
             ExecuteCommand(CommandType.Move, direction);
+            
+            int sandCount = PlayerHandler.SandCount;
+            if(HexTile.GetTile(PlayerHandler.GridPos).CurrentData.type == TileType.Sand)
+            {
+                ExecuteCommand(CommandType.SandCount, (sandCount, sandCount + 1), false);
+            }
+            else if (sandCount > 0)
+            {
+                ExecuteCommand(CommandType.SandCount, (sandCount, 0), false);
+            }
         }
         public static void Trigger(Vector2Int gridPos, bool isUnInteract = false)
         {
