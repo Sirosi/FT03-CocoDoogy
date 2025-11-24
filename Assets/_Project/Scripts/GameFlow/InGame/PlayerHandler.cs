@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
-    public class PlayerHandler: Singleton<PlayerHandler>
+    public partial class PlayerHandler: Singleton<PlayerHandler>
     {
         public static Vector2Int GridPos
         {
@@ -50,8 +50,7 @@ namespace CocoDoogy.GameFlow.InGame
                 return true;
             }
         }
-
-
+        
         private Vector2Int gridPos = Vector2Int.zero;
         private HexDirection lookDirection = HexDirection.East;
         private PlayerAnimHandler anim = null;
@@ -112,15 +111,13 @@ namespace CocoDoogy.GameFlow.InGame
             DOTween.Kill(Instance, true);
             Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION)
                 .SetId(Instance)
-                .OnStepComplete(() => {
-                        OnBehaviourCompleted();
-                        HexTile currentTile = HexTile.GetTile(gridPos);
-                        if (currentTile != null && currentTile.CurrentData.stepSfx != SfxType.None)
-                        {
-                            SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
-                        }
-                    }
-                    );
+                .OnComplete(() =>
+                {
+                    Instance.StopFootstepSound();
+                    OnBehaviourCompleted();
+                })
+                .OnKill(() => Instance.StopFootstepSound());
+            Instance.StartFootstepSound();
         }
         /// <summary>
         /// 미끄러지듯 이동
