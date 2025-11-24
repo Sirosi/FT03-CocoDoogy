@@ -53,6 +53,7 @@ namespace CocoDoogy.StageSelect.Item
             {
                 CurrentAmount = Convert.ToInt32(value);   
             }
+            DataManager.Instance.CurrentItem[item] = CurrentAmount;
             itemAmountText.text = $"{CurrentAmount} 개";
         }
 

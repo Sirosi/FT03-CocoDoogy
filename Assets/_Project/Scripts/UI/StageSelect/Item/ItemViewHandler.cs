@@ -73,7 +73,7 @@ namespace CocoDoogy.StageSelect.Item
         /// <param name="itemButton"></param>
         private void OnClickButton(ItemButton itemButton)
         {
-            InfoDialog.ShowInfo("아이템 정보", "아이템 설명",itemButton.ItemData.itemDescription, itemButton.ItemData.itemSprite, DialogMode.Confirm, OpenShopUI);
+            InfoDialog.ShowInfo("아이템 정보", "아이템 설명",itemButton.ItemData.itemDescription, itemButton.ItemData.itemSprite, DialogMode.Confirm, OpenShopUI, "상점가기");
         }
 
         private void OpenShopUI(CallbackType callbackType)
