@@ -73,12 +73,6 @@ namespace CocoDoogy.Network
         /// <returns></returns>
         public static async Task<bool> UseTicketAsync()
         {
-            // TODO : 티켓 구매 시 TotalTicket에 영향을 주게 변경해야함. 
-            // if (TotalTicket <= 0)
-            // {
-            //     Debug.LogWarning("로컬 확인: 사용 가능한 티켓이 없습니다.");
-            //     return false;
-            // }
             var loading = FirebaseLoading.ShowLoading();
             try
             {

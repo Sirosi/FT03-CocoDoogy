@@ -81,7 +81,7 @@ namespace CocoDoogy.UI.StageSelect
         private async void OnStartButtonClicked()
         {
             startButton.interactable = false;
-            bool isReady = await OnConsumeTicketAsync();
+            bool isReady = await FirebaseManager.UseTicketAsync();
             if (isReady)
             {
                 InGameManager.Stage = stageData;
@@ -97,12 +97,6 @@ namespace CocoDoogy.UI.StageSelect
                     null);
                 startButton.interactable = true;
             }
-        }
-        
-        private async Task<bool> OnConsumeTicketAsync()
-        {
-            // TODO: 나중에 UseTicketAsync를 static 형태로 변경해야 함
-            return await FirebaseManager.UseTicketAsync();
         }
     }
 }

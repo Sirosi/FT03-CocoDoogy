@@ -1,10 +1,9 @@
-using CocoDoogy.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CocoDoogy.UI.UIManager
 {
-    public class IngameUIManager : MonoBehaviour
+    public class InGameUIManager : MonoBehaviour
     {
         [Header("SettingsWindow Buttons")]
         [SerializeField] private CommonButton openSettingsButton;
@@ -32,7 +31,7 @@ namespace CocoDoogy.UI.UIManager
         [SerializeField] private RectTransform settingsWindow;
         [SerializeField] private RectTransform pauseWindow;
         [SerializeField] private RectTransform quitWindow;
-
+        
         void Awake()
         {
             openSettingsButton.onClick.AddListener(OnOpenSettingsButtonClicked);
