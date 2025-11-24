@@ -577,7 +577,6 @@ RectTransform:
   - {fileID: 4730165522515316101}
   - {fileID: 1255988509084770950}
   - {fileID: 761871091866855825}
-  - {fileID: 6501279479152773673}
   m_Father: {fileID: 7203037875511119113}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1711,6 +1710,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4493530078631309392}
   - component: {fileID: 720438117639318393}
+  - component: {fileID: 2525967207184356884}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -1747,6 +1747,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2293864755123699400}
   m_CullTransparentMesh: 1
+--- !u!114 &2525967207184356884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2293864755123699400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac951cfbaf548644e9757bac428a522d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 7411386312286385995}
 --- !u!1 &2295041931328760003
 GameObject:
   m_ObjectHideFlags: 0
@@ -3762,6 +3775,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6501279479152773673}
   - {fileID: 387028184677344612}
   - {fileID: 17331986779695236}
   - {fileID: 7181196358629545381}
@@ -4606,7 +4620,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7181196358629545381}
+  m_Father: {fileID: 7203037875511119113}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4630,7 +4644,7 @@ MonoBehaviour:
   openQuitButton: {fileID: 2313047626377012201}
   resumeButton: {fileID: 6920085918310692585}
   pauseQuitButton: {fileID: 4849207805389741205}
-  volumeSlider: {fileID: 0}
+  volumeSlider: {fileID: 1176596662206941387}
   backButton: {fileID: 3383081532324825979}
   quitButton: {fileID: 2393270001391255284}
   againButton: {fileID: 1856391095557832915}
@@ -4640,6 +4654,7 @@ MonoBehaviour:
   settingsWindow: {fileID: 6054505380206544867}
   pauseWindow: {fileID: 5157475927917278485}
   quitWindow: {fileID: 3601372429154483299}
+  timer: {fileID: 2525967207184356884}
 --- !u!1 &5178633704433723234
 GameObject:
   m_ObjectHideFlags: 0
@@ -8841,6 +8856,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1176596662206941387 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1204602567123331159, guid: 64f7c4295a07f1f4eae11006509146f2, type: 3}
+  m_PrefabInstance: {fileID: 64044117644648604}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2313047626377012201 stripped

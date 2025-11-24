@@ -1,8 +1,7 @@
-using CocoDoogy.UI;
+using CocoDoogy.Timer;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Audio;
-using TMPro;
+
 
 namespace CocoDoogy.UI.UserInfo
 {
@@ -57,6 +56,16 @@ namespace CocoDoogy.UI.UserInfo
             masterVolume.value = AudioSetting.MasterVolume;
             bgmVolume.value = AudioSetting.BgmVolume;
             sfxVolume.value = AudioSetting.SfxVolume;
+        }
+
+        void OnEnable()
+        {
+            InGameTimer.ToggleTimer();
+        }
+
+        void OnDisable()
+        {
+            InGameTimer.ToggleTimer();
         }
         
         public override void ClosePanel()
