@@ -1,7 +1,6 @@
 using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame.Weather;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
