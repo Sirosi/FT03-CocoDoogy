@@ -60,7 +60,8 @@ namespace CocoDoogy.GameFlow.InGame
 
         private Camera mainCamera = null;
         private bool touched = false;
-        private HexTile pointDownTile = null;
+        private Vector2 touchStart = Vector2.zero;
+        private int touchCount = 0;
 
 
         protected override void Awake()
@@ -80,29 +81,40 @@ namespace CocoDoogy.GameFlow.InGame
             
             if (TouchSystem.TouchCount > 0)
             {
-                if (touched) return;
-                
-                touched = true;
-                Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
-                pointDownTile = GetRayTile(ray);
+                if (TouchSystem.TouchCount != touchCount)
+                {
+                    touched = true;
+                    touchStart = TouchSystem.TouchAverage;
+                    touchCount = TouchSystem.TouchCount;
+                    return;
+                }
+
+                float distance = Vector2.Distance(TouchSystem.TouchAverage, touchStart);
+                if(distance > 20) // TODO: 값은 나중에 바뀔 수 있음
+                {
+                    touched = false;
+                }
             }
             else
             {
+                touchCount = 0;
+
                 if (!touched) return;
-                
                 touched = false;
-                if (!pointDownTile) return;
-                
+
                 Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
-                HexTile pointUpTile = GetRayTile(ray);
-                if (pointDownTile != pointUpTile) return;
-                if (!pointDownTile) return;
+                HexTile selectedTile = GetRayTile(ray);
+                if (!selectedTile) return;
                 
-                HexDirection? direction = GridPos.GetRelativeDirection(pointUpTile.GridPos);
+                HexDirection? direction = GridPos.GetRelativeDirection(selectedTile.GridPos);
                 if (!direction.HasValue) return;
 
                 HexTile playerTile = HexTile.GetTile(GridPos);
-                if (!playerTile.CanMove(direction.Value)) return;
+                if (!playerTile.CanMove(direction.Value))
+                {
+                    // TODO: 이동 불가 사운드 발사
+                    return;
+                }
 
                 CommandManager.Move(direction.Value);
             }
