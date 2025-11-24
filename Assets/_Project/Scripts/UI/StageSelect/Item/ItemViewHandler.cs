@@ -32,6 +32,7 @@ namespace CocoDoogy.StageSelect.Item
         private void OnDisable()
         {
             ClearToggleEvent();
+            DataManager.Instance.OnPrivateUserDataLoaded -= Refresh;
         }
         
         /// <summary>

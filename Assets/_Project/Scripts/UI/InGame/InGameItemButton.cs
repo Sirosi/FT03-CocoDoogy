@@ -68,6 +68,7 @@ namespace CocoDoogy
                 if (success)
                 {
                     Debug.Log($"구매 성공: {itemData.itemName} ({1})");
+                    DataManager.Instance.CurrentItem[itemData] += 1;
                 }
                 else
                 {
