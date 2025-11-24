@@ -37,7 +37,14 @@ namespace CocoDoogy.UI.UserInfo
                 var data = snapshot.ToDictionary();
                 
                 long ticketCount = (long)data["gameTicket"] + (long)data["bonusTicket"];
-                ticketCountText.text = $"{ticketCount.ToString()} / 5";
+                if (ticketCount > 99)
+                {
+                    ticketCountText.text = $"99+ / 5";
+                }
+                else
+                {
+                    ticketCountText.text = $"{ticketCount.ToString()} / 5";
+                }
                 cashMoneyText.text = data["cashMoney"].ToString();
             }
             else
