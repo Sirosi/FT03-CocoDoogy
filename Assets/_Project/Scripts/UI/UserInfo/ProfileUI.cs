@@ -1,5 +1,5 @@
 using CocoDoogy.Network;
-using CocoDoogy.UI;
+using CocoDoogy.CameraSwiper;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -20,7 +20,7 @@ namespace CocoDoogy
             closeButton.onClick.AddListener(ClosePanel);
             _ = RefreshUIAsync();
         }
-        
+
         public override void ClosePanel()
         {
             WindowAnimation.CloseWindow(profileWindow);
@@ -28,7 +28,7 @@ namespace CocoDoogy
         }
 
 
-        
+
         private async Task RefreshUIAsync()
         {
             var docRef = Firebase.Firestore

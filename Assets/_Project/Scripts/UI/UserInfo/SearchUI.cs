@@ -1,7 +1,7 @@
 using CocoDoogy.Network;
 using CocoDoogy.Network.UI;
-using CocoDoogy.UI;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper;
+using CocoDoogy.CameraSwiper.Popup;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +13,7 @@ namespace CocoDoogy
         [Header("UI Elements")]
         [SerializeField] private SearchWindowPopup searchWindow;
 
-        [Header("Search Window Popup Buttons")] 
+        [Header("Search Window Popup Buttons")]
         [SerializeField] private CommonButton closeThisButton;
         [SerializeField] private CommonButton searchButton;
 
@@ -27,10 +27,10 @@ namespace CocoDoogy
         {
             searchWindow.gameObject.SetActive(true);
         }
-        
-        
+
+
         public override void ClosePanel() => WindowAnimation.CloseWindow(searchWindow.transform);
-        
+
 
         private void OnSearchButtonClicked()
         {
@@ -59,7 +59,7 @@ namespace CocoDoogy
             bool success = (bool)result["success"];
             if (success)
             {
-                MessageDialog.ShowMessage("친구 추가 요청 성공", "친구 추가 요청을 보내는데 성공했습니다.", DialogMode.Confirm, null); 
+                MessageDialog.ShowMessage("친구 추가 요청 성공", "친구 추가 요청을 보내는데 성공했습니다.", DialogMode.Confirm, null);
             }
             else
             {

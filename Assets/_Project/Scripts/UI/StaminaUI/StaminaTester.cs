@@ -5,7 +5,7 @@ using UnityEngine;
     키보드 입력으로 행동력을 증감시킬 수 있습니다.
 */
 
-namespace CocoDoogy.UI.StaminaUI
+namespace CocoDoogy.CameraSwiper.StaminaUI
 {
     public class StaminaTester : MonoBehaviour
     {

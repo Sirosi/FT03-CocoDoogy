@@ -1,14 +1,14 @@
 using CocoDoogy.GameFlow.InGame.Command;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using UnityEngine;
 
-namespace CocoDoogy.UI.InGame
+namespace CocoDoogy.CameraSwiper.InGame
 {
     /// <summary>
     /// InGame 내에서 초기화용 버튼<br/>
     /// 갖고 있는 남은 행동력을 모두 소진하고, 초기화 진행 및 초기화 카운팅
     /// </summary>
-    public class ResetButton: MonoBehaviour
+    public class ResetButton : MonoBehaviour
     {
         [SerializeField] private CommonButton button;
 
@@ -27,7 +27,7 @@ namespace CocoDoogy.UI.InGame
         private void OnMessageCallback(CallbackType type)
         {
             if (type != CallbackType.Yes) return;
-            
+
             CommandManager.Refill();
         }
     }

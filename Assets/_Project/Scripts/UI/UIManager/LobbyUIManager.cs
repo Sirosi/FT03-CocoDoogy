@@ -1,29 +1,29 @@
 using CocoDoogy.Core;
 using CocoDoogy.Data;
 using CocoDoogy.Network;
-using CocoDoogy.UI.Friend;
-using CocoDoogy.UI.Gift;
-using CocoDoogy.UI.Shop;
-using CocoDoogy.UI.UserInfo;
+using CocoDoogy.CameraSwiper.Friend;
+using CocoDoogy.CameraSwiper.Gift;
+using CocoDoogy.CameraSwiper.Shop;
+using CocoDoogy.CameraSwiper.UserInfo;
 using System.Collections;
 using UnityEngine;
 
-namespace CocoDoogy.UI.UIManager
+namespace CocoDoogy.CameraSwiper.UIManager
 {
     public class LobbyUIManager : Singleton<LobbyUIManager>
     {
         [Header("MainUIs")]
         [SerializeField] private RectTransform lobbyUIPanel;
         [SerializeField] private RectTransform stageSelectUIPanel;
-        
+
         [Header("Lobby UI Panels")]
         [SerializeField] private ProfileUI profilePanel;
         [SerializeField] private FriendUI friendPanel;
         [SerializeField] private GiftUI giftPanel;
         [SerializeField] private SettingsUI settingsPanel;
-        [SerializeField] private ShopUI shopPanel; 
+        [SerializeField] private ShopUI shopPanel;
         [SerializeField] private InfoUI infoPanel;
-        
+
         [Header("Buttons")]
         [SerializeField] private CommonButton profileButton;
         [SerializeField] private CommonButton friendsButton;
@@ -31,21 +31,21 @@ namespace CocoDoogy.UI.UIManager
         [SerializeField] private CommonButton settingsButton;
         [SerializeField] private CommonButton shopButton;
         [SerializeField] private CommonButton startButton;
-        
+
         public ShopUI ShopUI => shopPanel;
-        
+
         protected override void Awake()
         {
             base.Awake();
             stageSelectUIPanel.gameObject.SetActive(false);
-            
+
             profileButton.onClick.AddListener(OnClickProfileButton);
             friendsButton.onClick.AddListener(OnClickFriendButton);
             giftsButton.onClick.AddListener(OnClickGiftButton);
             settingsButton.onClick.AddListener(OnClickSettingButton);
             shopButton.onClick.AddListener(OnClickShopButton);
             startButton.onClick.AddListener(OnStartButtonClicked);
-            
+
             StartCoroutine(FirebaseManager.Instance.UpdateLocalTimerCoroutine());
         }
 
@@ -58,13 +58,13 @@ namespace CocoDoogy.UI.UIManager
             DataManager.Instance.OnPrivateUserDataLoaded += friendPanel.SentRequestPanel.Refresh;
             DataManager.Instance.OnPrivateUserDataLoaded += giftPanel.SubscriptionEvent;
             DataManager.Instance.OnPrivateUserDataLoaded += infoPanel.SubscriptionEvent;
-            
+
             // 씬 이동 후 이벤트가 구독되기 전에 실행되서 UI Refresh가 되지 않아 따로 이벤트 실행
             DataManager.Instance.InvokePrivateUserData();
         }
         private void OnClickProfileButton() => profilePanel.OpenPanel();
         private void OnClickFriendButton() => friendPanel.OpenPanel();
-        private void OnClickGiftButton() =>  giftPanel.OpenPanel();
+        private void OnClickGiftButton() => giftPanel.OpenPanel();
         private void OnClickSettingButton() => settingsPanel.OpenPanel();
         private void OnClickShopButton() => shopPanel.OpenPanel();
 

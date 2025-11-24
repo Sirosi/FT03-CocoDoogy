@@ -3,9 +3,9 @@ using CocoDoogy.Tile;
 using UnityEngine;
 using TMPro;
 
-namespace CocoDoogy.UI.InGame
+namespace CocoDoogy.CameraSwiper.InGame
 {
-    public class ActionPointUI: MonoBehaviour
+    public class ActionPointUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI text;
 

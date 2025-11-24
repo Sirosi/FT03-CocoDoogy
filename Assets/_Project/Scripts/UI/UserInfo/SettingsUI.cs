@@ -1,19 +1,19 @@
-using CocoDoogy.UI;
+using CocoDoogy.CameraSwiper;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
 
-namespace CocoDoogy.UI.UserInfo
+namespace CocoDoogy.CameraSwiper.UserInfo
 {
     public class SettingsUI : UIPanel
     {
         [Header("UI Elements")]
         [SerializeField] private RectTransform settingsWindow;
-        
+
         [Header("Buttons")]
         [SerializeField] private Button closeButton;
-        
+
         [Header("Volume Icons")]
         [SerializeField] private Image masterIcon;
         [SerializeField] private Image bgmIcon;
@@ -24,7 +24,7 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private Sprite offMasterIcon;
         [SerializeField] private Sprite offBgmIcon;
         [SerializeField] private Sprite offSfxIcon;
-        
+
         [Header("Volume UI Sliders")]
         [SerializeField] private Slider masterVolume;
         [SerializeField] private Slider bgmVolume;
@@ -37,13 +37,13 @@ namespace CocoDoogy.UI.UserInfo
         private float lastMasterVolume;
         private float lastBgmVolume;
         private float lastSfxVolume;
-        
+
 
 
         void Awake()
         {
             closeButton.onClick.AddListener(ClosePanel);
-            
+
             masterVolume.onValueChanged.AddListener(MasterControl);
             bgmVolume.onValueChanged.AddListener(BGMControl);
             sfxVolume.onValueChanged.AddListener(SfxControl);
@@ -58,7 +58,7 @@ namespace CocoDoogy.UI.UserInfo
             bgmVolume.value = AudioSetting.BgmVolume;
             sfxVolume.value = AudioSetting.SfxVolume;
         }
-        
+
         public override void ClosePanel()
         {
             WindowAnimation.SwipeWindow(settingsWindow);
@@ -93,7 +93,7 @@ namespace CocoDoogy.UI.UserInfo
             }
 
             AudioSetting.BgmVolume = value;
-            
+
         }
         void SfxControl(float value)
         {
@@ -108,7 +108,7 @@ namespace CocoDoogy.UI.UserInfo
             }
 
             AudioSetting.SfxVolume = value;
-            
+
         }
 
         #region Mute Events

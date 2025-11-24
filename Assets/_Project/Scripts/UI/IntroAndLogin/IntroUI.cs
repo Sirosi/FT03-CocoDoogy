@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.UI.IntroAndLogin
+namespace CocoDoogy.CameraSwiper.IntroAndLogin
 {
     public class IntroUI : UIPanel
     {
@@ -11,7 +11,7 @@ namespace CocoDoogy.UI.IntroAndLogin
         [SerializeField] private Image titleImage;
         [SerializeField] private Button startButton;
         [SerializeField] private TextMeshProUGUI touchToStartText;
-        
+
         // TODO : titleImage 흔들리는 효과는 버튼 클릭 시 딱 한번 흔들리고 LoginUI로 전환되게
         [Header("Shake Title Options")]
         [SerializeField] private float moveAmount = 20f;
@@ -19,13 +19,14 @@ namespace CocoDoogy.UI.IntroAndLogin
         [SerializeField] private float textDuration = 1f;
         [SerializeField] private float interval = 1f;
         private RectTransform rect;
-        
-        [Header("Blick Text Effect")][Range(0, 0.3f)]
+
+        [Header("Blick Text Effect")]
+        [Range(0, 0.3f)]
         [SerializeField] private float minBlinkRatio;
-        
+
         // TODO : startButton 클릭 시 LoginUI로 전환되게
         // TODO : touchToStartText는 깜빡거리다가 startButton 클릭 시 안보이게
-        
+
         private void Awake()
         {
             ShakeTitleImage();
@@ -57,7 +58,7 @@ namespace CocoDoogy.UI.IntroAndLogin
             seq.Append(touchToStartText.DOFade(minBlinkRatio, textDuration))
                 .Append(touchToStartText.DOFade(1, textDuration)).SetLoops(-1);
         }
-        
+
         /// <summary>
         /// Intro에서 LoginUI로 변경하는 메서드 <br/>
         /// 맨 처음 화면에서 로그인 버튼이 있는 화면으로 이동
@@ -68,7 +69,7 @@ namespace CocoDoogy.UI.IntroAndLogin
             IntroUIManager.Instance.LoginUI.OpenPanel();
             touchToStartText.gameObject.SetActive(false);
         }
-        
+
         public override void ClosePanel()
         {
             // Intro는 Lobby로 넘어가기 전까지 계속 나와야 하므로 Close 기능 없음 (기능 X)

@@ -1,5 +1,5 @@
 using CocoDoogy.Network;
-using CocoDoogy.UI.UIManager;
+using CocoDoogy.CameraSwiper.UIManager;
 using Firebase.Firestore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-namespace CocoDoogy.UI.UserInfo
+namespace CocoDoogy.CameraSwiper.UserInfo
 {
     public class InfoUI : MonoBehaviour
     {
@@ -15,7 +15,7 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private TextMeshProUGUI cashMoneyText;
         [SerializeField] private CommonButton stampShopButton;
         [SerializeField] private CommonButton jemShopButton;
-        
+
         private FirebaseManager Firebase => FirebaseManager.Instance;
 
         private void Awake()
@@ -24,7 +24,7 @@ namespace CocoDoogy.UI.UserInfo
             jemShopButton.onClick.AddListener((() => LobbyUIManager.Instance.ShopUI.OpenJemShopUI()));
         }
         public void SubscriptionEvent() => _ = RefreshUIAsync();
-        
+
         private async Task RefreshUIAsync()
         {
             var docRef = Firebase.Firestore
@@ -35,7 +35,7 @@ namespace CocoDoogy.UI.UserInfo
             if (snapshot.Exists)
             {
                 var data = snapshot.ToDictionary();
-                
+
                 long ticketCount = (long)data["gameTicket"] + (long)data["bonusTicket"];
                 ticketCountText.text = $"{ticketCount.ToString()} / 5";
                 cashMoneyText.text = data["cashMoney"].ToString();

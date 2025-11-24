@@ -1,6 +1,6 @@
 using CocoDoogy.Network.UI;
-using CocoDoogy.UI;
-using CocoDoogy.UI.UserInfo;
+using CocoDoogy.CameraSwiper;
+using CocoDoogy.CameraSwiper.UserInfo;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +13,7 @@ namespace CocoDoogy.Network.Purchase
     {
         [SerializeField] private CommonButton purchaseButton;
         [SerializeField] private string itemId;
-        
+
         private ShopItemUI shopUI;
 
         public ShopItemUI ShopItemUI { set => shopUI = value; }
@@ -22,7 +22,7 @@ namespace CocoDoogy.Network.Purchase
         {
             set => itemId = value;
         }
-        
+
         private void Awake()
         {
             purchaseButton ??= GetComponent<CommonButton>();

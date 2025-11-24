@@ -1,6 +1,6 @@
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.LifeCycle;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using DG.Tweening;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace CocoDoogy.Tile.Piece
     /// 다리용
     /// </summary>
     [RequireComponent(typeof(Piece))]
-    public class BridgePiece: MonoBehaviour, ISpawn<Piece>, IRelease<Piece>
+    public class BridgePiece : MonoBehaviour, ISpawn<Piece>, IRelease<Piece>
     {
         private HexDirection LookDirection => piece.LookDirection;
 
@@ -30,15 +30,15 @@ namespace CocoDoogy.Tile.Piece
                 (parent = value).OnRotateComplete += OnParentRotateComplete;
             }
         }
-        
-        
+
+
         private HexTile parent = null;
         private Piece piece = null;
 
         private HexTile frontTile = null;
         private HexTile backTile = null;
-        
-        
+
+
         public void OnSpawn(Piece piece)
         {
             Parent = (this.piece = piece).Parent;
@@ -52,12 +52,12 @@ namespace CocoDoogy.Tile.Piece
             }
             DisconnectEvents();
         }
-        
+
 
         private void ConnectSideTile()
         {
             DisconnectEvents();
-            
+
             Vector2Int frontPos = Parent.GridPos.GetDirectionPos(LookDirection);
             Vector2Int backPos = Parent.GridPos.GetDirectionPos(LookDirection.GetMirror());
 
@@ -78,7 +78,7 @@ namespace CocoDoogy.Tile.Piece
             Quaternion preRot = piece.transform.rotation;
             piece.LookDirection = LookDirection.AddRotate(rotate);
             Parent.Pieces[(int)HexDirection.Center] = null;
-            
+
             HexDirection directionOfRotateTile = tile == frontTile ? LookDirection.GetMirror() : LookDirection;
             Vector2Int nextParentPos = tile.GridPos.GetDirectionPos(directionOfRotateTile);
             HexTile nextParent = HexTile.GetTile(nextParentPos);
@@ -90,7 +90,7 @@ namespace CocoDoogy.Tile.Piece
                 piece.transform.rotation = preRot;
                 piece.transform.parent = tile.transform;
 
-                if(prePos == PlayerHandler.GridPos)
+                if (prePos == PlayerHandler.GridPos)
                 {
                     DOTween.Kill(PlayerHandler.Instance, true);
                     PlayerHandler.GridPos = Parent.GridPos;
@@ -112,15 +112,15 @@ namespace CocoDoogy.Tile.Piece
             }
             Parent.ConnectPiece(HexDirection.Center, piece);
 
-            if(Parent.GridPos == PlayerHandler.GridPos)
+            if (Parent.GridPos == PlayerHandler.GridPos)
             {
                 PlayerHandler.Instance.transform.parent = null;
                 DOTween.Kill(PlayerHandler.Instance, true);
             }
-            
+
             ConnectSideTile();
         }
-        
+
         private void ConnectEvents()
         {
             if (frontTile)

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.UI.IntroAndLogin
+namespace CocoDoogy.CameraSwiper.IntroAndLogin
 {
     public class MessagePopup : MonoBehaviour
     {
@@ -22,7 +22,7 @@ namespace CocoDoogy.UI.IntroAndLogin
             SetAlpha(1f);
 
             var tcs = new TaskCompletionSource<bool>();
-            
+
             DOTween.To(() => 1f, SetAlpha, 0f, fadeDuration)
                 .SetDelay(duration)
                 .OnComplete(() =>
@@ -59,7 +59,7 @@ namespace CocoDoogy.UI.IntroAndLogin
         public void HidePopup()
         {
             DOTween.Kill(messageText);
-            DOTween.Kill(backgroundImage); 
+            DOTween.Kill(backgroundImage);
             gameObject.SetActive(false);
             messageText.text = string.Empty;
         }

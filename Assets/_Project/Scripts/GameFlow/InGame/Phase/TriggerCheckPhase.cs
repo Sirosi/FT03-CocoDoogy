@@ -4,7 +4,7 @@ using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
 using CocoDoogy.Tile.Piece.Trigger;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Phase
@@ -12,11 +12,11 @@ namespace CocoDoogy.GameFlow.InGame.Phase
     /// <summary>
     /// 작동시킬 수 있는 트리거가 있는지 확인
     /// </summary>
-    public class TriggerCheckPhase: IPhase
+    public class TriggerCheckPhase : IPhase
     {
         private Vector2Int? gridPos = null;
-        
-        
+
+
         public bool OnPhase()
         {
             if (!InGameManager.IsValid) return false;
@@ -42,7 +42,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             Piece centerPiece = tile.GetPiece(HexDirection.Center);
             if (!centerPiece) return true;
             if (centerPiece.BaseData.type is not (PieceType.Lever or PieceType.Button)) return true;
-            
+
             // 이미 눌린 버튼은 다시 누를 수 없음
             TriggerPieceBase triggerPiece = centerPiece.GetComponent<TriggerPieceBase>();
             if (centerPiece.BaseData.type is PieceType.Button && triggerPiece.IsOn) return true;
@@ -59,7 +59,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             {
                 CommandManager.Trigger(gridPos.Value);
                 GimmickExecutor.ExecuteFromTrigger(gridPos.Value);
-                
+
                 InGameManager.ProcessPhase();
             }
             else

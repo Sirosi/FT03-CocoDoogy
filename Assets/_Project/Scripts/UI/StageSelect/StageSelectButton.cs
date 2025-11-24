@@ -5,30 +5,30 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-namespace CocoDoogy.UI.StageSelect
+namespace CocoDoogy.CameraSwiper.StageSelect
 {
     /// <summary>
     /// Stage 선택 버튼
     /// </summary>
-    public class StageSelectButton: MonoBehaviour
+    public class StageSelectButton : MonoBehaviour
     {
         [Header("UI Components")]
         [SerializeField] private TextMeshProUGUI stageNumberText;
         [SerializeField] private CommonButton startButton;
-        
+
         [SerializeField] private GameObject starGroup = null;
         [SerializeField] private GameObject[] clearStars = null;
-        
+
         [Header("UI Components")]
         [SerializeField] private Sprite defaultSprite;
         [SerializeField] private Sprite lockedSprite;
 
-        
+
         private StageData stageData = null;
         private Action<StageData> callback = null;
 
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         void Reset()
         {
             stageNumberText = GetComponentInChildren<TextMeshProUGUI>();
@@ -41,13 +41,13 @@ namespace CocoDoogy.UI.StageSelect
             }
             clearStars = starObjects.ToArray();
         }
-        #endif
+#endif
 
         void Awake()
         {
             startButton.onClick.AddListener(OnButtonClicked);
         }
-        
+
 
         /// <summary>
         /// 스테이지 데이터 입력 및 초기화
@@ -63,11 +63,11 @@ namespace CocoDoogy.UI.StageSelect
                 starGroup.gameObject.SetActive(false);
                 return;
             }
-            
+
             startButton.interactable = true;
             startButton.GetComponentInChildren<Image>().sprite = defaultSprite;
             starGroup.gameObject.SetActive(true);
-            
+
             stageData = data;
             this.callback = actionCallback;
 
@@ -75,13 +75,13 @@ namespace CocoDoogy.UI.StageSelect
             {
                 star.SetActive(starSize-- > 0);
             }
-            
+
             stageNumberText.text = $"{data.stageName}";
         }
 
 
         private void OnButtonClicked()
-        {   
+        {
             callback?.Invoke(stageData);
         }
     }

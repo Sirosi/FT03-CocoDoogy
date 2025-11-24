@@ -1,5 +1,5 @@
 using CocoDoogy.MiniGame.CoatArrangeGame;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using Firebase.Firestore;
 using UnityEngine;
 

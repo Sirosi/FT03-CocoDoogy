@@ -5,7 +5,7 @@ using Lean.Pool;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static CocoDoogy.UI.StaminaUI.StaminaUI;
+using static CocoDoogy.CameraSwiper.StaminaUI.StaminaUI;
 
 namespace CocoDoogy
 {
@@ -24,16 +24,16 @@ namespace CocoDoogy
             print("파티클 실행");
         }
 
-        public void ParticleWatering(Transform parent) 
+        public void ParticleWatering(Transform parent)
         {
-                Instantiate(wateringParticlePrefab, parent);
+            Instantiate(wateringParticlePrefab, parent);
         }
 
         public void ParticleDigging(Vector3 position, Transform parent) => PlayParticle(diggingParticlePrefab, position, parent);
-        public void ParticleTrash(Vector3 position, Transform parent)=> PlayParticle(trashParticlePrefab, position, parent);
+        public void ParticleTrash(Vector3 position, Transform parent) => PlayParticle(trashParticlePrefab, position, parent);
 
-        public void ParticleCoat(Vector3 position, Transform parent)=> PlayParticle(coatParticlePrefab, position, parent);
-        
+        public void ParticleCoat(Vector3 position, Transform parent) => PlayParticle(coatParticlePrefab, position, parent);
+
 
         IEnumerator RetrunAfter(UIParticle p, float time)
         {

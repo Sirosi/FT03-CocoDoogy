@@ -1,9 +1,9 @@
 using CocoDoogy.Network;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CocoDoogy.UI.Friend
+namespace CocoDoogy.CameraSwiper.Friend
 {
     public class SentRequestPanel : RequestPanel
     {
@@ -19,7 +19,7 @@ namespace CocoDoogy.UI.Friend
 
             if (success)
             {
-                MessageDialog.ShowMessage("친구 요청 취소 성공","해당 유저에게 보낸 친구 추가 요청을 취소했습니다.", DialogMode.Confirm, null);
+                MessageDialog.ShowMessage("친구 요청 취소 성공", "해당 유저에게 보낸 친구 추가 요청을 취소했습니다.", DialogMode.Confirm, null);
             }
             else
             {
@@ -27,7 +27,7 @@ namespace CocoDoogy.UI.Friend
                 MessageDialog.ShowMessage("친구 요청 취소 실패", reason, DialogMode.Confirm, null);
             }
         }
-        
+
         protected override async Task RefreshPanelAsync()
         {
             foreach (Transform child in container)
@@ -43,7 +43,7 @@ namespace CocoDoogy.UI.Friend
                 var item = Instantiate(prefabItem, container);
                 item.GetComponent<FriendRequestItem>().SentInit(nickname, uid, OnCancelRequestAsync);
             }
-            
+
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);

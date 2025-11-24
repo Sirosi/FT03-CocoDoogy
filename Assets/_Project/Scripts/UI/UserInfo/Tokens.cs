@@ -3,7 +3,7 @@ using Firebase.Firestore;
 using TMPro;
 using UnityEngine;
 
-namespace CocoDoogy.UI.UserInfo
+namespace CocoDoogy.CameraSwiper.UserInfo
 {
     public class Tokens : MonoBehaviour
     {
@@ -17,7 +17,7 @@ namespace CocoDoogy.UI.UserInfo
         {
             auth = FirebaseAuth.DefaultInstance;
             database = FirebaseFirestore.DefaultInstance;
-            
+
             ReadTokenData();
         }
         private void OnDisable()
@@ -25,7 +25,7 @@ namespace CocoDoogy.UI.UserInfo
             listener?.Stop();
             listener = null;
         }
-            
+
         private void ReadTokenData()
         {
             DocumentReference docRef = database

@@ -1,14 +1,14 @@
 using CocoDoogy.Data;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using System;
 using TMPro;
 using UnityEngine;
 
 namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
 {
-    public class PieceDestroyPage: GimmickPageBase
+    public class PieceDestroyPage : GimmickPageBase
     {
         [SerializeField] private TMP_Dropdown directionDropdown;
 
