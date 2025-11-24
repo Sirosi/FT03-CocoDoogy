@@ -95,7 +95,8 @@ namespace CocoDoogy.GameFlow.InGame
                 
                 Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
                 HexTile pointUpTile = GetRayTile(ray);
-                if(pointDownTile != pointUpTile) return;
+                if (pointDownTile != pointUpTile) return;
+                if (!pointDownTile) return;
                 
                 HexDirection? direction = GridPos.GetRelativeDirection(pointUpTile.GridPos);
                 if (!direction.HasValue) return;

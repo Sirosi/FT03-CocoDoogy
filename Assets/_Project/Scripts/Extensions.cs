@@ -294,10 +294,10 @@ namespace CocoDoogy
         /// <returns></returns>
         public static int ToIndex(this Theme theme) => theme switch
         {
-            Theme.Forest => 1,
-            Theme.Water => 2,
-            Theme.Snow => 3,
-            Theme.Sand => 4,
+            Theme.Forest => 0,
+            Theme.Water => 1,
+            Theme.Snow => 2,
+            Theme.Sand => 3,
             _ => -1
         };
 

@@ -167,6 +167,14 @@ namespace CocoDoogy.GameFlow.InGame
             ConsumedActionPoints = 0;
             RefillPoints = 0;
             ActionPoints = 0;
+
+            foreach(IPhase phase in turnPhases)
+            {
+                if(phase is IClearable clearable)
+                {
+                    clearable.OnClear();
+                }
+            }
         }
 
         /// <summary>
