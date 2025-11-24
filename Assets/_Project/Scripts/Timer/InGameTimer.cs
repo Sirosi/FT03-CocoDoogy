@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,8 +14,14 @@ namespace CocoDoogy.Timer
         private static bool isPaused = false;
 
         public TextMeshProUGUI timerText;
-        
-        void Update()
+
+        private void OnEnable()
+        {
+            CurrentTime = 0;
+            isPaused = false;
+        }
+
+        private void Update()
         {
             if (isPaused) return;
             
