@@ -1,7 +1,8 @@
 using CocoDoogy.Data;
 using CocoDoogy.Network;
 using CocoDoogy.UI;
-using CocoDoogy.UI.UIManager;
+using CocoDoogy.UI.Popup;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,48 +12,57 @@ namespace CocoDoogy.StageSelect.Item
 {
     public class ItemButton : MonoBehaviour
     {
-        [Header("Item Buttons")]
-        [SerializeField] private CommonButton[] itemButton;
-        
-        [Header("Item Data")]
-        [SerializeField] private ItemData[] itemData;
-        
-        [Header("Item Panel")]
-        [SerializeField] private Button closeButton;
-        [SerializeField] private RectTransform itemPanel;
-        [SerializeField] private Image itemPanelImage;
-        [SerializeField] private TextMeshProUGUI itemPanelText;
-        
-        [Header("Open Shop")]
-        [SerializeField] private CommonButton openItemshopButton;
+        [Header("UI Elements")]
+        [SerializeField] private CommonButton itemButton;
+        [SerializeField] private TextMeshProUGUI itemAmountText;
 
+        /// <summary>
+        /// 현재 해당 토글이 가리키는 아이템 데이터, 사용 안하면 삭제.
+        /// </summary>
+        public IDictionary<string, object> Data { get; private set; }
 
-
+        public Action<ItemButton> OnClickEvent {get; set;}
+        
+        /// <summary>
+        /// 현재 해당 토글이 가리키는 아이템의 수량
+        /// </summary>
+        private int CurrentAmount {get; set;}
+        
+        public ItemData ItemData {get; set;}
+        
+        
+        
         private void Awake()
         {
-            closeButton.onClick.AddListener(OnCloseButtonClicked);
-            openItemshopButton.onClick.AddListener(() => LobbyUIManager.Instance.ShopUI.OpenItemShopUI());
-
-            itemPanel.gameObject.SetActive(false);
+            // 실수로 Inspector에서 연결을 안했을 때를 대비한 코드 
+            if (!itemButton) itemButton = GetComponent<CommonButton>();
+            if (!itemAmountText) itemAmountText = GetComponentInChildren<TextMeshProUGUI>();
             
-            for (int i = 0; i < itemButton.Length; ++i)
+            itemButton.onClick.AddListener(() =>
             {
-                int index = i;
-                itemButton[i].onClick.AddListener(()=> OnItemInfoButtonClicked(index));
+                OnClickEvent?.Invoke(this);
+            });
+        }
+
+        public void Init(IDictionary<string, object> data, ItemData item)
+        {
+            Data = data;
+            ItemData = item;
+            
+            if (data.TryGetValue(item.itemId, out object value))
+            {
+                CurrentAmount = Convert.ToInt32(value);   
             }
+            itemAmountText.text = $"{CurrentAmount} 개";
         }
 
-        private void OnCloseButtonClicked()
+        public void Refresh()
         {
-            WindowAnimation.CloseWindow(itemPanel);
-        }
-
-        
-        private void OnItemInfoButtonClicked(int index)
-        {
-            itemPanel.gameObject.SetActive(true);
-            itemPanelImage.sprite = itemData[index].itemSprite;
-            itemPanelText.text = itemData[index].itemDescription;
+            if (Data.TryGetValue(ItemData.itemId, out object value))
+            {
+                CurrentAmount = Convert.ToInt32(value);   
+            }
+            itemAmountText.text = $"{CurrentAmount} 개";
         }
     }
 }

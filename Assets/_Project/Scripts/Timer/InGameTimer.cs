@@ -13,9 +13,6 @@ namespace CocoDoogy.Timer
         private static bool isPaused = false;
 
         public TextMeshProUGUI timerText;
-
-
-        
         
         void Update()
         {
