@@ -21,7 +21,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 
                 int remainAp = InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints;
                 
-                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex(),
+                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex() + 1,
                     InGameManager.Stage.index, remainAp, time);
 
                 foreach (var itemData in ItemHandler.UsedItems)
