@@ -1,3 +1,6 @@
+using CocoDoogy.Network;
+using CocoDoogy.Timer;
+using CocoDoogy.UI.Popup;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,19 +8,17 @@ namespace CocoDoogy.UI.UIManager
 {
     public class InGameUIManager : MonoBehaviour
     {
-        [Header("SettingsWindow Buttons")]
+        [Header("Main Buttons")]
         [SerializeField] private CommonButton openSettingsButton;
         [SerializeField] private CommonButton openPauseButton;
-        [SerializeField] private CommonButton openQuitButton;
+        
         
         [Header("PauseWindow Buttons")]
         [SerializeField] private CommonButton resumeButton;
-        [SerializeField] private CommonButton pauseQuitButton;
+        [SerializeField] private CommonButton resetButton;
+        [SerializeField] private CommonButton openQuitButton;
         [SerializeField] private Slider volumeSlider;
         
-        [Header("QuitWindow Buttons")]
-        [SerializeField] private CommonButton backButton;
-        [SerializeField] private CommonButton quitButton;
         
         [Header("CompleteWindow Buttons")]
         [SerializeField] private CommonButton againButton;
@@ -30,19 +31,15 @@ namespace CocoDoogy.UI.UIManager
         [Header("Option UI Elements")]
         [SerializeField] private RectTransform settingsWindow;
         [SerializeField] private RectTransform pauseWindow;
-        [SerializeField] private RectTransform quitWindow;
         
-        void Awake()
+        private void Awake()
         {
             openSettingsButton.onClick.AddListener(OnOpenSettingsButtonClicked);
             openPauseButton.onClick.AddListener(OnOpenPauseButtonClicked);
-            openQuitButton.onClick.AddListener(OnOpenQuitButtonClicked);
             
             resumeButton.onClick.AddListener(OnResumeButtonClicked);
-            pauseQuitButton.onClick.AddListener(OnOpenQuitButtonClicked);
-            
-            backButton.onClick.AddListener(OnBackButtonClicked);
-            quitButton.onClick.AddListener(OnQuitButtonClicked);
+            resetButton.onClick.AddListener(OnOpenResetButtonClicked);
+            openQuitButton.onClick.AddListener(OnOpenQuitButtonClicked);
             
             againButton.onClick.AddListener(OnResetButtonClicked);
             nextStageButton.onClick.AddListener(OnQuitButtonClicked);
@@ -52,7 +49,7 @@ namespace CocoDoogy.UI.UIManager
         }
 
         
-        void OnOpenSettingsButtonClicked()
+        private void OnOpenSettingsButtonClicked()
         {
             if (!settingsWindow.gameObject.activeSelf)
             {
@@ -60,37 +57,73 @@ namespace CocoDoogy.UI.UIManager
             }
         }
         
-        void OnOpenPauseButtonClicked()
+        private void OnOpenPauseButtonClicked()
         {
             pauseWindow.gameObject.SetActive(true);
-            
+
+            InGameTimer.ToggleTimer();
             AudioSetting.MasterVolume = 0;
         }
-        void OnOpenQuitButtonClicked()
-        {
-            quitWindow.gameObject.SetActive(true);
-        }
-
-        void OnResetButtonClicked()
-        {
-            Loading.LoadScene("InGame");
-        }
-
-
-        void OnResumeButtonClicked()
+        
+        private void OnResumeButtonClicked()
         {
             pauseWindow.gameObject.SetActive(false);
-
+            
+            InGameTimer.ToggleTimer();
             AudioSetting.MasterVolume = volumeSlider.value;
         }
 
-
-        void OnBackButtonClicked()
+        private void OnOpenResetButtonClicked()
         {
-            WindowAnimation.CloseWindow(quitWindow);
+            MessageDialog.ShowMessage("다시하기", "모든 걸 버리고 다시 시작할까요?", DialogMode.YesNo, ResetOrNot);
         }
-        void OnQuitButtonClicked()
+        
+        private void OnOpenQuitButtonClicked()
         {
+            MessageDialog.ShowMessage("나가기", "주인은 다음에 찾을까요?", DialogMode.YesNo, QuitOrNot);
+        }
+
+
+        private void ResetOrNot(CallbackType type)
+        {
+            if (type == CallbackType.Yes)
+            {
+                OnResetButtonClicked();
+            }
+        }
+        
+        private void QuitOrNot(CallbackType type)
+        {
+            if (type == CallbackType.Yes)
+            {
+                OnQuitButtonClicked();
+            }
+        }
+
+        
+        private async void OnResetButtonClicked()
+        {
+            bool isReady = await FirebaseManager.UseTicketAsync();
+            if (isReady)
+            {
+                AudioSetting.MasterVolume = volumeSlider.value;
+                Loading.LoadScene("InGame");
+            }
+            else
+            {
+                // TODO : 티켓이 부족하면 메세지를 띄우게만 해뒀는데 여기에서 상점으로 연결까지 할 수도?
+                MessageDialog.ShowMessage(
+                    "티켓 부족", 
+                    "티켓이 부족하여 게임을 진행할 수 없습니다.",
+                    DialogMode.Confirm,
+                    null);
+            }
+        }
+        
+
+        private void OnQuitButtonClicked()
+        {
+            AudioSetting.MasterVolume = volumeSlider.value;
             Loading.LoadScene("Lobby");
         }
     }
