@@ -137,8 +137,8 @@ namespace CocoDoogy.UI.StageSelect
             if (starGroup)
                 starGroup.gameObject.SetActive(!locked);
 
-            if (stageNumberText && stageData)
-                stageNumberText.text = $"{stageData.stageName}";
+            if (stageNumberText && stageData && !locked) stageNumberText.text = $"{stageData.stageName}";
+            else stageNumberText.text = "";
         }
 
         private void OnButtonClicked()
