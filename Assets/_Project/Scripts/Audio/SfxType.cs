@@ -30,6 +30,8 @@ namespace CocoDoogy.Audio
         Gimmick_DockEnter,
         Gimmick_ObjectDestroy,
         Gimmick_ObjectSpawn,
+        Gimmick_Farm,
+        Gimmick_Mechanical,
         
         //날씨 이벤트 - event:/Sfx/Weather/
         Weather_Clear,
@@ -72,6 +74,8 @@ namespace CocoDoogy.Audio
         Item_Undo,
         Item_Tent,
         Item_Recovery,
+        Item_RestorePoint,
+        Item_DogSleeping,
         
         //Loop계열 - event:/Sfx/Loop/
         Loop_Detecting,
