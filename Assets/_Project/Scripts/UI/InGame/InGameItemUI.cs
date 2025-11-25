@@ -1,4 +1,5 @@
 using CocoDoogy.Data;
+using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using System;
@@ -9,26 +10,30 @@ namespace CocoDoogy
 {
     public class InGameItemUI : MonoBehaviour
     {
-        // TODO: 변경 사항
-        // 1. 게임에 들어오기 전 UI에서는 아이템의 수량만 보여주고 아이템을 눌렀을 때 아이템 설명과 상점으로 가는 버튼이 있는 Popup 띄움.(Clear)
-        // 2. 인게임에 들어가서 우측 중앙에 아이템 그룹이 있고 거기서 아이템을 눌렀을 때 1과 마찬가지고 아이템 정보가 나오는데 상점 버튼 대신 사용버튼, 취소버튼
-        // 3. 사용한 아이템은 버튼이 비활성화 된 상태로 유지
-
-        /// <summary>
-        /// 아이템 사용 여부를 가지고 있는 딕셔너리 true = 사용, false = 미사용
-        /// </summary>
-        public static Dictionary<ItemData, bool> UsedItems = new();
-        
         [SerializeField] private InGameItemButton[] itemButtons;
-        
-        
         
         private void Awake()
         {
+            ItemHandler.OnValueChanged += (item, value) =>
+            {
+                foreach (var button in itemButtons)
+                {
+                    if (button.ItemData == item)
+                    {
+                        button.Button.interactable = value;
+                    }
+                }
+            };
+        }
+
+        private void Start()
+        {
             for (int i = 0; i < itemButtons.Length; i++)
             {
-                itemButtons[i].ItemData = DataManager.Instance.ItemData[i];
-                itemButtons[i].OnClickEvent += ShowInfo;
+                ItemData itemData = DataManager.Instance.ItemData[i];
+                itemButtons[i].ItemData = itemData;
+                itemButtons[i].OnClicked += ShowInfo;
+                ItemHandler.SetValue(itemData, true);
             }
         }
 

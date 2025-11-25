@@ -24,7 +24,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex(),
                     InGameManager.Stage.index, remainAp, InGameTimer.CurrentTime);
 
-                foreach (var itemData in InGameItemUI.UsedItems)
+                foreach (var itemData in ItemHandler.UsedItems)
                 {
                     if (itemData.Value)
                     {

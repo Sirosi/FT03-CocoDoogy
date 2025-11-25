@@ -1,5 +1,6 @@
 using CocoDoogy._Project.Scripts.Data;
 using CocoDoogy.Data;
+using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Command.Content;
 using CocoDoogy.Network;
@@ -14,23 +15,25 @@ using UnityEngine.Events;
 
 namespace CocoDoogy
 {
+    // TODO : Undo 아이템 사용 시 이전 행동에 
     public class InGameItemButton : MonoBehaviour
     {
-        private CommonButton button;
-        
-        public CommonButton Button => button;
+        public CommonButton Button { get; private set; }
+
+        /// <summary>
+        /// 해당 버튼이 가지고 있는 ItemData를 InGameItemUI에서 넣어줌
+        /// </summary>
         public ItemData ItemData { get; set; }
 
-        public Action<InGameItemButton, ItemData> OnClickEvent;
-
+        public Action<InGameItemButton, ItemData> OnClicked;
         private void Awake()
         {
-            if (!button)
+            if (!Button)
             {
-                button = GetComponent<CommonButton>();
+                Button = GetComponent<CommonButton>();
             }
 
-            button.onClick.AddListener(() => OnClickEvent?.Invoke(this, ItemData));
+            Button.onClick.AddListener(() => OnClicked?.Invoke(this, ItemData));
         }
 
         /// <summary>
@@ -41,75 +44,33 @@ namespace CocoDoogy
         public void UseItem(CallbackType type, ItemData itemData)
         {
             if (type != CallbackType.Yes) return;
-            if (itemData.effect == ItemEffect.UndoTurn)
+            if (itemData.effect == ItemEffect.UndoTurn && !PlayerHandler.IsBehaviour)
             {
-                Debug.Log($"CommandManager.Executed.Count: {CommandManager.Executed.Count}");
-                if (CommandManager.Executed.Count <= 2)
-                {
-                    MessageDialog.ShowMessage("아이템 사용 실패", "해당 아이템은 1턴 전으로 돌아가는 아이템입니다.\n 진행한 기록이 없으면 사용이 불가합니다.",
-                        DialogMode.Confirm, null);
-                    return;
-                }
+                MessageDialog.ShowMessage("아이템 사용 실패", "해당 아이템은 1턴 전으로 돌아가는 아이템입니다.\n 진행한 기록이 없으면 사용이 불가합니다.",
+                    DialogMode.Confirm, null);
+                return;
             }
 
-            InGameItemUI.UsedItems[itemData] = true;
+            Button.interactable = false;
             
-            // TODO : 지금은 아이템 사용 시 파이어베이스에서 즉각적으로 반응하여 아이템 수량을 감소시키지만
-            // Undo 기능을 생각하면 아이템 소모를 게임 종료 시 소모된것만 적용되게 변경해야할듯 함.
-            // 아이템을 사용하되 소모되는 시점이 게임 끝나고 로비로 돌아가는 시점으로 하면 될듯.
-            // 아이템 1회 사용 후 더이상 사용하지 못하게 변경
-            button.interactable = false;
-            // TODO : 아이템 사용 시 인게임 기능 추가 
             switch (itemData.effect)
             {
                 case ItemEffect.ConsumeAndRecoverMaxAP:
                     Debug.Log("행동력을 1 소모하고 최대 행동력을 1 증가시킵니다.");
-                    CommandManager.MaxUp(1);
+                    CommandManager.MaxUp(itemData);
                     break;
                 case ItemEffect.RecoverAP:
                     Debug.Log("행동력을 1 증가시킵니다.");
-                    CommandManager.Recover(1);
+                    CommandManager.Recover(itemData);
                     break;
                 case ItemEffect.UndoTurn:
                     Debug.Log("1턴 전으로 돌아갑니다.");
-                    CommandManager.Undo();
+                    CommandManager.Undo(itemData);
                     break;
                 case ItemEffect.None:
-                    break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    break;
             }
-            // IDictionary<string, object> result = await FirebaseManager.UseItemAsync(itemData.itemId);
-            // bool success = (bool)result["success"];
-            // if (success)
-            // {
-            //     // 아이템 1회 사용 후 더이상 사용하지 못하게 변경
-            //     button.interactable = false;
-            //     // TODO : 아이템 사용 시 인게임 기능 추가 
-            //     switch (itemData.effect)
-            //     {
-            //         case ItemEffect.ConsumeAndRecoverMaxAP:
-            //             Debug.Log("행동력을 1 소모하고 최대 행동력을 1 증가시킵니다.");
-            //             CommandManager.MaxUp(1);
-            //             break;
-            //         case ItemEffect.RecoverAP:
-            //             Debug.Log("행동력을 1 증가시킵니다.");
-            //             CommandManager.Recover(1);
-            //             break;
-            //         case ItemEffect.UndoTurn:
-            //             Debug.Log("1턴 전으로 돌아갑니다.");
-            //             CommandManager.Undo();
-            //             break;
-            //         case ItemEffect.None:
-            //             break;
-            //         default:
-            //             throw new ArgumentOutOfRangeException();
-            //     }
-            // }
-            // else
-            // {
-            //     Debug.Log("아이템 사용 실패");
-            // }
         }
 
         /// <summary>
