@@ -2,13 +2,13 @@ using CocoDoogy.Tile;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
-    public class MaxUpCommand : CommandBase
+    public class MaxUpItemCommand : CommandBase
     {
-        public override bool IsUserCommand => false;
+        public override bool IsUserCommand => true;
 
         public int Delta = 0;
         
-        public MaxUpCommand(object param) : base(CommandType.MaxUp, param)
+        public MaxUpItemCommand(object param) : base(CommandType.MaxUp, param)
         {
             Delta = (int)param;
         }

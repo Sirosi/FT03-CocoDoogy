@@ -1,12 +1,12 @@
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
-    public class RecoverCommand : CommandBase
+    public class RecoverItemCommand : CommandBase
     {
-        public override bool IsUserCommand => false;
+        public override bool IsUserCommand => true;
 
         public int Recover = 0;
         
-        public RecoverCommand(object param) : base(CommandType.Recover, param)
+        public RecoverItemCommand(object param) : base(CommandType.Recover, param)
         {
             Recover = (int)param;
         }

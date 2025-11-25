@@ -14,8 +14,15 @@ namespace CocoDoogy
         // 2. 인게임에 들어가서 우측 중앙에 아이템 그룹이 있고 거기서 아이템을 눌렀을 때 1과 마찬가지고 아이템 정보가 나오는데 상점 버튼 대신 사용버튼, 취소버튼
         // 3. 사용한 아이템은 버튼이 비활성화 된 상태로 유지
 
+        /// <summary>
+        /// 아이템 사용 여부를 가지고 있는 딕셔너리 true = 사용, false = 미사용
+        /// </summary>
+        public static Dictionary<ItemData, bool> UsedItems = new();
+        
         [SerializeField] private InGameItemButton[] itemButtons;
-
+        
+        
+        
         private void Awake()
         {
             for (int i = 0; i < itemButtons.Length; i++)

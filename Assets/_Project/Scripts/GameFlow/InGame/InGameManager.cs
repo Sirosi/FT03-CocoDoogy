@@ -95,6 +95,10 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static string MapData { get; private set; } = null;
 
+        /// <summary>
+        /// 플레이 하고 있는 맵의 최대 행동력
+        /// </summary>
+        public static int CurrentMapMaxActionPoints { get; private set; } = 0;
 
         private static StageData stageData = null;
 
@@ -184,6 +188,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             RefillPoints = HexTileMap.RefillPoint;
             ActionPoints = HexTileMap.ActionPoint;
+            CurrentMapMaxActionPoints = HexTileMap.ActionPoint;
             CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
             CommandManager.Weather(HexTileMap.DefaultWeather);
 

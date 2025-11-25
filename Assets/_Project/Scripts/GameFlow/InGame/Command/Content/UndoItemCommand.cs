@@ -1,9 +1,9 @@
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
-    public class UndoCommand : CommandBase
+    public class UndoItemCommand : CommandBase
     {
-        public override bool IsUserCommand => false;
-        public UndoCommand(object param) : base(CommandType.Undo, param)
+        public override bool IsUserCommand => true;
+        public UndoItemCommand(object param) : base(CommandType.Undo, param)
         {
             
         }
