@@ -20,13 +20,18 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         /// 마지막 위치
         /// </summary>
         public Vector2Int GridPos = Vector2Int.zero;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int SandCount = 0;
         
         
         public RefillCommand(object param) : base(CommandType.Refill, param)
         {
-            var data = ((int, Vector2Int))param;
+            var data = ((int, Vector2Int, int))param;
             RemainPoints = data.Item1;
             GridPos = data.Item2;
+            SandCount = data.Item3;
         }
 
         
@@ -34,6 +39,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             InGameManager.ConsumeActionPoint(RemainPoints);
             InGameManager.RefillActionPoint();
+            PlayerHandler.SandCount = 0;
             
             PlayerHandler.Deploy(HexTileMap.StartPos);
         }
@@ -42,6 +48,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             InGameManager.ClearActionPoint();
             InGameManager.RegenActionPoint(RemainPoints);
+            PlayerHandler.SandCount = SandCount;
             
             PlayerHandler.Deploy(GridPos);
         }
