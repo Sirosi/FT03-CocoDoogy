@@ -7,9 +7,15 @@ using UnityEngine;
 namespace CocoDoogy.GameFlow.InGame.Phase
 {
     // TODO: 임시 Phase
-    public class RegenCheckPhase: IPhase
+    public class RegenCheckPhase: IPhase, IClearable
     {
         private Vector2Int gridPos = Vector2Int.zero;
+        
+
+        public void OnClear()
+        {
+            gridPos = Vector2Int.zero;
+        }
         
         public bool OnPhase()
         {

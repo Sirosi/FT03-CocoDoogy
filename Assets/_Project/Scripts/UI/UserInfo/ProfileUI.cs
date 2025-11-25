@@ -1,5 +1,6 @@
 using CocoDoogy.Network;
 using CocoDoogy.UI;
+using CocoDoogy.UI.StageSelect;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -15,9 +16,14 @@ namespace CocoDoogy
         [SerializeField] private Button closeButton;
 
         private FirebaseManager Firebase => FirebaseManager.Instance;
+
         private void Awake()
         {
             closeButton.onClick.AddListener(ClosePanel);
+        }
+
+        private void OnEnable()
+        {
             _ = RefreshUIAsync();
         }
         
@@ -28,7 +34,6 @@ namespace CocoDoogy
         }
 
 
-        
         private async Task RefreshUIAsync()
         {
             var docRef = Firebase.Firestore
@@ -40,7 +45,8 @@ namespace CocoDoogy
             {
                 var data = snapshot.ToDictionary();
                 nicknameText.text = data["nickName"].ToString();
-                recordText.text = "지금은 없음"; // TODO : 나중에 DB에 record 생기면 변경 data["record"].ToString();
+                recordText.text =
+                    $"{StageSelectManager.LastClearedStage.theme} 테마 {StageSelectManager.LastClearedStage.level} 스테이지";
             }
             else
             {

@@ -2,6 +2,7 @@ using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.Tile;
 using UnityEngine;
 using TMPro;
+using System;
 
 namespace CocoDoogy.UI.InGame
 {
@@ -22,7 +23,7 @@ namespace CocoDoogy.UI.InGame
 
         private void OnRefillCountChanged(int point)
         {
-            text.SetText($"{point} / {HexTileMap.RefillPoint}");
+            text.SetText($"{Math.Clamp(point, 0, int.MaxValue)} / {HexTileMap.RefillPoint}");
         }
     }
 }

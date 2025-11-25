@@ -384,7 +384,7 @@ namespace CocoDoogy.Tile
         private static bool HasNotActionPoints(HexTile hexTile, HexDirection direction)
         {
             HexTile myTile = HexTile.GetTile(hexTile.GridPos.GetDirectionPos(direction));
-            return myTile.CurrentData.moveCost > InGameManager.ActionPoints;
+            return myTile.CurrentData.RealMoveCost > InGameManager.ActionPoints;
         }
         /// <summary>
         /// 타일이 이동할 수 있는 타일인지, 그리고 다리조차 없는지

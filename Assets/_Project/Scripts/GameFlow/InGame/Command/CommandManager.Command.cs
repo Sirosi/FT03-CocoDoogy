@@ -1,3 +1,4 @@
+using CocoDoogy.Data;
 using CocoDoogy.Tile;
 using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Tile.Gimmick.Data;
@@ -11,6 +12,16 @@ namespace CocoDoogy.GameFlow.InGame.Command
         public static void Move(HexDirection direction)
         {
             ExecuteCommand(CommandType.Move, direction);
+            
+            int sandCount = PlayerHandler.SandCount;
+            if(HexTile.GetTile(PlayerHandler.GridPos).CurrentData.type == TileType.Sand)
+            {
+                ExecuteCommand(CommandType.SandCount, (sandCount, sandCount + 1), false);
+            }
+            else if (sandCount > 0)
+            {
+                ExecuteCommand(CommandType.SandCount, (sandCount, 0), false);
+            }
         }
         public static void Trigger(Vector2Int gridPos, bool isUnInteract = false)
         {
@@ -71,6 +82,21 @@ namespace CocoDoogy.GameFlow.InGame.Command
         public static void Regen(int regen)
         {
             ExecuteCommand(CommandType.Increase, regen, false);
+        }
+
+        public static void MaxUp(ItemData itemData)
+        {
+            ExecuteCommand(CommandType.MaxUp, itemData, false);
+        }
+
+        public static void Recover(ItemData itemData)
+        {
+            ExecuteCommand(CommandType.Recover, itemData, false);
+        }
+
+        public static void Undo(ItemData itemData)
+        {
+            ExecuteCommand(CommandType.Undo, itemData,false);
         }
     }
 }

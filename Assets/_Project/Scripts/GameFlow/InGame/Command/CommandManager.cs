@@ -45,10 +45,15 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     
                     CommandType.Deploy => new DeployCommand(param),
                     CommandType.Refill => new RefillCommand(param),
+                    CommandType.SandCount => new SandCountCommand(param),
                     CommandType.Weather => new WeatherCommand(param),
                     CommandType.Gimmick => new GimmickCommand(param),
                     CommandType.Increase => new IncreaseCommand(param),
                     CommandType.DeckReset => new DeckResetCommand(param),
+                    
+                    CommandType.MaxUp => new MaxUpItemCommand(param),
+                    CommandType.Recover => new RecoverItemCommand(param),
+                    CommandType.Undo => new UndoItemCommand(param),
                     _ => null
                 };
 

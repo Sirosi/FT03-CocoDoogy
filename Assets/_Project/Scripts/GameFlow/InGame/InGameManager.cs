@@ -95,6 +95,12 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static string MapData { get; private set; } = null;
 
+        public static Stopwatch Timer { get; } = new();
+        /// <summary>
+        /// 플레이 하고 있는 맵의 최대 행동력
+        /// </summary>
+        public static int CurrentMapMaxActionPoints { get; private set; } = 0;
+
 
         private static StageData stageData = null;
         
@@ -148,6 +154,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             RefillPoints = HexTileMap.RefillPoint;
             ActionPoints = HexTileMap.ActionPoint;
+            CurrentMapMaxActionPoints = HexTileMap.ActionPoint;
             CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
             CommandManager.Weather(HexTileMap.DefaultWeather);
 
@@ -155,6 +162,8 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 Passages.Add(new WeatherPassage(weather.Key, weather.Value));
             }
+
+            Timer.Start();
 
             ProcessPhase();
         }
@@ -167,6 +176,15 @@ namespace CocoDoogy.GameFlow.InGame
             ConsumedActionPoints = 0;
             RefillPoints = 0;
             ActionPoints = 0;
+            Timer.Stop();
+
+            foreach(IPhase phase in turnPhases)
+            {
+                if(phase is IClearable clearable)
+                {
+                    clearable.OnClear();
+                }
+            }
         }
 
         /// <summary>

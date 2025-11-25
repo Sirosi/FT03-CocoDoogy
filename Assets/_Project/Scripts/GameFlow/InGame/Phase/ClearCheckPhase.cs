@@ -1,8 +1,6 @@
 using CocoDoogy.Network;
 using CocoDoogy.Tile;
 using CocoDoogy.UI.Popup;
-using System;
-using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
 namespace CocoDoogy.GameFlow.InGame.Phase
@@ -18,12 +16,25 @@ namespace CocoDoogy.GameFlow.InGame.Phase
 
             if (PlayerHandler.GridPos == HexTileMap.EndPos)
             {
-                // TODO : FirebaseManager.ClearStageAsync 추가
-                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex(),
-                    InGameManager.Stage.index, InGameManager.ActionPoints, 10.5f);
+                float time = InGameManager.Timer.NowTime;
+                InGameManager.Timer.Stop();
                 
+                int remainAp = InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints;
+                
+                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex(),
+                    InGameManager.Stage.index, remainAp, time);
+
+                foreach (var itemData in ItemHandler.UsedItems)
+                {
+                    if (itemData.Value)
+                    {
+                        _ = FirebaseManager.UseItemAsync(itemData.Key.itemId);
+                    }
+                }
+
                 MessageDialog.ShowMessage("승리", "그래, 이긴 걸로 하자!", DialogMode.Confirm,
                     _ => SceneManager.LoadScene("Lobby"));
+                
                 return false;
             }
 

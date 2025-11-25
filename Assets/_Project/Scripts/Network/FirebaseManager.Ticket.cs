@@ -11,8 +11,8 @@ namespace CocoDoogy.Network
 {
     public partial class FirebaseManager
     {
+        public const int MaxRegenTicket = 10;
         private const long RechargeIntervalMs = 1 * 60 * 1000; // TODO: 지금은 1분 주기로 실행되게 되어있는데 나중에 10분 or 30분 주기로 변경 예정
-        private const int MaxRegenTicket = 5;
         private int TotalTicket => CurrentTicket + BonusTicket;
 
         private int CurrentTicket { get; set; }
@@ -73,12 +73,6 @@ namespace CocoDoogy.Network
         /// <returns></returns>
         public static async Task<bool> UseTicketAsync()
         {
-            // TODO : 티켓 구매 시 TotalTicket에 영향을 주게 변경해야함. 
-            // if (TotalTicket <= 0)
-            // {
-            //     Debug.LogWarning("로컬 확인: 사용 가능한 티켓이 없습니다.");
-            //     return false;
-            // }
             var loading = FirebaseLoading.ShowLoading();
             try
             {

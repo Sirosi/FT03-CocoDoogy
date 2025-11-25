@@ -103,7 +103,7 @@ namespace CocoDoogy
 
                 if (Mathf.Abs(scroll) > 0.1f)
                 {
-                    mainCamera.fieldOfView -= scroll * zoomSpeed * Time.deltaTime;
+                    mainCamera.fieldOfView -= scroll * zoomSpeed;
                     mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView, 20, 80);
                 }
                 return;

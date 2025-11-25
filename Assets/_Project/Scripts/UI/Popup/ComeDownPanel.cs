@@ -14,7 +14,7 @@ namespace CocoDoogy.UI.Popup
             
             rect.anchoredPosition = new Vector2(0, Screen.height);
             rect.DOKill(true);
-            rect.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutCubic);
+            rect.DOAnchorPos(Vector2.zero, 0.25f).SetEase(Ease.OutCubic);
         }
     }
 }

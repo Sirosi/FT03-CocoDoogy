@@ -4,7 +4,9 @@ using CocoDoogy.Network;
 using CocoDoogy.UI.Friend;
 using CocoDoogy.UI.Gift;
 using CocoDoogy.UI.Shop;
+using CocoDoogy.UI.StageSelect;
 using CocoDoogy.UI.UserInfo;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -49,9 +51,9 @@ namespace CocoDoogy.UI.UIManager
             StartCoroutine(FirebaseManager.Instance.UpdateLocalTimerCoroutine());
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
-            _ = FirebaseManager.GetLastClearStage();
+            StageSelectManager.LastClearedStage = await FirebaseManager.GetLastClearStage();
         }
         
         private IEnumerator Start()

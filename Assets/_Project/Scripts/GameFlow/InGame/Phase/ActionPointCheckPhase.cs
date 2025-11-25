@@ -15,17 +15,16 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (!InGameManager.IsValid) return false;
             
             HexTile nextTile = HexTile.GetTile(PlayerHandler.GridPos);
-            if (InGameManager.ActionPoints < nextTile.CurrentData.moveCost)
+            if (InGameManager.ActionPoints < nextTile.CurrentData.RealMoveCost)
             {
-                if (InGameManager.RefillPoints <= 1)
+                if (InGameManager.RefillPoints < 1)
                 {
                     ProcessDefeat();
                     return false;
                 }
-                //CommandManager.Refill();
             }
 
-            if (InGameManager.RefillPoints > 0) return true;
+            if (InGameManager.RefillPoints >= 0) return true;
             
             // TODO: 상징적인 패배를 넣어야 함.
             ProcessDefeat();

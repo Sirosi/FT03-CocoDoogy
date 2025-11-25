@@ -7,14 +7,17 @@ using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
 using CocoDoogy.Utility;
 using DG.Tweening;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
     public class PlayerHandler: Singleton<PlayerHandler>
     {
+        // 플레이어가 인게임에 들어와서 행동을 했는지 여부
+        public static bool IsBehaviour = false;
+
+        public static int SandCount{ get; set; } = 0;
+
         public static Vector2Int GridPos
         {
             get => Instance?.gridPos ?? Vector2Int.zero;
@@ -60,7 +63,8 @@ namespace CocoDoogy.GameFlow.InGame
 
         private Camera mainCamera = null;
         private bool touched = false;
-        private HexTile pointDownTile = null;
+        private Vector2 touchStart = Vector2.zero;
+        private int touchCount = 0;
 
 
         protected override void Awake()
@@ -80,28 +84,40 @@ namespace CocoDoogy.GameFlow.InGame
             
             if (TouchSystem.TouchCount > 0)
             {
-                if (touched) return;
-                
-                touched = true;
-                Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
-                pointDownTile = GetRayTile(ray);
+                if (TouchSystem.TouchCount != touchCount)
+                {
+                    touched = true;
+                    touchStart = TouchSystem.TouchAverage;
+                    touchCount = TouchSystem.TouchCount;
+                    return;
+                }
+
+                float distance = Vector2.Distance(TouchSystem.TouchAverage, touchStart);
+                if(distance > 20) // TODO: 값은 나중에 바뀔 수 있음
+                {
+                    touched = false;
+                }
             }
             else
             {
+                touchCount = 0;
+
                 if (!touched) return;
-                
                 touched = false;
-                if (!pointDownTile) return;
-                
+
                 Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
-                HexTile pointUpTile = GetRayTile(ray);
-                if(pointDownTile != pointUpTile) return;
+                HexTile selectedTile = GetRayTile(ray);
+                if (!selectedTile) return;
                 
-                HexDirection? direction = GridPos.GetRelativeDirection(pointUpTile.GridPos);
+                HexDirection? direction = GridPos.GetRelativeDirection(selectedTile.GridPos);
                 if (!direction.HasValue) return;
 
                 HexTile playerTile = HexTile.GetTile(GridPos);
-                if (!playerTile.CanMove(direction.Value)) return;
+                if (!playerTile.CanMove(direction.Value))
+                {
+                    // TODO: 이동 불가 사운드 발사
+                    return;
+                }
 
                 CommandManager.Move(direction.Value);
             }
@@ -125,6 +141,8 @@ namespace CocoDoogy.GameFlow.InGame
         public static void Clear()
         {
             if (!IsValid) return;
+
+            SandCount = 0;
         }
 
 
@@ -138,7 +156,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             // 추후 Move 및 Slide에서 사용할지 고민 좀 해봐야할 듯 함
             Vector2Int? preGravityButton = null;
-            if(HexTile.GetTile(GridPos)?.HasPiece(PieceType.GravityButton, out _) ?? false)
+            if (HexTile.GetTile(GridPos)?.HasPiece(PieceType.GravityButton, out _) ?? false)
             {
                 preGravityButton = GridPos;
             }
@@ -147,10 +165,12 @@ namespace CocoDoogy.GameFlow.InGame
             DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.transform.position = gridPos.ToWorldPos();
-            if(preGravityButton.HasValue) // 실제 기존 발판 리셋하는 곳
+            if (preGravityButton.HasValue) // 실제 기존 발판 리셋하는 곳
             {
-                GimmickExecutor.ExecuteFromTrigger(preGravityButton.Value); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
+                GimmickExecutor.ExecuteFromTrigger(preGravityButton
+                    .Value); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
             }
+
             OnBehaviourCompleted();
         }
 
@@ -161,24 +181,16 @@ namespace CocoDoogy.GameFlow.InGame
         public static void Move(Vector2Int gridPos)
         {
             if (!IsValid) return;
+            if (!IsBehaviour) IsBehaviour = true;
 
             Instance.transform.parent = null;
-            DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Moving);
+            Instance.PlayFootstepCoroutine();
             DOTween.Kill(Instance, true);
             Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION)
                 .SetId(Instance)
-                .OnComplete(OnMoveComplete);
-        }
-        private static void OnMoveComplete()
-        {
-            OnBehaviourCompleted();
-            HexTile currentTile = HexTile.GetTile(GridPos);
-            if (currentTile != null && currentTile.CurrentData.stepSfx != SfxType.None)
-            {
-                SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
-            }
+                .OnComplete(OnBehaviourCompleted);
         }
         
         /// <summary>
@@ -193,13 +205,25 @@ namespace CocoDoogy.GameFlow.InGame
             DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Slide);
-            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance).OnComplete(OnBehaviourCompleted);
+            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance)
+                .OnComplete(OnBehaviourCompleted);
         }
 
 
         private static void OnBehaviourCompleted()
         {
             Instance.anim.ChangeAnim(AnimType.Idle);
+        }
+
+
+        //발소리 코루틴
+        private void PlayFootstepCoroutine()
+        {
+            HexTile currentTile = HexTile.GetTile(GridPos);
+            if (!currentTile) return;
+            if (currentTile.CurrentData.stepSfx == SfxType.None) return;
+
+            SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
         }
     }
 }

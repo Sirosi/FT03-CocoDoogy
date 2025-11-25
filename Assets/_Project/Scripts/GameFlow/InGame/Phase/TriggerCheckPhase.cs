@@ -12,10 +12,15 @@ namespace CocoDoogy.GameFlow.InGame.Phase
     /// <summary>
     /// 작동시킬 수 있는 트리거가 있는지 확인
     /// </summary>
-    public class TriggerCheckPhase: IPhase
+    public class TriggerCheckPhase: IPhase, IClearable
     {
         private Vector2Int? gridPos = null;
         
+
+        public void OnClear()
+        {
+            gridPos = null;
+        }
         
         public bool OnPhase()
         {

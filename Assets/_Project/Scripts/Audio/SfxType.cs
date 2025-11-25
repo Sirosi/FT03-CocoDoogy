@@ -13,6 +13,8 @@ namespace CocoDoogy.Audio
         Interaction_SwitchOff,
         Interaction_PressurePlate,
         Interaction_PushChest,
+        Interaction_Sliding,
+        Interaction_WaterSplash,
         
         //발자국 소리 - event:/Sfx/Footstep/
         Footstep_Water,
@@ -26,6 +28,10 @@ namespace CocoDoogy.Audio
         Gimmick_HouseEnter,
         Gimmick_OasisEnter,
         Gimmick_DockEnter,
+        Gimmick_ObjectDestroy,
+        Gimmick_ObjectSpawn,
+        Gimmick_Farm,
+        Gimmick_Mechanical,
         
         //날씨 이벤트 - event:/Sfx/Weather/
         Weather_Clear,
@@ -38,29 +44,41 @@ namespace CocoDoogy.Audio
         //미니게임 - event:/Sfx/Minigame/
         Minigame_PickTrash,
         Minigame_DropTrash,
-        //Minigame_PickUmbrella,
         Minigame_PickCloth,
         Minigame_DropCloth,
         Minigame_DigSand,
         Minigame_ShakeUmbrella,
+        Minigame_PickLeaf,
+        Minigame_MinigameStart,
         
         //UI계열 - event:/Sfx/UI/
         UI_SuccessMission,
         UI_SuccessStage,
+        UI_Success,
         UI_FailStage,
         UI_ButtonDown,
         UI_ButtonUp1,
         UI_ButtonUp2,
         UI_PopUp,
+        UI_FailButton1,
+        UI_FailButton2,
         
         //감정표현 계열 - event:/Sfx/Emote/
         Emote_Positive,
         Emote_Neutral,
         Emote_Negative,
         
+        //아이템 계열 - event:/Sfx/Item/
+        Item_Eating,
+        Item_TentDrop,
+        Item_Undo,
+        Item_Tent,
+        Item_Recovery,
+        Item_RestorePoint,
+        Item_DogSleeping,
+        
         //Loop계열 - event:/Sfx/Loop/
         Loop_Detecting,
-        Loop_WaterSplash,
         Loop_ShakeUmbrella
     }
     

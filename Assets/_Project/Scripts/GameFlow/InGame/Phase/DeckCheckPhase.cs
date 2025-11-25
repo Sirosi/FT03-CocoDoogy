@@ -12,6 +12,12 @@ namespace CocoDoogy.GameFlow.InGame.Phase
         private Vector2Int? gridPos = null;
         private Vector2Int destination = Vector2Int.zero;
         
+
+        public void OnClear()
+        {
+            gridPos = null;
+            destination = Vector2Int.zero;
+        }
         
         public bool OnPhase()
         {

@@ -15,13 +15,6 @@ namespace CocoDoogy.UI.StageSelect
     /// </summary>
     public class StageSelectButton : MonoBehaviour
     {
-        public static int LastStageNum = 0;
-
-        private static readonly Dictionary<Theme, int> ThemeOrder = new()
-        {
-            { Theme.Forest, 1 }, { Theme.Water, 2 }, { Theme.Snow, 3 }, { Theme.Sand, 4 },
-        };
-
         [Header("UI Components")]
         [SerializeField] private TextMeshProUGUI stageNumberText;
 
@@ -89,7 +82,7 @@ namespace CocoDoogy.UI.StageSelect
                 lastLevel = last.level?.Hex2Int() ?? 0;
             }
 
-            int dataTheme = ThemeOrder[data.theme];
+            int dataTheme = data.theme.ToIndex() + 1;
             int dataLevel = data.index;
             
             bool unlocked = true;
@@ -104,6 +97,9 @@ namespace CocoDoogy.UI.StageSelect
             
             ApplyLockedState(unlocked);
         }
+        
+        // TODO: 스테이지 테스트 할때 위에 Init 비활성화 하고 이거 활성화 해서 사용하면 됨 
+        
         // public void Init(StageData data, int starSize, Action<StageData> actionCallback)
         // {
         //     if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
@@ -130,6 +126,7 @@ namespace CocoDoogy.UI.StageSelect
         //
         //     stageNumberText.text = $"{data.stageName}";
         // }
+        
         private void ApplyLockedState(bool locked)
         {
             startButton.interactable = !locked;
