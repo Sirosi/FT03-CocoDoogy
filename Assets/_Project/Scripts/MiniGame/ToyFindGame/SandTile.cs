@@ -49,7 +49,7 @@ namespace CocoDoogy.MiniGame
                     image.sprite = diggedSprite;
                     digged = true;
                     //클리어판단
-                    SfxManager.PlaySfx(SfxType.UI_PopUp);
+                    SfxManager.PlaySfx(SfxType.UI_Success);
                     parent.RemoveToy(tileID);
                     parent.CheckClear();
                 }

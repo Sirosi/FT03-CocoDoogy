@@ -50,6 +50,7 @@ namespace CocoDoogy.MiniGame
             OnOpenInit();
             ShowRemainCount();
             remainCountCallback = ShowRemainCount;
+            SfxManager.PlaySfx(SfxType.Minigame_MinigameStart);
         }
 
 
@@ -61,7 +62,7 @@ namespace CocoDoogy.MiniGame
             remainCountCallback?.Invoke();
             if (!IsClear()) return;
 
-            SfxManager.PlaySfx(SfxType.UI_SuccessStage);
+            SfxManager.PlaySfx(SfxType.UI_SuccessMission);
             MessageDialog.ShowMessage("미니게임 클리어", "보상을 받으시오", DialogMode.Confirm, _ => 
             {
                 Disable();

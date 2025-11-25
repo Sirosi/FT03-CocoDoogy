@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -216,11 +217,13 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
             if (slotA != null&& slotA.CheckID())
             {
                 MiniGameParticleManager.Instance.ParticleCoat(slotA.transform.position, slotA.transform);
+                SfxManager.PlaySfx(SfxType.UI_Success);
             }
             
             if(slotB != null&& slotB.CheckID())
             {
                 MiniGameParticleManager.Instance.ParticleCoat(slotB.transform.position, slotB.transform);
+                SfxManager.PlaySfx(SfxType.UI_Success);
             }
             CheckClear();
         }

@@ -122,7 +122,7 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
                     {
                         SetDry(drySprite);
                         parent.CheckClear();
-                        SfxManager.PlaySfx(SfxType.UI_SuccessMission);
+                        SfxManager.PlaySfx(SfxType.UI_Success);
                     }
                     // 쿨다운 시간 갱신
                     lastShakeTime = now;

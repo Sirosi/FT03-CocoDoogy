@@ -49,6 +49,7 @@ namespace CocoDoogy.MiniGame
                 if (result.gameObject == gameObject) continue;
                 if (result.gameObject.GetComponent<WindowSlot>())
                 {
+                    
                     iswindowSlot = true;
                     break;
                 }
@@ -57,7 +58,8 @@ namespace CocoDoogy.MiniGame
             if(!iswindowSlot)
             {
                 transform.DOKill();
-                SfxManager.PlaySfx(SfxType.Minigame_DropTrash);
+                
+                SfxManager.PlaySfx(SfxType.UI_Success);
                     parent.DestroyDirty(this);
             }
         }
