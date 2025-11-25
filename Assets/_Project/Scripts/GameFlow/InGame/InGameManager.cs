@@ -95,6 +95,8 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static string MapData { get; private set; } = null;
 
+        public static Stopwatch Timer { get; } = new();
+
 
         private static StageData stageData = null;
         
@@ -156,6 +158,8 @@ namespace CocoDoogy.GameFlow.InGame
                 Passages.Add(new WeatherPassage(weather.Key, weather.Value));
             }
 
+            Timer.Start();
+
             ProcessPhase();
         }
 
@@ -167,6 +171,7 @@ namespace CocoDoogy.GameFlow.InGame
             ConsumedActionPoints = 0;
             RefillPoints = 0;
             ActionPoints = 0;
+            Timer.Stop();
 
             foreach(IPhase phase in turnPhases)
             {
