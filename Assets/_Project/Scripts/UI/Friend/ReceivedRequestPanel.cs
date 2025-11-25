@@ -1,3 +1,4 @@
+using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace CocoDoogy.UI.Friend
         /// <param name="uid"></param>
         private async void OnAcceptRequestAsync(string uid)
         {
-            var result = await Firebase.CallFriendFunctionAsync("receiveFriendsRequest", uid, "친구 요청 수락 실패");
+            var result = await FirebaseManager.CallFriendFunctionAsync("receiveFriendsRequest", uid, "친구 요청 수락 실패");
             bool success = (bool)result["success"];
 
             if (success)
@@ -32,7 +33,7 @@ namespace CocoDoogy.UI.Friend
         /// <param name="uid"></param>
         private async void OnRejectRequestAsync(string uid)
         {
-            var result = await Firebase. CallFriendFunctionAsync("rejectFriendsRequest", uid, "친구 요청 거절 실패");
+            var result = await FirebaseManager. CallFriendFunctionAsync("rejectFriendsRequest", uid, "친구 요청 거절 실패");
             bool success = (bool)result["success"];
 
             if (success)
@@ -53,7 +54,7 @@ namespace CocoDoogy.UI.Friend
                 Destroy(child.gameObject);
             }
 
-            var requestDict = await Firebase.GetFriendRequestsAsync("friendReceivedList");
+            var requestDict = await FirebaseManager.GetFriendRequestsAsync("friendReceivedList");
             foreach (var kvp in requestDict)
             {
                 string uid = kvp.Key;
@@ -65,7 +66,7 @@ namespace CocoDoogy.UI.Friend
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "이런, 아무도 나를 원하지 않습니다!";
+                nullMessage.text = "아직 친구신청이 없네요~";
             }
             else
             {

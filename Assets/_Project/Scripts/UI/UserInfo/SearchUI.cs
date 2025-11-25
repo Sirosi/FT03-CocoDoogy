@@ -14,7 +14,7 @@ namespace CocoDoogy
         [SerializeField] private SearchWindowPopup searchWindow;
 
         [Header("Search Window Popup Buttons")] 
-        [SerializeField] private CommonButton closeThisButton;
+        [SerializeField] private Button closeThisButton;
         [SerializeField] private CommonButton searchButton;
 
         private void Awake()
@@ -53,8 +53,8 @@ namespace CocoDoogy
                 return;
             }
 
-            var uid = await FirebaseManager.Instance.FindUserByNicknameAsync(searchWindow.InputNickname);
-            var result = await FirebaseManager.Instance.CallFriendFunctionAsync("sendFriendsRequest", uid, "친구 요청 보내기 실패");
+            var uid = await FirebaseManager.FindUserByNicknameAsync(searchWindow.InputNickname);
+            var result = await FirebaseManager.CallFriendFunctionAsync("sendFriendsRequest", uid, "친구 요청 보내기 실패");
 
             bool success = (bool)result["success"];
             if (success)

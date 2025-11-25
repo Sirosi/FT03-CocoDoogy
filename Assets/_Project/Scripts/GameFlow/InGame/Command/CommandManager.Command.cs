@@ -72,5 +72,20 @@ namespace CocoDoogy.GameFlow.InGame.Command
         {
             ExecuteCommand(CommandType.Increase, regen, false);
         }
+
+        public static void MaxUp(int delta)
+        {
+            ExecuteCommand(CommandType.MaxUp, delta, false);
+        }
+
+        public static void Recover(int recover)
+        {
+            ExecuteCommand(CommandType.Recover, recover, false);
+        }
+
+        public static void Undo()
+        {
+            ExecuteCommand(CommandType.Undo,false);
+        }
     }
 }

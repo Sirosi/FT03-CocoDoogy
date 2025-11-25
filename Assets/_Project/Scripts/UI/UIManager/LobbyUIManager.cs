@@ -4,7 +4,9 @@ using CocoDoogy.Network;
 using CocoDoogy.UI.Friend;
 using CocoDoogy.UI.Gift;
 using CocoDoogy.UI.Shop;
+using CocoDoogy.UI.StageSelect;
 using CocoDoogy.UI.UserInfo;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -49,6 +51,11 @@ namespace CocoDoogy.UI.UIManager
             StartCoroutine(FirebaseManager.Instance.UpdateLocalTimerCoroutine());
         }
 
+        private async void OnEnable()
+        {
+            StageSelectManager.LastClearedStage = await FirebaseManager.GetLastClearStage();
+        }
+        
         private IEnumerator Start()
         {
             // 해당 이벤트 추가는 로그인 후 되어야 되므로 UIManager에서 구독, 나중에 문제되면 DataManager.Instance가 null 아닐때 async로 변경해서 사용

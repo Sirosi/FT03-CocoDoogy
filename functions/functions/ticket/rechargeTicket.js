@@ -4,7 +4,7 @@ const admin = require("../../admin");
 
 const minute = 1;
 const rechargeInterval = minute * 60 * 1000;
-const maxTicket = 5;
+const maxTicket = 10;
 
 exports.rechargeTicket = onCall(fnConfig, async (request) => {
   const uid = request.auth.uid;

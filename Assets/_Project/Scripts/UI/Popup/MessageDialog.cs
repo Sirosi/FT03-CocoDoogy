@@ -20,6 +20,7 @@ namespace CocoDoogy.UI.Popup
         [Header("Panels")]
         [SerializeField] private GameObject buttonsPanel;
         [SerializeField] private GameObject inputFieldPanel;
+        [SerializeField] private Button backGround;
 
         [Header("Message Mode Buttons")]
         [SerializeField] private Button yesButton;
@@ -45,6 +46,8 @@ namespace CocoDoogy.UI.Popup
             
             yesButton.onClick.AddListener(OnConfirmOrYesClick);
             noButton.onClick.AddListener(OnNoClick);
+            backGround.onClick.AddListener(OnNoClick);
+            
             cancelButton.onClick.AddListener(OnCancelClick);
             
             inputConfirmButton.onClick.AddListener(OnInputConfirmClick);

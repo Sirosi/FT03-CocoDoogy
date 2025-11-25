@@ -82,8 +82,6 @@ namespace CocoDoogy.Data
         {
             if (!Instance) return null;
 
-            Debug.Log(Instance.stageList.GetValueOrDefault(theme));
-            
             return Instance.stageList.GetValueOrDefault(theme);
         }
         public static StageData GetStageData(Theme theme, int index)

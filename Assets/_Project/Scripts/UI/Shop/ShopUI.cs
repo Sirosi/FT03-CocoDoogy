@@ -2,6 +2,7 @@ using CocoDoogy.Data;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.Shop.Category;
+using CocoDoogy.UI.StageSelect;
 using CocoDoogy.UI.UserInfo;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,12 @@ namespace CocoDoogy.UI.Shop
         [SerializeField] private Button jemShopButton;
         
         private Transform currentActivePanel;
+        
+        
+        //스와이프 문제 수정용
+        [Header("Extra")]
+        [SerializeField] private GameObject stageSelectUI;
+        
         private void Awake()
         {
             closeButton.onClick.AddListener(ClosePanel);
@@ -45,9 +52,11 @@ namespace CocoDoogy.UI.Shop
         
         public override void ClosePanel()
         {
-            if (!purchasePanel.gameObject.activeSelf && !confirmPanel.gameObject.activeSelf)
+            WindowAnimation.SwipeWindow(transform as RectTransform);
+            
+            if (!stageSelectUI.activeSelf)
             {
-                WindowAnimation.SwipeWindow(transform as RectTransform);
+                PageCameraSwiper.IsSwipeable = true;
             }
         }
 
@@ -64,7 +73,7 @@ namespace CocoDoogy.UI.Shop
         {
             try
             {
-                var result = await FirebaseManager.Instance.PurchaseWithCashMoneyAsync(itemData.itemId, quantity);
+                var result = await FirebaseManager.PurchaseWithCashMoneyAsync(itemData.itemId, quantity);
 
                 bool success = result.ContainsKey("success") && (bool)result["success"];
 

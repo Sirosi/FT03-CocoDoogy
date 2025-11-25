@@ -1,3 +1,4 @@
+using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace CocoDoogy.UI.Friend
         /// <param name="uid"></param>
         private async void OnCancelRequestAsync(string uid)
         {
-            var result = await Firebase.CallFriendFunctionAsync("cancelFriendsRequest", uid, "친구 요청 취소 실패");
+            var result = await FirebaseManager.CallFriendFunctionAsync("cancelFriendsRequest", uid, "친구 요청 취소 실패");
 
             bool success = (bool)result["success"];
 
@@ -34,7 +35,7 @@ namespace CocoDoogy.UI.Friend
                 Destroy(child.gameObject);
             }
 
-            var requestDict = await Firebase.GetFriendRequestsAsync("friendSentList");
+            var requestDict = await FirebaseManager.GetFriendRequestsAsync("friendSentList");
             foreach (var kvp in requestDict)
             {
                 string uid = kvp.Key;
@@ -46,7 +47,7 @@ namespace CocoDoogy.UI.Friend
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "이런, 나는 아직 아무도 찾지 못했습니다!";
+                nullMessage.text = "새 친구를 찾아볼까요?";
             }
             else
             {

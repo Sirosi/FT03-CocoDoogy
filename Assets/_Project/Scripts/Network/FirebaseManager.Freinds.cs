@@ -18,12 +18,13 @@ namespace CocoDoogy.Network
         /// <param name="friendsUid">보내는 친구 uid(FindUserByNicknameAsync에서 찾아서 넣음)</param>
         /// <param name="errorMessage">Firebase Functions에 맞는 에러 문구</param>
         /// <returns></returns>
-        public async Task<IDictionary<string, object>> CallFriendFunctionAsync(string functionName, string friendsUid, string errorMessage)
+        public static async Task<IDictionary<string, object>> CallFriendFunctionAsync(string functionName, string friendsUid, string errorMessage)
         {
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
                 Dictionary<string, object> data = new() { { "friendsUid", friendsUid } };
-                HttpsCallableResult result = await Functions.GetHttpsCallable(functionName).CallAsync(data);
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable(functionName).CallAsync(data);
 
                 string json = JsonConvert.SerializeObject(result.Data);
                 return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
@@ -33,6 +34,10 @@ namespace CocoDoogy.Network
                 Debug.LogError($"{errorMessage}: {e.Message}");
                 throw;
             }
+            finally
+            {
+                loading.Hide();
+            }
         }
         
         
@@ -41,11 +46,12 @@ namespace CocoDoogy.Network
         /// </summary>
         /// <param name="nickname"></param>
         /// <returns></returns>
-        public async Task<string> FindUserByNicknameAsync(string nickname)
+        public static async Task<string> FindUserByNicknameAsync(string nickname)
         {
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
-                DocumentReference docRef = Firestore.Collection("nicknames").Document(nickname);
+                DocumentReference docRef = Instance.Firestore.Collection("nicknames").Document(nickname);
                 DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
             
                 if (snapshot.Exists)
@@ -62,6 +68,10 @@ namespace CocoDoogy.Network
                 Debug.LogError($"사용자 검색 실패: {e.Message}");
                 return null;
             }
+            finally
+            {
+                loading.Hide();
+            }
         }
         
         
@@ -69,12 +79,13 @@ namespace CocoDoogy.Network
         /// 현재 로그인한 유저가 받은 친구 추가 요청을 모두 Dictionary에 담아 반환 
         /// </summary>
         /// <returns></returns>
-        public async Task<Dictionary<string, string>> GetFriendRequestsAsync(string request)
+        public static async Task<Dictionary<string, string>> GetFriendRequestsAsync(string request)
         {
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
-                var userDoc = Firestore
-                    .Collection("users").Document(Auth.CurrentUser.UserId)
+                var userDoc = Instance.Firestore
+                    .Collection("users").Document(Instance.Auth.CurrentUser.UserId)
                     .Collection("private").Document("data");
                 
                 DocumentSnapshot snapshot = await userDoc.GetSnapshotAsync();
@@ -106,6 +117,10 @@ namespace CocoDoogy.Network
             {
                 Debug.LogError($"친구 요청 목록 불러오기 실패: {e.Message}");
                 return new Dictionary<string, string>();
+            }
+            finally
+            {
+                loading.Hide();
             }
         }
     }

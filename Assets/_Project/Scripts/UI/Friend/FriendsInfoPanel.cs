@@ -1,3 +1,4 @@
+using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace CocoDoogy.UI.Friend
     {
         private async void OnDeleteRequestAsync(string uid)
         {
-            IDictionary<string, object> result = await Firebase.CallFriendFunctionAsync("deleteFriendsRequest", uid, "친구 삭제 실패");
+            IDictionary<string, object> result = await FirebaseManager.CallFriendFunctionAsync("deleteFriendsRequest", uid, "친구 삭제 실패");
             bool success = (bool)result["success"];
 
             if (success)
@@ -25,7 +26,7 @@ namespace CocoDoogy.UI.Friend
         
         private async void OnGiftRequestAsync(string uid)
         {
-            IDictionary<string, object> result = await Firebase.CallFriendFunctionAsync("giftFriendsRequest", uid, "선물 보내기 실패");
+            IDictionary<string, object> result = await FirebaseManager.CallFriendFunctionAsync("giftFriendsRequest", uid, "선물 보내기 실패");
             bool success = (bool)result["success"];
 
             if (success)
@@ -46,7 +47,7 @@ namespace CocoDoogy.UI.Friend
                 Destroy(child.gameObject);
             }
 
-            var requestDict = await Firebase.GetFriendRequestsAsync("friendsList");
+            var requestDict = await FirebaseManager.GetFriendRequestsAsync("friendsList");
             foreach ((string uid, string nickname) in requestDict)
             {
                 FriendRequestItem item = Instantiate(prefabItem, container);
@@ -56,7 +57,7 @@ namespace CocoDoogy.UI.Friend
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "이런, 나는 친구가 없습니다!";
+                nullMessage.text = "이런, 나는 친구가 없어요!";
             }
             else
             {

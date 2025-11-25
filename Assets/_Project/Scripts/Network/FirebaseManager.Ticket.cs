@@ -12,7 +12,7 @@ namespace CocoDoogy.Network
     public partial class FirebaseManager
     {
         private const long RechargeIntervalMs = 1 * 60 * 1000; // TODO: 지금은 1분 주기로 실행되게 되어있는데 나중에 10분 or 30분 주기로 변경 예정
-        private const int MaxRegenTicket = 5;
+        private const int MaxRegenTicket = 10;
         private int TotalTicket => CurrentTicket + BonusTicket;
 
         private int CurrentTicket { get; set; }
@@ -71,29 +71,27 @@ namespace CocoDoogy.Network
         /// 티켓을 사용하는 메서드
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> UseTicketAsync()
+        public static async Task<bool> UseTicketAsync()
         {
-            // TODO : 티켓 구매 시 TotalTicket에 영향을 주게 변경해야함. 
-            // if (TotalTicket <= 0)
-            // {
-            //     Debug.LogWarning("로컬 확인: 사용 가능한 티켓이 없습니다.");
-            //     return false;
-            // }
-
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
-                HttpsCallableResult result = await Functions.GetHttpsCallable("consumeTicket").CallAsync();
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("consumeTicket").CallAsync();
                 string json = JsonConvert.SerializeObject(result.Data);
                 TicketResponse response = JsonConvert.DeserializeObject<TicketResponse>(json);
 
-                if (response.Success) UpdateTicketState(result.Data);
-                
+                if (response.Success) Instance.UpdateTicketState(result.Data);
+
                 return response.Success;
             }
             catch (Exception e)
             {
                 Debug.LogError("티켓 사용 함수 호출 실패: " + e.Message);
                 return false;
+            }
+            finally
+            {
+                loading.Hide();
             }
         }
 

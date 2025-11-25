@@ -14,7 +14,7 @@ namespace CocoDoogy.UI
             
             rt.DOKill();
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(rt.DOAnchorPos(new Vector2(0, Screen.height), 0.5f).SetEase(Ease.OutCubic));
+            sequence.Append(rt.DOAnchorPos(new Vector2(0, Screen.height), 0.25f).SetEase(Ease.OutCubic));
             sequence.AppendCallback(() => rt.gameObject.SetActive(false));
         }
 
@@ -30,7 +30,7 @@ namespace CocoDoogy.UI
         {
             rt.DOKill();
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(rt.DOScale(new Vector2(0, 1), 0.5f).SetEase(Ease.OutCubic));
+            sequence.Append(rt.DOScale(new Vector2(0, 1), 0.25f).SetEase(Ease.OutCubic));
             sequence.AppendCallback(() =>
             {
                 rt.gameObject.SetActive(false);

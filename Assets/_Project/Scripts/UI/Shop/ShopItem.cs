@@ -17,13 +17,23 @@ namespace CocoDoogy.UI.Shop
         [SerializeField] private TextMeshProUGUI itemPrice;
         [SerializeField] private CommonButton purchaseButton;
         
+        [SerializeField] private bool isSaleForCash = false;
+        
         public ItemData ItemData => itemData;
+
         
         private void OnEnable()
         {
             itemImage.sprite = itemData.itemSprite;
             itemName.text = itemData.itemName;
-            itemPrice.text = itemData.purchasePrice.ToString();
+            if (!isSaleForCash)
+            {
+                itemPrice.text = $"{itemData.purchasePrice:N0} 두기 잼";
+            }
+            else
+            {
+                itemPrice.text = $"₩{itemData.purchasePrice:N0}";
+            }
         }
         
         /// <summary>
