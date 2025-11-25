@@ -45,7 +45,6 @@ namespace CocoDoogy.MiniGame
 
         public virtual void OnEndDrag(PointerEventData eventData)
         {
-            //이미지가 놓은 자리에 위치하도록&&쓰레기통에 닿으면 삭제
             transform.position = eventData.position;
             GameObject hitObject = eventData.pointerCurrentRaycast.gameObject;
             

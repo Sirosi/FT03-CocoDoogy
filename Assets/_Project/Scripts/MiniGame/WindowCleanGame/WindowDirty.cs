@@ -1,4 +1,5 @@
 using CocoDoogy.Audio;
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,7 +13,18 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
 
         void Start()
         {
-            outline.effectDistance = new Vector2(10, 10);
+            SetVisualEmphasize();
+        }
+
+        void SetVisualEmphasize()
+        {
+            transform.DOKill();
+            // 스케일 초기화
+            transform.localScale = Vector3.one;
+            // DoTween 애니메이션 (살짝 튕기는 효과)
+            transform.DOScale(1.2f, 0.75f)
+                .SetEase(Ease.OutBack)
+                .SetLoops(-1, LoopType.Yoyo);
         }
 
 
@@ -22,11 +34,12 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
             image.sprite = sprite;
         }
 
+        
 
         public override void OnEndDrag(PointerEventData eventData)
         {
             base.OnEndDrag(eventData);
-
+            SetVisualEmphasize();
             List<RaycastResult> raylist = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventData, raylist);
             bool iswindowSlot = false;
@@ -35,6 +48,7 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
                 if (result.gameObject == gameObject) continue;
                 if (result.gameObject.GetComponent<WindowSlot>())
                 {
+                    
                     iswindowSlot = true;
                     break;
                 }
@@ -42,7 +56,9 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
             //놓는 자리에 WindowSlot없으면 사라짐
             if(!iswindowSlot)
             {
-                SfxManager.PlaySfx(SfxType.Minigame_DropTrash);
+                transform.DOKill();
+                
+                SfxManager.PlaySfx(SfxType.UI_Success);
                     parent.DestroyDirty(this);
             }
         }

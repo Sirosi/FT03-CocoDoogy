@@ -2,6 +2,7 @@ using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using CocoDoogy.UI.Popup;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,9 +19,17 @@ namespace CocoDoogy.MiniGame
         [Tooltip("해당 미니게임 등장 가능 계절 테마")]
         [SerializeField] private Theme themeFlag;
         [SerializeField] protected Image background;
-
-
-        private Action clearCallback;
+        [SerializeField] protected TextMeshProUGUI remainCount;
+        protected Action remainCountCallback;
+        
+        protected Action clearCallback;
+        
+        public TutorialExplainData tutorialExplainData;
+        [Tooltip("미니게임 설명 여부 체크용")]
+        [SerializeField] private string miniGameID;
+        public string  MiniGameID => miniGameID;
+        
+        //SO를 활용해서 타이틀과 설명을 넣자
 
 
         /// <summary>
@@ -39,6 +48,9 @@ namespace CocoDoogy.MiniGame
             clearCallback = callback;
             gameObject.SetActive(true);
             OnOpenInit();
+            ShowRemainCount();
+            remainCountCallback = ShowRemainCount;
+            SfxManager.PlaySfx(SfxType.Minigame_MinigameStart);
         }
 
 
@@ -47,10 +59,11 @@ namespace CocoDoogy.MiniGame
         /// </summary>
         public void CheckClear()
         {
+            remainCountCallback?.Invoke();
             if (!IsClear()) return;
 
-            SfxManager.PlaySfx(SfxType.UI_SuccessStage);
-            MessageDialog.ShowMessage("미니게임 클리어", "보상을 받으시오", DialogMode.Confirm, _ =>
+            SfxManager.PlaySfx(SfxType.UI_SuccessMission);
+            MessageDialog.ShowMessage("미니게임 클리어", "보상을 받으시오", DialogMode.Confirm, _ => 
             {
                 Disable();
                 gameObject.SetActive(false);
@@ -59,7 +72,12 @@ namespace CocoDoogy.MiniGame
             });
 
         }
-
+        
+        /// <summary>
+        /// 클리어까지 남은 진행도를 표시
+        /// </summary>
+        protected abstract void ShowRemainCount();
+        
         /// <summary>
         /// 미니게임 배경 세팅
         /// </summary>

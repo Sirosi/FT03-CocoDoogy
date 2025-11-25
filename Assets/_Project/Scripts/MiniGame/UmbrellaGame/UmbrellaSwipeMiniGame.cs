@@ -27,16 +27,26 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
 
         [SerializeField] private int summonUmbrellaCount = 1;
         public List<Umbrella> clearcount = new List<Umbrella>();
-
+        private int allcount; //clearCount안에 있는 각 우산의 필요한 needSwipeCount를 합쳐서 UI에 표시하기 위한 매개체
 
         protected override void OnOpenInit()
         {
             SetBackground(backgroundSprite);
-
+            allcount = 0;
             clearcount.Clear();
             SummonUmbrellas();
         }
         protected override bool IsClear() => clearcount.Count <= 0;
+
+        protected override void ShowRemainCount()
+        {
+            //private인 umbrella의 needSwipeCount를 여기다가 옮길수 있을까 public밖에 없는걸까나
+            foreach (var umbrella in clearcount)
+            {
+                allcount = umbrella.needSwipeCount;
+            }
+            remainCount.text = "남은 흔들기: "+allcount.ToString();
+        }
 
         protected override void Disable()
         {

@@ -30,7 +30,8 @@ namespace CocoDoogy.MiniGame.TrashGame
             TrashCan trashCan = hitObject != null ? hitObject.GetComponent<TrashCan>() : null;
             if (trashCan != null)
             {
-                SfxManager.PlaySfx(SfxType.Minigame_DropTrash);
+                SfxManager.PlaySfx(SfxType.UI_Success);                                    
+
                 trashCan.ShakingWithTilt();
                 parent.DestroyTrash(this);
             }
