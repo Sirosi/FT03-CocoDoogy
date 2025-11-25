@@ -6,6 +6,7 @@ using CocoDoogy.Tile.Piece;
 using CocoDoogy.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CocoDoogy.MapEditor.UI
 {
@@ -27,6 +28,7 @@ namespace CocoDoogy.MapEditor.UI
         [SerializeField] private CommonButton gimmickButton;
         [SerializeField] private CommonButton targetButton;
         [SerializeField] private TMP_InputField buttonLifeInput;
+        [SerializeField] private Toggle deckToggle;
 
 
         public static HexTile SelectedTile = null;
@@ -44,6 +46,7 @@ namespace CocoDoogy.MapEditor.UI
             gimmickButton.onClick.AddListener(OnGimmickButtonClicked);
             targetButton.onClick.AddListener(OnTargetButtonClicked);
             buttonLifeInput.onValueChanged.AddListener(OnButtonLifeChanged);
+            deckToggle.onValueChanged.AddListener(OnDeckChanged);
         }
         void OnDestroy()
         {
@@ -134,14 +137,23 @@ namespace CocoDoogy.MapEditor.UI
             {
                 targetButton.gameObject.SetActive(true);
             }
-            if (direction != HexDirection.Center) return;
 
+            if (direction != HexDirection.Center) return;
+            
+            // 버튼 트리거 수명
             bool hasButtonPiece = piece && piece.BaseData.type == PieceType.Button;
             buttonLifeInput.gameObject.SetActive(hasButtonPiece);
             if (hasButtonPiece)
             {
-                print(piece.SpecialData);
                 buttonLifeInput.SetTextWithoutNotify(piece.SpecialData);
+            }
+            
+            // 부두 배 정박
+            bool hasDeckPiece = SelectedTile.HasPiece(PieceType.Deck, out Piece deckPiece);
+            deckToggle.gameObject.SetActive(hasDeckPiece);
+            if (hasDeckPiece)
+            {
+                deckToggle.SetIsOnWithoutNotify(bool.TryParse(deckPiece.SpecialData, out bool isOn) && isOn);
             }
         }
 
@@ -175,13 +187,20 @@ namespace CocoDoogy.MapEditor.UI
         {
             MapEditorController.EditMode = MapEditMode.PieceTargetMode;
         }
-
+        
         private void OnButtonLifeChanged(string newValue)
         {
             if (!int.TryParse(newValue, out int num)) return;
 
             Piece centerPiece = SelectedTile.GetPiece(HexDirection.Center);
             centerPiece.SpecialData = newValue;
+        }
+
+        private void OnDeckChanged(bool isOn)
+        {
+            if(!SelectedTile.HasPiece(PieceType.Deck, out Piece piece)) return;
+            
+            piece.SpecialData = isOn.ToString();
         }
 
         /// <summary>
