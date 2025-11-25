@@ -2,7 +2,6 @@ using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
-using CocoDoogy.CameraSwiper.StageSelect;
 using System.Collections.Generic;
 using UnityEngine;
 

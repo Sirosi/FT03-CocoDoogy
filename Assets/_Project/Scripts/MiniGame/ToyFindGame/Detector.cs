@@ -5,10 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace CocoDoogy.MiniGame
+namespace CocoDoogy.MiniGame.ToyFindGame
 {
     public class Detector : CanMoveImage
     {

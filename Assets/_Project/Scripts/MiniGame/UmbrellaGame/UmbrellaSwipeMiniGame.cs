@@ -1,9 +1,7 @@
 using CocoDoogy.Utility;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [Serializable]

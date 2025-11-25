@@ -1,16 +1,16 @@
+using CocoDoogy.CameraSwiper;
 using CocoDoogy.Data;
 using CocoDoogy.Network;
-using CocoDoogy.CameraSwiper.Popup;
-using CocoDoogy.CameraSwiper.Shop.Category;
-using CocoDoogy.CameraSwiper.StageSelect;
-using CocoDoogy.CameraSwiper.UserInfo;
+using CocoDoogy.UI.Popup;
+using CocoDoogy.UI.Shop.Category;
+using CocoDoogy.UI.UserInfo;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper.Shop
+namespace CocoDoogy.UI.Shop
 {
     public class ShopUI : UIPanel
     {

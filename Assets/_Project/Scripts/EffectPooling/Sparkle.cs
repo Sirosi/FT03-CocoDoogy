@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy
+namespace CocoDoogy.EffectPooling
 {
     public class Sparkle : MonoBehaviour
     {

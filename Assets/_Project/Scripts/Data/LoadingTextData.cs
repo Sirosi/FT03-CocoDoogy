@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CocoDoogy
+namespace CocoDoogy.Data
 {
     [CreateAssetMenu(menuName = "Data/LoadingText Data")]
     public class LoadingTextData : ScriptableObject

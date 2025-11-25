@@ -1,8 +1,7 @@
+using CocoDoogy.Core;
 using UnityEngine;
-using UnityEngine.Rendering;
-using CocoDoogy.CameraSwiper;
 
-namespace CocoDoogy.Core
+namespace CocoDoogy.CameraSwiper.Lighting
 {
     /// <summary>
     /// 런타임에 LightingPreset을 적용하는 매니저

@@ -1,13 +1,10 @@
-using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using Coffee.UIExtensions;
 using Lean.Pool;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static CocoDoogy.CameraSwiper.StaminaUI.StaminaUI;
 
-namespace CocoDoogy
+namespace CocoDoogy.MiniGame
 {
     public class MiniGameParticleManager : Singleton<MiniGameParticleManager>
     {

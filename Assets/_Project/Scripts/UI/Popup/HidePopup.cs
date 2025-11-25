@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CocoDoogy
+namespace CocoDoogy.UI.Popup
 {
     public class HidePopup : MonoBehaviour, IDeselectHandler
     {

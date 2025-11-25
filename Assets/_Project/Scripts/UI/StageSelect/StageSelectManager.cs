@@ -1,16 +1,8 @@
+using CocoDoogy.CameraSwiper;
 using CocoDoogy.Core;
 using CocoDoogy.Data;
-using CocoDoogy.Network;
-using CocoDoogy.UI;
-using CocoDoogy.UI.Popup;
-using DG.Tweening;
-using System;
-using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 namespace CocoDoogy.UI.StageSelect
 {

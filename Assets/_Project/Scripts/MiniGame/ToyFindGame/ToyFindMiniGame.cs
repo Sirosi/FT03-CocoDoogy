@@ -1,5 +1,3 @@
-using CocoDoogy.MiniGame;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using CocoDoogy.Utility;

@@ -1,6 +1,6 @@
 using CocoDoogy.Audio;
 using CocoDoogy.Core;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using System;
 using UnityEngine;
 using UnityEngine.UI;

@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper.Popup
+namespace CocoDoogy.UI.Popup
 {
     public class MessageDialog : MonoBehaviour
     {

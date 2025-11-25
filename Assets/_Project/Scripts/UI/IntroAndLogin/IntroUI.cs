@@ -1,9 +1,10 @@
+using CocoDoogy.UI.UIManager;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper.IntroAndLogin
+namespace CocoDoogy.UI.IntroAndLogin
 {
     public class IntroUI : UIPanel
     {

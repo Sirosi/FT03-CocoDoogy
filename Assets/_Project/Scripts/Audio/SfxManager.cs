@@ -1,9 +1,7 @@
 using CocoDoogy.Core;
 using FMOD.Studio;
 using FMODUnity;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
 
 namespace CocoDoogy.Audio

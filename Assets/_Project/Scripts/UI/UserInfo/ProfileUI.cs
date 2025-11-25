@@ -1,3 +1,4 @@
+using CocoDoogy.CameraSwiper;
 using CocoDoogy.Network;
 using CocoDoogy.UI;
 using CocoDoogy.UI.StageSelect;
@@ -6,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy
+namespace CocoDoogy.UI.UserInfo
 {
     public class ProfileUI : UIPanel
     {

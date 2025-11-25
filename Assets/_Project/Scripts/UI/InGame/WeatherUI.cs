@@ -3,7 +3,7 @@ using CocoDoogy.GameFlow.InGame.Weather;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper.InGame
+namespace CocoDoogy.UI.InGame
 {
     /// <summary>
     /// InGame 상단의 현재 날씨 Icon 표시기

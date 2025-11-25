@@ -1,4 +1,3 @@
-using CocoDoogy._Project.Scripts.Data;
 using UnityEngine;
 
 namespace CocoDoogy.Data

@@ -1,7 +1,7 @@
-using CocoDoogy.Data;
+using CocoDoogy.CameraSwiper;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper
+namespace CocoDoogy.UI
 {
     public abstract class UIPanel : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using CocoDoogy.MapEditor.Controller;
 using CocoDoogy.MapEditor.UI.GimmickConnector;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
-using CocoDoogy.CameraSwiper;
+using CocoDoogy.UI;
 using TMPro;
 using UnityEngine;
 

@@ -1,6 +1,6 @@
 using Firebase.Firestore;
 
-namespace CocoDoogy._Project.Scripts.Data
+namespace CocoDoogy.Data
 {
     [FirestoreData]
     public class GiftData

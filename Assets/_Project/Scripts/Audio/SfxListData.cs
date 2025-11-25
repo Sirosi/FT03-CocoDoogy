@@ -1,9 +1,8 @@
-using CocoDoogy.Audio;
 using FMODUnity;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CocoDoogy
+namespace CocoDoogy.Audio
 {
     [CreateAssetMenu(fileName = "SfxListData", menuName = "ScriptableObjects/SfxListData")]
     public class SfxListData : ScriptableObject

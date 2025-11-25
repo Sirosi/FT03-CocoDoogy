@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-namespace CocoDoogy.CameraSwiper.InGame
+namespace CocoDoogy.UI.InGame
 {
     public class RefillPointUI : MonoBehaviour
     {

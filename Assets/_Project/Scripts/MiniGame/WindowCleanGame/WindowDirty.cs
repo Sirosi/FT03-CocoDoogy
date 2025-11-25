@@ -1,10 +1,9 @@
 using CocoDoogy.Audio;
-using CocoDoogy.MiniGame.WindowCleanGame;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CocoDoogy.MiniGame
+namespace CocoDoogy.MiniGame.WindowCleanGame
 {
     public class WindowDirty : CanMoveImage
     {

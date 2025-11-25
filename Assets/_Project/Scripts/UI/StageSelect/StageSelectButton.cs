@@ -1,7 +1,5 @@
 using CocoDoogy.Core;
 using CocoDoogy.Data;
-using CocoDoogy.Network;
-using JetBrains.Annotations;
 using System;
 using TMPro;
 using UnityEngine;

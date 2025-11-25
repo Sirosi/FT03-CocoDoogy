@@ -1,7 +1,7 @@
 using CocoDoogy.MapEditor.Controller;
 using CocoDoogy.Tile;
-using CocoDoogy.CameraSwiper;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI;
+using CocoDoogy.UI.Popup;
 using CocoDoogy.Utility;
 using System.IO;
 using System.Text;

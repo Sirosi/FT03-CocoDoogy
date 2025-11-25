@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.StageSelect.Item
+namespace CocoDoogy.UI.StageSelect.Item
 {
     public class ItemButton : MonoBehaviour
     {

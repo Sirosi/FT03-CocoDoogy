@@ -1,11 +1,9 @@
 using CocoDoogy.Data;
-using CocoDoogy.Network.UI;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.UIManager;
 using Firebase.Auth;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace CocoDoogy.Network.Login
 {

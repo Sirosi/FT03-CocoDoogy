@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace CocoDoogy.Network.UI
+namespace CocoDoogy.UI.Friend
 {
     public class SearchWindowPopup : MonoBehaviour
     {

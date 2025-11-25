@@ -1,7 +1,7 @@
 using CocoDoogy.Data;
 using CocoDoogy.MapEditor.Controller;
 using CocoDoogy.Tile;
-using CocoDoogy.CameraSwiper;
+using CocoDoogy.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
