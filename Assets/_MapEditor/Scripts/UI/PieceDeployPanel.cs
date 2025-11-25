@@ -135,7 +135,14 @@ namespace CocoDoogy.MapEditor.UI
                 targetButton.gameObject.SetActive(true);
             }
             if (direction != HexDirection.Center) return;
-            buttonLifeInput.gameObject.SetActive(piece && piece.BaseData.type == PieceType.Button);
+
+            bool hasButtonPiece = piece && piece.BaseData.type == PieceType.Button;
+            buttonLifeInput.gameObject.SetActive(hasButtonPiece);
+            if (hasButtonPiece)
+            {
+                print(piece.SpecialData);
+                buttonLifeInput.SetTextWithoutNotify(piece.SpecialData);
+            }
         }
 
 
@@ -171,8 +178,10 @@ namespace CocoDoogy.MapEditor.UI
 
         private void OnButtonLifeChanged(string newValue)
         {
-            if (int.TryParse(newValue, out int num)) return;
-            // TODO: 아직 완성되지 않음
+            if (!int.TryParse(newValue, out int num)) return;
+
+            Piece centerPiece = SelectedTile.GetPiece(HexDirection.Center);
+            centerPiece.SpecialData = newValue;
         }
 
         /// <summary>
