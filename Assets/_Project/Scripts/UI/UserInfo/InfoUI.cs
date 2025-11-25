@@ -40,11 +40,11 @@ namespace CocoDoogy.UI.UserInfo
                 long ticketCount = (long)data["gameTicket"] + (long)data["bonusTicket"];
                 if (ticketCount > 99)
                 {
-                    ticketCountText.text = $"99+ / 5";
+                    ticketCountText.text = $"99+ / {FirebaseManager.MaxRegenTicket}";
                 }
                 else
                 {
-                    ticketCountText.text = $"{ticketCount.ToString()} / 5";
+                    ticketCountText.text = $"{ticketCount.ToString()} / {FirebaseManager.MaxRegenTicket}";
                 }
                 cashMoneyText.text = data["cashMoney"].ToString();
                 

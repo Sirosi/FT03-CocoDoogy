@@ -62,6 +62,28 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// Refill 시, 부두의 배 리턴
         /// </summary>
         DeckReset = 123,
+        
         #endregion
+
+        #region ◇ 아이템 ◇
+        /// <summary>
+        /// 아이템 사용 1<br/>
+        /// 현재 행동력 1 감소, 최대 행동력 1 증가
+        /// </summary>
+        MaxUp = 200,
+        
+        /// <summary>
+        /// 아이템 사용 2<br/>
+        /// 현재 행동력 1 증가
+        /// </summary>
+        Recover = 201,
+        
+        /// <summary>
+        /// 아이템 사용 3<br/>
+        /// 행동을 한 이력이 있을 때 아이템을 사용하면 1턴 전으로 돌아감
+        /// </summary>
+        Undo = 202
+        #endregion
+        
     }
 }

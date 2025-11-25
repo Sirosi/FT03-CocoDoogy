@@ -11,8 +11,8 @@ namespace CocoDoogy.Network
 {
     public partial class FirebaseManager
     {
+        public const int MaxRegenTicket = 10;
         private const long RechargeIntervalMs = 1 * 60 * 1000; // TODO: 지금은 1분 주기로 실행되게 되어있는데 나중에 10분 or 30분 주기로 변경 예정
-        private const int MaxRegenTicket = 5;
         private int TotalTicket => CurrentTicket + BonusTicket;
 
         private int CurrentTicket { get; set; }
