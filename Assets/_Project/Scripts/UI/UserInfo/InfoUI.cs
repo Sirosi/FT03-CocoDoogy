@@ -1,5 +1,5 @@
 using CocoDoogy.Network;
-using CocoDoogy.CameraSwiper.UIManager;
+using CocoDoogy.UI.UIManager;
 using Firebase.Firestore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.UserInfo
+namespace CocoDoogy.UI.UserInfo
 {
     public class InfoUI : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.StageSelect.Page
+namespace CocoDoogy.UI.StageSelect.Page
 {
     /// <summary>
     /// 스테이지 상세보기

@@ -1,6 +1,6 @@
 using CocoDoogy.Network;
 using CocoDoogy.Tile;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using UnityEngine.SceneManagement;
 
 namespace CocoDoogy.GameFlow.InGame.Phase

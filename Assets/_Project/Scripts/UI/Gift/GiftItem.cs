@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper.Gift
+namespace CocoDoogy.UI.Gift
 {
     public class GiftItem : MonoBehaviour
     {

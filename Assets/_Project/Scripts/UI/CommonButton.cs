@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper
+namespace CocoDoogy.UI
 {
     /// <summary>
     /// Tween 효과를 주는 Button Component

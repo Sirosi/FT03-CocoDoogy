@@ -1,10 +1,7 @@
-using CocoDoogy.Audio;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-namespace CocoDoogy
+namespace CocoDoogy.Audio
 {
     public class TESTButtonAudio : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {

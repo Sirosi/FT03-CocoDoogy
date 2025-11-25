@@ -1,11 +1,8 @@
-using CocoDoogy.MiniGame.TrashGame;
-using CocoDoogy.CameraSwiper.Popup;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using CocoDoogy.Audio;
 
-namespace CocoDoogy.MiniGame
+namespace CocoDoogy.MiniGame.TrashGame
 {
     public class Trash : CanMoveImage
     {

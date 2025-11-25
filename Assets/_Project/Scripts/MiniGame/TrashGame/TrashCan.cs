@@ -1,9 +1,8 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-namespace CocoDoogy.MiniGame
+namespace CocoDoogy.MiniGame.TrashGame
 {
     public class TrashCan : MonoBehaviour, IPointerClickHandler
     {

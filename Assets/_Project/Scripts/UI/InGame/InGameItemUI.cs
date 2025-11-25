@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CocoDoogy
+namespace CocoDoogy.UI.InGame
 {
     public class InGameItemUI : MonoBehaviour
     {

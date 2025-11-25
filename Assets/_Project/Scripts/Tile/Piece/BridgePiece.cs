@@ -1,6 +1,6 @@
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.LifeCycle;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using DG.Tweening;
 using UnityEngine;
 

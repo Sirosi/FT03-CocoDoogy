@@ -1,11 +1,8 @@
 using CocoDoogy.Core;
 using FMOD.Studio;
 using FMODUnity;
-using System;
-using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
-namespace CocoDoogy
+namespace CocoDoogy.Audio
 {
     public class VolumeController : Singleton<VolumeController>
     {

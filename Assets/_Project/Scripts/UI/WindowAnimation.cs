@@ -1,10 +1,8 @@
-using CocoDoogy.Audio;
 using DG.Tweening;
 using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper
+namespace CocoDoogy.UI
 {
     public static class WindowAnimation
     {

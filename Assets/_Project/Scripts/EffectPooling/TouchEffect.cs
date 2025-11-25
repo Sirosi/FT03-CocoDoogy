@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using Lean.Pool;
 
-namespace CocoDoogy
+namespace CocoDoogy.EffectPooling
 {
     public class TouchEffect : MonoBehaviour
     {

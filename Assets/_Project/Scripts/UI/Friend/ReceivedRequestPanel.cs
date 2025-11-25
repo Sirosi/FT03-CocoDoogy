@@ -1,9 +1,9 @@
 using CocoDoogy.Network;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.Friend
+namespace CocoDoogy.UI.Friend
 {
     public class ReceivedRequestPanel : RequestPanel
     {

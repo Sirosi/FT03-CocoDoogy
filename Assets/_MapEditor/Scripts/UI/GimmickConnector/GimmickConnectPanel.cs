@@ -1,11 +1,10 @@
-using CocoDoogy.LifeCycle;
 using CocoDoogy.MapEditor.Controller;
 using CocoDoogy.MapEditor.GimmickConnector;
 using CocoDoogy.MapEditor.UI.GimmickConnector.Effect;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick.Data;
-using CocoDoogy.CameraSwiper;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI;
+using CocoDoogy.UI.Popup;
 using Lean.Pool;
 using System;
 using TMPro;

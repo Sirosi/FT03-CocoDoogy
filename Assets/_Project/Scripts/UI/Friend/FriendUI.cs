@@ -1,8 +1,9 @@
-using CocoDoogy.CameraSwiper.UserInfo;
+using CocoDoogy.CameraSwiper;
+using CocoDoogy.UI.UserInfo;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper.Friend
+namespace CocoDoogy.UI.Friend
 {
     public class FriendUI : UIPanel
     {

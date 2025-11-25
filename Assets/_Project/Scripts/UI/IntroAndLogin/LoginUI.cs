@@ -1,16 +1,11 @@
-using CocoDoogy.Data;
 using CocoDoogy.Network;
 using CocoDoogy.Network.Login;
-using CocoDoogy.CameraSwiper.UIManager;
 using Firebase.Auth;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper.IntroAndLogin
+namespace CocoDoogy.UI.IntroAndLogin
 {
     public class LoginUI : UIPanel
     {

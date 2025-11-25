@@ -7,7 +7,7 @@ using DG.Tweening;
     활성/비활성 상태를 애니메이션으로 표현합니다.
 */
 
-namespace CocoDoogy.CameraSwiper.StaminaUI
+namespace CocoDoogy.UI.StaminaUI
 {
     public class StaminaSlot : MonoBehaviour
     {

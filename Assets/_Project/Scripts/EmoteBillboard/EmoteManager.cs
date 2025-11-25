@@ -1,5 +1,4 @@
 using UnityEngine;
-using CocoDoogy.EmoteBillboard;
 
 namespace CocoDoogy.EmoteBillboard
 {

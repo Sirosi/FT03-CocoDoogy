@@ -1,9 +1,9 @@
-using CocoDoogy.CameraSwiper.IntroAndLogin;
+using CocoDoogy.UI.IntroAndLogin;
 using CocoDoogy.Core;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CocoDoogy
+namespace CocoDoogy.UI.UIManager
 {
     public class IntroUIManager : Singleton<IntroUIManager>
     {

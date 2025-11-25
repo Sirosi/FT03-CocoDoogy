@@ -1,9 +1,6 @@
-using CocoDoogy.MiniGame.CoatArrangeGame;
-using CocoDoogy.CameraSwiper.Popup;
-using Firebase.Firestore;
 using UnityEngine;
 
-namespace CocoDoogy.MiniGame
+namespace CocoDoogy.MiniGame.CoatArrangeGame
 {
     public class CoatSlot : MonoBehaviour
     {

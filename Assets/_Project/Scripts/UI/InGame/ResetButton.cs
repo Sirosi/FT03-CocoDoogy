@@ -1,9 +1,9 @@
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.InGame.Command;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.InGame
+namespace CocoDoogy.UI.InGame
 {
     /// <summary>
     /// InGame 내에서 초기화용 버튼<br/>

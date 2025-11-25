@@ -2,7 +2,7 @@ using CocoDoogy.Data;
 using System;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.StageSelect.Page
+namespace CocoDoogy.UI.StageSelect.Page
 {
     public abstract class StageInfoPage : MonoBehaviour
     {

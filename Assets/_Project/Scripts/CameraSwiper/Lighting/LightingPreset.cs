@@ -1,11 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-namespace CocoDoogy.Core
+namespace CocoDoogy.CameraSwiper.Lighting
 {
     /// <summary>
     /// Lighting / Environment / Other 세팅을 모두 포함하는 ScriptableObject

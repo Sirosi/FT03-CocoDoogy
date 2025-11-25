@@ -1,4 +1,4 @@
-namespace CocoDoogy.CameraSwiper.Popup
+namespace CocoDoogy.UI.Popup
 {
     public enum CallbackType
     {

@@ -4,6 +4,8 @@ using CocoDoogy.WeatherEffect;
 using UnityEngine;
 using UnityEngine.InputSystem; // 추가!
 
+namespace CocoDoogy.Test
+{
 public class WeatherEffectTester : MonoBehaviour
 {
     [Header("테스트 설정")]
@@ -31,4 +33,5 @@ public class WeatherEffectTester : MonoBehaviour
         Debug.Log($"테스트 실행: {weatherType}, Duration: {testDuration}초");
         WeatherEffectManager.PlayEffect(weatherType, testDuration);
     }
+}
 }

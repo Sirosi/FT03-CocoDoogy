@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CocoDoogy
+namespace CocoDoogy.ToyFindGame
 {
     public class Toy : MonoBehaviour
     {

@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CocoDoogy.Core;
-using Random = UnityEngine.Random;
-using CocoDoogy.MiniGame.WindowCleanGame;
 
-namespace CocoDoogy.MiniGame
+namespace CocoDoogy.MiniGame.WindowCleanGame
 {
     
     public class WindowCleanGameMaker : MonoBehaviour

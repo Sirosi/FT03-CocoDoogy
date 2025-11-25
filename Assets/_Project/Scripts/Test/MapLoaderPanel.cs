@@ -1,5 +1,5 @@
 using CocoDoogy.GameFlow.InGame;
-using CocoDoogy.CameraSwiper;
+using CocoDoogy.UI;
 using TMPro;
 using UnityEngine;
 

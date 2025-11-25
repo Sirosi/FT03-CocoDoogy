@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.Shop.Category
+namespace CocoDoogy.UI.Shop.Category
 {
     public class ShopCategory : MonoBehaviour
     {

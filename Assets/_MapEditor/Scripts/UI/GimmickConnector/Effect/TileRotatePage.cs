@@ -1,5 +1,5 @@
 using CocoDoogy.Tile;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using System;
 using TMPro;
 using UnityEngine;

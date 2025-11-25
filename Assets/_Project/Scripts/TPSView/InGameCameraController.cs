@@ -1,12 +1,10 @@
 using CocoDoogy.Tile;
 using CocoDoogy.Utility;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 
-namespace CocoDoogy
+namespace CocoDoogy.TPSView
 {
     public class InGameCameraController : MonoBehaviour
     {

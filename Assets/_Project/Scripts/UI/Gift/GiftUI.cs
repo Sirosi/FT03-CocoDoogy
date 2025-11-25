@@ -1,12 +1,13 @@
+using CocoDoogy.CameraSwiper;
 using CocoDoogy.Network;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace CocoDoogy.CameraSwiper.Gift
+namespace CocoDoogy.UI.Gift
 {
     public class GiftUI : UIPanel
     {

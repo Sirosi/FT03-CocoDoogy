@@ -3,7 +3,7 @@ using Lean.Pool;
 using TMPro;
 using UnityEngine;
 
-namespace CocoDoogy
+namespace CocoDoogy.Network
 {
     public class FirebaseLoading : MonoBehaviour
     {

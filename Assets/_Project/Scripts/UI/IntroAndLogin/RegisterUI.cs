@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper.IntroAndLogin
+namespace CocoDoogy.UI.IntroAndLogin
 {
     public class RegisterUI : UIPanel
     {

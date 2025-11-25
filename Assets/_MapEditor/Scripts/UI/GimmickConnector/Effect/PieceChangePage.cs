@@ -1,7 +1,6 @@
 using CocoDoogy.Data;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
-using CocoDoogy.CameraSwiper.Popup;
 using System;
 using TMPro;
 using UnityEngine;

@@ -1,11 +1,9 @@
 using CocoDoogy.Audio;
-using CocoDoogy.MiniGame.CoatArrangeGame;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CocoDoogy.MiniGame
+namespace CocoDoogy.MiniGame.CoatArrangeGame
 {
     public class Coat : CanMoveImage
     {
