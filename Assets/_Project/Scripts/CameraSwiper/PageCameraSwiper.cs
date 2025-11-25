@@ -84,9 +84,6 @@ namespace CocoDoogy.CameraSwiper
 
         private void Swipe()
         {
-            if (Touchscreen.current == null) return;
-
-            // 현재 터치 감지
             if (TouchSystem.TouchCount > 0 && IsSwipeable)
             {
                 lastPos = TouchSystem.TouchAverage;
@@ -187,7 +184,7 @@ namespace CocoDoogy.CameraSwiper
             mainCamera.transform.position = cameraPoints[index].position;
             mainCamera.transform.rotation = cameraPoints[index].rotation;
 
-            OnEndPageChanged.Invoke(GetThemeByIndex(index));
+            OnEndPageChanged?.Invoke(GetThemeByIndex(index));
             SetActivePage(index);
         }
 

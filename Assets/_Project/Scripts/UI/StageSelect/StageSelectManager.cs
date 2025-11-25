@@ -39,7 +39,7 @@ namespace CocoDoogy.UI.StageSelect
         {
             base.Awake();
 
-            PageCameraSwiper.OnStartPageChanged += OnChangedThemeAsync;
+            PageCameraSwiper.OnEndPageChanged += OnChangedThemeAsync;
 
             stageInfoPanel.gameObject.SetActive(false);
 
@@ -53,7 +53,7 @@ namespace CocoDoogy.UI.StageSelect
         {
             base.OnDestroy();
 
-            PageCameraSwiper.OnStartPageChanged -= OnChangedThemeAsync;
+            PageCameraSwiper.OnEndPageChanged -= OnChangedThemeAsync;
         }
 
 
