@@ -22,7 +22,6 @@ namespace CocoDoogy.UI
             base.Reset();
 
             interactable = true;
-            transition = Transition.None;
         }
         #endif
 
