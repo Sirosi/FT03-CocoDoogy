@@ -34,7 +34,8 @@ namespace CocoDoogy.GameFlow.InGame.Phase
 
         private void ProcessDefeat()
         {
-            MessageDialog.ShowMessage("미아", "집을 영구적으로 잃었습니다.", DialogMode.Confirm, _ => SceneManager.LoadScene("Lobby"));
+            GameEndPopup.OpenPopup(true);
+            // MessageDialog.ShowMessage("미아", "집을 영구적으로 잃었습니다.", DialogMode.Confirm, _ => SceneManager.LoadScene("Lobby"));
         }
     }
 }

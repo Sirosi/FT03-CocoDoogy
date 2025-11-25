@@ -1,3 +1,4 @@
+using CocoDoogy.Core;
 using CocoDoogy.Network;
 using CocoDoogy.Timer;
 using CocoDoogy.UI.Popup;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 namespace CocoDoogy.UI.UIManager
 {
-    public class InGameUIManager : MonoBehaviour
+    public class InGameUIManager : Singleton<InGameUIManager>
     {
         [Header("Main Buttons")]
         [SerializeField] private CommonButton openSettingsButton;
@@ -18,34 +19,21 @@ namespace CocoDoogy.UI.UIManager
         [SerializeField] private CommonButton resetButton;
         [SerializeField] private CommonButton openQuitButton;
         [SerializeField] private Slider volumeSlider;
-        
-        
-        [Header("CompleteWindow Buttons")]
-        [SerializeField] private CommonButton againButton;
-        [SerializeField] private CommonButton nextStageButton;
-        
-        [Header("DefeatWindow Buttons")]
-        [SerializeField] private CommonButton restartButton;
-        [SerializeField] private CommonButton homeButton;
+
         
         [Header("Option UI Elements")]
         [SerializeField] private RectTransform settingsWindow;
         [SerializeField] private RectTransform pauseWindow;
         
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             openSettingsButton.onClick.AddListener(OnOpenSettingsButtonClicked);
             openPauseButton.onClick.AddListener(OnOpenPauseButtonClicked);
             
             resumeButton.onClick.AddListener(OnResumeButtonClicked);
             resetButton.onClick.AddListener(OnOpenResetButtonClicked);
             openQuitButton.onClick.AddListener(OnOpenQuitButtonClicked);
-            
-            againButton.onClick.AddListener(OnResetButtonClicked);
-            nextStageButton.onClick.AddListener(OnQuitButtonClicked);
-            
-            restartButton.onClick.AddListener(OnResetButtonClicked);
-            homeButton.onClick.AddListener(OnQuitButtonClicked);
         }
 
         
@@ -101,7 +89,7 @@ namespace CocoDoogy.UI.UIManager
         }
 
         
-        private async void OnResetButtonClicked()
+        public async void OnResetButtonClicked()
         {
             bool isReady = await FirebaseManager.UseTicketAsync();
             if (isReady)
@@ -121,7 +109,7 @@ namespace CocoDoogy.UI.UIManager
         }
         
 
-        private void OnQuitButtonClicked()
+        public void OnQuitButtonClicked()
         {
             AudioSetting.MasterVolume = volumeSlider.value;
             Loading.LoadScene("Lobby");

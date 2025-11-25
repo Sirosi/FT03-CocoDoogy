@@ -6,21 +6,6 @@ using UnityEngine.UI;
 
 namespace CocoDoogy.UI.Popup
 {
-    // TODO : 아이템 정보나 타일의 정보를 보여주기위한 InfoDialog
-    // 1. StageSelectUI에서 아이템 버튼 클릭 시
-    //      - 상점으로 가는 버튼
-    //      - 아이템 이미지
-    //      - 아이템 설명
-    // 2. StageSelectUI에서 타일 버튼 클릭 시
-    //      - 버튼은 없어도 되고
-    //      - 타일 이미지
-    //      - 타일 설명
-    // 3. InGame에서 아이템 버튼 클릭 시
-    //      - 아이템 사용 버튼, 취소 버튼(취소 버튼의 경우 Popup 메세지 이외의 다른 부분을 클릭하면 닫히게도 됨)
-    //      - 아이템 이미지
-    //      - 아이템 설명
-    //      - 만약 아이템이 없는 상태에서 클릭한다면 아이템 구매버튼이 나오게
-    
     public class InfoDialog : MonoBehaviour
     {
         private static InfoDialog prefab = null;
