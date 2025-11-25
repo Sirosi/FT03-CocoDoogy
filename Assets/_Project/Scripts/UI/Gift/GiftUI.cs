@@ -1,12 +1,12 @@
 using CocoDoogy.Network;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace CocoDoogy.UI.Gift
+namespace CocoDoogy.CameraSwiper.Gift
 {
     public class GiftUI : UIPanel
     {
@@ -14,19 +14,19 @@ namespace CocoDoogy.UI.Gift
         [SerializeField] private Button closeThisButton;
         [SerializeField] private CommonButton getAllButton;
         [SerializeField] private CommonButton confirmButton;
-        
+
         [Header("UI Elements")]
         [SerializeField] private RectTransform giftWindow;
         [SerializeField] private RectTransform getGiftWindow;
-        
+
         [SerializeField] private RectTransform container;
         [SerializeField] private GiftItem prefabItem;
-        
+
         [Header("Null Message")]
         [SerializeField] private TextMeshProUGUI nullMessage;
-        
+
         FirebaseManager Firebase => FirebaseManager.Instance;
-        
+
         private void Awake()
         {
             closeThisButton.onClick.AddListener(ClosePanel);
@@ -41,13 +41,13 @@ namespace CocoDoogy.UI.Gift
 
         public void SubscriptionEvent() => _ = RefreshPanelAsync();
         private void OnGetAllButtonClicked() => getGiftWindow.gameObject.SetActive(true);
-        private void OnConfirmButtonClicked() =>  WindowAnimation.CloseWindow(getGiftWindow);
+        private void OnConfirmButtonClicked() => WindowAnimation.CloseWindow(getGiftWindow);
 
         private void OnEnable()
         {
             _ = RefreshPanelAsync();
         }
-        
+
         private async Task RefreshPanelAsync()
         {
             foreach (Transform child in container)
@@ -61,9 +61,9 @@ namespace CocoDoogy.UI.Gift
                 item.GetComponent<GiftItem>().Init(kvp["fromNickname"].ToString(),
                     kvp["giftId"].ToString(),
                     kvp["giftCount"].ToString()
-                    ,OnTakePresentAsync);
+                    , OnTakePresentAsync);
             }
-            
+
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);
@@ -82,7 +82,7 @@ namespace CocoDoogy.UI.Gift
 
             if (success)
             {
-                MessageDialog.ShowMessage("선물 받기 성공","선물 받기를 성공했습니다.", DialogMode.Confirm, null);
+                MessageDialog.ShowMessage("선물 받기 성공", "선물 받기를 성공했습니다.", DialogMode.Confirm, null);
             }
             else
             {

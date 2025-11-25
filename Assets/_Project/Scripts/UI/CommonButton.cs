@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace CocoDoogy.UI
+namespace CocoDoogy.CameraSwiper
 {
     /// <summary>
     /// Tween 효과를 주는 Button Component
@@ -16,14 +16,14 @@ namespace CocoDoogy.UI
         private Color buttonColor;
 
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         protected override void Reset()
         {
             base.Reset();
 
             interactable = true;
         }
-        #endif
+#endif
 
         protected override void Awake()
         {

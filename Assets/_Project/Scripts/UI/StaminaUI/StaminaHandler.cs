@@ -8,7 +8,7 @@ using CocoDoogy.Core;
     StaminaUI에서 행동력 변경 이벤트를 구독하여 UI를 업데이트 합니다.
 */
 
-namespace CocoDoogy.UI.StaminaUI
+namespace CocoDoogy.CameraSwiper.StaminaUI
 {
     public class StaminaHandler : Singleton<StaminaHandler>
     {

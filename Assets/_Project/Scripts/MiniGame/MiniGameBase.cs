@@ -1,6 +1,6 @@
 using CocoDoogy.Audio;
 using CocoDoogy.Core;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,14 +50,14 @@ namespace CocoDoogy.MiniGame
             if (!IsClear()) return;
 
             SfxManager.PlaySfx(SfxType.UI_SuccessStage);
-            MessageDialog.ShowMessage("미니게임 클리어", "보상을 받으시오", DialogMode.Confirm, _ => 
+            MessageDialog.ShowMessage("미니게임 클리어", "보상을 받으시오", DialogMode.Confirm, _ =>
             {
                 Disable();
                 gameObject.SetActive(false);
                 MiniGameManager.Instance.BackGround.SetActive(false);
                 clearCallback?.Invoke();
             });
-            
+
         }
 
         /// <summary>

@@ -1,34 +1,34 @@
 using CocoDoogy.Data;
 using CocoDoogy.Network;
-using CocoDoogy.UI.Popup;
-using CocoDoogy.UI.Shop.Category;
-using CocoDoogy.UI.StageSelect;
-using CocoDoogy.UI.UserInfo;
+using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.CameraSwiper.Shop.Category;
+using CocoDoogy.CameraSwiper.StageSelect;
+using CocoDoogy.CameraSwiper.UserInfo;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.UI.Shop
+namespace CocoDoogy.CameraSwiper.Shop
 {
     public class ShopUI : UIPanel
     {
-        [Header("Purchase Item Button")] [SerializeField] private List<ShopItem> shopItems;
-        [Header("Purchase Panel")] [SerializeField] private PurchasePanel purchasePanel;
-        [Header("Confirm Panel")] [SerializeField] private ConfirmPanel confirmPanel;
-        [Header("Close Button")] [SerializeField] private Button closeButton;
+        [Header("Purchase Item Button")][SerializeField] private List<ShopItem> shopItems;
+        [Header("Purchase Panel")][SerializeField] private PurchasePanel purchasePanel;
+        [Header("Confirm Panel")][SerializeField] private ConfirmPanel confirmPanel;
+        [Header("Close Button")][SerializeField] private Button closeButton;
 
-        [Header("Categories")] 
+        [Header("Categories")]
         [SerializeField] private ShopCategory itemShop;
         [SerializeField] private ShopCategory stampShop;
         [SerializeField] private ShopCategory jemShop;
-        
+
         [Header("Category Select Buttons")]
         [SerializeField] private Button itemShopButton;
         [SerializeField] private Button stampShopButton;
         [SerializeField] private Button jemShopButton;
-        
+
         private Transform currentActivePanel;
         
         
@@ -39,7 +39,7 @@ namespace CocoDoogy.UI.Shop
         private void Awake()
         {
             closeButton.onClick.AddListener(ClosePanel);
-            
+
             itemShopButton.onClick.AddListener(OnClickItemShopButton);
             stampShopButton.onClick.AddListener(OnClickStampShopButton);
             jemShopButton.onClick.AddListener(OnClickJemShopButton);
@@ -49,7 +49,7 @@ namespace CocoDoogy.UI.Shop
         {
             InitTabs();
         }
-        
+
         public override void ClosePanel()
         {
             WindowAnimation.SwipeWindow(transform as RectTransform);
@@ -62,7 +62,7 @@ namespace CocoDoogy.UI.Shop
 
         public void OpenPurchasePanel(ItemData itemData) => purchasePanel.Open(itemData, OnPurchaseRequest);
         private void OnPurchaseRequest(ItemData itemData, int quantity) => _ = ExecutePurchaseAsync(itemData, quantity);
-        
+
         /// <summary>
         /// 구매를 실행하는 메서드. itemData에서 DB에 검색할 내용인 아이템ID를 가져와서 DB에 전송.<br/>
         /// PurchaseWithCashMoneyAsync를 통해서 Firebase Functions의 기능을 사용. DB 내에서 결제 처리 후 결과를 반환하여 사용함.
@@ -94,7 +94,7 @@ namespace CocoDoogy.UI.Shop
                 Debug.LogError($"구매 실패: {e.Message}");
             }
         }
-        
+
         #region < ChangeTabs >
         private void InitTabs()
         {
@@ -110,10 +110,10 @@ namespace CocoDoogy.UI.Shop
             ChangeUITabs.ChangeTab(itemShopButton, false);
             ChangeUITabs.ChangeTab(stampShopButton, false);
             ChangeUITabs.ChangeTab(jemShopButton, false);
-            
+
             ChangeUITabs.ChangeTab(clicked, true);
         }
-        
+
         private void OnClickItemShopButton()
         {
             OnClickButton(itemShopButton);
@@ -140,7 +140,7 @@ namespace CocoDoogy.UI.Shop
             {
                 currentActivePanel.gameObject.SetActive(false);
             }
-            
+
             targetPanel.gameObject.SetActive(true);
             currentActivePanel = targetPanel;
         }

@@ -1,12 +1,12 @@
 using CocoDoogy.Tile;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using System;
 using TMPro;
 using UnityEngine;
 
 namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
 {
-    public class TileRotatePage: GimmickPageBase
+    public class TileRotatePage : GimmickPageBase
     {
         [SerializeField] private TMP_Dropdown rotateDropdown;
 
@@ -16,7 +16,7 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
             get
             {
                 bool result = SelectedGimmick.Effect.Rotate != HexRotate.None;
-                if(!result)
+                if (!result)
                 {
                     MessageDialog.ShowMessage("저장 실패", "회전값을 설정해야 합니다.", DialogMode.Confirm, null);
                 }
@@ -62,7 +62,7 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
                 }
             }
         }
-        
+
 
         private void OnRotateChanged(int idx)
         {

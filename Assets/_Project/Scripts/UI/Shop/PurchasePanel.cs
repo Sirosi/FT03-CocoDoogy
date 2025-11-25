@@ -4,25 +4,25 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.UI.Shop
+namespace CocoDoogy.CameraSwiper.Shop
 {
     public class PurchasePanel : MonoBehaviour
     {
         [Header("Selected Item Info")]
         [SerializeField] private Image selectedItemImage;
         [SerializeField] private TextMeshProUGUI descriptionText;
-        
+
         [Header("Decrease Purchase Item Quantity (-1, -10)")]
         [SerializeField] private CommonButton decrease1Button;
         [SerializeField] private CommonButton decrease10Button;
-        
+
         [Header("Increase Purchase Item Quantity (+1, +10)")]
         [SerializeField] private CommonButton increase1Button;
         [SerializeField] private CommonButton increase10Button;
-        
+
         [Header("Current Purchase Item Quantity")]
         [SerializeField] private TextMeshProUGUI currentQuantityText;
-        
+
         [Header("Purchase & Cancel Buttons")]
         [SerializeField] private CommonButton purchaseButton;
         [SerializeField] private CommonButton cancelButton;
@@ -31,7 +31,7 @@ namespace CocoDoogy.UI.Shop
         private ItemData currentItem;
         private int quantity = 1;
         private Action<ItemData, int> onPurchaseRequest;
-        
+
         private void Awake()
         {
             decrease1Button.onClick.AddListener(() => ChangeQuantity(-1));

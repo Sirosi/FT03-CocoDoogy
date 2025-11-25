@@ -2,16 +2,16 @@ using CocoDoogy.Data;
 using System;
 using UnityEngine;
 
-namespace CocoDoogy.UI.StageSelect.Page
+namespace CocoDoogy.CameraSwiper.StageSelect.Page
 {
-    public abstract class StageInfoPage: MonoBehaviour
+    public abstract class StageInfoPage : MonoBehaviour
     {
         public StageData StageData { get; private set; } = null;
-        
-        
+
+
         private RectTransform rect;
-        
-        
+
+
         public void Show(StageData data)
         {
             if (!rect)
