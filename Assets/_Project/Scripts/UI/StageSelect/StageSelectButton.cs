@@ -1,6 +1,7 @@
 using CocoDoogy.Core;
 using CocoDoogy.Data;
 using CocoDoogy.Network;
+using CocoDoogy.UI.Popup;
 using JetBrains.Annotations;
 using System;
 using TMPro;
@@ -48,12 +49,7 @@ namespace CocoDoogy.UI.StageSelect
         }
 #endif
 
-        private void Awake()
-        {
-            startButton.onClick.AddListener(OnButtonClicked);
-        }
-
-
+        
         /// <summary>
         /// 스테이지 데이터 입력 및 초기화
         /// </summary>
@@ -129,7 +125,6 @@ namespace CocoDoogy.UI.StageSelect
         
         private void ApplyLockedState(bool locked)
         {
-            startButton.interactable = !locked;
             var img = startButton.GetComponentInChildren<Image>();
             if (img)
                 img.sprite = locked ? lockedSprite : defaultSprite;
@@ -139,11 +134,23 @@ namespace CocoDoogy.UI.StageSelect
 
             if (stageNumberText && stageData && !locked) stageNumberText.text = $"{stageData.stageName}";
             else stageNumberText.text = "";
+            
+            
+            startButton.onClick.RemoveAllListeners();
+            if (locked)
+                startButton.onClick.AddListener(OnLockedButtonClicked);
+            else
+                startButton.onClick.AddListener(OnButtonClicked);
         }
 
         private void OnButtonClicked()
         {
             callback?.Invoke(stageData);
+        }
+
+        private void OnLockedButtonClicked()
+        {
+            MessageDialog.ShowMessage($"{stageData.stageName}", "This Stage is Locked", DialogMode.Confirm, null);
         }
 
         #region < 스테이지 활성화 책임 연쇄 패턴>
