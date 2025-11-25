@@ -5,7 +5,7 @@ using System;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-namespace CocoDoogy.Audio
+namespace CocoDoogy
 {
     public class VolumeController : Singleton<VolumeController>
     {
