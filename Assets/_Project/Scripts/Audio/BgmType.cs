@@ -1,3 +1,4 @@
+using CocoDoogy.Core;
 using FMODUnity;
 
 namespace CocoDoogy.Audio
@@ -18,5 +19,12 @@ namespace CocoDoogy.Audio
     {
         public BgmType type;
         public EventReference eventReference;
+    }
+
+    [System.Serializable]
+    public struct ThemeBgm
+    {
+        public Theme theme;
+        public BgmType bgmType;
     }
 }

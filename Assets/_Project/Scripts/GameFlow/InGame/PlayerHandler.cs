@@ -7,13 +7,11 @@ using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
 using CocoDoogy.Utility;
 using DG.Tweening;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
-    public class PlayerHandler : Singleton<PlayerHandler>
+    public class PlayerHandler: Singleton<PlayerHandler>
     {
         // 플레이어가 인게임에 들어와서 행동을 했는지 여부
         public static bool IsBehaviour = false;
@@ -186,22 +184,13 @@ namespace CocoDoogy.GameFlow.InGame
             if (!IsBehaviour) IsBehaviour = true;
 
             Instance.transform.parent = null;
-            DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Moving);
+            Instance.PlayFootstepCoroutine();
             DOTween.Kill(Instance, true);
             Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION)
                 .SetId(Instance)
-                .OnComplete(OnMoveComplete);
-        }
-        private static void OnMoveComplete()
-        {
-            OnBehaviourCompleted();
-            HexTile currentTile = HexTile.GetTile(GridPos);
-            if (currentTile != null && currentTile.CurrentData.stepSfx != SfxType.None)
-            {
-                SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
-            }
+                .OnComplete(OnBehaviourCompleted);
         }
         
         /// <summary>
@@ -224,6 +213,17 @@ namespace CocoDoogy.GameFlow.InGame
         private static void OnBehaviourCompleted()
         {
             Instance.anim.ChangeAnim(AnimType.Idle);
+        }
+
+
+        //발소리 코루틴
+        private void PlayFootstepCoroutine()
+        {
+            HexTile currentTile = HexTile.GetTile(GridPos);
+            if (!currentTile) return;
+            if (currentTile.CurrentData.stepSfx == SfxType.None) return;
+
+            SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
         }
     }
 }

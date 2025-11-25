@@ -46,6 +46,7 @@ namespace CocoDoogy.UI
 
             rect.DOScale(0.9f, 0.15f).SetEase(Ease.OutCubic).SetId(this);
             image.DOColor(buttonColor * 0.8f, 0.15f).SetEase(Ease.OutCubic).SetId(this);
+            SfxManager.PlaySfx(SfxType.UI_ButtonDown);
         }
 
         public override void OnPointerUp(PointerEventData data)
@@ -61,7 +62,7 @@ namespace CocoDoogy.UI
             sequence.Append(rect.DOScale(Vector2.one, 0.1f).SetEase(Ease.OutCubic));
             sequence.SetId(this);
             sequence.Play();
-
+            SfxManager.PlaySfx(SfxType.UI_ButtonUp1);
             image.DOColor(buttonColor, 0.2f).SetEase(Ease.OutBack).SetId(this);
         }
         #endregion

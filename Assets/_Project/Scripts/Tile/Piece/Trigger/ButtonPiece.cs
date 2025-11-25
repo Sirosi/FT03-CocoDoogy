@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.InGame.Phase.Passage;
 using UnityEngine;
@@ -28,6 +29,7 @@ namespace CocoDoogy.Tile.Piece.Trigger
             IsOn = true;
 
             // TODO: 버튼 누르는 소리가 들려야 함
+            SfxManager.PlaySfx(SfxType.Interaction_SwitchOn);
             int actionPoints = InGameManager.ConsumedActionPoints + this.actionPoints;
             print(actionPoints);
             InGameManager.Passages.Add(new ButtonPassage(actionPoints, Parent.GridPos));
@@ -37,6 +39,8 @@ namespace CocoDoogy.Tile.Piece.Trigger
             buttonObject.localPosition = Vector3.zero;
             IsOn = false;
 
+            SfxManager.PlaySfx(SfxType.Interaction_SwitchOff);
+            
             bool isDelete = false;
             for (int i = 0;i < InGameManager.Passages.Count;i++)
             {
