@@ -19,9 +19,19 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 float time = InGameManager.Timer.NowTime;
                 InGameManager.Timer.Stop();
                 
-                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex() + 1,
-                    InGameManager.Stage.index, InGameManager.ActionPoints, time);
+                int remainAp = InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints;
                 
+                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex(),
+                    InGameManager.Stage.index, remainAp, time);
+
+                foreach (var itemData in ItemHandler.UsedItems)
+                {
+                    if (itemData.Value)
+                    {
+                        _ = FirebaseManager.UseItemAsync(itemData.Key.itemId);
+                    }
+                }
+
                 MessageDialog.ShowMessage("승리", "그래, 이긴 걸로 하자!", DialogMode.Confirm,
                     _ => SceneManager.LoadScene("Lobby"));
                 

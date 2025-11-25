@@ -4143,7 +4143,6 @@ GameObject:
   - component: {fileID: 3086101493240398867}
   - component: {fileID: 5550590310820426045}
   - component: {fileID: 1941533649273702883}
-  - component: {fileID: 8221649206716789707}
   m_Layer: 5
   m_Name: Items
   m_TagString: Untagged
@@ -4213,31 +4212,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
---- !u!114 &8221649206716789707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7696673455786729283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b28250347dc5824ab5b2e1339bbf90b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemButton:
-  - {fileID: 7395000149930779150}
-  - {fileID: 8897837492786308416}
-  - {fileID: 2806542401312836690}
-  itemData:
-  - {fileID: 11400000, guid: cf2cdcc61f7af3c40ae74f249641df7e, type: 2}
-  - {fileID: 11400000, guid: 9977c4643fa872545aa7e2cfd4502856, type: 2}
-  - {fileID: 11400000, guid: 71e1d0dc13ee3b743adecc2ff15e3b88, type: 2}
-  closeButton: {fileID: 0}
-  itemPanel: {fileID: 0}
-  itemPanelImage: {fileID: 0}
-  itemPanelText: {fileID: 0}
-  openItemshopButton: {fileID: 0}
 --- !u!1 &7838484183637598977
 GameObject:
   m_ObjectHideFlags: 0

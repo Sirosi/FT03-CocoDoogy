@@ -1,31 +1,39 @@
+using CocoDoogy._Project.Scripts.Data;
 using CocoDoogy.Data;
+using CocoDoogy.GameFlow.InGame;
+using CocoDoogy.GameFlow.InGame.Command;
+using CocoDoogy.GameFlow.InGame.Command.Content;
 using CocoDoogy.Network;
 using CocoDoogy.UI;
 using CocoDoogy.UI.Popup;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace CocoDoogy
 {
+    // TODO : Undo 아이템 사용 시 이전 행동에 
     public class InGameItemButton : MonoBehaviour
     {
-        private CommonButton button;
+        public CommonButton Button { get; private set; }
 
+        /// <summary>
+        /// 해당 버튼이 가지고 있는 ItemData를 InGameItemUI에서 넣어줌
+        /// </summary>
         public ItemData ItemData { get; set; }
 
-        public Action<InGameItemButton, ItemData> OnClickEvent;
-
+        public Action<InGameItemButton, ItemData> OnClicked;
         private void Awake()
         {
-            if (!button)
+            if (!Button)
             {
-                button = GetComponent<CommonButton>();
+                Button = GetComponent<CommonButton>();
             }
 
-            button.onClick.AddListener(() => OnClickEvent?.Invoke(this, ItemData));
+            Button.onClick.AddListener(() => OnClicked?.Invoke(this, ItemData));
         }
 
         /// <summary>
@@ -33,21 +41,35 @@ namespace CocoDoogy
         /// </summary>
         /// <param name="type"></param>
         /// <param name="itemData"></param>
-        public async void UseItem(CallbackType type, ItemData itemData)
+        public void UseItem(CallbackType type, ItemData itemData)
         {
             if (type != CallbackType.Yes) return;
-            
-            IDictionary<string, object> result = await FirebaseManager.UseItemAsync(itemData.itemId);
-            bool success = (bool)result["success"];
-            if (success)
+            if (itemData.effect == ItemEffect.UndoTurn && !PlayerHandler.IsBehaviour)
             {
-                // 아이템 1회 사용 후 더이상 사용하지 못하게 변경
-                button.interactable = false;
-                // TODO : 아이템 사용 시 인게임 기능 추가 
+                MessageDialog.ShowMessage("아이템 사용 실패", "해당 아이템은 1턴 전으로 돌아가는 아이템입니다.\n 진행한 기록이 없으면 사용이 불가합니다.",
+                    DialogMode.Confirm, null);
+                return;
             }
-            else
+
+            Button.interactable = false;
+            
+            switch (itemData.effect)
             {
-                Debug.Log("아이템 사용 실패");
+                case ItemEffect.ConsumeAndRecoverMaxAP:
+                    Debug.Log("행동력을 1 소모하고 최대 행동력을 1 증가시킵니다.");
+                    CommandManager.MaxUp(itemData);
+                    break;
+                case ItemEffect.RecoverAP:
+                    Debug.Log("행동력을 1 증가시킵니다.");
+                    CommandManager.Recover(itemData);
+                    break;
+                case ItemEffect.UndoTurn:
+                    Debug.Log("1턴 전으로 돌아갑니다.");
+                    CommandManager.Undo(itemData);
+                    break;
+                case ItemEffect.None:
+                default:
+                    break;
             }
         }
 

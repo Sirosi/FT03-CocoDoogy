@@ -50,6 +50,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     CommandType.Gimmick => new GimmickCommand(param),
                     CommandType.Increase => new IncreaseCommand(param),
                     CommandType.DeckReset => new DeckResetCommand(param),
+                    
+                    CommandType.MaxUp => new MaxUpItemCommand(param),
+                    CommandType.Recover => new RecoverItemCommand(param),
+                    CommandType.Undo => new UndoItemCommand(param),
                     _ => null
                 };
 

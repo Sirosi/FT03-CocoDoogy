@@ -1,3 +1,4 @@
+using CocoDoogy.Data;
 using CocoDoogy.Tile;
 using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Tile.Gimmick.Data;
@@ -81,6 +82,21 @@ namespace CocoDoogy.GameFlow.InGame.Command
         public static void Regen(int regen)
         {
             ExecuteCommand(CommandType.Increase, regen, false);
+        }
+
+        public static void MaxUp(ItemData itemData)
+        {
+            ExecuteCommand(CommandType.MaxUp, itemData, false);
+        }
+
+        public static void Recover(ItemData itemData)
+        {
+            ExecuteCommand(CommandType.Recover, itemData, false);
+        }
+
+        public static void Undo(ItemData itemData)
+        {
+            ExecuteCommand(CommandType.Undo, itemData,false);
         }
     }
 }
