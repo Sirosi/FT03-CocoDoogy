@@ -168,12 +168,28 @@ MonoBehaviour:
   - type: 20
     eventReference:
       Guid:
+        Data1: -764565932
+        Data2: 1256533841
+        Data3: 569232057
+        Data4: -1720255136
+      Path: event:/SFX/Gimmick/Farm
+  - type: 21
+    eventReference:
+      Guid:
+        Data1: 580505832
+        Data2: 1297628006
+        Data3: -2051687758
+        Data4: -416345677
+      Path: event:/SFX/Gimmick/Mechanical
+  - type: 22
+    eventReference:
+      Guid:
         Data1: 1595957532
         Data2: 1263970614
         Data3: -1152263775
         Data4: 1971873961
       Path: event:/SFX/Weather/Clear
-  - type: 21
+  - type: 23
     eventReference:
       Guid:
         Data1: -1386827239
@@ -181,7 +197,7 @@ MonoBehaviour:
         Data3: -1540770173
         Data4: -1835377869
       Path: event:/SFX/Weather/Rain
-  - type: 22
+  - type: 24
     eventReference:
       Guid:
         Data1: -1465955396
@@ -189,7 +205,7 @@ MonoBehaviour:
         Data3: 658289052
         Data4: -1665990607
       Path: event:/SFX/Weather/Snow
-  - type: 23
+  - type: 25
     eventReference:
       Guid:
         Data1: -1127212899
@@ -197,7 +213,7 @@ MonoBehaviour:
         Data3: 83554486
         Data4: -605360083
       Path: event:/SFX/Weather/Wind
-  - type: 24
+  - type: 26
     eventReference:
       Guid:
         Data1: -1293081751
@@ -205,7 +221,7 @@ MonoBehaviour:
         Data3: 314958759
         Data4: 304266229
       Path: event:/SFX/Weather/Hail
-  - type: 25
+  - type: 27
     eventReference:
       Guid:
         Data1: -1962054361
@@ -213,7 +229,7 @@ MonoBehaviour:
         Data3: 1942296732
         Data4: -1015552341
       Path: event:/SFX/Weather/Mirage
-  - type: 26
+  - type: 28
     eventReference:
       Guid:
         Data1: 388533925
@@ -221,7 +237,7 @@ MonoBehaviour:
         Data3: -975551587
         Data4: -517404191
       Path: event:/SFX/Minigame/PickTrash
-  - type: 27
+  - type: 29
     eventReference:
       Guid:
         Data1: -2114967419
@@ -229,7 +245,7 @@ MonoBehaviour:
         Data3: -1264829044
         Data4: 1792253202
       Path: event:/SFX/Minigame/DropTrash
-  - type: 28
+  - type: 30
     eventReference:
       Guid:
         Data1: -1164134178
@@ -237,7 +253,7 @@ MonoBehaviour:
         Data3: -1092576619
         Data4: 734757826
       Path: event:/SFX/Minigame/PickCloth
-  - type: 29
+  - type: 31
     eventReference:
       Guid:
         Data1: 1908865576
@@ -245,7 +261,7 @@ MonoBehaviour:
         Data3: -494481524
         Data4: 693025113
       Path: event:/SFX/Minigame/DropCloth
-  - type: 30
+  - type: 32
     eventReference:
       Guid:
         Data1: 496740920
@@ -253,7 +269,7 @@ MonoBehaviour:
         Data3: 1407252130
         Data4: 1948356037
       Path: event:/SFX/Minigame/DigSand
-  - type: 31
+  - type: 33
     eventReference:
       Guid:
         Data1: 1096118123
@@ -261,7 +277,7 @@ MonoBehaviour:
         Data3: -967988599
         Data4: -1920585955
       Path: event:/SFX/Minigame/ShakeUmbrella
-  - type: 32
+  - type: 34
     eventReference:
       Guid:
         Data1: 533878779
@@ -269,7 +285,7 @@ MonoBehaviour:
         Data3: 875545235
         Data4: -216566990
       Path: event:/SFX/Minigame/PickLeaf
-  - type: 33
+  - type: 35
     eventReference:
       Guid:
         Data1: 1161050222
@@ -277,7 +293,7 @@ MonoBehaviour:
         Data3: -1027401331
         Data4: -1153717686
       Path: event:/SFX/Minigame/MinigameStart
-  - type: 34
+  - type: 36
     eventReference:
       Guid:
         Data1: 763221275
@@ -285,7 +301,7 @@ MonoBehaviour:
         Data3: -1632893505
         Data4: -2023603027
       Path: event:/SFX/UI/SuccessMission
-  - type: 35
+  - type: 37
     eventReference:
       Guid:
         Data1: 1645129604
@@ -293,7 +309,7 @@ MonoBehaviour:
         Data3: 757492373
         Data4: 819175566
       Path: event:/SFX/UI/SuccessStage
-  - type: 36
+  - type: 38
     eventReference:
       Guid:
         Data1: 1674907627
@@ -301,7 +317,7 @@ MonoBehaviour:
         Data3: 1466712472
         Data4: -12926232
       Path: event:/SFX/UI/Success
-  - type: 37
+  - type: 39
     eventReference:
       Guid:
         Data1: -1777075120
@@ -309,7 +325,7 @@ MonoBehaviour:
         Data3: 1609997197
         Data4: -842941399
       Path: event:/SFX/UI/FailStage
-  - type: 38
+  - type: 40
     eventReference:
       Guid:
         Data1: 1952342693
@@ -317,7 +333,7 @@ MonoBehaviour:
         Data3: -993283967
         Data4: 903448127
       Path: event:/SFX/UI/ButtonDown
-  - type: 39
+  - type: 41
     eventReference:
       Guid:
         Data1: 86252079
@@ -325,7 +341,7 @@ MonoBehaviour:
         Data3: 2116558465
         Data4: -1147205353
       Path: event:/SFX/UI/ButtonUp1
-  - type: 40
+  - type: 42
     eventReference:
       Guid:
         Data1: 1440921346
@@ -333,7 +349,7 @@ MonoBehaviour:
         Data3: 1636548000
         Data4: -1687639625
       Path: event:/SFX/UI/ButtonUp2
-  - type: 41
+  - type: 43
     eventReference:
       Guid:
         Data1: 136054408
@@ -341,7 +357,7 @@ MonoBehaviour:
         Data3: -33167702
         Data4: 301100124
       Path: event:/SFX/UI/PopUp
-  - type: 42
+  - type: 44
     eventReference:
       Guid:
         Data1: -208364833
@@ -349,7 +365,7 @@ MonoBehaviour:
         Data3: -1925124679
         Data4: -313601337
       Path: event:/SFX/UI/FailButton1
-  - type: 43
+  - type: 45
     eventReference:
       Guid:
         Data1: -109669989
@@ -357,7 +373,7 @@ MonoBehaviour:
         Data3: -1426501446
         Data4: 387942313
       Path: event:/SFX/UI/FailButton2
-  - type: 44
+  - type: 46
     eventReference:
       Guid:
         Data1: -466790381
@@ -365,7 +381,7 @@ MonoBehaviour:
         Data3: 1739776697
         Data4: 352098150
       Path: event:/SFX/Emote/Positive
-  - type: 45
+  - type: 47
     eventReference:
       Guid:
         Data1: 1357268756
@@ -373,7 +389,7 @@ MonoBehaviour:
         Data3: 910332082
         Data4: 1423735083
       Path: event:/SFX/Emote/Neutral
-  - type: 46
+  - type: 48
     eventReference:
       Guid:
         Data1: -1621085955
@@ -381,7 +397,7 @@ MonoBehaviour:
         Data3: 684788632
         Data4: -1032527471
       Path: event:/SFX/Emote/Negative
-  - type: 47
+  - type: 49
     eventReference:
       Guid:
         Data1: 1453845704
@@ -389,7 +405,7 @@ MonoBehaviour:
         Data3: 1074665638
         Data4: -1505693045
       Path: event:/SFX/Item/Eating
-  - type: 48
+  - type: 50
     eventReference:
       Guid:
         Data1: 98275391
@@ -397,7 +413,7 @@ MonoBehaviour:
         Data3: 680341935
         Data4: -2037559477
       Path: event:/SFX/Item/TentDrop
-  - type: 49
+  - type: 51
     eventReference:
       Guid:
         Data1: 594341088
@@ -405,7 +421,7 @@ MonoBehaviour:
         Data3: 877106570
         Data4: -1713391213
       Path: event:/SFX/Item/Undo
-  - type: 50
+  - type: 52
     eventReference:
       Guid:
         Data1: 466490915
@@ -413,7 +429,7 @@ MonoBehaviour:
         Data3: -540361584
         Data4: -1574759060
       Path: event:/SFX/Item/Tent
-  - type: 51
+  - type: 53
     eventReference:
       Guid:
         Data1: -1319903844
@@ -421,7 +437,23 @@ MonoBehaviour:
         Data3: 830194830
         Data4: 317347031
       Path: event:/SFX/Item/Recovery
-  - type: 52
+  - type: 54
+    eventReference:
+      Guid:
+        Data1: -1508285114
+        Data2: 1133460108
+        Data3: -337316677
+        Data4: 279204905
+      Path: event:/SFX/Item/RestorePoint
+  - type: 55
+    eventReference:
+      Guid:
+        Data1: 959362011
+        Data2: 1256166516
+        Data3: -1855122812
+        Data4: -2017158413
+      Path: event:/SFX/Item/DogSleeping
+  - type: 56
     eventReference:
       Guid:
         Data1: -1012921921
@@ -429,7 +461,7 @@ MonoBehaviour:
         Data3: 1087699333
         Data4: 1877176503
       Path: event:/SFX/Loop/Detecting
-  - type: 53
+  - type: 57
     eventReference:
       Guid:
         Data1: -1830622457
