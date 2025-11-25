@@ -12,6 +12,7 @@ namespace CocoDoogy.UI.UserInfo
     public class InfoUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI ticketCountText;
+        [SerializeField] private TextMeshProUGUI realtimeTicket;
         [SerializeField] private TextMeshProUGUI cashMoneyText;
         [SerializeField] private CommonButton stampShopButton;
         [SerializeField] private CommonButton jemShopButton;
@@ -46,6 +47,9 @@ namespace CocoDoogy.UI.UserInfo
                     ticketCountText.text = $"{ticketCount.ToString()} / 5";
                 }
                 cashMoneyText.text = data["cashMoney"].ToString();
+                
+                
+                realtimeTicket.text =  $"현재 코코 도장 : {ticketCount.ToString()}개\n5분마다 하나씩 충전됩니다.";
             }
             else
             {
