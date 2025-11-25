@@ -82,7 +82,7 @@ namespace CocoDoogy.UI.StageSelect
                 lastLevel = last.level?.Hex2Int() ?? 0;
             }
 
-            int dataTheme = data.theme.ToIndex();
+            int dataTheme = data.theme.ToIndex() + 1;
             int dataLevel = data.index;
             
             bool unlocked = true;
@@ -195,7 +195,9 @@ namespace CocoDoogy.UI.StageSelect
         {
             if (StageSelectManager.LastClearedStage == null || dataTheme != lastTheme + 1) return true;
             
-            int lastStageInPrevTheme = DataManager.GetStageData((Theme)StageSelectManager.LastClearedStage.theme.Hex2Int()).Count;
+            var list = DataManager.GetStageData((Theme)(1 << StageSelectManager.LastClearedStage.theme.Hex2Int()));
+            if (list == null) return false;
+            int lastStageInPrevTheme = list.Count;
             bool prevThemeCleared = lastLevel >= lastStageInPrevTheme;
             return !(prevThemeCleared && dataLevel == 1);
         }

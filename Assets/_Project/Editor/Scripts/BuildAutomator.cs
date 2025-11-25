@@ -1,5 +1,7 @@
 using UnityEditor;
 
+using System.Linq;
+
 namespace CocoDoogy.Editor
 {
     /// <summary>
@@ -12,10 +14,7 @@ namespace CocoDoogy.Editor
         {
             BuildPlayerOptions buildPlayerOptions = new()
             {
-                scenes = new[]
-                {
-                    "Assets/_Project/Scenes/SampleScene.unity",
-                },
+                scenes = GetScenesFromBuildSettings(),
                 locationPathName = "./Builds/CocoDoogy.exe",
                 target = BuildTarget.StandaloneWindows64,
                 options = BuildOptions.Development,
@@ -23,22 +22,27 @@ namespace CocoDoogy.Editor
 
             BuildPipeline.BuildPlayer(buildPlayerOptions);
         }
-        
+
         [MenuItem("Build/Android")]
         public static void BuildForAndroid()
         {
             BuildPlayerOptions buildPlayerOptions = new()
             {
-                scenes = new[]
-                {
-                    "Assets/_Project/Scenes/SampleScene.unity",
-                },
+                scenes = GetScenesFromBuildSettings(),
                 locationPathName = "./Builds/CocoDoogy.apk",
                 target = BuildTarget.Android,
                 options = BuildOptions.Development,
             };
-            
+
             BuildPipeline.BuildPlayer(buildPlayerOptions);
+        }
+
+        private static string[] GetScenesFromBuildSettings()
+        {
+            return EditorBuildSettings.scenes
+                .Where(scene => scene.enabled)
+                .Select(scene => scene.path)
+                .ToArray();
         }
     }
 }

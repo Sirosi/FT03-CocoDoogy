@@ -1,6 +1,5 @@
 using CocoDoogy.Core;
 using CocoDoogy.Network;
-using CocoDoogy.Timer;
 using CocoDoogy.UI.Popup;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,7 +48,6 @@ namespace CocoDoogy.UI.UIManager
         {
             pauseWindow.gameObject.SetActive(true);
 
-            InGameTimer.ToggleTimer();
             AudioSetting.MasterVolume = 0;
         }
         
@@ -57,7 +55,6 @@ namespace CocoDoogy.UI.UIManager
         {
             pauseWindow.gameObject.SetActive(false);
             
-            InGameTimer.ToggleTimer();
             AudioSetting.MasterVolume = volumeSlider.value;
         }
 

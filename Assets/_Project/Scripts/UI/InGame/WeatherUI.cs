@@ -3,12 +3,12 @@ using CocoDoogy.GameFlow.InGame.Weather;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.UI.InGame
+namespace CocoDoogy.CameraSwiper.InGame
 {
     /// <summary>
     /// InGame 상단의 현재 날씨 Icon 표시기
     /// </summary>
-    public class WeatherUI: MonoBehaviour
+    public class WeatherUI : MonoBehaviour
     {
         [SerializeField] private Image weatherImage;
 
@@ -21,8 +21,8 @@ namespace CocoDoogy.UI.InGame
         {
             WeatherManager.OnWeatherChanged -= OnWeatherChanged;
         }
-        
-        
+
+
         private void OnWeatherChanged(WeatherType type)
         {
             Sprite weatherIcon = null;
@@ -32,7 +32,7 @@ namespace CocoDoogy.UI.InGame
             }
             catch
             {
-                
+
             }
             weatherImage.sprite = weatherIcon;
         }

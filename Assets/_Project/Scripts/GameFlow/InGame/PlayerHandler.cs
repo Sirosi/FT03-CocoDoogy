@@ -1,20 +1,22 @@
 using CocoDoogy.Animation;
 using CocoDoogy.Audio;
 using CocoDoogy.Core;
+using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
+using CocoDoogy.Utility;
 using DG.Tweening;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
-    public class PlayerHandler : Singleton<PlayerHandler>
+    public class PlayerHandler: Singleton<PlayerHandler>
     {
         // 플레이어가 인게임에 들어와서 행동을 했는지 여부
         public static bool IsBehaviour = false;
+
+        public static int SandCount{ get; set; } = 0;
 
         public static Vector2Int GridPos
         {
@@ -59,6 +61,11 @@ namespace CocoDoogy.GameFlow.InGame
         private HexDirection lookDirection = HexDirection.East;
         private PlayerAnimHandler anim = null;
 
+        private Camera mainCamera = null;
+        private bool touched = false;
+        private Vector2 touchStart = Vector2.zero;
+        private int touchCount = 0;
+
 
         protected override void Awake()
         {
@@ -66,11 +73,76 @@ namespace CocoDoogy.GameFlow.InGame
 
             anim = GetComponentInChildren<PlayerAnimHandler>();
         }
+        void Start()
+        {
+            mainCamera = Camera.main;
+        }
+
+        void Update()
+        {
+            if (TouchSystem.IsPointerOverUI) return;
+            
+            if (TouchSystem.TouchCount > 0)
+            {
+                if (TouchSystem.TouchCount != touchCount)
+                {
+                    touched = true;
+                    touchStart = TouchSystem.TouchAverage;
+                    touchCount = TouchSystem.TouchCount;
+                    return;
+                }
+
+                float distance = Vector2.Distance(TouchSystem.TouchAverage, touchStart);
+                if(distance > 20) // TODO: 값은 나중에 바뀔 수 있음
+                {
+                    touched = false;
+                }
+            }
+            else
+            {
+                touchCount = 0;
+
+                if (!touched) return;
+                touched = false;
+
+                Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
+                HexTile selectedTile = GetRayTile(ray);
+                if (!selectedTile) return;
+                
+                HexDirection? direction = GridPos.GetRelativeDirection(selectedTile.GridPos);
+                if (!direction.HasValue) return;
+
+                HexTile playerTile = HexTile.GetTile(GridPos);
+                if (!playerTile.CanMove(direction.Value))
+                {
+                    // TODO: 이동 불가 사운드 발사
+                    return;
+                }
+
+                CommandManager.Move(direction.Value);
+            }
+        }
+        /// <summary>
+        /// Ray에 부딪힌 HexTile을 반환
+        /// </summary>
+        /// <param name="ray"></param>
+        /// <returns></returns>
+        private HexTile GetRayTile(Ray ray)
+        {
+            HexTile result = null;
+            if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, LayerMask.GetMask("Tile")))
+            {
+                result = hit.collider.GetComponentInParent<HexTile>();                ;
+            }
+            return result;
+        }
 
 
         public static void Clear()
         {
             if (!IsValid) return;
+
+            SandCount = 0;
         }
 
 
@@ -112,23 +184,15 @@ namespace CocoDoogy.GameFlow.InGame
             if (!IsBehaviour) IsBehaviour = true;
 
             Instance.transform.parent = null;
-            DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Moving);
+            Instance.PlayFootstepCoroutine();
             DOTween.Kill(Instance, true);
             Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION)
                 .SetId(Instance)
-                .OnComplete(() =>
-                {
-                    OnBehaviourCompleted();
-                    HexTile currentTile = HexTile.GetTile(gridPos);
-                    if (currentTile != null && currentTile.CurrentData.stepSfx != SfxType.None)
-                    {
-                        SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
-                    }
-                });
+                .OnComplete(OnBehaviourCompleted);
         }
-
+        
         /// <summary>
         /// 미끄러지듯 이동
         /// </summary>
@@ -149,6 +213,17 @@ namespace CocoDoogy.GameFlow.InGame
         private static void OnBehaviourCompleted()
         {
             Instance.anim.ChangeAnim(AnimType.Idle);
+        }
+
+
+        //발소리 코루틴
+        private void PlayFootstepCoroutine()
+        {
+            HexTile currentTile = HexTile.GetTile(GridPos);
+            if (!currentTile) return;
+            if (currentTile.CurrentData.stepSfx == SfxType.None) return;
+
+            SfxManager.PlaySfx(currentTile.CurrentData.stepSfx);
         }
     }
 }

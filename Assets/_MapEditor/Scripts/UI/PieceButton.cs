@@ -1,6 +1,6 @@
 using CocoDoogy.Data;
 using CocoDoogy.Tile.Piece;
-using CocoDoogy.UI;
+using CocoDoogy.CameraSwiper;
 using System;
 using TMPro;
 using UnityEngine;
@@ -13,21 +13,21 @@ namespace CocoDoogy.MapEditor.UI
     /// </summary>
     public class PieceButton : MonoBehaviour
     {
-        [Tooltip("기물 아이콘")] [SerializeField] private Image pieceImage;
-        [Tooltip("기물 명칭")] [SerializeField] private TextMeshProUGUI nameText;
-        
-        [Tooltip("클릭 이벤트 호출용 버튼")] [SerializeField] private CommonButton button;
+        [Tooltip("기물 아이콘")][SerializeField] private Image pieceImage;
+        [Tooltip("기물 명칭")][SerializeField] private TextMeshProUGUI nameText;
+
+        [Tooltip("클릭 이벤트 호출용 버튼")][SerializeField] private CommonButton button;
 
 
         private PieceData pieceData = null;
         private Action<PieceType> callback = null;
 
-        
+
         void Reset()
         {
             pieceImage = GetComponentInChildren<Image>();
             nameText = GetComponentInChildren<TextMeshProUGUI>();
-            
+
             button = GetComponentInChildren<CommonButton>();
         }
 

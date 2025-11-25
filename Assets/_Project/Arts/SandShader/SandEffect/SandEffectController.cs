@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI; // RawImage 사용을 위해 추가
 
 [RequireComponent(typeof(RawImage))] // MeshRenderer 대신 RawImage 요구
-public class MirageEffectController : MonoBehaviour
+public class SandEffectController : MonoBehaviour
 {
     // Inspector에서 셰이더 속성 이름과 duration 설정 가능
     [SerializeField] private string progressPropertyName = "_Progress"; 

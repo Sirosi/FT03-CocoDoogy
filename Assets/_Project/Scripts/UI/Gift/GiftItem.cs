@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.UI.Gift
+namespace CocoDoogy.CameraSwiper.Gift
 {
     public class GiftItem : MonoBehaviour
     {
@@ -21,7 +21,7 @@ namespace CocoDoogy.UI.Gift
             giftName.text = nickname;
             giftCount.text = itemCount;
             onTake = takeCallback;
-            
+
             takeGiftButton.onClick.AddListener(() => onTake?.Invoke(itemType));
         }
     }

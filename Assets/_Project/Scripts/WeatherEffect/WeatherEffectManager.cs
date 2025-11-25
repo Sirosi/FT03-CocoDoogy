@@ -21,6 +21,7 @@ namespace CocoDoogy.WeatherEffect
     {
         public WeatherType weatherType;
         public GameObject effect;
+        public float duration;
         public EffectSystemType effectSystemType;
         public SfxType sfxType;
     }
@@ -43,6 +44,24 @@ namespace CocoDoogy.WeatherEffect
             InitWeatherEffectDictionary();
         }
 
+        private void OnEnable()
+        {
+            WeatherManager.OnWeatherChanged += OnWeatherChanged;
+        }
+        
+        private void OnDisable()
+        {
+            WeatherManager.OnWeatherChanged -= OnWeatherChanged;
+        }
+
+        private void OnWeatherChanged(WeatherType weatherType)
+        {
+            if (weatherEffectDictionary.TryGetValue(weatherType, out WeatherEffectInfo effectInfo))
+            {
+                PlayEffect(weatherType, effectInfo.duration);
+            }
+        }
+        
         private void InitWeatherEffectDictionary()
         {
             weatherEffectDictionary.Clear();

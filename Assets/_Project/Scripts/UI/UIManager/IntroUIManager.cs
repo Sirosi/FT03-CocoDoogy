@@ -1,4 +1,4 @@
-using CocoDoogy.UI.IntroAndLogin;
+using CocoDoogy.CameraSwiper.IntroAndLogin;
 using CocoDoogy.Core;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -10,11 +10,11 @@ namespace CocoDoogy
         [SerializeField] private IntroUI introUI;
         [SerializeField] private LoginUI loginUI;
         [SerializeField] private RegisterUI registerUI;
-        
+
         public IntroUI IntroUI => introUI;
         public LoginUI LoginUI => loginUI;
         public RegisterUI RegisterUI => registerUI;
-        
+
         /// <summary>
         /// 닉네임 입력 팝업 띄우는 메서드 (RegisterUI)
         /// </summary>

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.UI.Shop
+namespace CocoDoogy.CameraSwiper.Shop
 {
     public class ConfirmPanel : MonoBehaviour
     {

@@ -3,13 +3,13 @@ using CocoDoogy.MapEditor.Controller;
 using CocoDoogy.MapEditor.UI.GimmickConnector;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
-using CocoDoogy.UI;
+using CocoDoogy.CameraSwiper;
 using TMPro;
 using UnityEngine;
 
 namespace CocoDoogy.MapEditor.UI
 {
-    public class PieceDeployPanel: MonoBehaviour
+    public class PieceDeployPanel : MonoBehaviour
     {
         [Header("Gimmick Connector")]
         [SerializeField] private GimmickConnectPanel gimmickPanel;
@@ -17,7 +17,7 @@ namespace CocoDoogy.MapEditor.UI
         [Header("Piece Button Settings")]
         [SerializeField] private PieceButton pieceButtonPrefab;
         [SerializeField] private RectTransform pieceButtonGroup;
-        
+
         [Header("Slots")]
         [SerializeField] private CommonButton ccwRotateButton;
         [SerializeField] private CommonButton cwRotateButton;
@@ -72,7 +72,7 @@ namespace CocoDoogy.MapEditor.UI
         public void Close()
         {
             ClearEvent();
-            
+
             gameObject.SetActive(false);
             foreach (var slot in slotIcons)
             {
@@ -102,7 +102,7 @@ namespace CocoDoogy.MapEditor.UI
         {
             DrawPiece(direction);
         }
-        
+
 
         /// <summary>
         /// 모든 모서리의 기물 그리기
@@ -138,7 +138,7 @@ namespace CocoDoogy.MapEditor.UI
             buttonLifeInput.gameObject.SetActive(piece && piece.BaseData.type == PieceType.Button);
         }
 
-        
+
         /// <summary>
         /// 반시계방향으로 한 번 회전
         /// </summary>
@@ -174,7 +174,7 @@ namespace CocoDoogy.MapEditor.UI
             if (int.TryParse(newValue, out int num)) return;
             // TODO: 아직 완성되지 않음
         }
-        
+
         /// <summary>
         /// 기물 설치
         /// </summary>
@@ -187,7 +187,7 @@ namespace CocoDoogy.MapEditor.UI
 
             if (data.posType.HasFlag(PiecePosType.Side))
             {
-                for(int i = 0;i < 6;i++)
+                for (int i = 0; i < 6; i++)
                 {
                     if (!SelectedTile.Pieces[i])
                     {

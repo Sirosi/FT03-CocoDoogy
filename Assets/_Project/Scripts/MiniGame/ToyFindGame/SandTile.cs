@@ -1,6 +1,6 @@
 using CocoDoogy.Tile;
 using CocoDoogy.MiniGame.ToyFindGame;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using CocoDoogy.Audio;
 namespace CocoDoogy.MiniGame
 {
-    public class SandTile : MonoBehaviour , IPointerClickHandler
+    public class SandTile : MonoBehaviour, IPointerClickHandler
     {
         public bool haveToy = false;
         private int tileID = -1;
@@ -23,7 +23,7 @@ namespace CocoDoogy.MiniGame
 
         private void Awake()
         {
-           image = GetComponent<Image>();
+            image = GetComponent<Image>();
         }
 
         public void Init(ToyFindMiniGame toyFindMiniGame)
@@ -33,7 +33,7 @@ namespace CocoDoogy.MiniGame
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if(digged) return;
+            if (digged) return;
             //모든 레이캐스트를 따와서 레이캐스트에 부딪친게 자신이고 haveToy가 True면 toyPrefab이미지 생성후 랜덤 toySprite로 이미지 교체
             List<RaycastResult> raycastResults = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventData, raycastResults);
@@ -65,7 +65,7 @@ namespace CocoDoogy.MiniGame
         {
             haveToy = value;
             this.tileID = tileID;
-            if(haveToy&&tileID != -1)
+            if (haveToy && tileID != -1)
             {
                 parent.AddToy(tileID);
             }

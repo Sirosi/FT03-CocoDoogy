@@ -1,7 +1,6 @@
 using CocoDoogy.Network;
 using CocoDoogy.Tile;
-using CocoDoogy.Timer;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using UnityEngine.SceneManagement;
 
 namespace CocoDoogy.GameFlow.InGame.Phase
@@ -17,12 +16,13 @@ namespace CocoDoogy.GameFlow.InGame.Phase
 
             if (PlayerHandler.GridPos == HexTileMap.EndPos)
             {
-                InGameTimer.ToggleTimer();
+                float time = InGameManager.Timer.NowTime;
+                InGameManager.Timer.Stop();
                 
                 int remainAp = InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints;
                 
-                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex(),
-                    InGameManager.Stage.index, remainAp, InGameTimer.CurrentTime);
+                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex() + 1,
+                    InGameManager.Stage.index, remainAp, time);
 
                 foreach (var itemData in ItemHandler.UsedItems)
                 {

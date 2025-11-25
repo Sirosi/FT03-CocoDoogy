@@ -299,11 +299,11 @@ namespace CocoDoogy.MapEditor.Controller
 
             if (isEditCameraMode)
             {
-                topDownCamera.orthographicSize = Mathf.Clamp(topDownCamera.orthographicSize + delta, 5f, 15f);
+                topDownCamera.orthographicSize = Mathf.Clamp(topDownCamera.orthographicSize - delta, 5f, 15f);
             }
             else
             {
-                inGameCamera.fieldOfView = Mathf.Clamp(inGameCamera.fieldOfView + delta, 30f, 60f);
+                inGameCamera.fieldOfView = Mathf.Clamp(inGameCamera.fieldOfView - delta, 30f, 60f);
             }
         }
         /// <summary>

@@ -1,6 +1,6 @@
 using CocoDoogy.Data;
 using CocoDoogy.Network.UI;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using Firebase.Auth;
 using System;
 using System.Text.RegularExpressions;
@@ -58,11 +58,11 @@ namespace CocoDoogy.Network.Login
         public void SignIn() => authProvider.SignInWithGoogle();
         public void SignOut() => authProvider.SignOut();
         #endregion
-        
+
 
         #region < 익명로그인 기능 & 익명로그인 링크 구글 기능 > 
         public void SignInAnonymously() => authProvider.SignInAnonymously();
-        public void LinkGoogleAccount() =>  authProvider.LinkGoogleAccount();
+        public void LinkGoogleAccount() => authProvider.LinkGoogleAccount();
         #endregion
 
         #region < 로그인 이후 최초 가입 시 닉네임 입력 시퀀스 >
@@ -75,7 +75,7 @@ namespace CocoDoogy.Network.Login
             while (!isSuccess)
             {
                 nickname = await IntroUIManager.Instance.ShowNicknameInputPopupAsync();
-                
+
                 if (!CanUse(nickname)) continue;
 
                 try
@@ -85,7 +85,7 @@ namespace CocoDoogy.Network.Login
                     if (isAvailable)
                     {
                         await IntroUIManager.Instance.ShowCreatePopupAsync("닉네임 생성이 완료되었습니다.");
-                        isSuccess = true; 
+                        isSuccess = true;
                     }
                     else
                     {
@@ -101,9 +101,9 @@ namespace CocoDoogy.Network.Login
         }
 
         #endregion
-        
 
-        # region < 닉네임 입력 확인 연쇄책임패턴 > 
+
+        #region < 닉네임 입력 확인 연쇄책임패턴 > 
         /// <summary>
         /// 입력된 닉네임이 적합한 닉네임인지 확인
         /// </summary>
@@ -113,11 +113,11 @@ namespace CocoDoogy.Network.Login
         {
             foreach (var check in CanUseNickname)
             {
-                if(!check(nickname)) return false;
+                if (!check(nickname)) return false;
             }
             return true;
         }
-        
+
         /// <summary>
         /// 현재 입력된 닉네임이 예외 조건에 걸리지 않는지 확인하는 책임연쇄패턴
         /// </summary>
@@ -205,7 +205,7 @@ namespace CocoDoogy.Network.Login
             }
             return true;
         }
-        
+
         /// <summary>
         /// 특수기호가 사용되어있는가
         /// </summary>
@@ -215,7 +215,7 @@ namespace CocoDoogy.Network.Login
         {
             if (Regex.IsMatch(nickname, @"[^\w\.@-]"))
             {
-                _= IntroUIManager.Instance.ShowErrorPopupAsync("특수 기호 입력은 허용되지 않습니다.");
+                _ = IntroUIManager.Instance.ShowErrorPopupAsync("특수 기호 입력은 허용되지 않습니다.");
                 return false;
             }
             return true;

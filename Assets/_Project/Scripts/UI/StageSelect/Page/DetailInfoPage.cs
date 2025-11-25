@@ -1,13 +1,13 @@
-namespace CocoDoogy.UI.StageSelect.Page
+namespace CocoDoogy.CameraSwiper.StageSelect.Page
 {
     /// <summary>
     /// 스테이지 상세보기
     /// </summary>
-    public class DetailInfoPage: StageInfoPage
+    public class DetailInfoPage : StageInfoPage
     {
         protected override void OnShowPage()
         {
-            
+
         }
     }
 }

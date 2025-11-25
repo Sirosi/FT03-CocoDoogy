@@ -1,5 +1,5 @@
 using CocoDoogy.GameFlow.InGame;
-using CocoDoogy.UI;
+using CocoDoogy.CameraSwiper;
 using TMPro;
 using UnityEngine;
 
@@ -15,7 +15,7 @@ namespace CocoDoogy.Test
         {
             TextAsset[] mapData = Resources.LoadAll<TextAsset>("MapData");
 
-            foreach(var data in mapData)
+            foreach (var data in mapData)
             {
                 var button = Instantiate(buttonPrefab, buttonGroup);
                 var text = button.GetComponentInChildren<TextMeshProUGUI>();

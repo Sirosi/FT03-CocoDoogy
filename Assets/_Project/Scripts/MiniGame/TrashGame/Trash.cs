@@ -1,5 +1,5 @@
 using CocoDoogy.MiniGame.TrashGame;
-using CocoDoogy.UI.Popup;
+using CocoDoogy.CameraSwiper.Popup;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -25,7 +25,7 @@ namespace CocoDoogy.MiniGame
             SfxManager.PlaySfx(SfxType.Minigame_PickTrash);
         }
 
-       
+
         public override void OnEndDrag(PointerEventData eventData)
         {
             base.OnEndDrag(eventData);

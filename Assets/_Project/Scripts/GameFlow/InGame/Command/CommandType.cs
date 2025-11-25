@@ -42,6 +42,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// 행동력 초기화
         /// </summary>
         Refill = 102,
+        /// <summary>
+        /// 모래 카운터
+        /// </summary>
+        SandCount = 103,
         
         /// <summary>
         /// 날씨 처리

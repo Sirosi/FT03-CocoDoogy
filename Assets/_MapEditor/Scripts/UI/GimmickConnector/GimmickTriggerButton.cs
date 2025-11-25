@@ -1,7 +1,7 @@
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
-using CocoDoogy.UI;
+using CocoDoogy.CameraSwiper;
 using Lean.Pool;
 using TMPro;
 using UnityEngine;

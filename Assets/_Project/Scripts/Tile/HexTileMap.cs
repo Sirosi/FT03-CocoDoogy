@@ -23,17 +23,49 @@ namespace CocoDoogy.Tile
         /// </summary>
         public static int ActionPoint { get; set; } = 5;
         
+        /// <summary>
+        /// 게임 시작점
+        /// </summary>
         public static Vector2Int StartPos { get; set; } = Vector2Int.zero;
+        /// <summary>
+        /// 게임 도착점
+        /// </summary>
         public static Vector2Int EndPos { get; set; } = Vector2Int.zero;
+        
+        /// <summary>
+        /// 맵 최소 그리드 위치
+        /// </summary>
+        public static Vector3 MinPoint { get; set; } = Vector3.zero;
+        /// <summary>
+        /// 맵 최대 그리드 위치
+        /// </summary>
+        public static Vector3 MaxPoint { get; set; } = Vector3.zero;
+
+        /// <summary>
+        /// 게임 시작 날씨
+        /// </summary>
         public static WeatherType DefaultWeather { get; set; } = WeatherType.Sunny;
         
+        /// <summary>
+        /// Map 내 적용된 기믹들
+        /// </summary>
         public static Dictionary<Vector2Int, GimmickData> Gimmicks { get; } = new();
+        /// <summary>
+        /// Map 내에서 턴에 맞춰 동작할 날씨들
+        /// </summary>
         public static Dictionary<int, WeatherType> Weathers { get; } = new();
         
-        
+
+        /// <summary>
+        /// 타일을 생성시킬 Parent
+        /// </summary>
         [SerializeField] private Transform tileGroup;
 
 
+        /// <summary>
+        /// 타일 생성시킬 parent<br/>
+        /// tileGroup이 null이면, 해당 Component가 붙은 transform을 반환
+        /// </summary>
         private Transform TileParent => tileGroup ? tileGroup : transform;
 
 
@@ -145,6 +177,9 @@ namespace CocoDoogy.Tile
             
             StartPos = Vector2Int.zero;
             EndPos = Vector2Int.zero;
+            MinPoint = Vector3.zero;
+            MaxPoint = Vector3.zero;
+            
             Gimmicks.Clear();
             Weathers.Clear();
         }
