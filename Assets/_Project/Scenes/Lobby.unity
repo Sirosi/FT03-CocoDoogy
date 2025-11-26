@@ -184,11 +184,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
---- !u!1 &594837124 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 39629252281636192, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-  m_PrefabInstance: {fileID: 901437108}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &617662703
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,10 +515,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7078178465376689154, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
-      propertyPath: popup
-      value: 
-      objectReference: {fileID: 594837124}
     - target: {fileID: 8794815414988558217, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
