@@ -1,4 +1,3 @@
-using CocoDoogy.Audio;
 using UnityEngine;
 
 namespace CocoDoogy.Tile.Piece.Trigger
@@ -33,18 +32,8 @@ namespace CocoDoogy.Tile.Piece.Trigger
 
         public override void Interact()
         {
-            // TODO: 토글 소리가 들려야 함
-            if (IsOn)
-            {
-                SfxManager.PlaySfx(SfxType.Interaction_LeverOff);
-            }
-            else
-            {
-                SfxManager.PlaySfx(SfxType.Interaction_LeverOn);
-            }
-            
             IsOn = !IsOn;
-            
+            // TODO: 토글 소리가 들려야 함
         }
         public override void UnInteract() => Interact();
     }

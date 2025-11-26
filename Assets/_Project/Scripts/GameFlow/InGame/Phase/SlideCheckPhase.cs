@@ -1,4 +1,3 @@
-using CocoDoogy.Audio;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 
@@ -18,7 +17,6 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (!tile.CanMove(PlayerHandler.LookDirection)) return true; // 바라보는 방향으로 갈 수 없으면 정지
             
             CommandManager.Slide(PlayerHandler.LookDirection);
-            SfxManager.PlaySfx(SfxType.Interaction_Sliding);
             
             return false;
         }
