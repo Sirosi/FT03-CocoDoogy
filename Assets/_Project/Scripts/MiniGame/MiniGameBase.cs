@@ -50,6 +50,7 @@ namespace CocoDoogy.MiniGame
             OnOpenInit();
             ShowRemainCount();
             remainCountCallback = ShowRemainCount;
+            SfxManager.PlaySfx(SfxType.Gimmick_HouseEnter);
             SfxManager.PlaySfx(SfxType.Minigame_MinigameStart);
         }
 

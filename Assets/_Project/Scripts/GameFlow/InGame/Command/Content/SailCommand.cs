@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
 using UnityEngine;
@@ -18,8 +19,8 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         /// 다음 위치
         /// </summary>
         public Vector2Int NextPos = Vector2Int.zero;
-        
-        
+
+
         public SailCommand(object param) : base(CommandType.Sail, param)
         {
             var data = ((Vector2Int, Vector2Int))param;
@@ -33,12 +34,13 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             Debug.Log($"{NextPos} - {PrePos}");
             PlayerHandler.Deploy(NextPos);
             InGameManager.ConsumeActionPoint(1);
-            
+            SfxManager.PlaySfx(SfxType.Gimmick_DockEnter);
+
             // 출발지 정리
             HexTile tile = HexTile.GetTile(PrePos);
             tile.HasPiece(PieceType.Deck, out Piece piece);
             piece.GetComponent<DeckPiece>().IsDocked = false;
-                
+
             // 도착지 정리
             tile = HexTile.GetTile(NextPos);
             if (tile.HasPiece(PieceType.Deck, out Piece destoPiece))
@@ -52,14 +54,14 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             Debug.Log($"{NextPos} - {PrePos}");
             PlayerHandler.Deploy(PrePos);
             InGameManager.RegenActionPoint(1);
-            
+
             // 출발지 정리
             HexTile tile = HexTile.GetTile(NextPos);
             if (tile.HasPiece(PieceType.Deck, out Piece destoPiece))
             {
                 destoPiece.GetComponent<DeckPiece>().IsDocked = false;
             }
-                
+
             // 도착지 정리
             tile = HexTile.GetTile(PrePos);
             tile.HasPiece(PieceType.Deck, out Piece piece);

@@ -124,7 +124,7 @@ namespace CocoDoogy.Audio
         
         //Ducking이란? 특정 상황에서 BGM을 줄여서 몰입도를 늘리는 기능입니다.
         //Ducking이 필요하면 이 메서드를 PlaySfx 메서드를 불러오기 전에 같이 불러오고, 종료시 StopDucking 불러오면 됩니다.
-        public static void PlayDucking()
+        public static void PlayDucking(float duckingVolume)
         {
             if (!HasInstance)
             {
@@ -132,6 +132,9 @@ namespace CocoDoogy.Audio
                 return;
             }
             
+            duckingVolume = Mathf.Clamp(duckingVolume, 0, 1);
+            
+            Instance.duckingInstance.setParameterByName("Volume", duckingVolume);
             Instance.duckingInstance.start();
         }
 

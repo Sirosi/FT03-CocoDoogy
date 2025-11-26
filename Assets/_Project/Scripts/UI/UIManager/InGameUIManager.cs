@@ -50,14 +50,14 @@ namespace CocoDoogy.UI.UIManager
         {
             pauseWindow.gameObject.SetActive(true);
 
-            AudioSetting.MasterVolume = 0;
+            SfxManager.PlayDucking(0.7f);
         }
 
         private void OnResumeButtonClicked()
         {
             pauseWindow.gameObject.SetActive(false);
 
-            AudioSetting.MasterVolume = volumeSlider.value;
+            SfxManager.StopDucking();
         }
 
         private void OnOpenResetButtonClicked()
@@ -93,7 +93,7 @@ namespace CocoDoogy.UI.UIManager
             bool isReady = await FirebaseManager.UseTicketAsync();
             if (isReady)
             {
-                AudioSetting.MasterVolume = volumeSlider.value;
+                SfxManager.StopDucking();
                 Loading.LoadScene("InGame");
             }
             else
@@ -110,7 +110,7 @@ namespace CocoDoogy.UI.UIManager
 
         public void OnQuitButtonClicked()
         {
-            AudioSetting.MasterVolume = volumeSlider.value;
+            SfxManager.StopDucking();
             Loading.LoadScene("Lobby");
         }
     }

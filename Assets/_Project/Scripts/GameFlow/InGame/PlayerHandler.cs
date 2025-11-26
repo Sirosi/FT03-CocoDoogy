@@ -119,7 +119,7 @@ namespace CocoDoogy.GameFlow.InGame
                 HexTile playerTile = HexTile.GetTile(GridPos);
                 if (!playerTile.CanMove(direction.Value))
                 {
-                    // TODO: 이동 불가 사운드 발사
+                    SfxManager.PlaySfx(SfxType.UI_FailButton2);
                     return;
                 }
 
