@@ -1,5 +1,3 @@
-using CocoDoogy.MiniGame;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using CocoDoogy.Utility;
@@ -26,6 +24,11 @@ public class ToyFindMiniGame : MiniGameBase
 
         public List<int> toies = new List<int>();
 
+
+        protected override void ShowRemainCount()
+        {
+            remainCount.text = "남은 장난감: "+toies.Count.ToString();
+        }
 
         protected override void OnOpenInit()
         {

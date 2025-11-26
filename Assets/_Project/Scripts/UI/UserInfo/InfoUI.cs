@@ -16,7 +16,7 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private TextMeshProUGUI cashMoneyText;
         [SerializeField] private CommonButton stampShopButton;
         [SerializeField] private CommonButton jemShopButton;
-        
+
         private FirebaseManager Firebase => FirebaseManager.Instance;
 
         private void Awake()
@@ -25,7 +25,7 @@ namespace CocoDoogy.UI.UserInfo
             jemShopButton.onClick.AddListener((() => LobbyUIManager.Instance.ShopUI.OpenJemShopUI()));
         }
         public void SubscriptionEvent() => _ = RefreshUIAsync();
-        
+
         private async Task RefreshUIAsync()
         {
             var docRef = Firebase.Firestore
@@ -36,7 +36,7 @@ namespace CocoDoogy.UI.UserInfo
             if (snapshot.Exists)
             {
                 var data = snapshot.ToDictionary();
-                
+
                 long ticketCount = (long)data["gameTicket"] + (long)data["bonusTicket"];
                 if (ticketCount > 99)
                 {

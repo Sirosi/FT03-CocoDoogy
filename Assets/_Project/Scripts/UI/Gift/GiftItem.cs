@@ -21,7 +21,7 @@ namespace CocoDoogy.UI.Gift
             giftName.text = nickname;
             giftCount.text = itemCount;
             onTake = takeCallback;
-            
+
             takeGiftButton.onClick.AddListener(() => onTake?.Invoke(itemType));
         }
     }

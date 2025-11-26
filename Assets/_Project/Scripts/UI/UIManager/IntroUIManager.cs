@@ -3,18 +3,18 @@ using CocoDoogy.Core;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CocoDoogy
+namespace CocoDoogy.UI.UIManager
 {
     public class IntroUIManager : Singleton<IntroUIManager>
     {
         [SerializeField] private IntroUI introUI;
         [SerializeField] private LoginUI loginUI;
         [SerializeField] private RegisterUI registerUI;
-        
+
         public IntroUI IntroUI => introUI;
         public LoginUI LoginUI => loginUI;
         public RegisterUI RegisterUI => registerUI;
-        
+
         /// <summary>
         /// 닉네임 입력 팝업 띄우는 메서드 (RegisterUI)
         /// </summary>

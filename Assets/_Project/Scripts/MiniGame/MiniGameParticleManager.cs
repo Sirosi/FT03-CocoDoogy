@@ -1,21 +1,17 @@
-using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using Coffee.UIExtensions;
 using Lean.Pool;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static CocoDoogy.UI.StaminaUI.StaminaUI;
 
-namespace CocoDoogy
+namespace CocoDoogy.MiniGame
 {
     public class MiniGameParticleManager : Singleton<MiniGameParticleManager>
     {
-        [SerializeField] RectTransform canvas;
-        [SerializeField] UIParticle coatParticlePrefab;
-        [SerializeField] UIParticle trashParticlePrefab;
-        [SerializeField] UIParticle wateringParticlePrefab;
-        [SerializeField] UIParticle diggingParticlePrefab;
+        [SerializeField] private RectTransform canvas;
+        [SerializeField] private UIParticle coatParticlePrefab;
+        [SerializeField] private UIParticle wateringParticlePrefab;
+        [SerializeField] private UIParticle diggingParticlePrefab;
         public void PlayParticle(UIParticle particlePrefab, Vector3 position, Transform parent)
         {
             UIParticle p = LeanPool.Spawn(particlePrefab, position, Quaternion.identity, parent);
@@ -24,16 +20,15 @@ namespace CocoDoogy
             print("파티클 실행");
         }
 
-        public void ParticleWatering(Transform parent) 
+        public void ParticleWatering(Transform parent)
         {
-                Instantiate(wateringParticlePrefab, parent);
+            Instantiate(wateringParticlePrefab, parent);
         }
 
         public void ParticleDigging(Vector3 position, Transform parent) => PlayParticle(diggingParticlePrefab, position, parent);
-        public void ParticleTrash(Vector3 position, Transform parent)=> PlayParticle(trashParticlePrefab, position, parent);
 
-        public void ParticleCoat(Vector3 position, Transform parent)=> PlayParticle(coatParticlePrefab, position, parent);
-        
+        public void ParticleCoat(Vector3 position, Transform parent) => PlayParticle(coatParticlePrefab, position, parent);
+
 
         IEnumerator RetrunAfter(UIParticle p, float time)
         {

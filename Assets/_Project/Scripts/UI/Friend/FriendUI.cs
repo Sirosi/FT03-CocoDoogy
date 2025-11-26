@@ -1,3 +1,4 @@
+using CocoDoogy.CameraSwiper;
 using CocoDoogy.UI.UserInfo;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,36 +7,36 @@ namespace CocoDoogy.UI.Friend
 {
     public class FriendUI : UIPanel
     {
-        [Header("UI Elements")] 
+        [Header("UI Elements")]
         [SerializeField] private RectTransform friendsWindow;
         [SerializeField] private GameObject searchWindowBg;
 
-        [Header("Close Button")] 
+        [Header("Close Button")]
         [SerializeField] private Button closeButton;
-        
+
         [Header("Tab Buttons")]
         [SerializeField] private Button friendsInfoButton;
         [SerializeField] private Button friendsRequestButton;
         [SerializeField] private Button friendsSentButton;
 
-        [Header("Popup Buttons")] 
+        [Header("Popup Buttons")]
         [SerializeField] private CommonButton searchFriendButton;
         [SerializeField] private CommonButton sendAllButton;
 
-        [Header("Tabs")] 
+        [Header("Tabs")]
         [SerializeField] private FriendsInfoPanel friendsInfoPanel;
         [SerializeField] private ReceivedRequestPanel receivedRequestPanel;
         [SerializeField] private SentRequestPanel sentRequestPanel;
-        
+
         public FriendsInfoPanel FriendsInfoPanel => friendsInfoPanel;
         public ReceivedRequestPanel ReceivedRequestPanel => receivedRequestPanel;
         public SentRequestPanel SentRequestPanel => sentRequestPanel;
-        
+
         /// <summary>
         /// 현재 열려있는 친구 탭 패널
         /// </summary>
-        private RequestPanel currentActivePanel; 
-        
+        private RequestPanel currentActivePanel;
+
         private void Awake()
         {
             closeButton.onClick.AddListener(ClosePanel);
@@ -50,15 +51,15 @@ namespace CocoDoogy.UI.Friend
             InitTabs();
             WindowAnimation.CloseWindow(searchWindowBg.transform);
         }
-        
+
         public override void ClosePanel()
         {
             WindowAnimation.SwipeWindow(friendsWindow);
             PageCameraSwiper.IsSwipeable = true;
         }
 
-        private void OnClickFriendSearch() =>searchWindowBg.SetActive(true);
-        
+        private void OnClickFriendSearch() => searchWindowBg.SetActive(true);
+
         #region ChangeTabs
         private void InitTabs()
         {
@@ -94,7 +95,7 @@ namespace CocoDoogy.UI.Friend
             {
                 currentActivePanel.gameObject.SetActive(false);
             }
-            
+
             targetPanel.gameObject.SetActive(true);
             currentActivePanel = targetPanel;
         }
@@ -104,7 +105,7 @@ namespace CocoDoogy.UI.Friend
             ChangeUITabs.ChangeTab(friendsInfoButton, false);
             ChangeUITabs.ChangeTab(friendsRequestButton, false);
             ChangeUITabs.ChangeTab(friendsSentButton, false);
-            
+
             ChangeUITabs.ChangeTab(clicked, true);
         }
     }

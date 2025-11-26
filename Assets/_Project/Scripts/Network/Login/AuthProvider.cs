@@ -1,4 +1,3 @@
-using CocoDoogy.Network.UI;
 using Firebase;
 using Firebase.Auth;
 using Google;

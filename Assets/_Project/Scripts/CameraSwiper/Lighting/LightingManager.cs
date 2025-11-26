@@ -1,8 +1,7 @@
+using CocoDoogy.Core;
 using UnityEngine;
-using UnityEngine.Rendering;
-using CocoDoogy.UI;
 
-namespace CocoDoogy.Core
+namespace CocoDoogy.CameraSwiper.Lighting
 {
     /// <summary>
     /// 런타임에 LightingPreset을 적용하는 매니저
@@ -17,26 +16,13 @@ namespace CocoDoogy.Core
 
         private void Awake()
         {
-            PageCameraSwiper.OnStartPageChanged += ApplyPreset;
+            PageCameraSwiper.OnEndPageChanged += ApplyPreset;
         }
 
         private void OnDestroy()
         {
             // 이벤트 구독 해제 (메모리 누수 방지)
-            PageCameraSwiper.OnStartPageChanged -= ApplyPreset;
-        }
-
-
-        private int ThemeToIndex(Theme theme)
-        {
-            switch (theme)
-            { // TODO: 여기 다 뜯어 고쳐야 함
-                case Theme.Forest: return 0;
-                case Theme.Water: return 1;
-                case Theme.Snow: return 2;
-                case Theme.Sand: return 3;
-                default: return 0;
-            }
+            PageCameraSwiper.OnEndPageChanged -= ApplyPreset;
         }
 
         /// <summary>
@@ -45,7 +31,7 @@ namespace CocoDoogy.Core
         /// <param name="pageIndex">페이지 인덱스 (0~3)</param>
         public void ApplyPreset(Theme theme)
         {
-            LightingPreset preset = presets[ThemeToIndex(theme)];
+            LightingPreset preset = presets[theme.ToIndex()];
             if (preset == null)
             {
                 Debug.LogWarning($"[LightingManager] 페이지 {theme}에 LightingPreset이 할당되지 않음");

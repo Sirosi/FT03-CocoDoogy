@@ -18,7 +18,7 @@ namespace CocoDoogy.UI.Friend
 
             if (success)
             {
-                MessageDialog.ShowMessage("친구 추가 수락 성공","해당 유저를 친구 추가 했습니다.", DialogMode.Confirm, null);
+                MessageDialog.ShowMessage("친구 추가 수락 성공", "해당 유저를 친구 추가 했습니다.", DialogMode.Confirm, null);
             }
             else
             {
@@ -33,12 +33,12 @@ namespace CocoDoogy.UI.Friend
         /// <param name="uid"></param>
         private async void OnRejectRequestAsync(string uid)
         {
-            var result = await FirebaseManager. CallFriendFunctionAsync("rejectFriendsRequest", uid, "친구 요청 거절 실패");
+            var result = await FirebaseManager.CallFriendFunctionAsync("rejectFriendsRequest", uid, "친구 요청 거절 실패");
             bool success = (bool)result["success"];
 
             if (success)
             {
-                MessageDialog.ShowMessage("친구 추가 거절 성공","해당 유저를 친구 추가 거절했습니다.", DialogMode.Confirm, null);
+                MessageDialog.ShowMessage("친구 추가 거절 성공", "해당 유저를 친구 추가 거절했습니다.", DialogMode.Confirm, null);
             }
             else
             {
@@ -62,7 +62,7 @@ namespace CocoDoogy.UI.Friend
                 var item = Instantiate(prefabItem, container);
                 item.GetComponent<FriendRequestItem>().ReceivedInit(nickname, uid, OnAcceptRequestAsync, OnRejectRequestAsync);
             }
-            
+
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);

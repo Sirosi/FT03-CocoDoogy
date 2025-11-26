@@ -1,4 +1,4 @@
-namespace CocoDoogy._Project.Scripts.Data
+namespace CocoDoogy.Data
 {
     public enum ItemEffect
     {

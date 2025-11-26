@@ -1,14 +1,13 @@
 using CocoDoogy.Data;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
-using CocoDoogy.UI.Popup;
 using System;
 using TMPro;
 using UnityEngine;
 
 namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
 {
-    public class PieceChangePage: GimmickPageBase
+    public class PieceChangePage : GimmickPageBase
     {
         [SerializeField] private GameObject lookDirectionLine;
 
@@ -17,7 +16,7 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
         [SerializeField] private TMP_Dropdown lookDirecitonDropdown;
         [SerializeField] private TMP_Dropdown pieceDropdown;
 
-        
+
         public override bool IsSuccess
         {
             get
@@ -68,7 +67,7 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
             // 기물 Dropdown 정의
             pieceDropdown.options.Clear();
             pieceDropdown.options.Add(new TMP_Dropdown.OptionData(PieceType.None.ToString())); // None이라는 기물은 없기에 강제로 추가
-            foreach(var piece in DataManager.PieceTypes)
+            foreach (var piece in DataManager.PieceTypes)
             {
                 pieceDropdown.options.Add(new TMP_Dropdown.OptionData(piece.ToString()));
             }

@@ -1,7 +1,5 @@
-using CocoDoogy.Audio;
 using DG.Tweening;
 using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace CocoDoogy.UI
@@ -11,7 +9,7 @@ namespace CocoDoogy.UI
         public static void SwipeWindow(RectTransform rt)
         {
             //SfxManager.Instance.PlaySfx(SfxType.Sfx1); // TODO: 다시 넣어야 함
-            
+
             rt.DOKill();
             Sequence sequence = DOTween.Sequence();
             sequence.Append(rt.DOAnchorPos(new Vector2(0, Screen.height), 0.25f).SetEase(Ease.OutCubic));

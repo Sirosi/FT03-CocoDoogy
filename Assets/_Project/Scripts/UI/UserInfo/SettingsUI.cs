@@ -1,3 +1,5 @@
+using CocoDoogy.Audio;
+using CocoDoogy.CameraSwiper;
 using CocoDoogy.GameFlow.InGame;
 using UnityEngine;
 using UnityEngine.UI;

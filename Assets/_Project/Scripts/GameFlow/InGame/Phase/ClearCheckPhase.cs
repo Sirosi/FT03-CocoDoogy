@@ -31,9 +31,11 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                         _ = FirebaseManager.UseItemAsync(itemData.Key.itemId);
                     }
                 }
-
-                MessageDialog.ShowMessage("승리", "그래, 이긴 걸로 하자!", DialogMode.Confirm,
-                    _ => SceneManager.LoadScene("Lobby"));
+                
+                // TODO : 승리, 패배 팝업이 나와야함.
+                GameEndPopup.OpenPopup(false);
+                
+                // MessageDialog.ShowMessage("승리", "그래, 이긴 걸로 하자!", DialogMode.Confirm, _ => SceneManager.LoadScene("Lobby"));
                 
                 return false;
             }

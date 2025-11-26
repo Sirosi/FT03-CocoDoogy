@@ -6,12 +6,12 @@ namespace CocoDoogy.UI.StageSelect.Page
     /// <summary>
     /// 스테이지 상세보기
     /// </summary>
-    public class CommonInfoPage: StageInfoPage
+    public class CommonInfoPage : StageInfoPage
     {
         [SerializeField] private GameObject[] clearStars;
-        
-        
-        #if UNITY_EDITOR
+
+
+#if UNITY_EDITOR
         void Reset()
         {
             List<GameObject> stars = new();
@@ -21,11 +21,11 @@ namespace CocoDoogy.UI.StageSelect.Page
             }
             clearStars = stars.ToArray();
         }
-        #endif
-        
+#endif
+
         protected override void OnShowPage()
         {
-            
+
         }
     }
 }

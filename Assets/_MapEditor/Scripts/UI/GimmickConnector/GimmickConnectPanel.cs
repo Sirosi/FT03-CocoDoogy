@@ -1,4 +1,3 @@
-using CocoDoogy.LifeCycle;
 using CocoDoogy.MapEditor.Controller;
 using CocoDoogy.MapEditor.GimmickConnector;
 using CocoDoogy.MapEditor.UI.GimmickConnector.Effect;
@@ -39,7 +38,7 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
         void Awake()
         {
             // 초기화가 필요한 자식들 초기화
-            foreach(var page in effectPages)
+            foreach (var page in effectPages)
             {
                 page.Init(this);
             }
@@ -57,8 +56,8 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
             saveButton.onClick.AddListener(OnSaveButton);
             deleteButton.onClick.AddListener(OnDeleteButton);
         }
-        
-        
+
+
         /// <summary>
         /// UI 오픈
         /// </summary>
@@ -126,12 +125,12 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
 
         private bool CanSave()
         {
-            if(SelectedGimmick.Type == GimmickType.None)
+            if (SelectedGimmick.Type == GimmickType.None)
             {
                 MessageDialog.ShowMessage("저장 실패", "기믹 타입을 지정하지 않으면, 저장할 수 없습니다.", DialogMode.Confirm, null);
                 return false;
             }
-            foreach(var page in effectPages)
+            foreach (var page in effectPages)
             {
                 if (!page.gameObject.activeSelf) continue;
                 if (!page.IsSuccess) return false;
@@ -150,9 +149,9 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
         private void OnTriggerAddButton()
         {
             if (!CanSave()) return;
-            
+
             MapEditorController.EditMode = MapEditMode.GimmickTriggerMode;
-            
+
             gameObject.SetActive(false);
         }
 

@@ -14,7 +14,7 @@ namespace CocoDoogy.UI.UserInfo
                 buttons[i].transform.DOScale(new Vector3(1, 1, 1), 0.1f).SetEase(Ease.OutCubic);
                 buttons[i].image.color = new Color(0.6f, 0.6f, 0.6f);
             }
-            
+
             // 눌린 버튼 하이라이트
             if (index >= 0 && index < buttons.Length)
             {

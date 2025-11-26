@@ -1,12 +1,10 @@
 using CocoDoogy.Network;
-using CocoDoogy.Network.UI;
-using CocoDoogy.UI;
+using CocoDoogy.UI.Friend;
 using CocoDoogy.UI.Popup;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy
+namespace CocoDoogy.UI.UserInfo
 {
     public class SearchUI : UIPanel
     {

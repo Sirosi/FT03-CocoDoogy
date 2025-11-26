@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace CocoDoogy
+namespace CocoDoogy.Data
 {
     public enum DataType
     {

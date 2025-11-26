@@ -1,5 +1,4 @@
 using CocoDoogy.Network;
-using Firebase;
 using Firebase.Firestore;
 using System;
 using System.Collections.Generic;

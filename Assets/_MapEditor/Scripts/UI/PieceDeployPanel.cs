@@ -6,10 +6,11 @@ using CocoDoogy.Tile.Piece;
 using CocoDoogy.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CocoDoogy.MapEditor.UI
 {
-    public class PieceDeployPanel: MonoBehaviour
+    public class PieceDeployPanel : MonoBehaviour
     {
         [Header("Gimmick Connector")]
         [SerializeField] private GimmickConnectPanel gimmickPanel;
@@ -17,7 +18,7 @@ namespace CocoDoogy.MapEditor.UI
         [Header("Piece Button Settings")]
         [SerializeField] private PieceButton pieceButtonPrefab;
         [SerializeField] private RectTransform pieceButtonGroup;
-        
+
         [Header("Slots")]
         [SerializeField] private CommonButton ccwRotateButton;
         [SerializeField] private CommonButton cwRotateButton;
@@ -27,6 +28,7 @@ namespace CocoDoogy.MapEditor.UI
         [SerializeField] private CommonButton gimmickButton;
         [SerializeField] private CommonButton targetButton;
         [SerializeField] private TMP_InputField buttonLifeInput;
+        [SerializeField] private Toggle deckToggle;
 
 
         public static HexTile SelectedTile = null;
@@ -44,6 +46,7 @@ namespace CocoDoogy.MapEditor.UI
             gimmickButton.onClick.AddListener(OnGimmickButtonClicked);
             targetButton.onClick.AddListener(OnTargetButtonClicked);
             buttonLifeInput.onValueChanged.AddListener(OnButtonLifeChanged);
+            deckToggle.onValueChanged.AddListener(OnDeckChanged);
         }
         void OnDestroy()
         {
@@ -72,7 +75,7 @@ namespace CocoDoogy.MapEditor.UI
         public void Close()
         {
             ClearEvent();
-            
+
             gameObject.SetActive(false);
             foreach (var slot in slotIcons)
             {
@@ -102,7 +105,7 @@ namespace CocoDoogy.MapEditor.UI
         {
             DrawPiece(direction);
         }
-        
+
 
         /// <summary>
         /// 모든 모서리의 기물 그리기
@@ -134,11 +137,27 @@ namespace CocoDoogy.MapEditor.UI
             {
                 targetButton.gameObject.SetActive(true);
             }
+
             if (direction != HexDirection.Center) return;
-            buttonLifeInput.gameObject.SetActive(piece && piece.BaseData.type == PieceType.Button);
+            
+            // 버튼 트리거 수명
+            bool hasButtonPiece = piece && piece.BaseData.type == PieceType.Button;
+            buttonLifeInput.gameObject.SetActive(hasButtonPiece);
+            if (hasButtonPiece)
+            {
+                buttonLifeInput.SetTextWithoutNotify(piece.SpecialData);
+            }
+            
+            // 부두 배 정박
+            bool hasDeckPiece = SelectedTile.HasPiece(PieceType.Deck, out Piece deckPiece);
+            deckToggle.gameObject.SetActive(hasDeckPiece);
+            if (hasDeckPiece)
+            {
+                deckToggle.SetIsOnWithoutNotify(bool.TryParse(deckPiece.SpecialData, out bool isOn) && isOn);
+            }
         }
 
-        
+
         /// <summary>
         /// 반시계방향으로 한 번 회전
         /// </summary>
@@ -168,13 +187,22 @@ namespace CocoDoogy.MapEditor.UI
         {
             MapEditorController.EditMode = MapEditMode.PieceTargetMode;
         }
-
+        
         private void OnButtonLifeChanged(string newValue)
         {
-            if (int.TryParse(newValue, out int num)) return;
-            // TODO: 아직 완성되지 않음
+            if (!int.TryParse(newValue, out int num)) return;
+
+            Piece centerPiece = SelectedTile.GetPiece(HexDirection.Center);
+            centerPiece.SpecialData = newValue;
         }
-        
+
+        private void OnDeckChanged(bool isOn)
+        {
+            if(!SelectedTile.HasPiece(PieceType.Deck, out Piece piece)) return;
+            
+            piece.SpecialData = isOn.ToString();
+        }
+
         /// <summary>
         /// 기물 설치
         /// </summary>
@@ -187,7 +215,7 @@ namespace CocoDoogy.MapEditor.UI
 
             if (data.posType.HasFlag(PiecePosType.Side))
             {
-                for(int i = 0;i < 6;i++)
+                for (int i = 0; i < 6; i++)
                 {
                     if (!SelectedTile.Pieces[i])
                     {

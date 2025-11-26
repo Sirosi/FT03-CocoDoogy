@@ -4,8 +4,7 @@ using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.StageSelect.Page;
-using System;
-using System.Threading.Tasks;
+using CocoDoogy.Utility.Loading;
 using TMPro;
 using UnityEngine;
 

@@ -11,7 +11,7 @@ namespace CocoDoogy.UI.Friend
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button rejectButton;
         [SerializeField] private Button cancelButton;
-        [SerializeField] private Button presentButton; 
+        [SerializeField] private Button presentButton;
         [SerializeField] private Button deleteButton;
         private Action<string> onAccept;
         private Action<string> onReject;
@@ -49,17 +49,17 @@ namespace CocoDoogy.UI.Friend
             uid = sentUid;
             nicknameText.text = nickname;
             onCancel = cancelCallback;
-            
+
             cancelButton.onClick.AddListener(() => onCancel?.Invoke(sentUid));
         }
 
-        public void FriendInit(string nickname, string deletedUid, Action<string>presentCallback, Action<string> cancelCallback)
+        public void FriendInit(string nickname, string deletedUid, Action<string> presentCallback, Action<string> cancelCallback)
         {
             uid = deletedUid;
             nicknameText.text = nickname;
             onPresent = presentCallback;
             onDelete = cancelCallback;
-            
+
             presentButton.onClick.AddListener(() => onPresent?.Invoke(uid));
             deleteButton.onClick.AddListener(() => onDelete?.Invoke(uid));
         }

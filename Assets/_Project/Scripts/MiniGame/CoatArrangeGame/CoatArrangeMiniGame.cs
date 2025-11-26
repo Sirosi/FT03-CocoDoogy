@@ -1,4 +1,4 @@
-using System;
+using CocoDoogy.Audio;
 using System.Collections.Generic;
 using UnityEngine;
 using CocoDoogy.Utility;
@@ -17,6 +17,7 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
         [SerializeField] private Sprite[] coatSprites;
         [SerializeField] private Sprite backgroundSprite;
         private int coatCount = 4;
+        public List<CoatSlot> unArrangedCoatSlots = new List<CoatSlot>();
         private readonly List<Vector2> initialPositions = new List<Vector2>();
         private readonly List<Sprite> initialSprites = new List<Sprite>();
 
@@ -27,6 +28,12 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
         private const float CoatWidthScale = 0.9f;            // 슬롯 대비 코트 크기 비율
         private const float HintSpacingRatio = 550f / 2280f; //힌트패널의 간격
         private const float HintYOffsetRatio = 375f / 1080f;
+        
+
+        protected override void ShowRemainCount()
+        {
+            remainCount.text = "정렬되지 않은 코트: "+unArrangedCoatSlots.Count.ToString();
+        }
 
         protected override void Disable()
         {
@@ -42,22 +49,16 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
 
         protected override void OnOpenInit()
         {
+            unArrangedCoatSlots.Clear();
             SetBackground(backgroundSprite);
             ResizePanel();
             SummonCoatAndCoatSlot();
             ShowHint();
+            CoatSlotsCheck();
         }
-        protected override bool IsClear()
-        {
-            // 모든 CoatSlot의 ID 검사
-            for (int i = 0; i < coatCount; i++)
-            {
-                CoatSlot slot = coatSlots.GetChild(i).GetComponent<CoatSlot>();
-                if (!slot.CheckID())
-                    return false;
-            }
-            return true;
-        }
+
+        protected override bool IsClear() => unArrangedCoatSlots.Count <= 0;
+   
 
 
         protected override void SetBackground(Sprite sprite)
@@ -192,6 +193,17 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
             {
                 suffledCoats[i].transform.SetParent(coatSlots.GetChild(i), false);
             }
+
+        }
+
+        void CoatSlotsCheck()
+        {
+            foreach  (CoatSlot coatslot in unArrangedCoatSlots)
+            {
+                coatslot.CheckID();
+            }
+            CheckClear();
+            
         }
 
         /// <summary>
@@ -204,13 +216,14 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
             if (slotA != null&& slotA.CheckID())
             {
                 MiniGameParticleManager.Instance.ParticleCoat(slotA.transform.position, slotA.transform);
+                SfxManager.PlaySfx(SfxType.UI_Success);
             }
-            ;
             
             if(slotB != null&& slotB.CheckID())
             {
                 MiniGameParticleManager.Instance.ParticleCoat(slotB.transform.position, slotB.transform);
-            };
+                SfxManager.PlaySfx(SfxType.UI_Success);
+            }
             CheckClear();
         }
 

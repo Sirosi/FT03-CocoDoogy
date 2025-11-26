@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace CocoDoogy.UI.StageSelect.Page
 {
-    public abstract class StageInfoPage: MonoBehaviour
+    public abstract class StageInfoPage : MonoBehaviour
     {
         public StageData StageData { get; private set; } = null;
-        
-        
+
+
         private RectTransform rect;
-        
-        
+
+
         public void Show(StageData data)
         {
             if (!rect)

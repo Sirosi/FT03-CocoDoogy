@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace CocoDoogy.MapEditor.UI
 {
-    public class SavePanel: MonoBehaviour
+    public class SavePanel : MonoBehaviour
     {
         private const string FOLDER_PATH = "Assets/_Project/Data/StageData/MapData/";
 
@@ -18,7 +18,7 @@ namespace CocoDoogy.MapEditor.UI
         [Header("UI")]
         [SerializeField] private TMP_InputField fileNameInput;
         [SerializeField] private CommonButton saveButton;
-        
+
         [SerializeField] private TMP_InputField refillCountInput;
         [SerializeField] private TMP_InputField actionPointInput;
 
@@ -48,7 +48,7 @@ namespace CocoDoogy.MapEditor.UI
         {
             MapEditorInputHandler.OnSave -= OnSaveMap;
         }
-        
+
 
         private void OnSaveMap()
         {
@@ -57,7 +57,7 @@ namespace CocoDoogy.MapEditor.UI
                 MessageDialog.ShowMessage("저장 실패", "파일명이 최소 2자리 이상 돼야 합니다.", DialogMode.Confirm, null);
                 return;
             }
-            
+
             string refillCountStr = refillCountInput.text.Trim();
             string actionPointStr = actionPointInput.text.Trim();
             if (!int.TryParse(refillCountStr, out int refillCount))
@@ -70,7 +70,7 @@ namespace CocoDoogy.MapEditor.UI
                 MessageDialog.ShowMessage("저장 실패", "행동력이 숫자가 아닙니다.", DialogMode.Confirm, null);
                 return;
             }
-            
+
             HexTileMap.RefillPoint = refillCount;
             HexTileMap.ActionPoint = actionPoint;
 
@@ -95,28 +95,28 @@ namespace CocoDoogy.MapEditor.UI
 
         private void RefreshFileInfos()
         {
-            foreach(Transform child in loadButtonGroup)
+            foreach (Transform child in loadButtonGroup)
             {
                 Destroy(child.gameObject);
             }
 
             FileInfo[] files = Directory.CreateDirectory(FOLDER_PATH).GetFiles("*.json", SearchOption.TopDirectoryOnly);
-            foreach(FileInfo fileInfo in files)
+            foreach (FileInfo fileInfo in files)
             {
                 CommonButton button = Instantiate(loadButtonPrefab, loadButtonGroup);
 
                 int lastIdx = fileInfo.Name.LastIndexOf('.');
                 string fileName = fileInfo.Name.Substring(0, lastIdx);
                 TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>();
-                
+
                 text.text = fileName;
                 button.onClick.AddListener(() =>
                 {
                     string fName = fileName;
                     LoadMap(fName);
-                    
+
                     // MapEditorController에서도 사용하지만, 별도로 연결하는 노력을 없애는 게 더 나아 보임
-                    foreach(var gPos in HexTileMap.Gimmicks.Keys)
+                    foreach (var gPos in HexTileMap.Gimmicks.Keys)
                     {
                         HexTile.GetTile(gPos).DrawOutline(Color.blue);
                     }

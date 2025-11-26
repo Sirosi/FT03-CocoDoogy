@@ -7,12 +7,12 @@ using UnityEngine.UI;
 
 namespace CocoDoogy.MapEditor.UI
 {
-    public class PieceIcon: MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class PieceIcon : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         private static PieceIcon DragStartIcon = null;
         private static PieceIcon MouseOveredIcon = null;
-        
-        
+
+
         [SerializeField] private Image slotImage;
         [SerializeField] private Image pieceImage;
         [SerializeField] private HexDirection direction;
@@ -26,8 +26,8 @@ namespace CocoDoogy.MapEditor.UI
             slotImage = GetComponent<Image>();
             pieceImage = transform.GetChild(0).GetComponent<Image>();
         }
-        
-        
+
+
         public void OnPointerClick(PointerEventData eventData)
         {
             if (!selectedPiece) return;
@@ -44,8 +44,8 @@ namespace CocoDoogy.MapEditor.UI
                 MouseOveredIcon = null;
             }
         }
-        
-        public void OnDrag(PointerEventData eventData) {}
+
+        public void OnDrag(PointerEventData eventData) { }
         public void OnBeginDrag(PointerEventData eventData)
         {
             DragStartIcon = this;
@@ -57,14 +57,14 @@ namespace CocoDoogy.MapEditor.UI
             PieceIcon startIcon = DragStartIcon;
             PieceIcon endIcon = MouseOveredIcon;
             DragStartIcon = MouseOveredIcon = null;
-            
+
             if (startIcon)
             {
                 startIcon.slotImage.color = Color.white;
             }
 
             if (!startIcon || !endIcon) return;
-            
+
             Piece startPiece = startIcon.selectedPiece;
             Piece endPiece = endIcon.selectedPiece;
 
@@ -92,14 +92,14 @@ namespace CocoDoogy.MapEditor.UI
                 }
                 return;
             }
-            
+
             HexTile tile = startPiece ? startPiece.Parent : endPiece.Parent;
             PieceType toStart = endPiece ? endPiece.BaseData.type : PieceType.None;
             PieceType toEnd = startPiece ? startPiece.BaseData.type : PieceType.None;
 
             HexTileMap.RemovePiece(tile, startIcon.direction);
             HexTileMap.RemovePiece(tile, endIcon.direction);
-            
+
             HexTileMap.AddPiece(tile, startIcon.direction, toStart);
             HexTileMap.AddPiece(tile, endIcon.direction, toEnd);
         }

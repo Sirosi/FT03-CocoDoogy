@@ -1,11 +1,8 @@
-using CocoDoogy.MiniGame.TrashGame;
-using CocoDoogy.UI.Popup;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using CocoDoogy.Audio;
 
-namespace CocoDoogy.MiniGame
+namespace CocoDoogy.MiniGame.TrashGame
 {
     public class Trash : CanMoveImage
     {
@@ -25,7 +22,7 @@ namespace CocoDoogy.MiniGame
             SfxManager.PlaySfx(SfxType.Minigame_PickTrash);
         }
 
-       
+
         public override void OnEndDrag(PointerEventData eventData)
         {
             base.OnEndDrag(eventData);
@@ -33,7 +30,8 @@ namespace CocoDoogy.MiniGame
             TrashCan trashCan = hitObject != null ? hitObject.GetComponent<TrashCan>() : null;
             if (trashCan != null)
             {
-                SfxManager.PlaySfx(SfxType.Minigame_DropTrash);
+                SfxManager.PlaySfx(SfxType.UI_Success);                                    
+
                 trashCan.ShakingWithTilt();
                 parent.DestroyTrash(this);
             }

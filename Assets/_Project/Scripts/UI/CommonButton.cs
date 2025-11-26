@@ -16,14 +16,14 @@ namespace CocoDoogy.UI
         private Color buttonColor;
 
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         protected override void Reset()
         {
             base.Reset();
 
             interactable = true;
         }
-        #endif
+#endif
 
         protected override void Awake()
         {

@@ -12,12 +12,12 @@ namespace CocoDoogy.UI.IntroAndLogin
         [SerializeField] private MessagePopup errorPopup;
         [SerializeField] private MessagePopup createPopup;
         [SerializeField] private Button confirmButton;
-        
+
         public MessagePopup ErrorPopup => errorPopup;
         public MessagePopup CreatePopup => createPopup;
-        
+
         public override void ClosePanel() => gameObject.SetActive(false);
-        
+
         public Task<string> InputNicknameAsync()
         {
             OpenPanel();

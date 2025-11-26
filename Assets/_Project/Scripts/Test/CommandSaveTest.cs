@@ -12,17 +12,15 @@ namespace CocoDoogy.Test
         [SerializeField] private string save;
 
 
-        void Start()
-        {
-            if (string.IsNullOrEmpty(save)) return;
-            CommandManager.Load(save);
-        }
-
-
         [ContextMenu("Save")]
         private void Save()
         {
             save = CommandManager.Save();
+        }
+        [ContextMenu("Load")]
+        private void Load()
+        {
+            CommandManager.Load(save);
         }
     }
 }

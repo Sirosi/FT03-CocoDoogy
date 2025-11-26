@@ -5,7 +5,7 @@ namespace CocoDoogy.UI.Shop.Category
 {
     public class ShopCategory : MonoBehaviour
     {
-        [Header("Purchase Item Button")] [SerializeField] private List<ShopItem> shopItems;
+        [Header("Purchase Item Button")][SerializeField] private List<ShopItem> shopItems;
         private ShopUI shopUI;
 
         private void Awake()

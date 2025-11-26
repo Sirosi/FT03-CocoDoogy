@@ -26,7 +26,7 @@ namespace CocoDoogy.UI.Popup
         [SerializeField] private Button yesButton;
         [SerializeField] private Button noButton;
         [SerializeField] private Button cancelButton;
-        
+
         [Header("InputField Mode Buttons")]
         [SerializeField] private Button inputConfirmButton;
         [SerializeField] private Button inputCancelButton;
@@ -43,13 +43,13 @@ namespace CocoDoogy.UI.Popup
         private void Init()
         {
             hasInit = true;
-            
+
             yesButton.onClick.AddListener(OnConfirmOrYesClick);
             noButton.onClick.AddListener(OnNoClick);
             backGround.onClick.AddListener(OnNoClick);
             
             cancelButton.onClick.AddListener(OnCancelClick);
-            
+
             inputConfirmButton.onClick.AddListener(OnInputConfirmClick);
             inputCancelButton.onClick.AddListener(OnInputCancelClick);
         }
@@ -58,7 +58,7 @@ namespace CocoDoogy.UI.Popup
         {
             LeanPool.Despawn(this);
         }
-        
+
 
         private void OnConfirmOrYesClick()
         {
@@ -88,7 +88,7 @@ namespace CocoDoogy.UI.Popup
             Release();
         }
 
-        
+
         /// <summary>
         /// callback에 값을 넣어주면서 패널을 띄우는 함수
         /// </summary>
@@ -101,16 +101,16 @@ namespace CocoDoogy.UI.Popup
             MessageDialog messageDialog = Create();
             messageDialog.titleText.text = title;
             messageDialog.messageText.text = message;
-            
+
             messageDialog.buttonsPanel.SetActive(true);
             messageDialog.inputFieldPanel.SetActive(false);
-            
+
             messageDialog.yesButton.gameObject.SetActive(true);
             messageDialog.noButton.gameObject.SetActive(type is DialogMode.YesNo or DialogMode.YesNoCancel);
             messageDialog.cancelButton.gameObject.SetActive(type == DialogMode.YesNoCancel);
 
             messageDialog.callback = callback;
-            
+
             SfxManager.PlaySfx(SfxType.UI_PopUp);
         }
         /// <summary>
@@ -127,11 +127,11 @@ namespace CocoDoogy.UI.Popup
 
             messageDialog.buttonsPanel.SetActive(false);
             messageDialog.inputFieldPanel.SetActive(true);
-            
+
             messageDialog.inputConfirmButton.gameObject.SetActive(true);
 
             messageDialog.strCallback = strCallback;
-            
+
             SfxManager.PlaySfx(SfxType.UI_PopUp);
         }
 
@@ -141,7 +141,7 @@ namespace CocoDoogy.UI.Popup
             {
                 canvas = GameObject.Find("PopupCanvas").transform;
             }
-            
+
             MessageDialog result = LeanPool.Spawn(prefab, canvas);
             if (!result.hasInit)
             {
@@ -149,10 +149,10 @@ namespace CocoDoogy.UI.Popup
             }
             result.callback = null;
             result.strCallback = null;
-            
+
             return result;
         }
-        
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void InitializeRuntime()
         {

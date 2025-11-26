@@ -6,7 +6,7 @@ using System;
 
 namespace CocoDoogy.UI.InGame
 {
-    public class RefillPointUI: MonoBehaviour
+    public class RefillPointUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI text;
 

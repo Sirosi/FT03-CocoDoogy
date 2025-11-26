@@ -1,11 +1,10 @@
 #if UNITY_EDITOR
+using CocoDoogy.CameraSwiper.Lighting;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using CocoDoogy.Core;
 
-namespace CocoDoogy.Core.Editor
+namespace CocoDoogy.Editor
 {
     /// <summary>
     /// 현재 씬의 Lighting 설정을 LightingPreset ScriptableObject로 저장하는 에디터 유틸리티

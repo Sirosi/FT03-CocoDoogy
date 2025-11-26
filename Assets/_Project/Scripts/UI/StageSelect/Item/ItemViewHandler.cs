@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CocoDoogy.StageSelect.Item
+namespace CocoDoogy.UI.StageSelect.Item
 {
     public class ItemViewHandler : MonoBehaviour
     {

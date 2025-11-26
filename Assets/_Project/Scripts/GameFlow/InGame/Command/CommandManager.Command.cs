@@ -59,7 +59,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                 ExecuteCommand(CommandType.DeckReset, (piece.Parent.GridPos, deck.PreDocked), false);
             }
 
-            ExecuteCommand(CommandType.Refill, (InGameManager.ActionPoints, PlayerHandler.GridPos));
+            ExecuteCommand(CommandType.Refill, (InGameManager.ActionPoints, PlayerHandler.GridPos, PlayerHandler.SandCount));
         }
         
         public static void Weather(WeatherType weather)

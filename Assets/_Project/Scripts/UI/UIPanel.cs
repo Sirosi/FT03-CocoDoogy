@@ -1,4 +1,4 @@
-using CocoDoogy.Data;
+using CocoDoogy.CameraSwiper;
 using UnityEngine;
 
 namespace CocoDoogy.UI
@@ -15,7 +15,7 @@ namespace CocoDoogy.UI
             PageCameraSwiper.IsSwipeable = false;
         }
 
-        
+
         /// <summary>
         /// UIPanel을 상속받은 컴포넌트를 가진 오브젝트의 Active 상태를 false 변경 <br/>
         /// abstract로 만들어서 각 컴포넌트 내에서 상속받아서 사용

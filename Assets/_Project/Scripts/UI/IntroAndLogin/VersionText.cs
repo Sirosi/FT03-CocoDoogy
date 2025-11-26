@@ -7,7 +7,7 @@ namespace CocoDoogy.UI.IntroAndLogin
     /// Intro Scene에서 Version을 띄우는 용도
     /// </summary>
     [ExecuteAlways]
-    public class VersionText: MonoBehaviour
+    public class VersionText : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI text;
 

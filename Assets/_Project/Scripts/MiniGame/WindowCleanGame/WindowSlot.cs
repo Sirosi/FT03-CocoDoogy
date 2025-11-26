@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CocoDoogy.MiniGame
+namespace CocoDoogy.MiniGame.WindowCleanGame
 {
     public class WindowSlot : MonoBehaviour
     {
