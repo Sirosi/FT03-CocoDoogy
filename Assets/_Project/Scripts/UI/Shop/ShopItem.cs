@@ -18,7 +18,6 @@ namespace CocoDoogy.UI.Shop
         [SerializeField] private CommonButton purchaseButton;
         
         [SerializeField] private bool isSaleForCash = false;
-        
         public ItemData ItemData => itemData;
 
         
