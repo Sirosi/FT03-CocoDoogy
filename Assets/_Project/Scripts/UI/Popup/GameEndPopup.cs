@@ -13,6 +13,9 @@ namespace CocoDoogy.UI.Popup
     {
         private static GameEndPopup gameEndPopup;
         
+        [Header("UI Panel")]
+        [SerializeField] private GameObject panel;
+        
         [Header("Complete UI Elements")]
         [SerializeField] private GameEndWindow completeUI;
         
@@ -42,6 +45,10 @@ namespace CocoDoogy.UI.Popup
         [SerializeField] private Button homeButton;
         [SerializeField] private Button nextButton;
         
+        [Header("Button State")]
+        [SerializeField] private GameObject enableNextButton;
+        [SerializeField] private GameObject disableNextButton;
+        
         private Action<CallbackType> callback = null;
         
         private void Awake()
@@ -51,7 +58,7 @@ namespace CocoDoogy.UI.Popup
                 gameEndPopup = this;
             }
             
-            gameObject.SetActive(false);
+            panel.SetActive(false);
             restartButton.onClick.AddListener(OnClickRestart);
             homeButton.onClick.AddListener(OnClickHome);
             nextButton.onClick.AddListener(OnClickNext);
@@ -59,7 +66,7 @@ namespace CocoDoogy.UI.Popup
 
         public static void OpenPopup(bool isDefeat)
         {
-            gameEndPopup.gameObject.SetActive(true);
+            gameEndPopup.panel.SetActive(true);
 
             gameEndPopup.titleImage.sprite = !isDefeat ? gameEndPopup.completeUI.titleSprite : gameEndPopup.defeatUI.titleSprite;
             gameEndPopup.titleTextImage.sprite = !isDefeat ? gameEndPopup.completeUI.titleTextSprite : gameEndPopup.defeatUI.titleTextSprite;
@@ -69,40 +76,56 @@ namespace CocoDoogy.UI.Popup
             gameEndPopup.complete.SetActive(!isDefeat);
             gameEndPopup.defeat.SetActive(isDefeat);
             
-            gameEndPopup.remainAPText.text = "추가";
-            gameEndPopup.clearTimeText.text = "추가";
+            gameEndPopup.remainAPText.text = $"{InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints}";
+            
+            OnTimeChanged(InGameManager.Timer.NowTime);
+            
+            if (DataManager.GetStageData(InGameManager.Stage.theme, InGameManager.Stage.index + 1))
+            {
+                gameEndPopup.nextButton.interactable = true;    
+                gameEndPopup.enableNextButton.SetActive(true);
+                gameEndPopup.disableNextButton.SetActive(false);
+                return;
+            }
+            
+            // 다음 스테이지가 없다면 NextButton을 비활성화
+            gameEndPopup.nextButton.interactable = false;
+            gameEndPopup.enableNextButton.SetActive(false);
+            gameEndPopup.disableNextButton.SetActive(true);
         }
-        
+        private static void OnTimeChanged(float time)
+        {
+            int minutes = (int)(time / 60);
+            int seconds = (int)(time % 60);
+            gameEndPopup.clearTimeText.text = $"{minutes:00}:{seconds:00}";
+        }
         private void OnClickRestart()
         {
+            ItemHandler.UseItem();
             InGameUIManager.Instance.OnResetButtonClicked();
         }
         private void OnClickHome()
         {
+            ItemHandler.UseItem();
             InGameUIManager.Instance.OnQuitButtonClicked();
         }
         private void OnClickNext()
         {
+            ItemHandler.UseItem();
            // 현재 테마의 최대 스테이지를 가져옴
-           var stage = DataManager.GetStageData(InGameManager.Stage.theme).Count;
            var theme = InGameManager.Stage.theme;
+           var index = InGameManager.Stage.index;
+
+           StageData nextStage = DataManager.GetStageData(theme, index + 1);
            
-           // 가져온 최대 스테이지와 현재 플레이한 스테이지의 인덱스를 비교
-           if (InGameManager.Stage.index + 1 < stage) 
+           // 현재 테마의 다음 스테이지가 존재한다면
+           if (nextStage && nextStage.theme == theme) 
            {
-               // 플레이한 스테이지에 1을 더한값 보다 최대 스테이지가 크면 다음 스테이지로 넘어감.
+               Debug.Log($"theme : {nextStage.theme}, index : {nextStage.index}, stageName : {nextStage.stageName}");
                Debug.Log("다음 스테이지로 이동합니다.");
-           }
-           else if (InGameManager.Stage.index + 1 >= stage && Enum.IsDefined(typeof(Theme), (int)theme << 1)) 
-           {
-               // 플레이한 스테이지에 1을 더한값 보다 최대 스테이지가 작거나 같고 다음 테마가 존재한다면 다음 테마의 1스테이로 넘어감.
-               Debug.Log("다음 테마의 1스테이지로 넘어갑니다.");
-           }
-           else if (InGameManager.Stage.index + 1 >= stage && !Enum.IsDefined(typeof(Theme), (int)theme << 1))
-           {
-               // 플레이한 스테이지에 1을 더한값 보다 최대 스테이지가 작거나 같고 다음 테마가 존재하지 않는다면 버튼을 비활성화.
-               Debug.Log("다음 테마가 존재하지 않습니다.");
-               nextButton.interactable = false;
+               
+               InGameManager.Stage = nextStage;
+               InGameUIManager.Instance.OnResetButtonClicked();
            }
         }
     }

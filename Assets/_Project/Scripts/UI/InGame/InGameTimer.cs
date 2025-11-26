@@ -13,7 +13,7 @@ namespace CocoDoogy.UI.InGame
         {
             InGameManager.Timer.OnTimeChanged += OnTimeChanged;
         }
-        void Oestroy()
+        void OnDestroy()
         {
             InGameManager.Timer.OnTimeChanged -= OnTimeChanged;
         }

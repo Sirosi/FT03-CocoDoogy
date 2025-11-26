@@ -44,7 +44,8 @@ namespace CocoDoogy.UI.InGame
                     DialogMode.Confirm, null);
                 return;
             }
-
+            
+            DataManager.Instance.CurrentItem[itemData] -= 1;
             Button.interactable = false;
             
             switch (itemData.effect)
