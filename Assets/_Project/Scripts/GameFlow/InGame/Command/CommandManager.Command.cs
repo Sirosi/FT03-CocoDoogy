@@ -29,9 +29,9 @@ namespace CocoDoogy.GameFlow.InGame.Command
         }
         
         
-        public static void Slide(HexDirection direction)
+        public static void Slide(Vector2Int gridPos)
         {
-            ExecuteCommand(CommandType.Slide, direction);
+            ExecuteCommand(CommandType.Slide, (PlayerHandler.GridPos, gridPos));
         }
         public static void Teleport(Vector2Int gridPos)
         {
