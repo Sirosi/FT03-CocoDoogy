@@ -1,4 +1,5 @@
 using CocoDoogy.Timer;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,14 +16,9 @@ namespace CocoDoogy.UI.UserInfo
         
         [Header("Volume Icons")]
         [SerializeField] private Image masterIcon;
+        [SerializeField] private Image masterInnerIcon;
         [SerializeField] private Image bgmIcon;
         [SerializeField] private Image sfxIcon;
-        [SerializeField] private Sprite onMasterIcon;
-        [SerializeField] private Sprite onBgmIcon;
-        [SerializeField] private Sprite onSfxIcon;
-        [SerializeField] private Sprite offMasterIcon;
-        [SerializeField] private Sprite offBgmIcon;
-        [SerializeField] private Sprite offSfxIcon;
         
         [Header("Volume UI Sliders")]
         [SerializeField] private Slider masterVolume;
@@ -56,6 +52,10 @@ namespace CocoDoogy.UI.UserInfo
             masterVolume.value = AudioSetting.MasterVolume;
             bgmVolume.value = AudioSetting.BgmVolume;
             sfxVolume.value = AudioSetting.SfxVolume;
+            
+            MasterControl(masterVolume.value);
+            BGMControl(bgmVolume.value);
+            SfxControl(sfxVolume.value);
         }
 
         void OnEnable()
@@ -78,11 +78,13 @@ namespace CocoDoogy.UI.UserInfo
         {
             if (value <= 0)
             {
-                masterIcon.sprite = offMasterIcon;
+                masterIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
+                masterInnerIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
             }
             else
             {
-                masterIcon.sprite = onMasterIcon;
+                masterIcon.DOColor(new Color(1, 1, 1), 0.2f);
+                masterInnerIcon.DOColor(new Color(1, 1, 1), 0.2f);
                 masterMute.isOn = false;
             }
 
@@ -93,11 +95,11 @@ namespace CocoDoogy.UI.UserInfo
         {
             if (value <= 0)
             {
-                bgmIcon.sprite = offBgmIcon;
+                bgmIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
             }
             else
             {
-                bgmIcon.sprite = onBgmIcon;
+                bgmIcon.DOColor(new Color(1, 1, 1), 0.2f);
                 bgmMute.isOn = false;
             }
 
@@ -108,11 +110,11 @@ namespace CocoDoogy.UI.UserInfo
         {
             if (value <= 0)
             {
-                sfxIcon.sprite = offSfxIcon;
+                sfxIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
             }
             else
             {
-                sfxIcon.sprite = onSfxIcon;
+                sfxIcon.DOColor(new Color(1, 1, 1), 0.2f);
                 sfxMute.isOn = false;
             }
 
