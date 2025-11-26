@@ -32,6 +32,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             Debug.Log($"{NextPos} - {PrePos}");
             PlayerHandler.Deploy(NextPos);
+            InGameManager.ConsumeActionPoint(1);
             
             // 출발지 정리
             HexTile tile = HexTile.GetTile(PrePos);
@@ -50,6 +51,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             Debug.Log($"{NextPos} - {PrePos}");
             PlayerHandler.Deploy(PrePos);
+            InGameManager.RegenActionPoint(1);
             
             // 출발지 정리
             HexTile tile = HexTile.GetTile(NextPos);

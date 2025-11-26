@@ -16,7 +16,7 @@ namespace CocoDoogy
         /// <summary>
         /// 타일 이동 시간
         /// </summary>
-        public const float MOVE_DURATION = 1f;
+        public const float MOVE_DURATION = 0.5f;
 
 
         public static class Prefs
