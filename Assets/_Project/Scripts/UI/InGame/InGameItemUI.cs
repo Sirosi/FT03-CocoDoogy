@@ -12,20 +12,16 @@ namespace CocoDoogy.UI.InGame
     {
         [SerializeField] private InGameItemButton[] itemButtons;
         
-        private void Awake()
+        private void OnEnable()
         {
-            ItemHandler.OnValueChanged += (item, value) =>
-            {
-                foreach (var button in itemButtons)
-                {
-                    if (button.ItemData == item)
-                    {
-                        button.Button.interactable = value;
-                    }
-                }
-            };
+            ItemHandler.OnValueChanged += OnItemValueChanged;
         }
 
+        private void OnDisable()
+        {
+            ItemHandler.OnValueChanged -= OnItemValueChanged;
+        }
+        
         private void Start()
         {
             for (int i = 0; i < itemButtons.Length; i++)
@@ -53,5 +49,17 @@ namespace CocoDoogy.UI.InGame
                     (type => _ = button.PurchaseAsync(type, itemData)));
             }
         }
+        private void OnItemValueChanged(ItemData item, bool value)
+        {
+            foreach (var button in itemButtons)
+            {
+                if (button.ItemData == item)
+                {
+                    if (button.Button)
+                        button.Button.interactable = value;
+                }
+            }
+        }
+
     }
 }

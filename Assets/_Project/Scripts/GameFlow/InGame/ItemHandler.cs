@@ -1,6 +1,8 @@
 using CocoDoogy.Data;
+using CocoDoogy.Network;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
@@ -16,6 +18,18 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 UsedItems[key] = value;
                 OnValueChanged?.Invoke(key, value);
+            }
+        }
+
+        public static void UseItem()
+        {
+            foreach (var itemData in UsedItems)
+            {
+                Debug.Log("아이템 사용");
+                if (!itemData.Value)
+                {
+                    _ = FirebaseManager.UseItemAsync(itemData.Key.itemId);
+                }
             }
         }
     }
