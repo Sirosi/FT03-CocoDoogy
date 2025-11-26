@@ -58,62 +58,8 @@ namespace CocoDoogy.UI.StageSelect
         /// <param name="data">스테이지 데이터</param>
         /// <param name="starSize">스테이지 사이즈</param>
         /// <param name="actionCallback"></param>
-        public void Init(StageData data, int starSize, Action<StageData> actionCallback)
-        {
-            stageData = data;
-            callback = actionCallback;
-
-            foreach (GameObject star in clearStars)
-            {
-                star.SetActive(starSize-- > 0);
-            }
-
-            stageNumberText.text = $"{data.stageName}";
-
-            var last = StageSelectManager.LastClearedStage;
-            int lastTheme = 0;
-            int lastLevel = 0;
-
-            if (last != null)
-            {
-                lastTheme = last.theme?.Hex2Int() ?? 0;
-                lastLevel = last.level?.Hex2Int() ?? 0;
-            }
-
-            int dataTheme = data.theme.ToIndex() + 1;
-            int dataLevel = data.index;
-            
-            bool unlocked = true;
-            foreach (var check in IsStageOpen)
-            {
-                if (!check(dataTheme, dataLevel, lastTheme, lastLevel))
-                {
-                    unlocked = false;
-                    break;
-                }
-            }
-            
-            ApplyLockedState(unlocked);
-        }
-        
-        // TODO: 스테이지 테스트 할때 위에 Init 비활성화 하고 이거 활성화 해서 사용하면 됨 
-        
         // public void Init(StageData data, int starSize, Action<StageData> actionCallback)
         // {
-        //     if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
-        //         StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
-        //     {
-        //         startButton.interactable = false;
-        //         startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
-        //         starGroup.gameObject.SetActive(false);
-        //         stageNumberText.text = $"{data.stageName}";
-        //         return;
-        //     }
-        //
-        //     startButton.interactable = true;
-        //     startButton.GetComponentInChildren<Image>().sprite = defaultSprite;
-        //     starGroup.gameObject.SetActive(true);
-        //
         //     stageData = data;
         //     callback = actionCallback;
         //
@@ -123,7 +69,61 @@ namespace CocoDoogy.UI.StageSelect
         //     }
         //
         //     stageNumberText.text = $"{data.stageName}";
+        //
+        //     var last = StageSelectManager.LastClearedStage;
+        //     int lastTheme = 0;
+        //     int lastLevel = 0;
+        //
+        //     if (last != null)
+        //     {
+        //         lastTheme = last.theme?.Hex2Int() ?? 0;
+        //         lastLevel = last.level?.Hex2Int() ?? 0;
+        //     }
+        //
+        //     int dataTheme = data.theme.ToIndex() + 1;
+        //     int dataLevel = data.index;
+        //     
+        //     bool unlocked = true;
+        //     foreach (var check in IsStageOpen)
+        //     {
+        //         if (!check(dataTheme, dataLevel, lastTheme, lastLevel))
+        //         {
+        //             unlocked = false;
+        //             break;
+        //         }
+        //     }
+        //     
+        //     ApplyLockedState(unlocked);
         // }
+        
+        // TODO: 스테이지 테스트 할때 위에 Init 비활성화 하고 이거 활성화 해서 사용하면 됨 
+        
+        public void Init(StageData data, int starSize, Action<StageData> actionCallback)
+        {
+            // if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
+            //     StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
+            // {
+            //     startButton.interactable = false;
+            //     startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
+            //     starGroup.gameObject.SetActive(false);
+            //     stageNumberText.text = $"{data.stageName}";
+            //     return;
+            // }
+        
+            startButton.interactable = true;
+            startButton.GetComponentInChildren<Image>().sprite = defaultSprite;
+            starGroup.gameObject.SetActive(true);
+        
+            stageData = data;
+            callback = actionCallback;
+        
+            foreach (GameObject star in clearStars)
+            {
+                star.SetActive(starSize-- > 0);
+            }
+        
+            stageNumberText.text = $"{data.stageName}";
+        }
         
         private void ApplyLockedState(bool locked)
         {
