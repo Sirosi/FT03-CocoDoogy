@@ -18,6 +18,7 @@ namespace CocoDoogy.GameFlow.InGame
     {
         public static event Action<int> OnActionPointChanged = null;
         public static event Action<int> OnRefillCountChanged = null;
+        public static event Action<Action> OnInteractChanged = null;
 
 
         /// <summary>
@@ -117,11 +118,11 @@ namespace CocoDoogy.GameFlow.InGame
             new PassageCheckPhase(),
             new CrateMovePhase(),
             new CrateProcessPhase(),
-            new TriggerCheckPhase(),
             new RegenCheckPhase(),
+            new ActionPointCheckPhase(),
+            new TriggerCheckPhase(),
             new DeckCheckPhase(),
             new LockCheckPhase(),
-            new ActionPointCheckPhase(),
         };
 
 
@@ -178,6 +179,8 @@ namespace CocoDoogy.GameFlow.InGame
             ActionPoints = 0;
             Timer.Stop();
 
+            ChangeInteract(null);
+
             foreach(IPhase phase in turnPhases)
             {
                 if(phase is IClearable clearable)
@@ -233,6 +236,11 @@ namespace CocoDoogy.GameFlow.InGame
             }
             // TODO: 추후 삭제 필요
             OutlineForTest.Draw();
+        }
+
+        public static void ChangeInteract(Action callback)
+        {
+            OnInteractChanged?.Invoke(callback);
         }
     }
 }
