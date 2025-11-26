@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
@@ -20,6 +21,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             HexTileMap.ActionPoint += Regen;
             InGameManager.RegenActionPoint(Regen, false);
+            SfxManager.PlaySfx(SfxType.Item_Recovery);
         }
 
         public override void Undo()

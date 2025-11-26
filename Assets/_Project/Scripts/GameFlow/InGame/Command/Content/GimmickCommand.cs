@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
@@ -53,9 +54,11 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             {
                 case GimmickType.TileRotate:
                     tile.Rotate((HexRotate)MainData);
+                    SfxManager.PlaySfx(SfxType.Gimmick_Mechanical);
                     break;
                 case GimmickType.PieceChange:
                     tile.SetPiece((HexDirection)MainData, (PieceType)SubData, Dir);
+                    SfxManager.PlaySfx(SfxType.Gimmick_ObjectSpawn);
                     break;
                 case GimmickType.PieceMove:
                     tile.GetPiece((HexDirection)MainData).Move(Dir);

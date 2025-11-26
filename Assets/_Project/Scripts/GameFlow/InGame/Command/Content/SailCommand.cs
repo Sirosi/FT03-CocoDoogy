@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
 using UnityEngine;
@@ -32,6 +33,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             Debug.Log($"{NextPos} - {PrePos}");
             PlayerHandler.Deploy(NextPos);
+            SfxManager.PlaySfx(SfxType.Gimmick_DockEnter);
             
             // 출발지 정리
             HexTile tile = HexTile.GetTile(PrePos);

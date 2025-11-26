@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -27,6 +28,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             PlayerHandler.LookDirection = Dir;
             Vector2Int nextPos = PlayerHandler.GridPos.GetDirectionPos(Dir);
             PlayerHandler.Slide(nextPos);
+            SfxManager.PlaySfx(SfxType.Interaction_Sliding);
         }
 
         public override void Undo()

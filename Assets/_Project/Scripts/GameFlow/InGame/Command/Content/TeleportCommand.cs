@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 using UnityEngine;
 
@@ -31,6 +32,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override void Execute()
         {
             PlayerHandler.Deploy(NextPos);
+            SfxManager.PlaySfx(SfxType.Weather_Wind);
         }
 
         public override void Undo()

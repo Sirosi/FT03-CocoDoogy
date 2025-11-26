@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
@@ -25,6 +26,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (centerPiece && centerPiece.BaseData.type is PieceType.Crate or PieceType.GravityCrate)
             {
                 CommandManager.GimmickPieceMove(gridPos, HexDirection.Center, moveDir);
+                SfxManager.PlaySfx(SfxType.Interaction_PushChest);
             }
 
             centerPiece = tile.GetPiece(HexDirection.Center); // 제거됐을 가능성이 높으므로 새로 받아야 함
