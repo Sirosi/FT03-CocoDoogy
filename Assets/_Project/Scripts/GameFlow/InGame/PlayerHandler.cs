@@ -56,6 +56,7 @@ namespace CocoDoogy.GameFlow.InGame
             }
         }
 
+        private static Vector2Int prevGridPos = Vector2Int.zero;
 
         private Vector2Int gridPos = Vector2Int.zero;
         private HexDirection lookDirection = HexDirection.East;
@@ -66,7 +67,7 @@ namespace CocoDoogy.GameFlow.InGame
         private Vector2 touchStart = Vector2.zero;
         private int touchCount = 0;
 
-
+        
         protected override void Awake()
         {
             base.Awake();
@@ -184,6 +185,7 @@ namespace CocoDoogy.GameFlow.InGame
             if (!IsBehaviour) IsBehaviour = true;
 
             Instance.transform.parent = null;
+            prevGridPos = GridPos;
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Moving);
             Instance.PlayFootstepCoroutine();
@@ -219,7 +221,7 @@ namespace CocoDoogy.GameFlow.InGame
         //발소리 코루틴
         private void PlayFootstepCoroutine()
         {
-            HexTile currentTile = HexTile.GetTile(GridPos);
+            HexTile currentTile = HexTile.GetTile(prevGridPos);
             if (!currentTile) return;
             if (currentTile.CurrentData.stepSfx == SfxType.None) return;
 
