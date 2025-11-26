@@ -40,6 +40,6 @@ namespace CocoDoogy.UI.Shop
         /// 버튼 이벤트 구독하는 메서드
         /// </summary>
         /// <param name="action"></param>
-        public void OnClickSubscriptionEvent(UnityAction action) => purchaseButton.onClick.AddListener(action);
+        public void OnClickSubscriptionEvent(UnityAction<ItemData, bool> action) => purchaseButton.onClick.AddListener(() => action(itemData, isSaleForCash));
     }
 }
