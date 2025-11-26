@@ -87,8 +87,7 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
             {
                 if (deployDirectionDropdown.options[i].text == SelectedGimmick.Effect.Direction.ToString())
                 {
-                    deployDirectionDropdown.SetValueWithoutNotify(i);
-                    lookDirectionLine.SetActive((HexDirection)i == HexDirection.Center);
+                    deployDirectionDropdown.value = i;
                     break;
                 }
             }
@@ -98,7 +97,7 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
             {
                 if (lookDirecitonDropdown.options[i].text == SelectedGimmick.Effect.LookDirection.ToString())
                 {
-                    lookDirecitonDropdown.SetValueWithoutNotify(i);
+                    lookDirecitonDropdown.value = i;
                     break;
                 }
             }
@@ -108,7 +107,7 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector.Effect
             {
                 if (pieceDropdown.options[i].text == SelectedGimmick.Effect.NextPiece.ToString())
                 {
-                    pieceDropdown.SetValueWithoutNotify(i);
+                    pieceDropdown.value = i;
                     break;
                 }
             }
