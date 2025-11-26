@@ -1,5 +1,9 @@
-using CocoDoogy.Timer;
+using CocoDoogy.Audio;
+using CocoDoogy.CameraSwiper;
+using CocoDoogy.GameFlow.InGame;
+using CocoDoogy.UI.InGame;
 using DG.Tweening;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -60,12 +64,12 @@ namespace CocoDoogy.UI.UserInfo
 
         void OnEnable()
         {
-            InGameTimer.ToggleTimer();
+            InGameManager.Timer.Pause();
         }
 
         void OnDisable()
         {
-            InGameTimer.ToggleTimer();
+            InGameManager.Timer.Start();
         }
         
         public override void ClosePanel()

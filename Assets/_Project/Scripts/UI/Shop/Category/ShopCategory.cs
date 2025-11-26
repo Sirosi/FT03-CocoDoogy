@@ -14,7 +14,7 @@ namespace CocoDoogy.UI.Shop.Category
 
             foreach (var shopItem in shopItems)
             {
-                shopItem.OnClickSubscriptionEvent(() => shopUI.OpenPurchasePanel(shopItem.ItemData));
+                shopItem.OnClickSubscriptionEvent((data, isSaleforCash) => shopUI.OpenPurchasePanel(data, isSaleforCash));
             }
         }
 
