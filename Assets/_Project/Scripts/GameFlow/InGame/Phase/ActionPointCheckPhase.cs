@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.UI.Popup;
@@ -35,6 +36,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
         {
             // TODO: 추후, 아이템을 사용할 거냔 그런 거 넣어야 함
             GameEndPopup.OpenPopup(true);
+            SfxManager.PlaySfx(SfxType.UI_FailStage);
             // MessageDialog.ShowMessage("미아", "집을 영구적으로 잃었습니다.", DialogMode.Confirm, _ => SceneManager.LoadScene("Lobby"));
         }
     }

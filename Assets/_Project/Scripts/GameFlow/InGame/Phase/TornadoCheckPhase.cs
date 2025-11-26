@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
@@ -20,6 +21,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (centerPiece.Target == null) return true;
 
             CommandManager.Teleport((Vector2Int)centerPiece.Target);
+            SfxManager.PlaySfx(SfxType.Weather_Wind);
             
             return false;
         }

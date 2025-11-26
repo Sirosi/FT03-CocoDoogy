@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick.Data;
@@ -54,7 +55,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             {
                 gridPos = destination;
                 CommandManager.Sail(destination);
-                
+                SfxManager.PlaySfx(SfxType.Gimmick_DockEnter);
                 InGameManager.ProcessPhase();
             }
         }

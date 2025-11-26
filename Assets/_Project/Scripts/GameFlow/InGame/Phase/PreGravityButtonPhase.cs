@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
@@ -22,6 +23,8 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             if (!centerPiece || centerPiece.BaseData.type is not PieceType.GravityButton) return true;
             
             GimmickExecutor.ExecuteFromTrigger(prePos);
+            
+            SfxManager.PlaySfx(SfxType.Interaction_PressurePlate);
 
             return true;
         }
