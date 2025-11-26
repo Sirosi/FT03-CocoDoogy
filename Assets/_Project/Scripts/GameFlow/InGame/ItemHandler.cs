@@ -25,7 +25,6 @@ namespace CocoDoogy.GameFlow.InGame
         {
             foreach (var itemData in UsedItems)
             {
-                Debug.Log("아이템 사용");
                 if (!itemData.Value)
                 {
                     _ = FirebaseManager.UseItemAsync(itemData.Key.itemId);
