@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
@@ -24,11 +25,13 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 PieceType pieceType = centerPiece.BaseData.type;
                 if (tileType == TileType.Water && pieceType == PieceType.Crate)
                 {
+                    SfxManager.PlaySfx(SfxType.Interaction_WaterSplash);
                     CommandManager.GimmickPieceChange(tile.GridPos, HexDirection.Center, PieceType.FloatedCrate, pieceType,
                         centerPiece.LookDirection, centerPiece.LookDirection);
                 }
                 else if (tileType == TileType.Ice && pieceType == PieceType.FloatedCrate)
                 {
+                    SfxManager.PlaySfx(SfxType.Interaction_Sliding);
                     CommandManager.GimmickPieceChange(tile.GridPos, HexDirection.Center, PieceType.Crate, pieceType,
                         centerPiece.LookDirection, centerPiece.LookDirection);
                 }
