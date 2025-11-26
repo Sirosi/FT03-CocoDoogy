@@ -67,6 +67,7 @@ namespace CocoDoogy.GameFlow.InGame
         private Camera mainCamera = null;
         private bool touched = false;
         private Vector2 touchStart = Vector2.zero;
+        private Vector2 touchLast = Vector2.zero;
         private int touchCount = 0;
 
         
@@ -88,15 +89,16 @@ namespace CocoDoogy.GameFlow.InGame
             
             if (TouchSystem.TouchCount > 0)
             {
+                touchLast = TouchSystem.TouchAverage;
                 if (TouchSystem.TouchCount != touchCount)
                 {
                     touched = true;
-                    touchStart = TouchSystem.TouchAverage;
+                    touchStart = touchLast;
                     touchCount = TouchSystem.TouchCount;
                     return;
                 }
 
-                float distance = Vector2.Distance(TouchSystem.TouchAverage, touchStart);
+                float distance = Vector2.Distance(touchLast, touchStart);
                 if(distance > 20) // TODO: 값은 나중에 바뀔 수 있음
                 {
                     touched = false;
@@ -109,7 +111,7 @@ namespace CocoDoogy.GameFlow.InGame
                 if (!touched) return;
                 touched = false;
 
-                Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
+                Ray ray = mainCamera.ScreenPointToRay(touchLast);
                 HexTile selectedTile = GetRayTile(ray);
                 if (!selectedTile) return;
                 
