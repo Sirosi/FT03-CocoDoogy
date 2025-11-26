@@ -283,8 +283,8 @@ namespace CocoDoogy.Tile
         /// 해당 위치에 기물 추가
         /// </summary>
         /// <param name="direction"></param>
-        /// 
         /// <param name="pieceType"></param>
+        /// <param name="lookDirection"></param>
         /// <returns></returns>
         public Piece.Piece SetPiece(HexDirection direction, PieceType pieceType, HexDirection lookDirection)
         {
