@@ -23,6 +23,8 @@ namespace CocoDoogy.GameFlow.InGame.Phase
         {
             if (!InGameManager.IsValid) return false;
             
+            if (InGameManager.ActionPoints <= 0) return true;
+
             // 타일 존재 확인
             HexTile tile = HexTile.GetTile(PlayerHandler.GridPos);
             if (!tile) return true;

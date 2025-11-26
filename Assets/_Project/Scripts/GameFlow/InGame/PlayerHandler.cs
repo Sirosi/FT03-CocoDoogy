@@ -61,6 +61,8 @@ namespace CocoDoogy.GameFlow.InGame
         private HexDirection lookDirection = HexDirection.East;
         private PlayerAnimHandler anim = null;
 
+        private bool lockBehaviour = false;
+
         private Camera mainCamera = null;
         private bool touched = false;
         private Vector2 touchStart = Vector2.zero;
@@ -80,6 +82,7 @@ namespace CocoDoogy.GameFlow.InGame
 
         void Update()
         {
+            if (lockBehaviour) return;
             if (TouchSystem.IsPointerOverUI) return;
             
             if (TouchSystem.TouchCount > 0)
@@ -183,6 +186,8 @@ namespace CocoDoogy.GameFlow.InGame
             if (!IsValid) return;
             if (!IsBehaviour) IsBehaviour = true;
 
+            Instance.lockBehaviour = true;
+
             Instance.transform.parent = null;
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Moving);
@@ -201,6 +206,8 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (!IsValid) return;
 
+            Instance.lockBehaviour = true;
+
             Instance.transform.parent = null;
             DOTween.Kill(Instance, true);
             GridPos = gridPos;
@@ -213,6 +220,8 @@ namespace CocoDoogy.GameFlow.InGame
         private static void OnBehaviourCompleted()
         {
             Instance.anim.ChangeAnim(AnimType.Idle);
+
+            Instance.lockBehaviour = false;
         }
 
 
