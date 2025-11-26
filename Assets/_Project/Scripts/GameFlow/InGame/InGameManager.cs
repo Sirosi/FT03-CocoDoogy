@@ -5,6 +5,7 @@ using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.GameFlow.InGame.Phase.Passage;
 using CocoDoogy.Test;
 using CocoDoogy.Tile;
+using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Utility;
 using System;
 using System.Collections.Generic;
@@ -162,6 +163,14 @@ namespace CocoDoogy.GameFlow.InGame
             foreach (var weather in HexTileMap.Weathers)
             {
                 Passages.Add(new WeatherPassage(weather.Key, weather.Value));
+            }
+
+            foreach(var gimmick in HexTileMap.Gimmicks.Values)
+            {
+                foreach(var trigger in gimmick.Triggers)
+                {
+                    GimmickExecutor.ExecuteFromTrigger(trigger.GridPos);
+                }
             }
 
             Timer.Start();

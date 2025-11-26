@@ -46,7 +46,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// <summary>
         /// 현재 플레이어가 동작할 수 있을지 판단
         /// </summary>
-        private static bool IsValid
+        public static bool IsValid
         {
             get
             {
