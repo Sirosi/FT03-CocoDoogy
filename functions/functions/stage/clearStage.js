@@ -7,8 +7,8 @@ exports.clearStage = onCall(fnConfig, async (request) => {
     if (!uid) return { success: false, reason: "로그인이 필요합니다." };
 
     const { theme, level, clearTime, remainAP, replayData } = request.data;
-    console.log("theme:", theme, "level:", level, "clearTime:", clearTime, "remainAP:", remainAP);
-    if (!theme || !level || clearTime === undefined || remainAP === undefined) { // replayData 추가하면 이것도 예외체크 필요
+    console.log("theme:", theme, "level:", level, "clearTime:", clearTime, "remainAP:", remainAP, "replayData:", replayData);
+    if (!theme || !level || clearTime === undefined || remainAP === undefined || replayData === undefined) { // replayData 추가하면 이것도 예외체크 필요
         return { success: false, reason: "필수 파라미터가 누락되었습니다." };
     }
 
@@ -28,7 +28,7 @@ exports.clearStage = onCall(fnConfig, async (request) => {
             remainAP,
             theme,
             level,
-            // replayData: JSON.stringify(replayData),
+            replayData,
         };
 
         if (!doc.exists) {

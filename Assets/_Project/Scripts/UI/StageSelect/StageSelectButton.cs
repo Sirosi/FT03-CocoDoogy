@@ -60,25 +60,25 @@ namespace CocoDoogy.UI.StageSelect
         {
             stageData = data;
             callback = actionCallback;
-
+        
             foreach (GameObject star in clearStars)
             {
                 star.SetActive(starSize-- > 0);
             }
-
+        
             stageNumberText.text = $"{data.stageName}";
-
+        
             var last = StageSelectManager.LastClearedStage;
             int lastTheme = 0;
             int lastLevel = 0;
-
+        
             if (last != null)
             {
                 lastTheme = last.theme?.Hex2Int() ?? 0;
                 lastLevel = last.level?.Hex2Int() ?? 0;
             }
-
-            int dataTheme = data.theme.ToIndex();
+        
+            int dataTheme = data.theme.ToIndex() + 1;
             int dataLevel = data.index;
             
             bool unlocked = true;
@@ -90,6 +90,7 @@ namespace CocoDoogy.UI.StageSelect
                     break;
                 }
             }
+            Debug.Log($"dataTheme: {dataTheme}, dataLevel: {dataLevel}, lastTheme: {lastTheme}, lastLevel: {lastLevel}, unlocked: {unlocked}");
             
             ApplyLockedState(unlocked);
         }
@@ -98,15 +99,15 @@ namespace CocoDoogy.UI.StageSelect
         
         // public void Init(StageData data, int starSize, Action<StageData> actionCallback)
         // {
-        //     if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
-        //         StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
-        //     {
-        //         startButton.interactable = false;
-        //         startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
-        //         starGroup.gameObject.SetActive(false);
-        //         stageNumberText.text = $"{data.stageName}";
-        //         return;
-        //     }
+        //     // if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
+        //     //     StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
+        //     // {
+        //     //     startButton.interactable = false;
+        //     //     startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
+        //     //     starGroup.gameObject.SetActive(false);
+        //     //     stageNumberText.text = $"{data.stageName}";
+        //     //     return;
+        //     // }
         //
         //     startButton.interactable = true;
         //     startButton.GetComponentInChildren<Image>().sprite = defaultSprite;
@@ -121,6 +122,8 @@ namespace CocoDoogy.UI.StageSelect
         //     }
         //
         //     stageNumberText.text = $"{data.stageName}";
+        //     startButton.onClick.RemoveAllListeners();
+        //     startButton.onClick.AddListener(OnButtonClicked);
         // }
         
         private void ApplyLockedState(bool locked)
@@ -134,7 +137,6 @@ namespace CocoDoogy.UI.StageSelect
 
             if (stageNumberText && stageData && !locked) stageNumberText.text = $"{stageData.stageName}";
             else stageNumberText.text = "";
-            
             
             startButton.onClick.RemoveAllListeners();
             if (locked)
