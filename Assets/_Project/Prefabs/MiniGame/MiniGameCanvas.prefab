@@ -236,8 +236,8 @@ MonoBehaviour:
   themeFlag: -1
   background: {fileID: 2762294578044936128}
   remainCount: {fileID: 6818072742817200873}
-  tutorialExplainData: {fileID: 11400000, guid: 0f0faea6380ca434f91bd7913f1fa8fb, type: 2}
   miniGameID: WindowCleanGame
+  tutorialExplainData: {fileID: 11400000, guid: 0f0faea6380ca434f91bd7913f1fa8fb, type: 2}
   dirtyCount: 5
   windowGamePanel: {fileID: 9083133845047364172}
   dirtyPrefab: {fileID: 3460652669706432852, guid: 7e50ce07dfd5f1a4cadef7280f2c846b, type: 3}
@@ -637,8 +637,8 @@ MonoBehaviour:
   themeFlag: -1
   background: {fileID: 3002086505985338286}
   remainCount: {fileID: 7744687893180722841}
-  tutorialExplainData: {fileID: 11400000, guid: 9282ab9046530824199a5392f07a99d8, type: 2}
   miniGameID: TrashCleanGame
+  tutorialExplainData: {fileID: 11400000, guid: 9282ab9046530824199a5392f07a99d8, type: 2}
   trashCount: 5
   trashPrefab: {fileID: -4747869146135433724, guid: 7aee9a5323d1bf74ab27a5aa8c662229, type: 3}
   trashCanPrefab: {fileID: 9021466512950296119, guid: 85d2ae4202188e24a9a0eba80d07d648, type: 3}
@@ -1175,7 +1175,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 2237289094780422460}
   coatParticlePrefab: {fileID: 8218750820772630947, guid: a5d5d2625ab035e43aed2bf7864d1992, type: 3}
-  windowDirtyParticlePrefab: {fileID: 0}
   wateringParticlePrefab: {fileID: 2615781627948980699, guid: 8c9ba30be1941634a81067f883afbe30, type: 3}
   diggingParticlePrefab: {fileID: 2615781627948980699, guid: 9e5985795ad1d9742bfd3a02b21884e8, type: 3}
 --- !u!1 &5420230847707395816
@@ -1520,8 +1519,8 @@ MonoBehaviour:
   themeFlag: 2
   background: {fileID: 2921058373727947185}
   remainCount: {fileID: 1301781935679407728}
-  tutorialExplainData: {fileID: 11400000, guid: 6402f84d4cb02cc419a97d579a4417e2, type: 2}
   miniGameID: ToyFindGame
+  tutorialExplainData: {fileID: 11400000, guid: 6402f84d4cb02cc419a97d579a4417e2, type: 2}
   baackground: {fileID: 21300000, guid: 7c517438b305bd241824f75e6b8ab366, type: 3}
   sandGamePanel: {fileID: 3391165475019998545}
   toyCount: 3
@@ -2231,8 +2230,8 @@ MonoBehaviour:
   themeFlag: 4
   background: {fileID: 8525180023192304493}
   remainCount: {fileID: 6730180257693429960}
-  tutorialExplainData: {fileID: 11400000, guid: fa8552e6d26edc6479615c7a4f0762c3, type: 2}
   miniGameID: UmbrellaShakingGame
+  tutorialExplainData: {fileID: 11400000, guid: fa8552e6d26edc6479615c7a4f0762c3, type: 2}
   umbrellaParent: {fileID: 8682975654720149113}
   umbrellaPrefab: {fileID: 6782284360689680388, guid: 7d28c367a63f897409b3860b8ed4c456, type: 3}
   backgroundSprite: {fileID: 21300000, guid: 10d21e09dc97791488fd287e8b78d6cf, type: 3}
@@ -2298,8 +2297,8 @@ MonoBehaviour:
   themeFlag: 8
   background: {fileID: 446478441345911905}
   remainCount: {fileID: 4006926635205296755}
-  tutorialExplainData: {fileID: 11400000, guid: 12575342c5ffd7c41a871482a8dc95f1, type: 2}
   miniGameID: CoatArrangeGame
+  tutorialExplainData: {fileID: 11400000, guid: 12575342c5ffd7c41a871482a8dc95f1, type: 2}
   coatGamePanel: {fileID: 8539853256286646717}
   coatPrefab: {fileID: 6116421534896997649, guid: 30a7a3e5c910a2a489840726b78f55bf, type: 3}
   coatSlotPrefab: {fileID: 6116421534896997649, guid: 9e660d99e527108438e59281000deb04, type: 3}

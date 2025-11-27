@@ -20,16 +20,19 @@ namespace CocoDoogy.MiniGame
         [SerializeField] private Theme themeFlag;
         [SerializeField] protected Image background;
         [SerializeField] protected TextMeshProUGUI remainCount;
-        protected Action remainCountCallback;
         
-        protected Action clearCallback;
         
-        public TutorialExplainData tutorialExplainData;
         [Tooltip("미니게임 설명 여부 체크용")]
         [SerializeField] private string miniGameID;
+        public TutorialExplainData tutorialExplainData;
+
         public string  MiniGameID => miniGameID;
         
-        //SO를 활용해서 타이틀과 설명을 넣자
+        
+        protected Action remainCountCallback;
+        protected Action clearCallback;
+
+        private bool hasStarted = false;
 
 
         /// <summary>
@@ -45,6 +48,8 @@ namespace CocoDoogy.MiniGame
         /// <param name="callback"></param>
         public void Open(Action callback)
         {
+            hasStarted = true;
+            
             clearCallback = callback;
             gameObject.SetActive(true);
             OnOpenInit();
@@ -55,12 +60,14 @@ namespace CocoDoogy.MiniGame
 
 
         /// <summary>
-        /// 미니게임 클리어 판단을 언제해야하지?
+        /// 미니게임 클리어 판단
         /// </summary>
         public void CheckClear()
         {
             remainCountCallback?.Invoke();
             if (!IsClear()) return;
+            if (!hasStarted) return;
+            hasStarted = false;
 
             SfxManager.PlaySfx(SfxType.UI_SuccessMission);
             MessageDialog.ShowMessage("미니게임 클리어", "보상을 받으시오", DialogMode.Confirm, _ => 
