@@ -60,54 +60,44 @@ namespace CocoDoogy.UI.StageSelect
         {
             stageData = data;
             callback = actionCallback;
-        
+
             foreach (GameObject star in clearStars)
             {
                 star.SetActive(starSize-- > 0);
             }
-        
+
             stageNumberText.text = $"{data.stageName}";
-        
+
             var last = StageSelectManager.LastClearedStage;
-            int lastTheme = 0;
-            int lastLevel = 0;
-        
-            if (last != null)
-            {
-                lastTheme = last.theme?.Hex2Int() ?? 0;
-                lastLevel = last.level?.Hex2Int() ?? 0;
-            }
-        
-            int dataTheme = data.theme.ToIndex() + 1;
-            int dataLevel = data.index;
+            StageData lastClearStage = DataManager.GetStageData((Theme)(1 << (last.theme.Hex2Int() - 1)), last.level.Hex2Int());
+
             
-            bool unlocked = true;
+            bool isLocked = true;
             foreach (var check in IsStageOpen)
             {
-                if (!check(dataTheme, dataLevel, lastTheme, lastLevel))
+                if (check(data, lastClearStage))
                 {
-                    unlocked = false;
+                    isLocked = false;
                     break;
                 }
             }
-            Debug.Log($"dataTheme: {dataTheme}, dataLevel: {dataLevel}, lastTheme: {lastTheme}, lastLevel: {lastLevel}, unlocked: {unlocked}");
             
-            ApplyLockedState(unlocked);
+            ApplyLockedState(isLocked);
         }
         
         // TODO: 스테이지 테스트 할때 위에 Init 비활성화 하고 이거 활성화 해서 사용하면 됨 
         
         // public void Init(StageData data, int starSize, Action<StageData> actionCallback)
         // {
-        //     // if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
-        //     //     StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
-        //     // {
-        //     //     startButton.interactable = false;
-        //     //     startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
-        //     //     starGroup.gameObject.SetActive(false);
-        //     //     stageNumberText.text = $"{data.stageName}";
-        //     //     return;
-        //     // }
+        //     if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
+        //         StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
+        //     {
+        //         startButton.interactable = false;
+        //         startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
+        //         starGroup.gameObject.SetActive(false);
+        //         stageNumberText.text = $"{data.stageName}";
+        //         return;
+        //     }
         //
         //     startButton.interactable = true;
         //     startButton.GetComponentInChildren<Image>().sprite = defaultSprite;
@@ -122,8 +112,6 @@ namespace CocoDoogy.UI.StageSelect
         //     }
         //
         //     stageNumberText.text = $"{data.stageName}";
-        //     startButton.onClick.RemoveAllListeners();
-        //     startButton.onClick.AddListener(OnButtonClicked);
         // }
         
         private void ApplyLockedState(bool locked)
@@ -137,6 +125,7 @@ namespace CocoDoogy.UI.StageSelect
 
             if (stageNumberText && stageData && !locked) stageNumberText.text = $"{stageData.stageName}";
             else stageNumberText.text = "";
+            
             
             startButton.onClick.RemoveAllListeners();
             if (locked)
@@ -156,56 +145,37 @@ namespace CocoDoogy.UI.StageSelect
         }
 
         #region < 스테이지 활성화 책임 연쇄 패턴>
-        private static Func<int, int, int, int, bool>[] IsStageOpen =
+        private static Func<StageData, StageData, bool>[] IsStageOpen =
         {
-            HasRecord, IsSameTheme, IsPrevTheme, IsNextTheme
+            IsFirstStage, IsClearedTheme, IsClearedStageOrNextIndex, IsLastClearedNextStage
         };
-	
-        /// <summary>
-        /// 클리어 기록이 있는가? <br/>
-        /// 없으면 1-1 스테이지만 오픈
-        /// </summary>
-        /// <param name="dataTheme">선택한 테마</param>
-        /// <param name="dataLevel">선택한 테마에 있는 스테이지</param>
-        /// <param name="lastTheme">가장 마지막으로 클리어한 테마</param>
-        /// <param name="lastLevel">가장 마지막으로 클리어한 스테이지</param>
-        /// <returns></returns>
-        private static bool HasRecord(int dataTheme, int dataLevel, int lastTheme, int lastLevel)
-        {
-            if (lastTheme == 0 && lastLevel == 0)
-                return !(dataTheme == 1 && dataLevel == 1);
-            return true;
-        }
 
         /// <summary>
-        /// 클리어 기록이 있고 선택한 테마가 마지막 클리어한 테마와 같은 테마인가? <br/>
-        /// 마지막 클리어에서 +1 한 스테이지 오픈
+        /// 첫 스테이지인지
         /// </summary>
-        private static bool IsSameTheme(int dataTheme, int dataLevel, int lastTheme, int lastLevel)
-        {
-            if (dataTheme == lastTheme)
-                return !(dataLevel <= lastLevel + 1);
-            return true;
-        }
-
+        private static bool IsFirstStage(StageData nowStage, StageData clearData) =>
+            nowStage.theme <= Theme.Forest && nowStage.index <= 1;
         /// <summary>
-        /// 클리어한 기록이 있고 이미 완전히 클리어한 테마인가? <br/>
-        /// 1테마가 올 클리어 상태이면 1테마 전부 오픈
+        /// 이미 클리어한 테마인지
         /// </summary>
-        private static bool IsPrevTheme(int dataTheme, int dataLevel, int lastTheme, int lastLevel)
-        {
-            return !(dataTheme < lastTheme);
-        }
-
+        private static bool IsClearedTheme(StageData nowStage, StageData clearData) =>
+            nowStage.theme < clearData.theme;
         /// <summary>
-        /// 클리어한 기록이 있고 이미 완전히 클리어한 테마이면 다음 테마의 1스테이지 오픈
+        /// 이미 클리어한 스테이지거나,<br/>
+        /// 같은 테마 내 다음 스테이지인지
         /// </summary>
-        private static bool IsNextTheme(int dataTheme, int dataLevel, int lastTheme, int lastLevel)
+        private static bool IsClearedStageOrNextIndex(StageData nowStage, StageData clearData) =>
+            nowStage.theme <= clearData.theme && nowStage.index <= clearData.index + 1;
+        /// <summary>
+        /// 마지막으로 클리어한 스테이지의 다음 Theme 중 첫 스테이지인지
+        /// </summary>
+        private static bool IsLastClearedNextStage(StageData nowStage, StageData clearData)
         {
-            if (StageSelectManager.LastClearedStage == null || dataTheme != lastTheme + 1) return true;
-            int lastStageInPrevTheme = DataManager.GetStageData((Theme)(1 << StageSelectManager.LastClearedStage.theme.Hex2Int() - 1)).Count;
-            bool prevThemeCleared = lastLevel >= lastStageInPrevTheme;
-            return !(prevThemeCleared && dataLevel == 1);
+            if(nowStage.theme.ToIndex() > clearData.theme.ToIndex() + 1) return false;
+
+            // TODO: 각 Theme의 lastIndex를 구하는 방식을 나중에 수정하는 게 좋아보임, DataManager에서 StageData를 저장할 때 하면 될 듯
+            int lastIndex = DataManager.GetStageData(nowStage.theme).Count;
+            return nowStage.index <= 1 && clearData.index >= lastIndex;
         }
         #endregion
     }
