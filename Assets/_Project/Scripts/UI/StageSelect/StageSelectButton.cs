@@ -156,26 +156,27 @@ namespace CocoDoogy.UI.StageSelect
         private static bool IsFirstStage(StageData nowStage, StageData clearData) =>
             nowStage.theme <= Theme.Forest && nowStage.index <= 1;
         /// <summary>
-        /// 이미 클리어한 테마인지
+        /// 첫 스테이지인지
         /// </summary>
         private static bool IsClearedTheme(StageData nowStage, StageData clearData) =>
-            nowStage.theme < clearData.theme;
+            clearData && nowStage.theme < clearData.theme;
         /// <summary>
         /// 이미 클리어한 스테이지거나,<br/>
         /// 같은 테마 내 다음 스테이지인지
         /// </summary>
         private static bool IsClearedStageOrNextIndex(StageData nowStage, StageData clearData) =>
-            nowStage.theme <= clearData.theme && nowStage.index <= clearData.index + 1;
+            clearData && nowStage.theme <= clearData.theme && nowStage.index <= clearData.index + 1;
         /// <summary>
         /// 마지막으로 클리어한 스테이지의 다음 Theme 중 첫 스테이지인지
         /// </summary>
         private static bool IsLastClearedNextStage(StageData nowStage, StageData clearData)
         {
+            if(!clearData) return false;
             if(nowStage.theme.ToIndex() > clearData.theme.ToIndex() + 1) return false;
 
             // TODO: 각 Theme의 lastIndex를 구하는 방식을 나중에 수정하는 게 좋아보임, DataManager에서 StageData를 저장할 때 하면 될 듯
             int lastIndex = DataManager.GetStageData(nowStage.theme).Count;
-            return nowStage.index <= 1 && clearData.index >= lastIndex;
+            return clearData && nowStage.index <= 1 && clearData.index >= lastIndex;
         }
         #endregion
     }
