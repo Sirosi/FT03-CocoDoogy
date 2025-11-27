@@ -14,9 +14,15 @@ namespace CocoDoogy.GameFlow.InGame.Phase
 
             HexTile tile = HexTile.GetTile(PlayerHandler.GridPos);
             if (tile.CurrentData.moveType != MoveType.Slide) return true; // 현재 타일이 미끄러지는 타일이 아니면 정지
-            if (!tile.CanMove(PlayerHandler.LookDirection)) return true; // 바라보는 방향으로 갈 수 없으면 정지
 
+            // 현재 CanMove는 ActionPoints가 남았는지도 체크하므로 일시적으로 1을 늘려야 함
             InGameManager.RegenActionPoint(1, false);
+            if (!tile.CanMove(PlayerHandler.LookDirection))
+            {
+                InGameManager.ConsumeActionPoint(1, false);
+                return true; // 바라보는 방향으로 갈 수 없으면 정지
+            }
+    
             HexTile nextTile = tile;
             
             while(true)

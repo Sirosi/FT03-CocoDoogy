@@ -377,7 +377,7 @@ namespace CocoDoogy.Tile
         /// <summary>
         /// 타일이 없는지
         /// </summary>
-        private static bool HasNotTile(HexTile hexTile, HexDirection direction) => hexTile == null;
+        private static bool HasNotTile(HexTile hexTile, HexDirection direction) => !hexTile;
         /// <summary>
         /// 이동에 필요한 충분한 행동력을 보유했는지
         /// </summary>
