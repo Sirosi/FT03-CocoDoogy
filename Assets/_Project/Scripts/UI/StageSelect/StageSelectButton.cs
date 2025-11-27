@@ -179,8 +179,7 @@ namespace CocoDoogy.UI.StageSelect
             if(!clearData) return false;
             if(nowStage.theme.ToIndex() > clearData.theme.ToIndex() + 1) return false;
 
-            // TODO: 각 Theme의 lastIndex를 구하는 방식을 나중에 수정하는 게 좋아보임, DataManager에서 StageData를 저장할 때 하면 될 듯
-            int lastIndex = DataManager.GetStageData(nowStage.theme).Count;
+            int lastIndex = DataManager.GetThemeMaxIndex(clearData.theme);
             return clearData && nowStage.index <= 1 && clearData.index >= lastIndex;
         }
         #endregion
