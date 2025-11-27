@@ -100,7 +100,7 @@ namespace CocoDoogy.Network
         /// 일정 주기마다 RechargeTicketAsync를 실행시킴
         /// </summary>
         /// <returns></returns>
-        public IEnumerator UpdateLocalTimerCoroutine()
+        public IEnumerator UpdateTicketCoroutine()
         {
             while (true)
             {
