@@ -16,6 +16,11 @@ namespace CocoDoogy.UI.StageSelect
         private Stack<StageSelectButton> spawnedButtons = new();
 
 
+        void OnEnable()
+        {
+            stageGroup.position = new Vector2(0, Screen.height * 1.5f);
+        }
+        
         public void DrawButtons(Theme theme, int start)
         {
             while (spawnedButtons.Count > 0)
