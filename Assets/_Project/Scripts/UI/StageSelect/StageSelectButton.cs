@@ -69,7 +69,12 @@ namespace CocoDoogy.UI.StageSelect
             stageNumberText.text = $"{data.stageName}";
 
             var last = StageSelectManager.LastClearedStage;
-            StageData lastClearStage = DataManager.GetStageData((Theme)(1 << (last.theme.Hex2Int() - 1)), last.level.Hex2Int());
+            StageData lastClearStage = null;
+            
+            if (last != null)
+            {
+                lastClearStage = DataManager.GetStageData((Theme)(1 << (last.theme.Hex2Int() - 1)), last.level.Hex2Int());
+            }
 
             
             bool isLocked = true;
