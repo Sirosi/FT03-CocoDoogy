@@ -46,8 +46,16 @@ namespace CocoDoogy.UI.IntroAndLogin
             loginVM.OnUserChanged += OnUserLoggedIn;
             loginVM.OnErrorChanged += OnLoginError;
 
-            googleLoginButton.onClick.AddListener(() => loginVM.SignIn());
-            anonymousLoginButton.onClick.AddListener(() => loginVM.SignInAnonymously());
+            googleLoginButton.onClick.AddListener(() =>
+            {
+                googleLoginButton.interactable = false;
+                loginVM.SignIn();
+            });
+            anonymousLoginButton.onClick.AddListener(() =>
+            {
+                anonymousLoginButton.interactable = false;
+                loginVM.SignInAnonymously();
+            });
         }
 
         public override void ClosePanel() => gameObject.SetActive(false);
