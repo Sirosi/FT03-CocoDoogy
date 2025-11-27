@@ -29,6 +29,9 @@ namespace CocoDoogy.UI.Shop
         [SerializeField] private Button stampShopButton;
         [SerializeField] private Button jemShopButton;
 
+        [Header("Scroll Areas")]
+        [SerializeField] private GameObject[] lists;
+        
         private Transform currentActivePanel;
         
         
@@ -103,6 +106,12 @@ namespace CocoDoogy.UI.Shop
             itemShop.gameObject.SetActive(true);
             stampShop.gameObject.SetActive(false);
             jemShop.gameObject.SetActive(false);
+
+            for (int i = 0; i < lists.Length; ++i)
+            {
+                RectTransform rect = lists[i].transform as RectTransform;
+                rect.anchoredPosition = new Vector2(0, rect.anchoredPosition.y);
+            }
         }
 
         private void OnClickButton(Button clicked)

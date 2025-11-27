@@ -66,7 +66,7 @@ namespace CocoDoogy.UI.Friend
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "아직 친구신청이 없네요~";
+                nullMessage.text = "받은 친구 요청이 없습니다.";
             }
             else
             {
