@@ -1,6 +1,5 @@
 using CocoDoogy.CameraSwiper;
 using CocoDoogy.Network;
-using CocoDoogy.UI;
 using CocoDoogy.UI.StageSelect;
 using System.Threading.Tasks;
 using TMPro;
@@ -14,6 +13,8 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private RectTransform profileWindow;
         [SerializeField] private TextMeshProUGUI nicknameText;
         [SerializeField] private TextMeshProUGUI recordText;
+        [SerializeField] private CommonButton loginButton;
+        [SerializeField] private CommonButton logoutButton;
         [SerializeField] private Button closeButton;
 
         private FirebaseManager Firebase => FirebaseManager.Instance;
@@ -53,6 +54,9 @@ namespace CocoDoogy.UI.UserInfo
             {
                 Debug.Log("해당 문서가 존재하지 않습니다.");
             }
+            
+            
+            
         }
     }
 }
