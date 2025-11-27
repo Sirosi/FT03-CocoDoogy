@@ -203,8 +203,7 @@ namespace CocoDoogy.UI.StageSelect
         private static bool IsNextTheme(int dataTheme, int dataLevel, int lastTheme, int lastLevel)
         {
             if (StageSelectManager.LastClearedStage == null || dataTheme != lastTheme + 1) return true;
-            
-            int lastStageInPrevTheme = DataManager.GetStageData((Theme)StageSelectManager.LastClearedStage.theme.Hex2Int()).Count;
+            int lastStageInPrevTheme = DataManager.GetStageData((Theme)(1 << StageSelectManager.LastClearedStage.theme.Hex2Int() - 1)).Count;
             bool prevThemeCleared = lastLevel >= lastStageInPrevTheme;
             return !(prevThemeCleared && dataLevel == 1);
         }

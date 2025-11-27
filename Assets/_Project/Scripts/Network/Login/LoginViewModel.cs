@@ -60,7 +60,12 @@ namespace CocoDoogy.Network.Login
 
         #region < 익명로그인 기능 & 익명로그인 링크 구글 기능 > 
         public void SignInAnonymously() => authProvider.SignInAnonymously();
-        public void LinkGoogleAccount() => authProvider.LinkGoogleAccount();
+
+        public async Task<bool> LinkGoogleAccountAsync()
+        {
+            return await authProvider.LinkGoogleAccountAsync();
+        }
+
         #endregion
 
         #region < 로그인 이후 최초 가입 시 닉네임 입력 시퀀스 >
