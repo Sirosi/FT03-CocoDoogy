@@ -47,7 +47,7 @@ namespace CocoDoogy.UI.Shop
             backGround.onClick.AddListener(OnClickCancel);
         }
 
-        public void Open(ItemData itemData, bool isSaleForCash, Action<ItemData, int> purchaseCallback)
+        public void Open(ItemData itemData, bool isCountable, Action<ItemData, int> purchaseCallback)
         {
             currentItem = itemData;
             onPurchaseRequest = purchaseCallback;
@@ -57,7 +57,7 @@ namespace CocoDoogy.UI.Shop
             descriptionText.text = itemData.itemDescription;
             currentQuantityText.text = quantity.ToString();
 
-            if (isSaleForCash) counter.SetActive(false);
+            if (!isCountable) counter.SetActive(false);
             else counter.SetActive(true);
             gameObject.SetActive(true);
         }

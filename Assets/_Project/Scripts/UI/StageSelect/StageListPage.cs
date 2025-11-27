@@ -18,7 +18,7 @@ namespace CocoDoogy.UI.StageSelect
 
         void OnEnable()
         {
-            stageGroup.position = new Vector2(0, Screen.height * 1.5f);
+            stageGroup.position = new Vector2(0, stageGroup.position.y);
         }
         
         public void DrawButtons(Theme theme, int start)

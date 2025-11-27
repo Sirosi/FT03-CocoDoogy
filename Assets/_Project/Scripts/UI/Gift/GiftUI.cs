@@ -68,7 +68,7 @@ namespace CocoDoogy.UI.Gift
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "이런, 아무도 나에게 선물을 주지 않습니다!";
+                nullMessage.text = "받을 수 있는 상품이 없습니다.";
             }
             else
             {

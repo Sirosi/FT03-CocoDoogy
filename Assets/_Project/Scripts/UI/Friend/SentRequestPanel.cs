@@ -47,7 +47,7 @@ namespace CocoDoogy.UI.Friend
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "새 친구를 찾아볼까요?";
+                nullMessage.text = "보낸 친구 요청이 없습니다.";
             }
             else
             {
