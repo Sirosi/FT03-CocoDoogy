@@ -4,14 +4,30 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace CocoDoogy.TPSView
+namespace CocoDoogy.GameFlow.InGame
 {
     public class InGameCameraController : MonoBehaviour
     {
+        /// <summary>
+        /// 화면 최소각
+        /// </summary>
+        private const float FOV_MIN = 20;
+        /// <summary>
+        /// 화면 최대각
+        /// </summary>
+        private const float FOV_MAX = 80;
+        /// <summary>
+        /// 화면 기준각
+        /// </summary>
+        private const float FOV_PIVOT = 60;
+        /// <summary>
+        /// 기준각 기준 카메라 이동속도
+        /// </summary>
+        private const float PIVOT_WORLD_DISTANCE = 8;
+        
+        
         [SerializeField] private Transform cameraPivot;
         [SerializeField] private Camera mainCamera;
-        [SerializeField] private float moveSpeed = 10f;
-        [SerializeField] private float zoomSpeed = 3f;
 
 
         void Awake()
@@ -36,6 +52,8 @@ namespace CocoDoogy.TPSView
         private void InitCameraPos()
         {
             cameraPivot.transform.position = (HexTileMap.MaxPoint + HexTileMap.MinPoint) * 0.5f;
+            mainCamera.fieldOfView = FOV_PIVOT;
+            ChangeCameraMoveRate();
         }
 
 
@@ -55,10 +73,32 @@ namespace CocoDoogy.TPSView
             return false;
         }
 
+
+        #region ◇ CameraMoveRate ◇
+        /// <summary>
+        /// 카메라 이동비<br/>
+        /// FOV를 비례해서 계산
+        /// </summary>
+        private float cameraMoveRate = 1f;
+        
+        
+        private void ChangeCameraMoveRate()
+        {
+            cameraMoveRate = mainCamera.fieldOfView / FOV_PIVOT * PIVOT_WORLD_DISTANCE;
+        }
+        #endregion
+        
+
         #region ◇ Move ◇
         private bool hasMoving = false;
-        private Vector2 prevPos = Vector2.zero;
+        private Vector2 pivotTouchPos = Vector2.zero;
+        private Vector3 pivotCameraPos = Vector3.zero;
         private int lastTouchcount = 0;
+        
+        
+        /// <summary>
+        /// 카메라 이동 처리
+        /// </summary>
         private void Move()
         {
             //==================
@@ -68,7 +108,8 @@ namespace CocoDoogy.TPSView
             {
                 hasMoving = true;
                 lastTouchcount = TouchSystem.TouchCount;
-                prevPos = TouchSystem.TouchAverage;
+                pivotTouchPos = TouchSystem.TouchAverage;
+                pivotCameraPos = cameraPivot.transform.position;
                 return;
             }
             //==================
@@ -86,35 +127,40 @@ namespace CocoDoogy.TPSView
             // Touch ing
             //==================
             if(!hasMoving) return;
-            Vector2 currentPos = TouchSystem.TouchAverage;
-            Vector2 delta = currentPos - prevPos;
-            prevPos = currentPos;
+            Vector2 delta = TouchSystem.TouchAverage - pivotTouchPos;
+            Vector3 pos = pivotCameraPos - cameraMoveRate * new Vector3(delta.x, 0, delta.y) / Screen.height;
 
-            Vector3 move = new Vector3(-delta.x, 0, -delta.y) * (moveSpeed * Time.deltaTime);
-            cameraPivot.transform.Translate(move, Space.World);
-
-            // 카메라 최대크기 제약
-            cameraPivot.transform.position = Vector3.Min(cameraPivot.transform.position, HexTileMap.MaxPoint);
-            cameraPivot.transform.position = Vector3.Max(cameraPivot.transform.position, HexTileMap.MinPoint);
+            // 카메라 위치 제약
+            pos = Vector3.Min(pos, HexTileMap.MaxPoint);
+            cameraPivot.transform.position = Vector3.Max(pos, HexTileMap.MinPoint);
         }
         #endregion
         
+        
         #region ◇ Zoom ◇
         private bool hasZooming = false;
-        private float preDistance = 0f;
+        private float pivotDistance = 0f;
+        private float pivotFov = 0f;
+        
+        
+        /// <summary>
+        /// 카메라 확대/축소 처리
+        /// </summary>
         private void Zoom()
         {
             //==================
             // Mouse Zoom
             //==================
-            if(TouchSystem.CurrentInputType == TouchSystem.InputType.Mouse) // Mouse Scroll
+            if(TouchSystem.CurrentInputType == TouchSystem.InputType.Mouse)
             {
-                float scroll = Mouse.current.scroll.ReadValue().y;
+                float scroll = Mouse.current.scroll.ReadValue().y * 10;
 
                 if (Mathf.Abs(scroll) > 0.1f)
                 {
-                    mainCamera.fieldOfView -= scroll * zoomSpeed;
-                    mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView, 20, 80);
+                    print(scroll);
+                    mainCamera.fieldOfView -= scroll;
+                    mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView, FOV_MIN, FOV_MAX);
+                    ChangeCameraMoveRate();
                 }
                 return;
             }
@@ -126,7 +172,8 @@ namespace CocoDoogy.TPSView
             if(!hasZooming && TouchSystem.TouchCount >= 2) // Touch Began
             {
                 hasZooming = true;
-                preDistance = TouchSystem.DistanceAverage;
+                pivotDistance = TouchSystem.DistanceAverage;
+                pivotFov = mainCamera.fieldOfView;
                 return;
             }
             else if(hasZooming && TouchSystem.TouchCount < 2) // Touch Ended
@@ -136,12 +183,12 @@ namespace CocoDoogy.TPSView
             }
 
             if(!hasZooming) return;
-            float currentDistance = TouchSystem.DistanceAverage;
-            float delta = currentDistance - preDistance;
-            preDistance = currentDistance;
-
-            mainCamera.fieldOfView -= delta * zoomSpeed;
-            mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView, 20, 80);
+            float delta = TouchSystem.DistanceAverage / pivotDistance;
+            float fov = pivotFov * delta;
+            
+            if (Mathf.Approximately(fov, mainCamera.fieldOfView)) return;
+            mainCamera.fieldOfView = Mathf.Clamp(fov, 20, 80);
+            ChangeCameraMoveRate();
         }
         #endregion
     }
