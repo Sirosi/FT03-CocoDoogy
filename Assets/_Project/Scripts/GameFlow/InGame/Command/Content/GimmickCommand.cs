@@ -2,7 +2,6 @@ using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick.Data;
 using CocoDoogy.Tile.Piece;
-using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
@@ -17,14 +16,24 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override bool IsUserCommand => false;
 
 
-        public Vector2Int GridPos = Vector2Int.zero;
-        public GimmickType Gimmick = GimmickType.None;
-        public int MainData = 0;
-        public int SubData = 0;
-        public int PreSubData = 0;
-        public HexDirection Dir = 0;
-        public HexDirection PreDir = 0;
-        public bool DidGimmick = false;
+        [SerializeField] private Vector2Int gp = Vector2Int.zero;
+        [SerializeField] private GimmickType gt = GimmickType.None;
+        [SerializeField] private int md = 0;
+        [SerializeField] private int sd = 0;
+        [SerializeField] private int psd = 0;
+        [SerializeField] private HexDirection nd = HexDirection.East;
+        [SerializeField] private HexDirection pd = HexDirection.East;
+        [SerializeField] private bool dg = false;
+
+
+        public Vector2Int GridPos { get => gp; private set => gp = value; }
+        public GimmickType Gimmick { get => gt; private set => gt = value; }
+        public int MainData { get => md; private set => md = value; }
+        public int SubData { get => sd; private set => sd = value; }
+        public int PreSubData { get => psd; private set => psd = value; }
+        public HexDirection NextDir { get => nd; private set => nd = value; }
+        public HexDirection PreDir { get => pd; private set => pd = value; }
+        public bool DidGimmick { get => dg; private set => dg = value; }
         
         
         public GimmickCommand(object param) : base(CommandType.Gimmick, param)
@@ -35,7 +44,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             MainData = data.Item3;
             SubData = data.Item4;
             PreSubData = data.Item5;
-            Dir = data.Item6;
+            NextDir = data.Item6;
             PreDir = data.Item7;
             DidGimmick = data.Item8;
         }
@@ -57,11 +66,11 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
                     SfxManager.PlaySfx(SfxType.Gimmick_Mechanical);
                     break;
                 case GimmickType.PieceChange:
-                    tile.SetPiece((HexDirection)MainData, (PieceType)SubData, Dir);
+                    tile.SetPiece((HexDirection)MainData, (PieceType)SubData, NextDir);
                     SfxManager.PlaySfx(SfxType.Gimmick_ObjectSpawn);
                     break;
                 case GimmickType.PieceMove:
-                    tile.GetPiece((HexDirection)MainData).Move(Dir);
+                    tile.GetPiece((HexDirection)MainData).Move(NextDir);
                     break;
             }
         }
@@ -84,7 +93,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
                     tile.SetPiece((HexDirection)MainData, (PieceType)PreSubData, PreDir);
                     break;
                 case GimmickType.PieceMove:
-                    tile = HexTile.GetTile(GridPos.GetDirectionPos(Dir));
+                    tile = HexTile.GetTile(GridPos.GetDirectionPos(NextDir));
                     tile.GetPiece((HexDirection)MainData).Move(PreDir);
                     break;
             }

@@ -11,13 +11,17 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
     public class TriggerCommand: CommandBase
     {
         public override bool IsUserCommand => true;
+
+
+        [SerializeField] private Vector2Int gp = Vector2Int.zero;
+        [SerializeField] private bool un = false;
         
         
         /// <summary>
         /// 트리거 위치
         /// </summary>
-        public Vector2Int GridPos = Vector2Int.zero;
-        public bool IsUnInteract = false;
+        public Vector2Int GridPos { get => gp; private set => gp = value; }
+        public bool IsUnInteract { get => un; private set => un = value; }
 
 
         public TriggerCommand(object param): base(CommandType.Trigger, param)
