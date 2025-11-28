@@ -20,6 +20,7 @@ namespace CocoDoogy.GameFlow.InGame
         public static event Action<int> OnActionPointChanged = null;
         public static event Action<int> OnRefillCountChanged = null;
         public static event Action<Action> OnInteractChanged = null;
+        public static event Action<StageData> OnMapDrawn = null;
 
 
         /// <summary>
@@ -173,6 +174,7 @@ namespace CocoDoogy.GameFlow.InGame
                 }
             }
 
+            OnMapDrawn?.Invoke(Stage);
             Timer.Start();
 
             ProcessPhase();
