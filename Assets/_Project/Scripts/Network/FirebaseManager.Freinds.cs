@@ -95,7 +95,7 @@ namespace CocoDoogy.Network
                     return new Dictionary<string, string>();
                 }
 
-                Dictionary<string, string> result = new Dictionary<string, string>();
+                Dictionary<string, string> result = new();
                 foreach (KeyValuePair<string, object> key in dictionary)
                 {
                     if (key.Value is Dictionary<string, object> friendData && friendData.TryGetValue("nickName", out object nickname))

@@ -20,7 +20,7 @@ namespace CocoDoogy.UI.StageSelect
         [Header("Stage Information")]
         [SerializeField] private StageInfoPage commonInfoPage;
         [SerializeField] private StageInfoPage detailInfoPage;
-        
+        [SerializeField] private StageRankingPage rankingPage;
         /*-[Header("Ranks")]
         [SerializeField] private GameObject[] ranks;
         private TextMeshProUGUI[] rankTexts;
@@ -29,9 +29,6 @@ namespace CocoDoogy.UI.StageSelect
         [Header("Buttons")]
         [SerializeField] private CommonButton pageChangeButton;
         [SerializeField] private CommonButton startButton;
-        
-        [SerializeField] private CommonButton replayButton; // TODO: 테스트용 버튼
-
 
         public bool IsOpened { get; private set; } = false;
 
@@ -63,6 +60,7 @@ namespace CocoDoogy.UI.StageSelect
             BgmManager.PrepareStageBgm(data.theme);
             
             commonInfoPage.Show(stageData);
+            rankingPage.Show(stageData);
             detailInfoPage.Close();
         }
         

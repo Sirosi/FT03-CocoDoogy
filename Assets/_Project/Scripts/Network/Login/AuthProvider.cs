@@ -10,14 +10,16 @@ namespace CocoDoogy.Network.Login
     public class AuthProvider
     {
         private FirebaseManager Firebase => FirebaseManager.Instance;
-        
-        private readonly string webClientID = "285118742247-qfbhhk07114e287uu9b7pcj8kk7brotf.apps.googleusercontent.com";
-        
+
+        private readonly string webClientID =
+            "285118742247-qfbhhk07114e287uu9b7pcj8kk7brotf.apps.googleusercontent.com";
+
         public event Action<FirebaseUser> OnLoginSuccess;
         public event Action<string> OnLoginFailed;
         public event Action OnLogout;
 
         #region Google 로그인 기능
+
         /// <summary>
         /// 구글 로그인을 하기위해서 파이어베이스와 연동하기 위한 초기화 단계
         /// </summary>
@@ -25,12 +27,10 @@ namespace CocoDoogy.Network.Login
         {
             GoogleSignIn.Configuration = new GoogleSignInConfiguration()
             {
-                WebClientId = webClientID,
-                RequestIdToken = true,
-                UseGameSignIn = false,
-                RequestEmail = true
+                WebClientId = webClientID, RequestIdToken = true, UseGameSignIn = false, RequestEmail = true
             };
         }
+
         /// <summary>
         /// 구글 로그인 기능
         /// </summary>
@@ -40,15 +40,15 @@ namespace CocoDoogy.Network.Login
             {
                 InitGoogleSignIn();
             }
-            
+
             try
             {
                 var googleUser = await GoogleSignIn.DefaultInstance.SignIn();
-                var credential = GoogleAuthProvider.GetCredential(googleUser.IdToken,null);
+                var credential = GoogleAuthProvider.GetCredential(googleUser.IdToken, null);
                 var authResult = await Firebase.Auth.SignInWithCredentialAsync(credential);
 
                 Firebase.User = authResult;
-                
+
                 OnLoginSuccess?.Invoke(Firebase.User);
             }
             catch (Exception ex)
@@ -57,17 +57,21 @@ namespace CocoDoogy.Network.Login
                 Debug.LogError($"Google Sign-In Exception: {ex.Message}");
             }
         }
+
         /// <summary>
         /// 로그인한 계정을 로그아웃하는 기능
         /// </summary>
         public void SignOut()
         {
+# if !UNITY_EDITOR
             GoogleSignIn.DefaultInstance.SignOut();
+# endif
             Firebase.Auth.SignOut();
             Firebase.User = null;
-            
+
             OnLogout?.Invoke();
         }
+
         /// <summary>
         /// 익명으로 로그인 하는 기능
         /// </summary>
@@ -85,6 +89,7 @@ namespace CocoDoogy.Network.Login
                 Debug.LogError($"Anonymous Sign-In Exception: {e.Message}");
             }
         }
+
         /// <summary>
         /// 익명으로 로그인한 계정을 구글과 연동하는 기능
         /// </summary>
@@ -96,24 +101,24 @@ namespace CocoDoogy.Network.Login
                 Debug.LogError("LinkGoogleAccount Error: 익명 사용자가 로그인하지 않았습니다.");
                 return false;
             }
-            
+
             if (GoogleSignIn.Configuration == null)
             {
                 InitGoogleSignIn();
             }
-            
+
             try
             {
                 GoogleSignIn.DefaultInstance.SignOut();
                 await Task.Delay(100);
-                
+
                 var googleUser = await GoogleSignIn.DefaultInstance.SignIn();
-                var credential = GoogleAuthProvider.GetCredential(googleUser.IdToken,null);
-                var authResult = await Firebase.Auth.CurrentUser.LinkWithCredentialAsync(credential); 
-                
+                var credential = GoogleAuthProvider.GetCredential(googleUser.IdToken, null);
+                var authResult = await Firebase.Auth.CurrentUser.LinkWithCredentialAsync(credential);
+
                 Firebase.User = authResult.User;
                 OnLoginSuccess?.Invoke(Firebase.User);
-                
+
                 return true;
             }
             catch (FirebaseException ex)
@@ -140,7 +145,7 @@ namespace CocoDoogy.Network.Login
                 return false;
             }
         }
+
         #endregion
-        
     }
 }

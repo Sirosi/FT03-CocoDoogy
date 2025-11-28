@@ -20,7 +20,7 @@ namespace CocoDoogy.Network
         /// </summary>
         /// <returns></returns>
         public static async Task<IDictionary<string, object>> ClearStageAsync(int theme, int level, int remainAP,
-            float clearTime, string saveJson)
+            int refillPoints, float clearTime, string saveJson)
         {
             var loading = FirebaseLoading.ShowLoading();
             try
@@ -29,11 +29,12 @@ namespace CocoDoogy.Network
                 {
                     { "theme", theme.Hex2() },
                     { "level", level.Hex2() },
-                    { "remainAP", remainAP },
                     { "clearTime", clearTime },
+                    { "remainAP", remainAP },
                     { "replayData", saveJson },
+                    { "refillPoints", refillPoints },
                 };
-                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("clearStage").CallAsync(data);
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("stageClear").CallAsync(data);
 
                 string json = JsonConvert.SerializeObject(result.Data);
                 return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);

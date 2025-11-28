@@ -56,7 +56,7 @@ namespace CocoDoogy.Network
                     Storage = FirebaseStorage.DefaultInstance;
                     Firestore = FirebaseFirestore.DefaultInstance;
                     Functions = FirebaseFunctions.GetInstance("asia-northeast3");
-
+                    
                     IsFirebaseReady = true;
                     OnFirebaseInitialized?.Invoke();
                 }
@@ -67,7 +67,7 @@ namespace CocoDoogy.Network
                 }
             });
         }
-
+        
         /// <summary>
         /// LoginUI 에서 OnFirebaseInitialized에 이벤트를 넣어야하는데 이벤트를 넣기 전, <br/>
         /// OnFirebaseInitialized?.Invoke() 부분이 실행될 수 있기 때문에 파악 후 이벤트 실행 or 넣기 

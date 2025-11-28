@@ -35,31 +35,11 @@ namespace CocoDoogy.UI.IntroAndLogin
         private void Awake()
         {
             startButton.interactable = false;
+            startButton.onClick.AddListener(ConvertLoginUI);
             ShakeTitleImage();
             BlickText();
         }
-
-        private void Start()
-        {
-            FirebaseManager.SubscribeOnFirebaseInitialized(RegisterStartButtonEvent);
-        }
-
-        private void RegisterStartButtonEvent()
-        {
-            startButton.onClick.RemoveAllListeners();
-
-            if (FirebaseManager.Instance.Auth.CurrentUser != null)
-                startButton.onClick.AddListener(GoLobby);
-            else
-                startButton.onClick.AddListener(ConvertLoginUI);
-        }
-
-        private void GoLobby()
-        {
-            Debug.Log("GoLobby");
-            SceneManager.LoadScene("Lobby");
-        }
-
+        
         /// <summary>
         /// 맨 처음 화면을 클릭하면 TitleImage를 한번 위 아래로 흔들며 강조하는 메서드
         /// </summary>
