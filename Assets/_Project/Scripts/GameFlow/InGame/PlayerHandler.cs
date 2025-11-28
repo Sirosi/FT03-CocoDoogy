@@ -14,7 +14,7 @@ namespace CocoDoogy.GameFlow.InGame
     public class PlayerHandler: Singleton<PlayerHandler>
     {
         // 플레이어가 인게임에 들어와서 행동을 했는지 여부
-        public static bool IsBehaviour = false;
+        public static bool IsBehaviour { get; set; } = false;
 
         public static int SandCount{ get; set; } = 0;
 
@@ -181,6 +181,41 @@ namespace CocoDoogy.GameFlow.InGame
         }
 
         /// <summary>
+        /// 토네이도용 이동방식
+        /// </summary>
+        /// <param name="gridPos"></param>
+        public static void Tornado(Vector2Int gridPos)
+        {
+            if (!IsValid) return;
+
+            Instance.lockBehaviour = true;
+            
+            Instance.transform.parent = null;
+            GridPos = gridPos;
+            DOTween.Kill(Instance, true);
+
+            Sequence sequence = DOTween.Sequence();
+            sequence.SetId(Instance);
+            sequence.Append(Instance.transform.DOMoveY(10, Constants.MOVE_DURATION));
+            sequence.Append(Instance.transform.DOMove(GridPos.ToWorldPos() + Vector3.up * 10, Constants.MOVE_DURATION));
+            sequence.Append(Instance.transform.DOMoveY(0, Constants.MOVE_DURATION));
+            sequence.OnComplete(OnBehaviourCompleted);
+            sequence.Play();
+
+            // 추후 Move 및 Slide에서 사용할지 고민 좀 해봐야할 듯 함
+            Vector2Int? preGravityButton = null;
+            if (HexTile.GetTile(GridPos)?.HasPiece(PieceType.GravityButton, out _) ?? false)
+            {
+                preGravityButton = GridPos;
+            }
+            if (preGravityButton.HasValue) // 실제 기존 발판 리셋하는 곳
+            {
+                GimmickExecutor.ExecuteFromTrigger(preGravityButton
+                    .Value); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
+            }
+        }
+
+        /// <summary>
         /// 보행으로 이동
         /// </summary>
         /// <param name="gridPos"></param>
@@ -213,10 +248,13 @@ namespace CocoDoogy.GameFlow.InGame
             Instance.lockBehaviour = true;
 
             Instance.transform.parent = null;
+
+            float distance = Vector3.Distance(Instance.transform.position, gridPos.ToWorldPos());
+
             DOTween.Kill(Instance, true);
             GridPos = gridPos;
             Instance.anim.ChangeAnim(AnimType.Slide);
-            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Instance)
+            Instance.transform.DOMove(gridPos.ToWorldPos(), Constants.SLIDE_PER_DURATION * distance).SetId(Instance)
                 .OnComplete(OnBehaviourCompleted);
         }
 

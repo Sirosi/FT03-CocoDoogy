@@ -23,8 +23,7 @@ namespace CocoDoogy.UI.InGame
 
         private void OnMapDrawn(StageData stage)
         {
-            if(!stage) return;
-            text.SetText($"{stage.theme.ToName()} - {stage.index}");
+            text.SetText(stage ? $"{stage.theme.ToName()} - {stage.index}" : "테스트맵");
         }
     }
 }

@@ -31,13 +31,13 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
 
         public override void Execute()
         {
-            PlayerHandler.Deploy(NextPos);
+            PlayerHandler.Tornado(NextPos);
             SfxManager.PlaySfx(SfxType.Weather_Wind);
         }
 
         public override void Undo()
         {
-            PlayerHandler.Deploy(PrePos);
+            PlayerHandler.Tornado(PrePos);
         }
     }
 }
