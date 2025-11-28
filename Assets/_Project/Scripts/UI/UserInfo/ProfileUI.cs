@@ -1,10 +1,14 @@
 using CocoDoogy.CameraSwiper;
+using CocoDoogy.Data;
 using CocoDoogy.Network;
-using CocoDoogy.UI;
+using CocoDoogy.Network.Login;
+using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.StageSelect;
+using Firebase.Auth;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace CocoDoogy.UI.UserInfo
@@ -16,16 +20,48 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private TextMeshProUGUI recordText;
         [SerializeField] private Button closeButton;
 
+        [SerializeField] private Button googleLinkButton;
+        [SerializeField] private Button logOutButton;
+
+        private LoginViewModel loginVM;
+        
         private FirebaseManager Firebase => FirebaseManager.Instance;
 
         private void Awake()
         {
             closeButton.onClick.AddListener(ClosePanel);
+            Init();
         }
 
         private void OnEnable()
         {
             _ = RefreshUIAsync();
+        }
+        
+        private void Init()
+        {
+            var authProvider = new AuthProvider();
+            loginVM = new LoginViewModel(authProvider);
+
+            loginVM.OnLoggedOut += LogOut;
+            loginVM.OnErrorChanged += LinkError;
+            
+            if (FirebaseManager.Instance.Auth.CurrentUser.IsAnonymous)
+            {
+                googleLinkButton.gameObject.SetActive(true);
+                googleLinkButton.onClick.AddListener(CheckGoogleLinkAsync);
+            }
+            logOutButton.onClick.AddListener(() => loginVM.SignOut());
+        }
+
+        private void LinkError(string errorMessage)
+        {
+            MessageDialog.ShowMessage("연동 실패", errorMessage,DialogMode.Confirm,null);
+        }
+
+        private void LogOut()
+        {
+            SceneManager.LoadScene("Intro");
         }
         
         public override void ClosePanel()
@@ -34,7 +70,16 @@ namespace CocoDoogy.UI.UserInfo
             PageCameraSwiper.IsSwipeable = true;
         }
 
-
+        private async void CheckGoogleLinkAsync()
+        {
+            bool success = await loginVM.LinkGoogleAccountAsync();
+            
+            if (!success) return;
+            
+            googleLinkButton.gameObject.SetActive(false);
+            _ = RefreshUIAsync();
+        }
+        
         private async Task RefreshUIAsync()
         {
             var docRef = Firebase.Firestore
@@ -45,9 +90,9 @@ namespace CocoDoogy.UI.UserInfo
             if (snapshot.Exists)
             {
                 var data = snapshot.ToDictionary();
-                nicknameText.text = data["nickName"].ToString();
+                nicknameText.text = $"닉네임 : {data["nickName"]}";
                 recordText.text =
-                    $"{StageSelectManager.LastClearedStage.theme} 테마 {StageSelectManager.LastClearedStage.level} 스테이지";
+                    $"스테이지 : {StageSelectManager.LastClearedStage.theme} 테마 - {StageSelectManager.LastClearedStage.level}";
             }
             else
             {

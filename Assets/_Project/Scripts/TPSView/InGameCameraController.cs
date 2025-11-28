@@ -61,14 +61,20 @@ namespace CocoDoogy.TPSView
         private int lastTouchcount = 0;
         private void Move()
         {
-            if(TouchSystem.TouchCount > 0 && lastTouchcount != TouchSystem.TouchCount) // Touch Began
+            //==================
+            // Touch Began
+            //==================
+            if(TouchSystem.TouchCount > 0 && lastTouchcount != TouchSystem.TouchCount)
             {
                 hasMoving = true;
                 lastTouchcount = TouchSystem.TouchCount;
                 prevPos = TouchSystem.TouchAverage;
                 return;
             }
-            else if(hasMoving && TouchSystem.TouchCount <= 0) // Touch Ended
+            //==================
+            // Touch Ended
+            //==================
+            else if(hasMoving && TouchSystem.TouchCount <= 0)
             {
                 hasMoving = false;
                 lastTouchcount = TouchSystem.TouchCount;
@@ -76,6 +82,9 @@ namespace CocoDoogy.TPSView
             }
 
 
+            //==================
+            // Touch ing
+            //==================
             if(!hasMoving) return;
             Vector2 currentPos = TouchSystem.TouchAverage;
             Vector2 delta = currentPos - prevPos;
@@ -95,6 +104,9 @@ namespace CocoDoogy.TPSView
         private float preDistance = 0f;
         private void Zoom()
         {
+            //==================
+            // Mouse Zoom
+            //==================
             if(TouchSystem.CurrentInputType == TouchSystem.InputType.Mouse) // Mouse Scroll
             {
                 float scroll = Mouse.current.scroll.ReadValue().y;
@@ -108,6 +120,9 @@ namespace CocoDoogy.TPSView
             }
 
 
+            //==================
+            // TouchScreen Zoom
+            //==================
             if(!hasZooming && TouchSystem.TouchCount >= 2) // Touch Began
             {
                 hasZooming = true;
@@ -125,7 +140,7 @@ namespace CocoDoogy.TPSView
             float delta = currentDistance - preDistance;
             preDistance = currentDistance;
 
-            mainCamera.fieldOfView -= delta / Screen.height * zoomSpeed;
+            mainCamera.fieldOfView -= delta * zoomSpeed;
             mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView, 20, 80);
         }
         #endregion

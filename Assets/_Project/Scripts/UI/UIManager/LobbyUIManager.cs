@@ -48,7 +48,8 @@ namespace CocoDoogy.UI.UIManager
             shopButton.onClick.AddListener(OnClickShopButton);
             startButton.onClick.AddListener(OnStartButtonClicked);
             
-            StartCoroutine(FirebaseManager.Instance.UpdateLocalTimerCoroutine());
+            // StartCoroutine(FirebaseManager.Instance.UpdateTicketCoroutine());
+            _ = FirebaseManager.Instance.RechargeTicketAsync();
         }
 
         private async void OnEnable()

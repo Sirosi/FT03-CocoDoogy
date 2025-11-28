@@ -16,7 +16,8 @@ namespace CocoDoogy.UI.Shop
         [SerializeField] private TextMeshProUGUI itemName;
         [SerializeField] private TextMeshProUGUI itemPrice;
         [SerializeField] private CommonButton purchaseButton;
-        
+
+        [SerializeField] private bool isCountable = false;
         [SerializeField] private bool isSaleForCash = false;
         public ItemData ItemData => itemData;
 
@@ -39,6 +40,6 @@ namespace CocoDoogy.UI.Shop
         /// 버튼 이벤트 구독하는 메서드
         /// </summary>
         /// <param name="action"></param>
-        public void OnClickSubscriptionEvent(UnityAction<ItemData, bool> action) => purchaseButton.onClick.AddListener(() => action(itemData, isSaleForCash));
+        public void OnClickSubscriptionEvent(UnityAction<ItemData, bool> action) => purchaseButton.onClick.AddListener(() => action(itemData, isCountable));
     }
 }

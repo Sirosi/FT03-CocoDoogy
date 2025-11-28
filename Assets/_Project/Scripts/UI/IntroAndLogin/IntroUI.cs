@@ -1,7 +1,11 @@
+using CocoDoogy.Network;
 using CocoDoogy.UI.UIManager;
 using DG.Tweening;
+using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace CocoDoogy.UI.IntroAndLogin
@@ -30,11 +34,12 @@ namespace CocoDoogy.UI.IntroAndLogin
         
         private void Awake()
         {
-            ShakeTitleImage();
+            startButton.interactable = false;
             startButton.onClick.AddListener(ConvertLoginUI);
+            ShakeTitleImage();
             BlickText();
         }
-
+        
         /// <summary>
         /// 맨 처음 화면을 클릭하면 TitleImage를 한번 위 아래로 흔들며 강조하는 메서드
         /// </summary>
@@ -47,7 +52,7 @@ namespace CocoDoogy.UI.IntroAndLogin
 
             seq.Append(rect.DOAnchorPosY(originalPos.y + moveAmount, titleDuration))
                 .Append(rect.DOAnchorPosY(originalPos.y - moveAmount, titleDuration))
-                .Append(rect.DOAnchorPosY(originalPos.y, titleDuration));
+                .Append(rect.DOAnchorPosY(originalPos.y, titleDuration)).OnComplete(() => startButton.interactable = true);
         }
 
         /// <summary>

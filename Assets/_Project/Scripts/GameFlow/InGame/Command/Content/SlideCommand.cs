@@ -12,30 +12,32 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         
         
         /// <summary>
-        /// 움직이는 방향
+        /// 이전 위치
         /// </summary>
-        public HexDirection Dir = HexDirection.East;
+        public Vector2Int PrePos = Vector2Int.zero;
+        /// <summary>
+        /// 다음 위치
+        /// </summary>
+        public Vector2Int NextPos = Vector2Int.zero;
 
 
         public SlideCommand(object param): base(CommandType.Slide, param)
         {
-            Dir = (HexDirection)param;
+            var data = ((Vector2Int, Vector2Int))param;
+            PrePos = data.Item1;
+            NextPos = data.Item2;
         }
 
 
         public override void Execute()
         {
-            PlayerHandler.LookDirection = Dir;
-            Vector2Int nextPos = PlayerHandler.GridPos.GetDirectionPos(Dir);
-            PlayerHandler.Slide(nextPos);
             SfxManager.PlaySfx(SfxType.Interaction_Sliding);
+            PlayerHandler.Slide(NextPos);
         }
 
         public override void Undo()
         {
-            PlayerHandler.LookDirection = Dir;
-            Vector2Int prePos = PlayerHandler.GridPos.GetDirectionPos(Dir.GetMirror());
-            PlayerHandler.Slide(prePos);
+            PlayerHandler.Slide(PrePos);
         }
     }
 }

@@ -3,9 +3,11 @@ using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
+using DG.Tweening;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CocoDoogy.UI.InGame
 {
@@ -47,6 +49,8 @@ namespace CocoDoogy.UI.InGame
             
             DataManager.Instance.CurrentItem[itemData] -= 1;
             Button.interactable = false;
+            var buttonColor = GetComponent<Image>();
+            buttonColor.DOColor(new Color(0.2f, 0.2f, 0.2f), 0.2f);
             
             switch (itemData.effect)
             {

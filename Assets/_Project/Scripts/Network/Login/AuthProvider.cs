@@ -2,6 +2,7 @@ using Firebase;
 using Firebase.Auth;
 using Google;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace CocoDoogy.Network.Login
@@ -87,13 +88,13 @@ namespace CocoDoogy.Network.Login
         /// <summary>
         /// 익명으로 로그인한 계정을 구글과 연동하는 기능
         /// </summary>
-        public async void LinkGoogleAccount()
+        public async Task<bool> LinkGoogleAccountAsync()
         {
             if (Firebase.Auth.CurrentUser == null || !Firebase.Auth.CurrentUser.IsAnonymous)
             {
                 OnLoginFailed?.Invoke("현재 로그인한 익명의 사용자가 없습니다.");
                 Debug.LogError("LinkGoogleAccount Error: 익명 사용자가 로그인하지 않았습니다.");
-                return;
+                return false;
             }
             
             if (GoogleSignIn.Configuration == null)
@@ -103,12 +104,17 @@ namespace CocoDoogy.Network.Login
             
             try
             {
+                GoogleSignIn.DefaultInstance.SignOut();
+                await Task.Delay(100);
+                
                 var googleUser = await GoogleSignIn.DefaultInstance.SignIn();
                 var credential = GoogleAuthProvider.GetCredential(googleUser.IdToken,null);
                 var authResult = await Firebase.Auth.CurrentUser.LinkWithCredentialAsync(credential); 
                 
                 Firebase.User = authResult.User;
                 OnLoginSuccess?.Invoke(Firebase.User);
+                
+                return true;
             }
             catch (FirebaseException ex)
             {
@@ -121,14 +127,17 @@ namespace CocoDoogy.Network.Login
                 }
                 else
                 {
-                    OnLoginFailed?.Invoke(ex.Message);
+                    OnLoginFailed?.Invoke("이 Google 계정은 이미 다른 사용자와 연결되어있습니다.");
                     Debug.LogError($"Google Link Exception: {ex.Message}");
                 }
+
+                return false;
             }
             catch (Exception ex)
             {
-                OnLoginFailed?.Invoke(ex.Message);
+                OnLoginFailed?.Invoke("이 Google 계정은 이미 다른 사용자와 연결되어있습니다.");
                 Debug.LogError($"Google Link Exception: {ex.Message}");
+                return false;
             }
         }
         #endregion
