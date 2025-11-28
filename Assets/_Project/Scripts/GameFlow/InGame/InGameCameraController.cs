@@ -93,7 +93,7 @@ namespace CocoDoogy.GameFlow.InGame
         private bool hasMoving = false;
         private Vector2 pivotTouchPos = Vector2.zero;
         private Vector3 pivotCameraPos = Vector3.zero;
-        private int lastTouchcount = 0;
+        private int lastTouchCount = 0;
         
         
         /// <summary>
@@ -104,10 +104,10 @@ namespace CocoDoogy.GameFlow.InGame
             //==================
             // Touch Began
             //==================
-            if(TouchSystem.TouchCount > 0 && lastTouchcount != TouchSystem.TouchCount)
+            if(TouchSystem.TouchCount > 0 && lastTouchCount != TouchSystem.TouchCount)
             {
                 hasMoving = true;
-                lastTouchcount = TouchSystem.TouchCount;
+                lastTouchCount = TouchSystem.TouchCount;
                 pivotTouchPos = TouchSystem.TouchAverage;
                 pivotCameraPos = cameraPivot.transform.position;
                 return;
@@ -118,7 +118,7 @@ namespace CocoDoogy.GameFlow.InGame
             else if(hasMoving && TouchSystem.TouchCount <= 0)
             {
                 hasMoving = false;
-                lastTouchcount = TouchSystem.TouchCount;
+                lastTouchCount = TouchSystem.TouchCount;
                 return;
             }
 
@@ -183,8 +183,8 @@ namespace CocoDoogy.GameFlow.InGame
             }
 
             if(!hasZooming) return;
-            float delta = TouchSystem.DistanceAverage / pivotDistance;
-            float fov = pivotFov * delta;
+            float rate = pivotDistance / TouchSystem.DistanceAverage;
+            float fov = pivotFov * rate;
             
             if (Mathf.Approximately(fov, mainCamera.fieldOfView)) return;
             mainCamera.fieldOfView = Mathf.Clamp(fov, 20, 80);

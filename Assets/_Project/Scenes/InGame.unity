@@ -1172,7 +1172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 051f9ea74942ace45872ab8831ac36e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  save: 
 --- !u!114 &1530506121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1187,8 +1186,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraPivot: {fileID: 623703541}
   mainCamera: {fileID: 348081548}
-  moveSpeed: 0.5
-  zoomSpeed: 10
 --- !u!1 &2118283654
 GameObject:
   m_ObjectHideFlags: 0
