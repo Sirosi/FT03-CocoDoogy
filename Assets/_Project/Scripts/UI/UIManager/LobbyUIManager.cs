@@ -49,6 +49,7 @@ namespace CocoDoogy.UI.UIManager
             startButton.onClick.AddListener(OnStartButtonClicked);
             
             // StartCoroutine(FirebaseManager.Instance.UpdateTicketCoroutine());
+            _ = FirebaseManager.Instance.RechargeTicketAsync();
         }
 
         private async void OnEnable()
