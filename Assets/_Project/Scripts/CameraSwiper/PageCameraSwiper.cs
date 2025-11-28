@@ -55,13 +55,22 @@ namespace CocoDoogy.CameraSwiper
 
         public static event Action<Theme> OnEndPageChanged; // 페이지 전환 완료 시 호출
 
+
         void Start()
         {
-            MoveToPageInstant(currentIndex);
+            OnEndPageChanged += OnThemeChanged;
+            if(PlayerPrefs.GetInt(Constants.Prefs.LOBBY_THEME) == 0)
+            {
+                PlayerPrefs.SetInt(Constants.Prefs.LOBBY_THEME, (int)Theme.Forest);
+            }
+
+            Theme theme = (Theme)PlayerPrefs.GetInt(Constants.Prefs.LOBBY_THEME);
+            MoveToPageInstant(currentIndex = theme.ToIndex());
         }
 
         void OnDestroy()
         {
+            OnEndPageChanged -= OnThemeChanged;
             DOTween.Kill(mainCamera);
         }
 
@@ -70,17 +79,8 @@ namespace CocoDoogy.CameraSwiper
             Swipe();
         }
 
-        private Theme GetThemeByIndex(int index)
-        {
-            switch (index)
-            { // TODO: 여기 다 뜯어 고쳐야 함
-                case 0: return Theme.Forest;
-                case 1: return Theme.Water;
-                case 2: return Theme.Snow;
-                case 3: return Theme.Sand;
-                default: return Theme.None;
-            }
-        }
+
+        private Theme GetThemeByIndex(int index) => index < 0 ? Theme.None : (Theme)(1 << index);
 
         private void Swipe()
         {
@@ -192,6 +192,12 @@ namespace CocoDoogy.CameraSwiper
         {
             for (int i = 0; i < pages.Length; i++)
                 pages[i].SetActive(i == activeIndex);
+        }
+        
+
+        private void OnThemeChanged(Theme theme)
+        {
+            PlayerPrefs.SetInt(Constants.Prefs.LOBBY_THEME, (int)theme);
         }
     }
 }

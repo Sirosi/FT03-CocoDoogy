@@ -29,11 +29,11 @@ namespace CocoDoogy.Network
                 {
                     { "theme", theme.Hex2() },
                     { "level", level.Hex2() },
-                    { "remainAP", remainAP },
                     { "clearTime", clearTime },
+                    { "remainAP", remainAP },
                     { "replayData", saveJson },
                 };
-                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("clearStage").CallAsync(data);
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("stageClear").CallAsync(data);
 
                 string json = JsonConvert.SerializeObject(result.Data);
                 return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
