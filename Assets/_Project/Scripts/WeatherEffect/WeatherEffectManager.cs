@@ -73,6 +73,11 @@ namespace CocoDoogy.WeatherEffect
             }
         }
         
+        /// <summary>
+        /// 이펙트를 키고 끕니다.
+        /// </summary>
+        /// <param name="weatherType"></param>
+        /// <param name="duration"></param>
         public static void PlayEffect(WeatherType weatherType, float duration = 3f)
         {
             if (!HasInstance) return;
@@ -86,6 +91,7 @@ namespace CocoDoogy.WeatherEffect
             Instance.PlayEffectInternal(weatherType, duration);
         }
 
+        #region 내부 로직
         // 코루틴용 메서드
         private void PlayEffectInternal(WeatherType weatherType, float duration)
         {
@@ -227,5 +233,6 @@ namespace CocoDoogy.WeatherEffect
             
             effectObject.SetActive(false);
         }
+        #endregion
     }
 }
