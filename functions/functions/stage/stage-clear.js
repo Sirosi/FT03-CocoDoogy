@@ -11,9 +11,9 @@ exports.stageClear = onCall(fnConfig, async (request) => {
     if (!uid) return { success: false, reason: "로그인이 필요합니다." };
 
     const data = request.data || {};
-    const { theme, level, clearTime, remainAP, replayData } = data;
+    const { theme, level, clearTime, remainAP, replayData , refillPoints} = data;
 
-    if (!theme || !level || clearTime === undefined || remainAP === undefined || replayData === undefined) {
+    if (!theme || !level || clearTime === undefined || remainAP === undefined || replayData === undefined || refillPoints === undefined) {
         return { success: false, reason: "필수 파라미터가 누락되었습니다." };
     }
 
@@ -43,7 +43,8 @@ exports.stageClear = onCall(fnConfig, async (request) => {
             uid,
             clearTime,
             remainAP,
-            replayId
+            replayId,
+            refillPoints,
         );
 
         return { success: true };

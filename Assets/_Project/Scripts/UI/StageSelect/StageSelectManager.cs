@@ -33,7 +33,7 @@ namespace CocoDoogy.UI.StageSelect
 
         private Theme nowTheme = Theme.None;
         private Image[] stageIcons;
-
+        public static StageData CurrentStageData { get; set; }
 
         protected override void Awake()
         {
@@ -81,7 +81,7 @@ namespace CocoDoogy.UI.StageSelect
         public static void ShowReadyView(StageData data)
         {
             if (!Instance) return;
-
+            CurrentStageData =  data;
             Instance.stageInfoPanel.Show(data);
         }
     }
