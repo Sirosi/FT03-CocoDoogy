@@ -20,7 +20,7 @@ namespace CocoDoogy.UI.StageSelect
         [Header("Stage Information")]
         [SerializeField] private StageInfoPage commonInfoPage;
         [SerializeField] private StageInfoPage detailInfoPage;
-        
+        [SerializeField] private StageRankingPage rankingPage;
         /*-[Header("Ranks")]
         [SerializeField] private GameObject[] ranks;
         private TextMeshProUGUI[] rankTexts;
@@ -63,6 +63,7 @@ namespace CocoDoogy.UI.StageSelect
             BgmManager.PrepareStageBgm(data.theme);
             
             commonInfoPage.Show(stageData);
+            rankingPage.Show(stageData);
             detailInfoPage.Close();
         }
         

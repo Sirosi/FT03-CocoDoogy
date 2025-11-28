@@ -19,7 +19,7 @@ namespace CocoDoogy.Network
             dotTween?.Kill();
         }
 
-        public void Show()
+        private void Show()
         {
             PlayAnimation();
         }

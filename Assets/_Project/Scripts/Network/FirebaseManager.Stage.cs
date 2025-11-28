@@ -20,7 +20,7 @@ namespace CocoDoogy.Network
         /// </summary>
         /// <returns></returns>
         public static async Task<IDictionary<string, object>> ClearStageAsync(int theme, int level, int remainAP,
-            float clearTime, string saveJson)
+            int refillPoints, float clearTime, string saveJson)
         {
             var loading = FirebaseLoading.ShowLoading();
             try
@@ -32,6 +32,7 @@ namespace CocoDoogy.Network
                     { "clearTime", clearTime },
                     { "remainAP", remainAP },
                     { "replayData", saveJson },
+                    { "refillPoints", refillPoints },
                 };
                 HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("stageClear").CallAsync(data);
 

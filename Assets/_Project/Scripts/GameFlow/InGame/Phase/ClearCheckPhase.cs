@@ -19,10 +19,11 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             {
                 float time = InGameManager.Timer.NowTime;
                 int remainAp = InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints;
+                int refillPoints = InGameManager.RefillPoints;
                 string saveJson = CommandManager.Save();
                 
                 _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex() + 1,
-                    InGameManager.Stage.index, remainAp, time, saveJson);
+                    InGameManager.Stage.index, remainAp, refillPoints, time, saveJson);
                 
                 ItemHandler.UseItem();
                 

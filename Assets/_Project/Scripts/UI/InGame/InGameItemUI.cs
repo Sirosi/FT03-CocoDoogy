@@ -40,12 +40,12 @@ namespace CocoDoogy.UI.InGame
             // 아이템이 1개 이상 존재 하면 사용할 수 있도록
             if (DataManager.Instance.CurrentItem[itemData] > 0)
             {
-                InfoDialog.ShowInfo("아이템 정보", "아이템 설명", itemData.itemDescription, itemData.itemSprite, DialogMode.YesNo,
+                InfoDialog.ShowInfo("아이템 정보", itemData.itemName, itemData.itemDescription, itemData.itemSprite, DialogMode.YesNo,
                     (type => button.UseItem(type, itemData)));
             }
             else // 아이템이 존재하지 않으면 구매할 수 있도록
             {
-                InfoDialog.ShowInfo("아이템 정보", "아이템 설명", itemData.itemDescription, itemData.itemSprite, DialogMode.Confirm,
+                InfoDialog.ShowInfo("아이템 정보", itemData.itemName, itemData.itemDescription, itemData.itemSprite, DialogMode.Confirm,
                     (type => _ = button.PurchaseAsync(type, itemData)));
             }
         }
