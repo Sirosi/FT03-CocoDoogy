@@ -27,7 +27,8 @@ public class ToyFindMiniGame : MiniGameBase
 
         protected override void ShowRemainCount()
         {
-            remainCount.text = "남은 장난감: "+toies.Count.ToString();
+            remainCount.gameObject.SetActive(true);
+            remainCount.text = toies.Count.ToString()+$"/{toyCount}";
         }
 
         protected override void OnOpenInit()
@@ -40,6 +41,7 @@ public class ToyFindMiniGame : MiniGameBase
 
         protected override void Disable()
         {
+            remainCount.gameObject.SetActive(false);
             spawnedTile.Clear();
             foreach(Transform child in sandTileParent)
             {

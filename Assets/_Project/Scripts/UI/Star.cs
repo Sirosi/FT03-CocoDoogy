@@ -16,6 +16,7 @@ namespace CocoDoogy.UI
         private Vector2 originalScale;
         
         private float scaleUp = 1.3f;
+        private float scaleDown = 0.7f;
         private float duration = 0.3f;
         
 
@@ -40,7 +41,8 @@ namespace CocoDoogy.UI
              rectTransform.DOKill();
              image.sprite = brightStarSprite;
              Sequence seq = DOTween.Sequence();
-             seq.Append(rectTransform.DOScale(scaleUp, duration).SetEase(Ease.Linear))
+             seq.Append(rectTransform.DOScale(scaleUp, duration).SetEase(Ease.OutQuad))
+                 .Append(rectTransform.DOScale(scaleDown, duration).SetEase(Ease.OutQuad))
                  .Append(rectTransform.DOScale(originalScale, duration))
                  .OnComplete(() =>
                  {

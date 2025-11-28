@@ -1,19 +1,15 @@
 using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using CocoDoogy.UI.Popup;
+using DG.Tweening;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CocoDoogy.MiniGame
 {
-    public enum GetBackGroundType
-    {
-        InDoor,
-        OutDoor,
-        Fixed
-    }
     public abstract class MiniGameBase : MonoBehaviour
     {
         [Tooltip("해당 미니게임 등장 가능 계절 테마")]
@@ -26,8 +22,9 @@ namespace CocoDoogy.MiniGame
         [SerializeField] private string miniGameID;
         public TutorialExplainData tutorialExplainData;
 
-        public string  MiniGameID => miniGameID;
+        [SerializeField] private CompletePanel  completePanel;
         
+        public string  MiniGameID => miniGameID;
         
         protected Action remainCountCallback;
         protected Action clearCallback;
@@ -68,17 +65,24 @@ namespace CocoDoogy.MiniGame
             if (!IsClear()) return;
             if (!hasStarted) return;
             hasStarted = false;
+            // MessageDialog.ShowMessage("미니게임 클리어", "보상을 받으시오", DialogMode.Confirm, _ => 
+            // {
+            // });
 
             SfxManager.PlaySfx(SfxType.UI_SuccessMission);
-            MessageDialog.ShowMessage("미니게임 클리어", "보상을 받으시오", DialogMode.Confirm, _ => 
+            completePanel.Show(() =>
             {
                 Disable();
                 gameObject.SetActive(false);
                 MiniGameManager.Instance.BackGround.SetActive(false);
+                MiniGameManager.Instance.LetterBoxd.SetActive(false);
                 clearCallback?.Invoke();
+                completePanel.Hide();
             });
 
         }
+
+        
         
         /// <summary>
         /// 클리어까지 남은 진행도를 표시
@@ -108,5 +112,6 @@ namespace CocoDoogy.MiniGame
         /// 미니게임 초기화
         /// </summary>
         protected abstract void Disable();
+
     }
 }
