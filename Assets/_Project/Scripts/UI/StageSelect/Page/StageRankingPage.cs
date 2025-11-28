@@ -1,5 +1,8 @@
+using CocoDoogy.Data;
 using CocoDoogy.Network;
+using CocoDoogy.UI.Friend;
 using CocoDoogy.UI.StageSelect.Item;
+using Lean.Pool;
 using UnityEngine;
 
 namespace CocoDoogy.UI.StageSelect.Page
@@ -8,17 +11,28 @@ namespace CocoDoogy.UI.StageSelect.Page
     {
         [SerializeField] private RankItem prefab;
         [SerializeField] private RectTransform container;
+        
+        protected override async void OnShowPage()
+        {
+            foreach (Transform child in container)
+            {
+                LeanPool.Despawn(child.gameObject);
+            }
+            var ranking = await FirebaseManager.GetRanking((StageData.theme.ToIndex() + 1).Hex2(), StageData.index.Hex2());
 
-        private void OnEnable()
-        {
-            _ = FirebaseManager.GetRanking((StageData.theme.ToIndex() + 1).Hex2(), StageData.index.Hex2());
-        }
-        protected override void OnShowPage()
-        {
-            // _ = FirebaseManager.GetRanking("01", "01");
-            // TODO : 페이지가 열렸을 때 해당 스테이지의 1등부터 10등 까지의 랭킹 정보를 띄워야 함.
-            // RankItem rankItem = Instantiate(prefab, container);
-            // rankItem.Init("#1","닉네임","0/1","1","1.5");
+            foreach (var kvp in ranking)
+            {
+                RankData rank = kvp.Value;
+                
+                var rankItem = LeanPool.Spawn(prefab, container);
+                rankItem.GetComponent<RankItem>().Init(rank.rank.ToString(),
+                    rank.nickname,
+                    rank.refillPoints.ToString(),
+                    rank.remainAP,
+                    rank.clearTime.ToString(),
+                    rank.replayId);
+            }
+            
         }
     }
 }
