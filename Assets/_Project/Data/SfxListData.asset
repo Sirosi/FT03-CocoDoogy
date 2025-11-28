@@ -400,12 +400,20 @@ MonoBehaviour:
   - type: 49
     eventReference:
       Guid:
+        Data1: -1849949739
+        Data2: 1311135694
+        Data3: 1675256765
+        Data4: 1220435265
+      Path: event:/SFX/UI/Reset
+  - type: 50
+    eventReference:
+      Guid:
         Data1: -466790381
         Data2: 1083001024
         Data3: 1739776697
         Data4: 352098150
       Path: event:/SFX/Emote/Positive
-  - type: 50
+  - type: 51
     eventReference:
       Guid:
         Data1: 1357268756
@@ -413,7 +421,7 @@ MonoBehaviour:
         Data3: 910332082
         Data4: 1423735083
       Path: event:/SFX/Emote/Neutral
-  - type: 51
+  - type: 52
     eventReference:
       Guid:
         Data1: -1621085955
@@ -421,7 +429,7 @@ MonoBehaviour:
         Data3: 684788632
         Data4: -1032527471
       Path: event:/SFX/Emote/Negative
-  - type: 52
+  - type: 53
     eventReference:
       Guid:
         Data1: 1453845704
@@ -429,7 +437,7 @@ MonoBehaviour:
         Data3: 1074665638
         Data4: -1505693045
       Path: event:/SFX/Item/Eating
-  - type: 53
+  - type: 54
     eventReference:
       Guid:
         Data1: 98275391
@@ -437,7 +445,7 @@ MonoBehaviour:
         Data3: 680341935
         Data4: -2037559477
       Path: event:/SFX/Item/TentDrop
-  - type: 54
+  - type: 55
     eventReference:
       Guid:
         Data1: 594341088
@@ -445,7 +453,7 @@ MonoBehaviour:
         Data3: 877106570
         Data4: -1713391213
       Path: event:/SFX/Item/Undo
-  - type: 55
+  - type: 56
     eventReference:
       Guid:
         Data1: 466490915
@@ -453,7 +461,7 @@ MonoBehaviour:
         Data3: -540361584
         Data4: -1574759060
       Path: event:/SFX/Item/Tent
-  - type: 56
+  - type: 57
     eventReference:
       Guid:
         Data1: -1319903844
@@ -461,7 +469,7 @@ MonoBehaviour:
         Data3: 830194830
         Data4: 317347031
       Path: event:/SFX/Item/Recovery
-  - type: 57
+  - type: 58
     eventReference:
       Guid:
         Data1: -1508285114
@@ -469,7 +477,7 @@ MonoBehaviour:
         Data3: -337316677
         Data4: 279204905
       Path: event:/SFX/Item/RestorePoint
-  - type: 58
+  - type: 59
     eventReference:
       Guid:
         Data1: 959362011
@@ -477,7 +485,7 @@ MonoBehaviour:
         Data3: -1855122812
         Data4: -2017158413
       Path: event:/SFX/Item/DogSleeping
-  - type: 59
+  - type: 60
     eventReference:
       Guid:
         Data1: -1012921921
@@ -485,7 +493,7 @@ MonoBehaviour:
         Data3: 1087699333
         Data4: 1877176503
       Path: event:/SFX/Loop/Detecting
-  - type: 60
+  - type: 61
     eventReference:
       Guid:
         Data1: -1830622457

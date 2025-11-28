@@ -65,6 +65,7 @@ namespace CocoDoogy.Audio
         UI_ClearStar1,
         UI_ClearStar2,
         UI_ClearStar3,
+        UI_Reset,
         
         //감정표현 계열 - event:/Sfx/Emote/
         Emote_Positive,
