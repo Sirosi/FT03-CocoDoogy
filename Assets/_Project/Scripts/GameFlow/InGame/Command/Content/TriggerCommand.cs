@@ -14,14 +14,14 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
 
 
         [SerializeField] private Vector2Int gp = Vector2Int.zero;
-        [SerializeField] private bool un = false;
+        [SerializeField] private byte un = 0;
         
         
         /// <summary>
         /// 트리거 위치
         /// </summary>
         public Vector2Int GridPos { get => gp; private set => gp = value; }
-        public bool IsUnInteract { get => un; private set => un = value; }
+        public bool IsUnInteract { get => un == 1; private set => un = value ? (byte)1 : (byte)0; }
 
 
         public TriggerCommand(object param): base(CommandType.Trigger, param)

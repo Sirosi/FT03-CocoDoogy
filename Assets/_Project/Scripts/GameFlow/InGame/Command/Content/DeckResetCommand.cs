@@ -13,11 +13,11 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
 
 
         [SerializeField] private Vector2Int gp = Vector2Int.zero;
-        [SerializeField] private bool d = false;
+        [SerializeField] private byte d = 0;
         
 
         public Vector2Int GridPos { get => gp; private set => gp = value; }
-        public bool Docked { get => d; private set => d = value; }
+        public bool Docked { get => d == 1; private set => d = value ? (byte)1 : (byte)0; }
 
 
         public DeckResetCommand(object param): base(CommandType.DeckReset, param)

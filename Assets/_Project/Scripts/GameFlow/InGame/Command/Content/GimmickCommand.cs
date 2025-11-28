@@ -23,7 +23,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         [SerializeField] private int psd = 0;
         [SerializeField] private HexDirection nd = HexDirection.East;
         [SerializeField] private HexDirection pd = HexDirection.East;
-        [SerializeField] private bool dg = false;
+        [SerializeField] private byte dg = 0;
 
 
         public Vector2Int GridPos { get => gp; private set => gp = value; }
@@ -33,7 +33,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public int PreSubData { get => psd; private set => psd = value; }
         public HexDirection NextDir { get => nd; private set => nd = value; }
         public HexDirection PreDir { get => pd; private set => pd = value; }
-        public bool DidGimmick { get => dg; private set => dg = value; }
+        public bool DidGimmick { get => dg == 1; private set => dg = value ? (byte)1 : (byte)0; }
         
         
         public GimmickCommand(object param) : base(CommandType.Gimmick, param)
