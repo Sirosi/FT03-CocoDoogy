@@ -1,7 +1,11 @@
+using CocoDoogy.Network;
 using CocoDoogy.UI.UIManager;
 using DG.Tweening;
+using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace CocoDoogy.UI.IntroAndLogin
@@ -30,9 +34,30 @@ namespace CocoDoogy.UI.IntroAndLogin
         
         private void Awake()
         {
+            startButton.interactable = false;
             ShakeTitleImage();
-            startButton.onClick.AddListener(ConvertLoginUI);
             BlickText();
+        }
+
+        private void Start()
+        {
+            FirebaseManager.SubscribeOnFirebaseInitialized(RegisterStartButtonEvent);
+        }
+
+        private void RegisterStartButtonEvent()
+        {
+            startButton.onClick.RemoveAllListeners();
+
+            if (FirebaseManager.Instance.Auth.CurrentUser != null)
+                startButton.onClick.AddListener(GoLobby);
+            else
+                startButton.onClick.AddListener(ConvertLoginUI);
+        }
+
+        private void GoLobby()
+        {
+            Debug.Log("GoLobby");
+            SceneManager.LoadScene("Lobby");
         }
 
         /// <summary>
@@ -47,7 +72,7 @@ namespace CocoDoogy.UI.IntroAndLogin
 
             seq.Append(rect.DOAnchorPosY(originalPos.y + moveAmount, titleDuration))
                 .Append(rect.DOAnchorPosY(originalPos.y - moveAmount, titleDuration))
-                .Append(rect.DOAnchorPosY(originalPos.y, titleDuration));
+                .Append(rect.DOAnchorPosY(originalPos.y, titleDuration)).OnComplete(() => startButton.interactable = true);
         }
 
         /// <summary>

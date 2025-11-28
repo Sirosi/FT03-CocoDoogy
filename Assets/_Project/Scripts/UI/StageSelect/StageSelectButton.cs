@@ -146,7 +146,7 @@ namespace CocoDoogy.UI.StageSelect
 
         private void OnLockedButtonClicked()
         {
-            MessageDialog.ShowMessage($"{stageData.stageName}", "This Stage is Locked", DialogMode.Confirm, null);
+            MessageDialog.ShowMessage($"{stageData.stageName}", "해당 스테이지에 입장할 수 없습니다.", DialogMode.Confirm, null);
         }
 
         #region < 스테이지 활성화 책임 연쇄 패턴>
