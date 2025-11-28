@@ -67,11 +67,13 @@ namespace CocoDoogy.UI.Gift
 
             if (requestDict.Count < 1)
             {
+                getAllButton.interactable = false;
                 nullMessage.gameObject.SetActive(true);
                 nullMessage.text = "받을 수 있는 상품이 없습니다.";
             }
             else
             {
+                getAllButton.interactable = true;
                 nullMessage.gameObject.SetActive(false);
             }
         }
