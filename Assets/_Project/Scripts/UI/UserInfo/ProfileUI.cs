@@ -90,9 +90,9 @@ namespace CocoDoogy.UI.UserInfo
             if (snapshot.Exists)
             {
                 var data = snapshot.ToDictionary();
-                nicknameText.text = data["nickName"].ToString();
+                nicknameText.text = $"닉네임 : {data["nickName"]}";
                 recordText.text =
-                    $"{StageSelectManager.LastClearedStage.theme} 테마 {StageSelectManager.LastClearedStage.level} 스테이지";
+                    $"스테이지 : {StageSelectManager.LastClearedStage.theme} 테마 - {StageSelectManager.LastClearedStage.level}";
             }
             else
             {
