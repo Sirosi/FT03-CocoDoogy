@@ -2,9 +2,11 @@ using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CocoDoogy.UI.InGame
 {
@@ -57,9 +59,17 @@ namespace CocoDoogy.UI.InGame
                 {
                     if (button.Button)
                         button.Button.interactable = value;
+
+                    if (!value)
+                    {
+                        var buttonColor = button.GetComponentsInChildren<Graphic>();
+                        foreach (var colors in buttonColor)
+                        {
+                            colors.DOColor(new Color(0.75f, 0.75f, 0.75f), 0.2f);
+                        }
+                    }
                 }
             }
         }
-
     }
 }
