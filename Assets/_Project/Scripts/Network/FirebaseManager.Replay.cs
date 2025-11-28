@@ -21,8 +21,7 @@ namespace CocoDoogy.Network
             try
             {
                 string stageInfo = $"{theme}{level}";
-                Debug.Log(stageInfo);
-                
+                Debug.Log($"GetRanking: {stageInfo}");
                 var rankDoc = Instance.Firestore.Collection("rankings").Document(stageInfo);
                 
                 DocumentSnapshot rankSnapshot = await rankDoc.GetSnapshotAsync();
@@ -43,13 +42,14 @@ namespace CocoDoogy.Network
                     {
                         RankData rankData = new()
                         {
-                            nickname = rankMap["nickname"].ToString(),
+                            rank = Convert.ToInt32(rankMap["rank"]),
                             clearTime = Convert.ToDouble(rankMap["clearTime"]),
                             remainAP = rankMap["remainAP"].ToString(),
                             replayId = rankMap["replayId"].ToString(),
                             refillPoints = Convert.ToInt32(rankMap["refillPoints"]),
+                            nickname = rankMap["nickname"].ToString(),
                         };
-                        Debug.Log($"pair.Key: {pair.Key}, nickname: {rankData.nickname}," +
+                        Debug.Log($"pair.Key: {pair.Key}, rank: {rankData.rank}, nickname: {rankData.nickname}," +
                                   $"clearTime: {rankData.clearTime}, remainAP: {rankData.remainAP}," +
                                   $"replayId: {rankData.replayId}, refillPoints: {rankData.refillPoints}");
                         result[pair.Key] = rankData;

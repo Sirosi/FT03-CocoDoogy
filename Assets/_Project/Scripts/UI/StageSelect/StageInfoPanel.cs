@@ -29,9 +29,6 @@ namespace CocoDoogy.UI.StageSelect
         [Header("Buttons")]
         [SerializeField] private CommonButton pageChangeButton;
         [SerializeField] private CommonButton startButton;
-        
-        [SerializeField] private CommonButton replayButton; // TODO: 테스트용 버튼
-
 
         public bool IsOpened { get; private set; } = false;
 
