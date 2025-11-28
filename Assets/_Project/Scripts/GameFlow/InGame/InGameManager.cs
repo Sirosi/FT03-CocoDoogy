@@ -10,8 +10,6 @@ using CocoDoogy.Utility;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace CocoDoogy.GameFlow.InGame
 {

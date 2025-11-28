@@ -264,6 +264,7 @@ namespace CocoDoogy.GameFlow.InGame
             Instance.anim.ChangeAnim(AnimType.Idle);
 
             Instance.lockBehaviour = false;
+            InGameManager.ProcessPhase();
         }
 
 
