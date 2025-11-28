@@ -21,8 +21,7 @@ namespace CocoDoogy
 
         public static class Prefs
         {
-            // TODO: 임시 기능이라 날려야함
-            public const string REPLAY = "Replay";
+            public const string LOBBY_THEME = "LobbyTheme";
         }
     }
 }
