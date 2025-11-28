@@ -65,11 +65,18 @@ MonoBehaviour:
   sfxListData: {fileID: 11400000, guid: 8c24714ef7628bb41b401a3b03c1c69b, type: 2}
   duckingSnapShot:
     Guid:
-      Data1: -983966404
-      Data2: 1217928283
-      Data3: -2089836869
-      Data4: -1104273429
-    Path: snapshot:/Sfx Ducking
+      Data1: 550868620
+      Data2: 1258129235
+      Data3: 1407753873
+      Data4: 764664783
+    Path: snapshot:/Ducking
+  mutingSnapShot:
+    Guid:
+      Data1: -257527376
+      Data2: 1200270290
+      Data3: -1419772787
+      Data4: 944127326
+    Path: snapshot:/Muting
 --- !u!114 &2378233644098321866
 MonoBehaviour:
   m_ObjectHideFlags: 0

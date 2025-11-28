@@ -50,7 +50,7 @@ namespace CocoDoogy.UI.UIManager
         {
             pauseWindow.gameObject.SetActive(true);
 
-            SfxManager.PlayDucking(0.7f);
+            SfxManager.PlayDucking();
         }
 
         private void OnResumeButtonClicked()
