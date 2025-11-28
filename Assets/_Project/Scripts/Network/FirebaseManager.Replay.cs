@@ -21,7 +21,6 @@ namespace CocoDoogy.Network
             try
             {
                 string stageInfo = $"{theme}{level}";
-                Debug.Log($"GetRanking: {stageInfo}");
                 var rankDoc = Instance.Firestore.Collection("rankings").Document(stageInfo);
                 
                 DocumentSnapshot rankSnapshot = await rankDoc.GetSnapshotAsync();
@@ -62,6 +61,34 @@ namespace CocoDoogy.Network
             {
                 Debug.LogError(ex);
                 return null;
+            }
+            finally
+            {
+                loading.Hide();
+            }
+        }
+
+        public static async Task<string> GetReplayData(string replayId)
+        {
+            var loading = FirebaseLoading.ShowLoading();
+            try
+            {
+                var replayDoc = Instance.Firestore.Collection("replays").Document(replayId);
+                DocumentSnapshot replaySnapshot = await replayDoc.GetSnapshotAsync();
+                
+                if (!replaySnapshot.Exists)
+                {
+                    Debug.Log("스냅샷 없음");
+                    return string.Empty;
+                }
+                string replayJson = replaySnapshot.GetValue<string>("replayData");
+
+                return replayJson;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(ex);
+                return string.Empty;
             }
             finally
             {

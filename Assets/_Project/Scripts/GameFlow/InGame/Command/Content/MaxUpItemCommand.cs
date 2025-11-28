@@ -3,7 +3,6 @@ using CocoDoogy.Tile;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
-    // TODO : Execute, Undo 기능이 아이템에도 적용되기 위해서 여기서 아이템 사용이 되어야함.
     public class MaxUpItemCommand : CommandBase
     {
         public override bool IsUserCommand => true;
