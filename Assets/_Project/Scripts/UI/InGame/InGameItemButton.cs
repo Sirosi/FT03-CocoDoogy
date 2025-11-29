@@ -54,14 +54,18 @@ namespace CocoDoogy.UI.InGame
                     DialogMode.Confirm, null);
                 return;
             }
-            
-            DataManager.Instance.CurrentItem[itemData] -= 1;
-            Button.interactable = false;
-            
+
+            if (itemData.effect == ItemEffect.ConsumeAndRecoverMaxAP && InGameManager.ActionPoints <= 0)
+            {
+                MessageDialog.ShowMessage("아이템 사용 실패", "해당 아이템은 현재 행동력을 1 깍고 최대행동력을 1 늘리는 아이템입니다.\n 깍을 행동력이 없으면 사용이 불가합니다.",
+                    DialogMode.Confirm, null);
+                return;
+            }
             switch (itemData.effect)
             {
                 case ItemEffect.ConsumeAndRecoverMaxAP:
                     Debug.Log("행동력을 1 소모하고 최대 행동력을 1 증가시킵니다.");
+                    if (InGameManager.ActionPoints <= 0) break;
                     CommandManager.MaxUp(itemData.effect);
                     break;
                 case ItemEffect.RecoverAP:
