@@ -20,7 +20,7 @@ namespace CocoDoogy.Network
         /// </summary>
         /// <returns></returns>
         public static async Task<IDictionary<string, object>> ClearStageAsync(int theme, int level, int remainAP,
-            int refillPoints, float clearTime, string saveJson)
+            int refillPoints, float clearTime, string saveJson, Action openPopup)
         {
             var loading = FirebaseLoading.ShowLoading();
             try
@@ -47,6 +47,7 @@ namespace CocoDoogy.Network
             finally
             {
                 loading.Hide();
+                openPopup?.Invoke();
             }
         }
 

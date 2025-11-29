@@ -1,24 +1,36 @@
 using CocoDoogy.Data;
 using CocoDoogy.Tile;
+using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
 {
+    [System.Serializable]
     public class MaxUpItemCommand : CommandBase
     {
         public override bool IsUserCommand => true;
-        private ItemData Data { get; }
+        private ItemEffect Effect
+        {
+            get => itemEffect;
+            set => itemEffect = value;
+        }
+        
+        [SerializeField] private ItemEffect itemEffect;
+        
         private const int Delta = 1;
         
         public MaxUpItemCommand(object param) : base(CommandType.MaxUp, param)
         {
-            Data = (ItemData)param;
+            Effect = (ItemEffect)param;
         }
         
         public override void Execute()
         {
             HexTileMap.ActionPoint += Delta;
             InGameManager.ConsumeActionPoint(Delta, false);
-            ItemHandler.SetValue(Data, false);
+            
+            Debug.Log(DataManager.GetReplayItem(Effect));
+            
+            ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
         }
 
@@ -26,7 +38,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             HexTileMap.ActionPoint -= Delta;
             InGameManager.RegenActionPoint(Delta, false);
-            ItemHandler.SetValue(Data, true);
+            ItemHandler.SetValue(DataManager.GetReplayItem(Effect), true);
             PlayerHandler.IsBehaviour = false;
         }
     }

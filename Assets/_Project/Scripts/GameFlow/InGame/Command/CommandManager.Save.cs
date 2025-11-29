@@ -53,6 +53,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     CommandType.Gimmick => JsonUtility.FromJson<GimmickCommand>(data.DataJson),
                     CommandType.Increase => JsonUtility.FromJson<IncreaseCommand>(data.DataJson),
                     CommandType.DeckReset => JsonUtility.FromJson<DeckResetCommand>(data.DataJson),
+                    
+                    CommandType.MaxUp => JsonUtility.FromJson<MaxUpItemCommand>(data.DataJson),
+                    CommandType.Recover => JsonUtility.FromJson<RecoverItemCommand>(data.DataJson),
+                    CommandType.Undo => JsonUtility.FromJson<UndoItemCommand>(data.DataJson),
                     _ => null
                 };
 

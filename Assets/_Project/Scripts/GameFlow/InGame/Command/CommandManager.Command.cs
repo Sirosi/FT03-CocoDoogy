@@ -84,19 +84,19 @@ namespace CocoDoogy.GameFlow.InGame.Command
             ExecuteCommand(CommandType.Increase, regen, false);
         }
 
-        public static void MaxUp(ItemData itemData)
+        public static void MaxUp(ItemEffect effect)
         {
-            ExecuteCommand(CommandType.MaxUp, itemData, false);
+            ExecuteCommand(CommandType.MaxUp, effect);
         }
 
-        public static void Recover(ItemData itemData)
+        public static void Recover(ItemEffect effect)
         {
-            ExecuteCommand(CommandType.Recover, itemData, false);
+            ExecuteCommand(CommandType.Recover, effect);
         }
 
-        public static void Undo(ItemData itemData)
+        public static void Undo(ItemEffect effect)
         {
-            ExecuteCommand(CommandType.Undo, itemData,false);
+            ExecuteCommand(CommandType.Undo, effect);
         }
     }
 }

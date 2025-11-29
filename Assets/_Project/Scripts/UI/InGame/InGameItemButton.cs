@@ -15,13 +15,17 @@ namespace CocoDoogy.UI.InGame
     public class InGameItemButton : MonoBehaviour
     {
         public CommonButton Button { get; private set; }
-
+        public Image ButtonColor { get; private set; }
+        
         /// <summary>
         /// 해당 버튼이 가지고 있는 ItemData를 InGameItemUI에서 넣어줌
         /// </summary>
         public ItemData ItemData { get; set; }
 
         public Action<InGameItemButton, ItemData> OnClicked;
+
+        public bool IsPurchased { get; private set; } = false; 
+        
         private void Awake()
         {
             if (!Button)
@@ -29,6 +33,10 @@ namespace CocoDoogy.UI.InGame
                 Button = GetComponent<CommonButton>();
             }
 
+            if (!ButtonColor)
+            {
+                ButtonColor = GetComponent<Image>();
+            }
             Button.onClick.AddListener(() => OnClicked?.Invoke(this, ItemData));
         }
 
@@ -49,22 +57,20 @@ namespace CocoDoogy.UI.InGame
             
             DataManager.Instance.CurrentItem[itemData] -= 1;
             Button.interactable = false;
-            var buttonColor = GetComponent<Image>();
-            buttonColor.DOColor(new Color(0.2f, 0.2f, 0.2f), 0.2f);
             
             switch (itemData.effect)
             {
                 case ItemEffect.ConsumeAndRecoverMaxAP:
                     Debug.Log("행동력을 1 소모하고 최대 행동력을 1 증가시킵니다.");
-                    CommandManager.MaxUp(itemData);
+                    CommandManager.MaxUp(itemData.effect);
                     break;
                 case ItemEffect.RecoverAP:
                     Debug.Log("행동력을 1 증가시킵니다.");
-                    CommandManager.Recover(itemData);
+                    CommandManager.Recover(itemData.effect);
                     break;
                 case ItemEffect.UndoTurn:
                     Debug.Log("1턴 전으로 돌아갑니다.");
-                    CommandManager.Undo(itemData);
+                    CommandManager.Undo(itemData.effect);
                     break;
                 case ItemEffect.None:
                 default:
@@ -79,7 +85,7 @@ namespace CocoDoogy.UI.InGame
         /// <param name="itemData"></param>
         public async Task PurchaseAsync(CallbackType type, ItemData itemData)
         {
-            if (type != CallbackType.Yes) return;
+            if (type != CallbackType.Yes || IsPurchased) return;
             try
             {
                 var result = await FirebaseManager.PurchaseWithCashMoneyAsync(itemData.itemId, 1);
@@ -90,6 +96,7 @@ namespace CocoDoogy.UI.InGame
                 {
                     Debug.Log($"구매 성공: {itemData.itemName} ({1})");
                     DataManager.Instance.CurrentItem[itemData] += 1;
+                    IsPurchased = true;
                 }
                 else
                 {
