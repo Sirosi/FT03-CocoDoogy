@@ -343,5 +343,14 @@ namespace CocoDoogy
         {
             return Convert.ToInt32(value, 16);
         }
+
+        public static string Theme2Korean(this Theme theme) => theme switch
+        {
+            Theme.Forest => "숲",
+            Theme.Water => "물",
+            Theme.Snow => "눈",
+            Theme.Sand => "사막",
+            _ => string.Empty
+        };
     }
 }
