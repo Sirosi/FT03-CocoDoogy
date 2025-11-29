@@ -1,5 +1,6 @@
 using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
+using CocoDoogy.GameFlow.Replay;
 using CocoDoogy.Network;
 using CocoDoogy.Test;
 using TMPro;
@@ -45,8 +46,10 @@ namespace CocoDoogy.UI.StageSelect.Item
         /// </summary>
         private async void OnClickReplayStart()
         {
-            // TODO: 리플레이 씬으로 이동하여 리플레이 시작
-            CommandSaveTest.ReplayData = await FirebaseManager.GetReplayData(replayId);
+            ReplayHandler.ReplayData = await FirebaseManager.GetReplayData(replayId);
+            
+            InGameManager.OnLoadReplayData += ReplayHandler.Load;
+            
             InGameManager.Stage = stageData;
             SceneManager.LoadScene("Replay");
         }

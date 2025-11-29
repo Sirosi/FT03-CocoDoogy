@@ -83,6 +83,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// </summary>
         public static void UndoCommandAuto()
         {
+            Debug.Log($"Executed: {Executed.Count}");
             while (Executed.Count > 0)
             {
                 CommandBase command = UndoCommand();
@@ -98,6 +99,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// </summary>
         public static void RedoCommandAuto()
         {
+            Debug.Log($"Undid: {Undid.Count}");
             while (Undid.Count > 0)
             {
                 CommandBase command = RedoCommand();

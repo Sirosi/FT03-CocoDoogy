@@ -97,7 +97,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -1290, y: 300}
+  m_SizeDelta: {x: -870, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1312368784926560112
 MonoBehaviour:
@@ -1344,6 +1344,7 @@ GameObject:
   - component: {fileID: 333691958096403204}
   - component: {fileID: 7512931684335905433}
   - component: {fileID: 4769243630793918250}
+  - component: {fileID: 7891183163073110107}
   m_Layer: 5
   m_Name: CurrentStageInfo
   m_TagString: Untagged
@@ -1409,6 +1410,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7891183163073110107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3618370120656694237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70ecc3079abea34b86e12313754a24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentStageText: {fileID: 5086993186443914087}
 --- !u!1 &3681582066414550449
 GameObject:
   m_ObjectHideFlags: 0
@@ -2208,12 +2222,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openSettingsButton: {fileID: 5524545266067713663}
   openPauseButton: {fileID: 3677803864654476826}
-  resumeButton: {fileID: 6920085918310692585}
-  resetButton: {fileID: 1937543557347183023}
-  openQuitButton: {fileID: 4849207805389741205}
-  volumeSlider: {fileID: 1176596662206941387}
-  settingsWindow: {fileID: 6054505380206544867}
-  pauseWindow: {fileID: 5157475927917278485}
+  settingsUI: {fileID: 506397844961578296}
+  pauseUI: {fileID: 7011558786689525771}
 --- !u!1 &5153772720891641843
 GameObject:
   m_ObjectHideFlags: 0
@@ -3174,6 +3184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5157475927917278485}
   - component: {fileID: 4286552668131145509}
+  - component: {fileID: 7011558786689525771}
   m_Layer: 5
   m_Name: PauseWindow
   m_TagString: Untagged
@@ -3210,6 +3221,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6746784786694598810}
   m_CullTransparentMesh: 1
+--- !u!114 &7011558786689525771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6746784786694598810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f86e821841134a3c8e4e28118faea08a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resumeButton: {fileID: 6920085918310692585}
+  restartButton: {fileID: 1937543557347183023}
+  quitButton: {fileID: 4849207805389741205}
 --- !u!1 &7042895984504606867
 GameObject:
   m_ObjectHideFlags: 0
@@ -5014,15 +5040,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64f7c4295a07f1f4eae11006509146f2, type: 3}
---- !u!114 &1176596662206941387 stripped
+--- !u!114 &506397844961578296 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1204602567123331159, guid: 64f7c4295a07f1f4eae11006509146f2, type: 3}
+  m_CorrespondingSourceObject: {fileID: 568739848741776804, guid: 64f7c4295a07f1f4eae11006509146f2, type: 3}
   m_PrefabInstance: {fileID: 64044117644648604}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 096e3dd79a1ac9644b194448baeedef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &6054505380206544867 stripped
