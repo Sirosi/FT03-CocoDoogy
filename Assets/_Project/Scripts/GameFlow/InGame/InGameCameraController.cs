@@ -157,7 +157,6 @@ namespace CocoDoogy.GameFlow.InGame
 
                 if (Mathf.Abs(scroll) > 0.1f)
                 {
-                    print(scroll);
                     mainCamera.fieldOfView -= scroll;
                     mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView, FOV_MIN, FOV_MAX);
                     ChangeCameraMoveRate();

@@ -29,7 +29,7 @@ namespace CocoDoogy.Data
         /// <summary>
         /// 현재 로그인한 계정의 아이템 보유 수량을 저장하기 위한 딕셔너리 
         /// </summary>
-        public Dictionary<ItemData, int> CurrentItem = new();
+        public readonly Dictionary<ItemData, int> CurrentItem = new();
         
         /// <summary>
         /// Firebase Store의 Document 내부의 필드에 변화가 생기면 발생하는 이벤트. public Doc 하위 필드 변경시 발생
@@ -54,6 +54,7 @@ namespace CocoDoogy.Data
         /// </summary>
         private PrivateUserData lastPrivateData;
         
+        private static readonly Dictionary<ItemEffect, ItemData> ReplayItem = new();
         
 #if UNITY_EDITOR
         void Reset()
@@ -82,10 +83,11 @@ namespace CocoDoogy.Data
             if (Instance == this)
             {
                 InitTileData();
+                InitReplayItem(itemData);
                 DontDestroyOnLoad(gameObject);
             }
         }
-
+        
         //실시간 리스너 구독
         public void StartListeningForUserData(string userId)
         {
@@ -161,6 +163,24 @@ namespace CocoDoogy.Data
         {
             base.OnDestroy();
             StopListening();
+        }
+        
+        private void InitReplayItem(ItemData[] arr)
+        {
+            foreach (var item in arr)
+            {
+                if (item == null) continue;
+
+                if (!ReplayItem.TryAdd(item.effect, item))
+                {
+                    Debug.LogWarning($"중복 itemId 발견: {item.itemId}");
+                }
+            }
+        }
+
+        public static ItemData GetReplayItem(ItemEffect effect)
+        {
+            return ReplayItem.GetValueOrDefault(effect);
         }
     }
 }

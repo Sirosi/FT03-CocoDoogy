@@ -22,22 +22,22 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 int refillPoints = InGameManager.RefillPoints;
                 string saveJson = CommandManager.Save();
                 
-                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex() + 1,
-                    InGameManager.Stage.index, remainAp, refillPoints, time, saveJson);
+                // 여기서 Timer.Stop을 하면 Popup에 0초로 기록됨. 그래서 일단 시간을 멈추고
+                InGameManager.Timer.Pause();
                 
                 ItemHandler.UseItem();
                 
-                GameEndPopup.OpenPopup(false);
-                
-                
-                
-                InGameManager.Timer.Stop();
-                
-                // MessageDialog.ShowMessage("승리", "그래, 이긴 걸로 하자!", DialogMode.Confirm, _ => SceneManager.LoadScene("Lobby"));
+                // 이 부분에서 popup이 열리고나서 시간이 초기화 되게 
+                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex() + 1,
+                    InGameManager.Stage.index, remainAp, refillPoints, time, saveJson, 
+                    () =>
+                    {
+                        GameEndPopup.OpenPopup(false);
+                        InGameManager.Timer.Stop();
+                    });
                 
                 return false;
             }
-
             return true;
         }
     }

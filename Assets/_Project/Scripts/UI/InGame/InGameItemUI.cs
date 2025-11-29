@@ -2,6 +2,7 @@ using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace CocoDoogy.UI.InGame
                 ItemData itemData = DataManager.Instance.ItemData[i];
                 itemButtons[i].ItemData = itemData;
                 itemButtons[i].OnClicked += ShowInfo;
+
                 ItemHandler.SetValue(itemData, true);
             }
         }
@@ -38,28 +40,38 @@ namespace CocoDoogy.UI.InGame
             if (itemData is null) return;
 
             // 아이템이 1개 이상 존재 하면 사용할 수 있도록
-            if (DataManager.Instance.CurrentItem[itemData] > 0)
+            if (ItemHandler.UsedItems[itemData])
             {
                 InfoDialog.ShowInfo("아이템 정보", itemData.itemName, itemData.itemDescription, itemData.itemSprite, DialogMode.YesNo,
                     (type => button.UseItem(type, itemData)));
             }
-            else // 아이템이 존재하지 않으면 구매할 수 있도록
+            else if (DataManager.Instance.CurrentItem[itemData] <= 0 && !button.IsPurchased) // 아이템이 존재하지 않으면 구매할 수 있도록
             {
                 InfoDialog.ShowInfo("아이템 정보", itemData.itemName, itemData.itemDescription, itemData.itemSprite, DialogMode.Confirm,
                     (type => _ = button.PurchaseAsync(type, itemData)));
             }
         }
+        
+        /// <summary>
+        /// 아이템 사용여부에 따라서 버튼의 상태를 변화시키는 메서드
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="value"></param>
         private void OnItemValueChanged(ItemData item, bool value)
         {
+            float rgb = value ? 1f : 0.2f;
+            
             foreach (var button in itemButtons)
             {
                 if (button.ItemData == item)
                 {
                     if (button.Button)
+                    {
                         button.Button.interactable = value;
+                        button.ButtonColor.DOColor(new Color(rgb,rgb,rgb), 0.2f);
+                    }
                 }
             }
         }
-
     }
 }
