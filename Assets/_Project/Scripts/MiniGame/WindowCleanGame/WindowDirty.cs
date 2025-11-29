@@ -14,6 +14,7 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
         void Start()
         {
             SetVisualEmphasize();
+            outline.effectDistance = new Vector2(7,7);
         }
 
         void SetVisualEmphasize()
