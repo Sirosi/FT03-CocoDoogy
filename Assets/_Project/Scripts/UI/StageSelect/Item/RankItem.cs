@@ -2,7 +2,6 @@ using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.Replay;
 using CocoDoogy.Network;
-using CocoDoogy.Test;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -47,7 +46,7 @@ namespace CocoDoogy.UI.StageSelect.Item
         private async void OnClickReplayStart()
         {
             ReplayHandler.ReplayData = await FirebaseManager.GetReplayData(replayId);
-            
+            PlayerHandler.IsReplay = true;
             InGameManager.OnLoadReplayData += ReplayHandler.Load;
             
             InGameManager.Stage = stageData;

@@ -13,9 +13,16 @@ namespace CocoDoogy.GameFlow.InGame
 {
     public class PlayerHandler: Singleton<PlayerHandler>
     {
-        // 플레이어가 인게임에 들어와서 행동을 했는지 여부
-        public static bool IsBehaviour = false;
-
+        /// <summary>
+        /// 플레이어가 인게임에 들어와서 행동을 했는지 여부
+        /// </summary>
+        public static bool IsBehaviour { get; set; } = false;
+        
+        /// <summary>
+        /// 현재 플레이 하고있는 씬이 Replay면 true로, InGame이면 false로 
+        /// </summary>
+        public static bool IsReplay { get; set; } = false;
+        
         public static int SandCount{ get; set; } = 0;
 
         public static Vector2Int GridPos
@@ -86,6 +93,7 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (lockBehaviour) return;
             if (TouchSystem.IsPointerOverUI) return;
+            if (IsReplay) return;
             
             if (TouchSystem.TouchCount > 0)
             {
