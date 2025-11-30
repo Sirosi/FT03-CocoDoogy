@@ -6,13 +6,14 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CocoDoogy.UI.InGame
 {
     public class InGameItemUI : MonoBehaviour
     {
         [SerializeField] private InGameItemButton[] itemButtons;
-        
+
         private void OnEnable()
         {
             ItemHandler.OnValueChanged += OnItemValueChanged;
@@ -22,7 +23,7 @@ namespace CocoDoogy.UI.InGame
         {
             ItemHandler.OnValueChanged -= OnItemValueChanged;
         }
-        
+
         private void Start()
         {
             for (int i = 0; i < itemButtons.Length; i++)
@@ -51,7 +52,7 @@ namespace CocoDoogy.UI.InGame
                     (type => _ = button.PurchaseAsync(type, itemData)));
             }
         }
-        
+
         /// <summary>
         /// 아이템 사용여부에 따라서 버튼의 상태를 변화시키는 메서드
         /// </summary>
@@ -60,7 +61,7 @@ namespace CocoDoogy.UI.InGame
         private void OnItemValueChanged(ItemData item, bool value)
         {
             float rgb = value ? 1f : 0.2f;
-            
+
             foreach (var button in itemButtons)
             {
                 if (button.ItemData == item)
