@@ -10,8 +10,6 @@ using CocoDoogy.Utility;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace CocoDoogy.GameFlow.InGame
 {
@@ -20,6 +18,7 @@ namespace CocoDoogy.GameFlow.InGame
         public static event Action<int> OnActionPointChanged = null;
         public static event Action<int> OnRefillCountChanged = null;
         public static event Action<Action> OnInteractChanged = null;
+        public static event Action<StageData> OnMapDrawn = null;
 
         /// <summary>
         /// 맵 생성 후 리플레이 데이터를 불러오도록 하는 이벤트
@@ -177,6 +176,7 @@ namespace CocoDoogy.GameFlow.InGame
                 }
             }
 
+            OnMapDrawn?.Invoke(Stage);
             Timer.Start();
             OnLoadReplayData?.Invoke();
             

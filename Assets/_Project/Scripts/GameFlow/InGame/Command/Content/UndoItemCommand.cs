@@ -9,11 +9,11 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override bool IsUserCommand => true;
         private ItemEffect Effect
         {
-            get => itemEffect;
-            set => itemEffect = value;
+            get => ie;
+            set => ie = value;
         }
         
-        [SerializeField] private ItemEffect itemEffect;
+        [SerializeField] private ItemEffect ie;
         
         public UndoItemCommand(object param) : base(CommandType.Undo, param)
         {

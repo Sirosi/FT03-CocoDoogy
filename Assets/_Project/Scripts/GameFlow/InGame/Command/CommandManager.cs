@@ -29,7 +29,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// <param name="type"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static CommandBase ExecuteCommand(CommandType type, object param, bool processCheck = true)
+        public static CommandBase ExecuteCommand(CommandType type, object param)
         {
             CommandBase result = null;
             try
@@ -62,11 +62,6 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     result.Execute();
                     Executed.Push(result);
                     Undid.Clear();
-
-                    if (processCheck)
-                    {
-                        InGameManager.ProcessPhase();
-                    }
                 }
             }
             catch (InvalidCastException e)

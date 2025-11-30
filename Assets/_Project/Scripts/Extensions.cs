@@ -300,6 +300,14 @@ namespace CocoDoogy
             Theme.Sand => 3,
             _ => -1
         };
+        public static string ToName(this Theme theme) => theme switch
+        {
+            Theme.Forest => "숲",
+            Theme.Water => "물",
+            Theme.Snow => "눈",
+            Theme.Sand => "사막",
+            _ => "무지개랜드"
+        };
 
         /// <summary>
         /// Enable을 Method형태로 제공
@@ -343,14 +351,5 @@ namespace CocoDoogy
         {
             return Convert.ToInt32(value, 16);
         }
-
-        public static string Theme2Korean(this Theme theme) => theme switch
-        {
-            Theme.Forest => "숲",
-            Theme.Water => "물",
-            Theme.Snow => "눈",
-            Theme.Sand => "사막",
-            _ => string.Empty
-        };
     }
 }

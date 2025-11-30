@@ -51,11 +51,13 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
 
         protected override void ShowRemainCount()
         {
-            remainCount.text = "남은 이물질: "+dirties.Count.ToString();
+            remainCount.gameObject.SetActive(true);
+            remainCount.text = dirties.Count.ToString()+$"/{dirtyCount}";
         }
         
         protected override void Disable()
         {
+            remainCount.gameObject.SetActive(false);
             dirties.Clear();
             foreach(WindowDirty obj in dirtyGroup.GetComponentsInChildren<WindowDirty>())
             {

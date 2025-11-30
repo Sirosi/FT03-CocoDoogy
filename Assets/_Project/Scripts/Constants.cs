@@ -17,6 +17,11 @@ namespace CocoDoogy
         /// 타일 이동 시간
         /// </summary>
         public const float MOVE_DURATION = 0.5f;
+        /// <summary>
+        /// 슬라이드 당 이동 시간
+        /// </summary>
+        public const float SLIDE_PER_DURATION = 0.2f;
+
 
 
         public static class Prefs

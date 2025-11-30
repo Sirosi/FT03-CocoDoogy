@@ -11,16 +11,20 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
     public class DeployCommand: CommandBase
     {
         public override bool IsUserCommand => true;
+
+
+        [SerializeField] private Vector2Int gp = Vector2Int.zero;
+        [SerializeField] private HexDirection ld = HexDirection.East;
         
         
         /// <summary>
         /// 움직이는 방향
         /// </summary>
-        public Vector2Int GridPos = Vector2Int.zero;
+        public Vector2Int GridPos { get => gp; private set => gp = value; }
         /// <summary>
         /// 움직이는 방향
         /// </summary>
-        public HexDirection LookDirection = HexDirection.East;
+        public HexDirection LookDirection { get => ld; private set => ld = value; }
 
 
         public DeployCommand(object param): base(CommandType.Deploy, param)

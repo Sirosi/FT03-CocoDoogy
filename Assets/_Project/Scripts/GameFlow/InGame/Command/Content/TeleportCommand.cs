@@ -10,15 +10,19 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override bool IsUserCommand => false;
 
 
+        [UnityEngine.SerializeField] private Vector2Int pp = Vector2Int.zero;
+        [UnityEngine.SerializeField] private Vector2Int np = Vector2Int.zero;
+
+
         /// <summary>
         /// 이전 위치
         /// </summary>
-        public Vector2Int PrePos = Vector2Int.zero;
+        public Vector2Int PrePos { get => pp; private set => pp = value; }
 
         /// <summary>
         /// 다음 위치
         /// </summary>
-        public Vector2Int NextPos = Vector2Int.zero;
+        public Vector2Int NextPos { get => np; private set => np = value; }
 
 
         public TeleportCommand(object param) : base(CommandType.Teleport, param)
@@ -31,13 +35,13 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
 
         public override void Execute()
         {
-            PlayerHandler.Deploy(NextPos);
+            PlayerHandler.Tornado(NextPos);
             SfxManager.PlaySfx(SfxType.Weather_Wind);
         }
 
         public override void Undo()
         {
-            PlayerHandler.Deploy(PrePos);
+            PlayerHandler.Tornado(PrePos);
         }
     }
 }

@@ -8,12 +8,15 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
     public class MoveCommand: CommandBase
     {
         public override bool IsUserCommand => true;
+
+
+        [SerializeField] private HexDirection dir = HexDirection.East;
         
         
         /// <summary>
         /// 움직이는 방향
         /// </summary>
-        public HexDirection Dir = HexDirection.East;
+        public HexDirection Dir { get => dir; private set => dir = value; }
 
 
         public MoveCommand(object param): base(CommandType.Move, param)

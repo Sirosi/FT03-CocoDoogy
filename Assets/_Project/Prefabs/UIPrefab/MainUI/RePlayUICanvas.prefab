@@ -186,7 +186,7 @@ RectTransform:
   m_Children:
   - {fileID: 6836623042030863642}
   - {fileID: 5581778496373667820}
-  - {fileID: 1806709773928559992}
+  - {fileID: 8748483751280040463}
   m_Father: {fileID: 7571439616165761008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -963,7 +963,7 @@ GameObject:
   - component: {fileID: 367995899065202343}
   - component: {fileID: 8208816503840027126}
   m_Layer: 5
-  m_Name: ReplayUICanvas
+  m_Name: RePlayUICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1200,9 +1200,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1028228014843533821}
+  - component: {fileID: 4087851233193264461}
   - component: {fileID: 7108430016781314144}
   - component: {fileID: 5245212728450287059}
-  - component: {fileID: 2749329028087889177}
   m_Layer: 5
   m_Name: CurrentStageInfo
   m_TagString: Untagged
@@ -1230,6 +1230,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -25}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &4087851233193264461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4094463155034794276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e17e34d620503b419ef145cb0552597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 5511805224990632350}
 --- !u!222 &7108430016781314144
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1268,19 +1281,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2749329028087889177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4094463155034794276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e70ecc3079abea34b86e12313754a24e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentStageText: {fileID: 5511805224990632350}
 --- !u!1 &4175654469619515208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1909,7 +1909,7 @@ MonoBehaviour:
   redoButton: {fileID: 2771359872061784711}
   undoButton: {fileID: 409481467982366544}
   settingsUI: {fileID: 1000479542261993409}
-  pauseUI: {fileID: 6193936134033477513}
+  replayPauseUI: {fileID: 6193936134033477513}
 --- !u!1 &5691124416954298801
 GameObject:
   m_ObjectHideFlags: 0
@@ -3889,13 +3889,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9112267172628506843, guid: 04f9f0fadc29c9b478e7ddcddc628095, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04f9f0fadc29c9b478e7ddcddc628095, type: 3}
---- !u!224 &1806709773928559992 stripped
+--- !u!224 &8748483751280040463 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4799707058202143310, guid: 04f9f0fadc29c9b478e7ddcddc628095, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2513465211377993017, guid: 04f9f0fadc29c9b478e7ddcddc628095, type: 3}
   m_PrefabInstance: {fileID: 6595878807543881526}
   m_PrefabAsset: {fileID: 0}
