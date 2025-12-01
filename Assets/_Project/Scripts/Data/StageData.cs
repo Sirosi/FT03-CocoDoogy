@@ -11,5 +11,7 @@ namespace CocoDoogy.Data
         
         public string stageName;
         public TextAsset mapData;
+
+        public int[] starThresholds;
     }
 }
