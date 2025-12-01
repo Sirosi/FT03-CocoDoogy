@@ -35,8 +35,12 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
             image.sprite = sprite;
         }
 
+        public override void OnPointerDown(PointerEventData eventData)
+        {
+            base.OnPointerDown(eventData);
+            SfxManager.PlaySfx(SfxType.Minigame_PickLeaf);
+        }
         
-
         public override void OnEndDrag(PointerEventData eventData)
         {
             base.OnEndDrag(eventData);

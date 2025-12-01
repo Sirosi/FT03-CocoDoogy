@@ -16,6 +16,7 @@ namespace CocoDoogy
         [SerializeField] private float targetSecondWaveAmp = 0.02f;
         [SerializeField] private float targetVerticalStretch = 0.1f;
         //여기에 Tint도 추가?
+        [SerializeField] private GameObject parentObject;
         
         private Material materialInstance;
         private bool isDeactivating = false;
@@ -60,7 +61,7 @@ namespace CocoDoogy
             
             FadeOutSequence();
             
-            currentSequence.OnComplete(() => gameObject.SetActive(false));
+            currentSequence.OnComplete(() => parentObject.SetActive(false));
         }
         
         //private void OnDisable() 은 강제호출 대비용. 일단 독립적인 형태라서 당장은 필요없음.
@@ -69,7 +70,13 @@ namespace CocoDoogy
         {
             //메모리 해제해주기
             if (currentSequence != null) currentSequence.Kill();
-            if (materialInstance != null) Destroy(materialInstance);
+            if (materialInstance != null)
+            {
+                if (Application.isPlaying)
+                    Destroy(materialInstance);
+                else
+                    DestroyImmediate(materialInstance);
+            }
         }
         
         #region Dotweening

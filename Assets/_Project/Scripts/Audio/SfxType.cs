@@ -50,6 +50,7 @@ namespace CocoDoogy.Audio
         Minigame_ShakeUmbrella,
         Minigame_PickLeaf,
         Minigame_MinigameStart,
+        Minigame_TouchTrashCan,
         
         //UI계열 - event:/Sfx/UI/
         UI_SuccessMission,

@@ -107,7 +107,7 @@ namespace CocoDoogy.WeatherEffect
             {
                 StopCoroutine(_currentEffectCoroutine);
             }
-            
+            SfxManager.StopLoopSfx(SfxType.Weather_Rain);
             SfxManager.PlaySfx(weatherEffectDictionary[weatherType].sfxType);
             // 여기서 코루틴 사용
             _currentEffectCoroutine = StartCoroutine(PlayEffectCoroutine(
@@ -154,8 +154,9 @@ namespace CocoDoogy.WeatherEffect
                     break;
                     
                 case EffectSystemType.None:
-                    // UI만 사용하는 경우 즉시 종료
-                    effectObject.SetActive(false);
+                    //확장형 컨트롤러 스크립트로 리팩토링 가능성?
+                    WaveDistortionController waveDistortionController = effectObject.GetComponentInChildren<WaveDistortionController>();
+                    waveDistortionController.Deactivate();
                     break;
             }
         }

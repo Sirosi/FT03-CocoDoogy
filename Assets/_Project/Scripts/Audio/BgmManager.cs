@@ -126,7 +126,7 @@ namespace CocoDoogy.Audio
         }
         
         //BgmType과 EventInstance를 매칭 시켜 줍니다.
-        private static void InitBgmDictionary()
+        private void InitBgmDictionary()
         {
             if (!Instance)
             {
