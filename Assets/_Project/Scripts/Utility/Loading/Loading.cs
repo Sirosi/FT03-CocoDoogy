@@ -29,7 +29,7 @@ namespace CocoDoogy.Utility.Loading
             StartCoroutine(LoadingProcess());
             
             string randomtips = loadingTextData.texts[Random.Range(0, loadingTextData.texts.Length)];
-            tips.text = $"tips.{randomtips}";
+            tips.text = $"Tips.{randomtips}";
         }
 
         IEnumerator LoadingProcess()
