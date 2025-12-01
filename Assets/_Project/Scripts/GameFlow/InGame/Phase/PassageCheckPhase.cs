@@ -12,6 +12,13 @@ namespace CocoDoogy.GameFlow.InGame.Phase
         private int lastWorkActionPoints = -1;
         private HashSet<PassageBase> executed = new();
         
+
+        public void OnClear()
+        {
+            lastWorkActionPoints = -1;
+            executed.Clear();
+        }
+        
         
         public bool OnPhase()
         {

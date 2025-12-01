@@ -65,6 +65,12 @@ namespace CocoDoogy.MiniGame.TrashGame
         }
 
 
+        protected override void ShowRemainCount()
+        {
+            remainCount.gameObject.SetActive(true);
+            remainCount.text = trashes.Count.ToString()+$"/{trashCount}";
+        }
+
         protected override bool IsClear() => trashes.Count <= 0;
 
         /// <summary>
@@ -79,6 +85,7 @@ namespace CocoDoogy.MiniGame.TrashGame
 
         protected override void Disable()
         {
+            remainCount.gameObject.SetActive(false);
             foreach (Transform child in trashParent)
             {
                 Destroy(child.gameObject);

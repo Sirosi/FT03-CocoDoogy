@@ -1,4 +1,5 @@
 using CocoDoogy.Audio;
+using CocoDoogy.GameFlow.InGame;
 using UnityEngine;
 
 namespace CocoDoogy.Tile
@@ -23,5 +24,8 @@ namespace CocoDoogy.Tile
 
         [Header("Editor")]
         [Tooltip("비고")][TextArea(3, 10)][SerializeField] private string editorDescription = string.Empty;
+
+
+        public int RealMoveCost => moveCost * (PlayerHandler.SandCount >= 2 ? 2 : 1);
     }
 }

@@ -1,16 +1,16 @@
+using CocoDoogy.CameraSwiper;
 using CocoDoogy.Data;
 using CocoDoogy.Network;
-using CocoDoogy.CameraSwiper.Popup;
-using CocoDoogy.CameraSwiper.Shop.Category;
-using CocoDoogy.CameraSwiper.StageSelect;
-using CocoDoogy.CameraSwiper.UserInfo;
+using CocoDoogy.UI.Popup;
+using CocoDoogy.UI.Shop.Category;
+using CocoDoogy.UI.UserInfo;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper.Shop
+namespace CocoDoogy.UI.Shop
 {
     public class ShopUI : UIPanel
     {
@@ -29,7 +29,16 @@ namespace CocoDoogy.CameraSwiper.Shop
         [SerializeField] private Button stampShopButton;
         [SerializeField] private Button jemShopButton;
 
+        [Header("Scroll Areas")]
+        [SerializeField] private GameObject[] lists;
+        
         private Transform currentActivePanel;
+        
+        
+        //스와이프 문제 수정용
+        [Header("Extra")]
+        [SerializeField] private GameObject stageSelectUI;
+        
         private void Awake()
         {
             closeButton.onClick.AddListener(ClosePanel);
@@ -46,17 +55,15 @@ namespace CocoDoogy.CameraSwiper.Shop
 
         public override void ClosePanel()
         {
-            if (!purchasePanel.gameObject.activeSelf && !confirmPanel.gameObject.activeSelf)
+            WindowAnimation.SwipeWindow(transform as RectTransform);
+            
+            if (!stageSelectUI.activeSelf)
             {
-                WindowAnimation.SwipeWindow(transform as RectTransform);
-                if (!StageSelectManager.Instance.gameObject.activeSelf)
-                {
-                    PageCameraSwiper.IsSwipeable = true;
-                }
+                PageCameraSwiper.IsSwipeable = true;
             }
         }
 
-        public void OpenPurchasePanel(ItemData itemData) => purchasePanel.Open(itemData, OnPurchaseRequest);
+        public void OpenPurchasePanel(ItemData itemData, bool isCountable) => purchasePanel.Open(itemData, isCountable, OnPurchaseRequest);
         private void OnPurchaseRequest(ItemData itemData, int quantity) => _ = ExecutePurchaseAsync(itemData, quantity);
 
         /// <summary>
@@ -99,6 +106,12 @@ namespace CocoDoogy.CameraSwiper.Shop
             itemShop.gameObject.SetActive(true);
             stampShop.gameObject.SetActive(false);
             jemShop.gameObject.SetActive(false);
+
+            for (int i = 0; i < lists.Length; ++i)
+            {
+                RectTransform rect = lists[i].transform as RectTransform;
+                rect.anchoredPosition = new Vector2(0, rect.anchoredPosition.y);
+            }
         }
 
         private void OnClickButton(Button clicked)

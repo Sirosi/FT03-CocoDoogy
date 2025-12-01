@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using UnityEngine;
 using CocoDoogy.GameFlow.InGame;
 
@@ -19,7 +20,7 @@ namespace CocoDoogy.Tile.Piece.Trigger
 
         public override void Interact()
         {
-
+            SfxManager.PlaySfx(SfxType.Interaction_PressurePlate);
         }
         public override void UnInteract()
         {

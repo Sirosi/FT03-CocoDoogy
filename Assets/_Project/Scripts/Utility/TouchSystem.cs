@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
@@ -16,9 +17,15 @@ namespace CocoDoogy.Utility
         }
 
 
-        public static InputType CurrentInputType {get; private set;} = InputType.None;
+        /// <summary>
+        /// 현재 Input 모드
+        /// </summary>
+        public static InputType CurrentInputType { get; private set; } = InputType.None;
 
 
+        /// <summary>
+        /// 현재 터치된 위치의 중간위치
+        /// </summary>
         public static Vector2 TouchAverage
         {
             get
@@ -44,7 +51,36 @@ namespace CocoDoogy.Utility
                 }
             }
         }
+        /// <summary>
+        /// 터치 중심 위치에서 벌어진 터치 포인트들의 평균값
+        /// </summary>
+        public static float DistanceAverage
+        {
+            get
+            {
+                if(CurrentInputType == InputType.Touch)
+                {
+                    Vector2 center = TouchAverage;
+                    float average = 0f;
+                    int count = 0;
+                    foreach (var touch in Touchscreen.current.touches)
+                    {
+                        if (touch.phase.value is TouchPhase.Began or TouchPhase.Moved)
+                        {
+                            average += Vector2.Distance(center, touch.position.value);
+                            count++;
+                        }
+                    }
+                    return average / count;
+                }
+                
+                return 0f;
+            }
+        }
 
+        /// <summary>
+        /// 현재 터치 중인 위치값 개수
+        /// </summary>
         public static int TouchCount
         {
             get
@@ -65,6 +101,31 @@ namespace CocoDoogy.Utility
                         return count;
                     default:
                         return 0;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// 현재 터치 or 클릭이 UI 위에서 이뤄졌는지
+        /// </summary>
+        public static bool IsPointerOverUI
+        {
+            get
+            {
+                switch(CurrentInputType)
+                {
+                    case InputType.Mouse:
+                        return EventSystem.current.IsPointerOverGameObject();
+                    case InputType.Touch:
+                        foreach (var touch in Touchscreen.current.touches)
+                        {
+                            if (touch.isInProgress &&
+                                EventSystem.current.IsPointerOverGameObject(touch.touchId.ReadValue()))
+                                return true;
+                        }
+                        return false;
+                    default:
+                        return false;
                 }
             }
         }

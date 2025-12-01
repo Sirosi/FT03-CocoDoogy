@@ -2,8 +2,9 @@ using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.Tile;
 using UnityEngine;
 using TMPro;
+using System;
 
-namespace CocoDoogy.CameraSwiper.InGame
+namespace CocoDoogy.UI.InGame
 {
     public class RefillPointUI : MonoBehaviour
     {
@@ -22,7 +23,7 @@ namespace CocoDoogy.CameraSwiper.InGame
 
         private void OnRefillCountChanged(int point)
         {
-            text.SetText($"{point} / {HexTileMap.RefillPoint}");
+            text.SetText($"{Math.Clamp(point, 0, int.MaxValue)} / {HexTileMap.RefillPoint}");
         }
     }
 }

@@ -1,3 +1,4 @@
+using CocoDoogy.Data;
 using CocoDoogy.Tile;
 using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Tile.Gimmick.Data;
@@ -11,16 +12,26 @@ namespace CocoDoogy.GameFlow.InGame.Command
         public static void Move(HexDirection direction)
         {
             ExecuteCommand(CommandType.Move, direction);
+            
+            int sandCount = PlayerHandler.SandCount;
+            if(HexTile.GetTile(PlayerHandler.GridPos).CurrentData.type == TileType.Sand)
+            {
+                ExecuteCommand(CommandType.SandCount, (sandCount, sandCount + 1));
+            }
+            else if (sandCount > 0)
+            {
+                ExecuteCommand(CommandType.SandCount, (sandCount, 0));
+            }
         }
         public static void Trigger(Vector2Int gridPos, bool isUnInteract = false)
         {
-            ExecuteCommand(CommandType.Trigger, (gridPos, isUnInteract), false);
+            ExecuteCommand(CommandType.Trigger, (gridPos, isUnInteract));
         }
         
         
-        public static void Slide(HexDirection direction)
+        public static void Slide(Vector2Int gridPos)
         {
-            ExecuteCommand(CommandType.Slide, direction);
+            ExecuteCommand(CommandType.Slide, (PlayerHandler.GridPos, gridPos));
         }
         public static void Teleport(Vector2Int gridPos)
         {
@@ -45,10 +56,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
                 if(!deck) continue;
                 if(deck.IsDocked == deck.PreDocked) continue;
 
-                ExecuteCommand(CommandType.DeckReset, (piece.Parent.GridPos, deck.PreDocked), false);
+                ExecuteCommand(CommandType.DeckReset, (piece.Parent.GridPos, deck.PreDocked));
             }
 
-            ExecuteCommand(CommandType.Refill, (InGameManager.ActionPoints, PlayerHandler.GridPos));
+            ExecuteCommand(CommandType.Refill, (InGameManager.ActionPoints, PlayerHandler.GridPos, PlayerHandler.SandCount));
         }
         
         public static void Weather(WeatherType weather)
@@ -57,20 +68,35 @@ namespace CocoDoogy.GameFlow.InGame.Command
         }
         public static void GimmickTileRotate(Vector2Int gridPos, HexRotate rotate, bool didGimmicked = false)
         {
-            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.TileRotate, (int)rotate, 0, 0, HexDirection.East, HexDirection.East, didGimmicked), false);
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.TileRotate, (int)rotate, 0, 0, HexDirection.East, HexDirection.East, didGimmicked));
         }
         public static void GimmickPieceChange(Vector2Int gridPos, HexDirection direction, PieceType newPiece, PieceType oldPiece, HexDirection lookDirection, HexDirection preLookDirection, bool didGimmicked = false)
         {
-            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceChange, (int)direction, (int)newPiece, (int)oldPiece, lookDirection, preLookDirection, didGimmicked), false);
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceChange, (int)direction, (int)newPiece, (int)oldPiece, lookDirection, preLookDirection, didGimmicked));
         }
         public static void GimmickPieceMove(Vector2Int gridPos, HexDirection pieceDir, HexDirection moveDir, bool didGimmicked = false)
         {
-            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceMove, (int)pieceDir, 0, 0, moveDir, moveDir.GetMirror(), didGimmicked), false);
+            ExecuteCommand(CommandType.Gimmick, (gridPos, GimmickType.PieceMove, (int)pieceDir, 0, 0, moveDir, moveDir.GetMirror(), didGimmicked));
         }
         
         public static void Regen(int regen)
         {
-            ExecuteCommand(CommandType.Increase, regen, false);
+            ExecuteCommand(CommandType.Increase, regen);
+        }
+
+        public static void MaxUp(ItemEffect effect)
+        {
+            ExecuteCommand(CommandType.MaxUp, effect);
+        }
+
+        public static void Recover(ItemEffect effect)
+        {
+            ExecuteCommand(CommandType.Recover, effect);
+        }
+
+        public static void Undo(ItemEffect effect)
+        {
+            ExecuteCommand(CommandType.Undo, effect);
         }
     }
 }

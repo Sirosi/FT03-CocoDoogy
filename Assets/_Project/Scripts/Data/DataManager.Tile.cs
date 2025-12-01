@@ -2,7 +2,6 @@ using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
-using CocoDoogy.CameraSwiper.StageSelect;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +15,7 @@ namespace CocoDoogy.Data
 
         private readonly Dictionary<Theme, List<StageData>> stageList = new();
         private readonly Dictionary<(Theme, int), StageData> stageDict = new();
+        private readonly Dictionary<Theme, int> themeMaxIndex = new();
 
 
         [SerializeField] private HexTileData[] tileData;
@@ -53,6 +53,15 @@ namespace CocoDoogy.Data
                 }
                 stageList[data.theme].Add(data);
                 stageDict.Add((data.theme, data.index), data);
+
+                if(!themeMaxIndex.ContainsKey(data.theme))
+                {
+                    themeMaxIndex.Add(data.theme, data.index);
+                }
+                else if(themeMaxIndex[data.theme] < data.index)
+                {
+                    themeMaxIndex[data.theme] = data.index;
+                }
             }
         }
 
@@ -82,8 +91,6 @@ namespace CocoDoogy.Data
         {
             if (!Instance) return null;
 
-            Debug.Log(Instance.stageList.GetValueOrDefault(theme));
-
             return Instance.stageList.GetValueOrDefault(theme);
         }
         public static StageData GetStageData(Theme theme, int index)
@@ -91,6 +98,12 @@ namespace CocoDoogy.Data
             if (!Instance) return null;
 
             return Instance.stageDict.GetValueOrDefault((theme, index));
+        }
+        public static int GetThemeMaxIndex(Theme theme)
+        {
+            if(!Instance) return int.MaxValue;
+
+            return Instance.themeMaxIndex.GetValueOrDefault(theme, int.MaxValue);
         }
     }
 }

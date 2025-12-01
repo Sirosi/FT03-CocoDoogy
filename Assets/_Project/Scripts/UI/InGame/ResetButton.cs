@@ -1,8 +1,9 @@
+using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.InGame.Command;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.InGame
+namespace CocoDoogy.UI.InGame
 {
     /// <summary>
     /// InGame 내에서 초기화용 버튼<br/>
@@ -18,17 +19,31 @@ namespace CocoDoogy.CameraSwiper.InGame
             button.onClick.AddListener(OnButtonClicked);
         }
 
+        void OnEnable()
+        {
+            OnRefillCountChanged(InGameManager.RefillPoints);
+            InGameManager.OnRefillCountChanged += OnRefillCountChanged;
+        }
+        void OnDisable()
+        {
+            InGameManager.OnRefillCountChanged -= OnRefillCountChanged;
+        }
+
 
         private void OnButtonClicked()
         {
             MessageDialog.ShowMessage("초기화", "초기화 하시겠습니까?", DialogMode.YesNo, OnMessageCallback);
         }
-
         private void OnMessageCallback(CallbackType type)
         {
             if (type != CallbackType.Yes) return;
 
             CommandManager.Refill();
+        }
+
+        private void OnRefillCountChanged(int refillPoints)
+        {
+            button.interactable = refillPoints > 0;
         }
     }
 }

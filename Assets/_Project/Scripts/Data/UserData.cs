@@ -1,5 +1,4 @@
 using CocoDoogy.Network;
-using Firebase;
 using Firebase.Firestore;
 using System;
 using System.Collections.Generic;
@@ -39,7 +38,7 @@ namespace CocoDoogy.Data
             PublicUserData = new PublicUserData { nickName = nickName };
             PrivateUserData = new PrivateUserData
             {
-                gameTicket = 5,
+                gameTicket = 10,
                 // UserData를 생성할 때 아이템 인벤토리에 모든 아이템을 0개로 초기화 후 저장
                 itemDic = new Dictionary<string, object>() {
                     { "item001", 0 },

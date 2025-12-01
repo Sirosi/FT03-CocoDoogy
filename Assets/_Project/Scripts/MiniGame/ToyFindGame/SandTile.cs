@@ -1,12 +1,10 @@
-using CocoDoogy.Tile;
 using CocoDoogy.MiniGame.ToyFindGame;
-using CocoDoogy.CameraSwiper.Popup;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using CocoDoogy.Audio;
-namespace CocoDoogy.MiniGame
+namespace CocoDoogy.MiniGame.ToyFindGame
 {
     public class SandTile : MonoBehaviour, IPointerClickHandler
     {
@@ -49,7 +47,7 @@ namespace CocoDoogy.MiniGame
                     image.sprite = diggedSprite;
                     digged = true;
                     //클리어판단
-                    SfxManager.PlaySfx(SfxType.UI_PopUp);
+                    SfxManager.PlaySfx(SfxType.UI_Success);
                     parent.RemoveToy(tileID);
                     parent.CheckClear();
                 }

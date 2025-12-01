@@ -1,11 +1,11 @@
+using CocoDoogy.Data;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace CocoDoogy
+namespace CocoDoogy.Utility.Loading
 {
     public class Loading : MonoBehaviour
     {
@@ -38,7 +38,7 @@ namespace CocoDoogy
             op.allowSceneActivation = false;
 
             float loadingTimer = 0f;
-            float additionalLoadingTime = 3f;
+            float additionalLoadingTime = 2f;
             
             while (!op.isDone)
             {

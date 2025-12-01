@@ -1,8 +1,7 @@
+using CocoDoogy.Core;
 using UnityEngine;
-using UnityEngine.Rendering;
-using CocoDoogy.CameraSwiper;
 
-namespace CocoDoogy.Core
+namespace CocoDoogy.CameraSwiper.Lighting
 {
     /// <summary>
     /// 런타임에 LightingPreset을 적용하는 매니저
@@ -71,8 +70,6 @@ namespace CocoDoogy.Core
             RenderSettings.haloStrength = preset.haloStrength;
             RenderSettings.flareStrength = preset.flareStrength;
             RenderSettings.flareFadeSpeed = preset.flareFadeSpeed;
-
-            Debug.Log($"[LightingManager] LightingPreset 적용 완료: {preset.name}");
         }
     }
 }

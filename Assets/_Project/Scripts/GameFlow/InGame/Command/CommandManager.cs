@@ -29,7 +29,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// <param name="type"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static CommandBase ExecuteCommand(CommandType type, object param, bool processCheck = true)
+        public static CommandBase ExecuteCommand(CommandType type, object param)
         {
             CommandBase result = null;
             try
@@ -45,10 +45,15 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     
                     CommandType.Deploy => new DeployCommand(param),
                     CommandType.Refill => new RefillCommand(param),
+                    CommandType.SandCount => new SandCountCommand(param),
                     CommandType.Weather => new WeatherCommand(param),
                     CommandType.Gimmick => new GimmickCommand(param),
                     CommandType.Increase => new IncreaseCommand(param),
                     CommandType.DeckReset => new DeckResetCommand(param),
+                    
+                    CommandType.MaxUp => new MaxUpItemCommand(param),
+                    CommandType.Recover => new RecoverItemCommand(param),
+                    CommandType.Undo => new UndoItemCommand(param),
                     _ => null
                 };
 
@@ -57,11 +62,6 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     result.Execute();
                     Executed.Push(result);
                     Undid.Clear();
-
-                    if (processCheck)
-                    {
-                        InGameManager.ProcessPhase();
-                    }
                 }
             }
             catch (InvalidCastException e)
@@ -78,6 +78,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// </summary>
         public static void UndoCommandAuto()
         {
+            Debug.Log($"Executed: {Executed.Count}");
             while (Executed.Count > 0)
             {
                 CommandBase command = UndoCommand();
@@ -93,6 +94,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
         /// </summary>
         public static void RedoCommandAuto()
         {
+            Debug.Log($"Undid: {Undid.Count}");
             while (Undid.Count > 0)
             {
                 CommandBase command = RedoCommand();

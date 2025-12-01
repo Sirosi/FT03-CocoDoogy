@@ -1,7 +1,6 @@
 using CocoDoogy.Data;
 using CocoDoogy.Tile;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CocoDoogy.MapEditor.UI
 {

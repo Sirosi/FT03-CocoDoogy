@@ -1,9 +1,7 @@
 using CocoDoogy.Core;
 using FMOD.Studio;
 using FMODUnity;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
 
 namespace CocoDoogy.Audio
@@ -13,9 +11,8 @@ namespace CocoDoogy.Audio
         //모든 Sfx류의 사운드를 여기에서 관리합니다.
         private static bool HasInstance => Instance != null;
         
-        //인스펙터에서 추가하지만 enum도 추가해야합니다! 인스펙터 창에서 Reset Sfx List누르면 초기화
-        [Header("SfxList")]
-        public List<SfxReference> sfxList = new ();
+        [Header("SFXListData")]
+        public SfxListData sfxListData;
         
         //런타임에서 빠른 검색 위해서 만든 딕셔너리
         private Dictionary<SfxType, EventInstance> sfxDictionary = new ();
@@ -71,7 +68,7 @@ namespace CocoDoogy.Audio
                 return;
             }
             
-            foreach (var sfxType in Instance.sfxList)
+            foreach (var sfxType in Instance.sfxListData.sfxList)
             {
                 EventInstance sfxInstance = RuntimeManager.CreateInstance(sfxType.eventReference);
                 Instance.sfxDictionary.Add(sfxType.type, sfxInstance);
@@ -127,7 +124,7 @@ namespace CocoDoogy.Audio
         
         //Ducking이란? 특정 상황에서 BGM을 줄여서 몰입도를 늘리는 기능입니다.
         //Ducking이 필요하면 이 메서드를 PlaySfx 메서드를 불러오기 전에 같이 불러오고, 종료시 StopDucking 불러오면 됩니다.
-        public static void PlayDucking()
+        public static void PlayDucking(float duckingVolume)
         {
             if (!HasInstance)
             {
@@ -135,6 +132,9 @@ namespace CocoDoogy.Audio
                 return;
             }
             
+            duckingVolume = Mathf.Clamp(duckingVolume, 0, 1);
+            
+            Instance.duckingInstance.setParameterByName("Volume", duckingVolume);
             Instance.duckingInstance.start();
         }
 
@@ -148,57 +148,5 @@ namespace CocoDoogy.Audio
             
             Instance.duckingInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
-
-        // #region  SfxList Reset
-        // //sfxList를 Reset 버튼 누름으로써 빠르게 초기화 하는 기능
-        // [ContextMenu("Reset Sfx List")]
-        // private void ResetSfxList()
-        // {
-        //     sfxList.Clear();
-        //     int successCount = 0;
-        //     int failCount = 0;
-        //     var allEvents = EventManager.Events;
-        //     
-        //     foreach (SfxType sfxType in System.Enum.GetValues(typeof(SfxType)))
-        //     {
-        //         if (sfxType == SfxType.None) continue;
-        //         string enumName = sfxType.ToString();
-        //         
-        //         string[] parts = enumName.Split('_');
-        //         if (parts.Length != 2)
-        //         {
-        //             Debug.LogError($"SfxType {enumName}은 적합한 형식 아님! 이름 바꾸쇼");
-        //             failCount++;
-        //             continue;
-        //         }
-        //         
-        //         string category = parts[0];
-        //         string soundName = parts[1];
-        //         
-        //         //분리한 이름 기반으로 FMOD 이벤트 경로 생성
-        //         string eventPath = $"event:/SFX/{category}/{soundName}";
-        //         EventReference eventRef = EventReference.Find(eventPath);
-        //         
-        //         sfxList.Add(new SfxReference
-        //         {
-        //             type = sfxType,
-        //             eventReference = eventRef
-        //         });
-        //         
-        //         if (eventRef.IsNull)
-        //         {
-        //             Debug.LogWarning($"FMOD 이벤트 없음: {eventPath}");
-        //             failCount++;
-        //         }
-        //         else
-        //         {
-        //             Debug.Log($"매칭 성공: {sfxType} -> {eventPath}");
-        //             successCount++;
-        //         }
-        //     }
-        //     
-        //     Debug.Log($"=== 자동 매칭 완료 ===\n 성공: {successCount}개 | 실패: {failCount}개");
-        // }
-        // #endregion
     }
 }

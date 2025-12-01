@@ -1,11 +1,12 @@
 using CocoDoogy.Core;
+using CocoDoogy.Network;
 using Firebase.Functions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CocoDoogy.Network
+namespace CocoDoogy.Data
 {
     public class ServerRequestManager : Singleton<ServerRequestManager>
     {

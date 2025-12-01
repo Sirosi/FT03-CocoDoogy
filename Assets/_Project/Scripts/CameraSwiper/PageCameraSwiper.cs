@@ -39,7 +39,15 @@ namespace CocoDoogy.CameraSwiper
         public static bool IsSwipeable = true;
 
         private Camera mainCamera;
-        private int currentIndex = 0; // 숲 = 0 , 물 , 눈 , 사막 = 4 (테마)
+        private static int currentIndex = 0; // 숲 = 0 , 물 , 눈 , 사막 = 4 (테마)
+
+        /// <summary>
+        /// 현재 활성화된 테마를 반환하는 정적 프로퍼티
+        /// 외부에서 직접 참조 없이 현재 테마를 가져올 수 있음
+        /// </summary>
+        public static Theme CurrentTheme => GetThemeByIndexStatic(currentIndex);
+
+        private static Theme GetThemeByIndexStatic(int index) => index < 0 ? Theme.None : (Theme)(1 << index);
 
         private Vector2 startPos;
         private Vector2 lastPos;
@@ -55,42 +63,35 @@ namespace CocoDoogy.CameraSwiper
 
         public static event Action<Theme> OnEndPageChanged; // 페이지 전환 완료 시 호출
 
+
         void Start()
         {
-            MoveToPageInstant(currentIndex);
+            OnEndPageChanged += OnThemeChanged;
+            if (PlayerPrefs.GetInt(Constants.Prefs.LOBBY_THEME) == 0)
+            {
+                PlayerPrefs.SetInt(Constants.Prefs.LOBBY_THEME, (int)Theme.Forest);
+            }
+
+            Theme theme = (Theme)PlayerPrefs.GetInt(Constants.Prefs.LOBBY_THEME);
+            MoveToPageInstant(currentIndex = theme.ToIndex());
         }
 
         void OnDestroy()
         {
+            OnEndPageChanged -= OnThemeChanged;
             DOTween.Kill(mainCamera);
         }
 
         void Update()
         {
-#if UNITY_EDITOR
-            HandleEditorSwipe();
-#else
-                Swipe();
-#endif
+            Swipe();
         }
 
-        private Theme GetThemeByIndex(int index)
-        {
-            switch (index)
-            { // TODO: 여기 다 뜯어 고쳐야 함
-                case 0: return Theme.Forest;
-                case 1: return Theme.Water;
-                case 2: return Theme.Snow;
-                case 3: return Theme.Sand;
-                default: return Theme.None;
-            }
-        }
+
+        private Theme GetThemeByIndex(int index) => index < 0 ? Theme.None : (Theme)(1 << index);
 
         private void Swipe()
         {
-            if (Touchscreen.current == null) return;
-
-            // 현재 터치 감지
             if (TouchSystem.TouchCount > 0 && IsSwipeable)
             {
                 lastPos = TouchSystem.TouchAverage;
@@ -100,7 +101,7 @@ namespace CocoDoogy.CameraSwiper
                     isDragging = true;
                     startPos = lastPos;
 
-                    OnStartPageChanged.Invoke(GetThemeByIndex(currentIndex));
+                    OnStartPageChanged?.Invoke(GetThemeByIndex(currentIndex));
                 }
 
                 float deltaX = (lastPos.x - startPos.x) / Screen.width;
@@ -168,7 +169,7 @@ namespace CocoDoogy.CameraSwiper
             currentIndex = index;
 
             // 페이지 변경 이벤트 즉시 호출 (Lighting, BGM 등이 카메라 애니메이션과 동시에 전환)
-            OnEndPageChanged.Invoke(GetThemeByIndex(index));
+            OnEndPageChanged?.Invoke(GetThemeByIndex(index));
 
             camTr.DOMove(targetPoint.position, snapDuration)
                 .SetEase(Ease.OutCubic)
@@ -188,10 +189,11 @@ namespace CocoDoogy.CameraSwiper
             mainCamera = Camera.main;
             IsSwipeable = true;
 
+            currentIndex = index;
             mainCamera.transform.position = cameraPoints[index].position;
             mainCamera.transform.rotation = cameraPoints[index].rotation;
 
-            OnEndPageChanged.Invoke(GetThemeByIndex(index));
+            OnEndPageChanged?.Invoke(GetThemeByIndex(index));
             SetActivePage(index);
         }
 
@@ -201,54 +203,10 @@ namespace CocoDoogy.CameraSwiper
                 pages[i].SetActive(i == activeIndex);
         }
 
-#if UNITY_EDITOR
-        private void HandleEditorSwipe()
+
+        private void OnThemeChanged(Theme theme)
         {
-            bool hasInput = Mouse.current.leftButton.isPressed;
-            Vector2 inputPos = Mouse.current.position.ReadValue();
-
-            if (hasInput && IsSwipeable)
-            {
-                lastPos = inputPos;
-
-                if (!isDragging)
-                {
-                    isDragging = true;
-                    startPos = lastPos;
-                }
-
-                float deltaX = (lastPos.x - startPos.x) / Screen.width;
-                float dragPercent = Mathf.Clamp(deltaX * dragSensitivity, -1f, 1f);
-
-                int targetIndex = currentIndex;
-                if (dragPercent > 0 && currentIndex > 0)
-                    targetIndex = currentIndex - 1;
-                else if (dragPercent < 0 && currentIndex < cameraPoints.Length - 1)
-                    targetIndex = currentIndex + 1;
-
-                float weight = Mathf.Abs(dragPercent);
-
-                Transform currentPoint = cameraPoints[currentIndex];
-                Transform targetPoint = cameraPoints[targetIndex];
-
-                Vector3 blendedPos = Vector3.Lerp(currentPoint.position, targetPoint.position, weight);
-                Quaternion blendedRot = Quaternion.Slerp(currentPoint.rotation, targetPoint.rotation, weight);
-
-                mainCamera.transform.position =
-                    Vector3.Lerp(mainCamera.transform.position, blendedPos, Time.deltaTime * lerpSpeed);
-                mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, blendedRot,
-                    Time.deltaTime * lerpSpeed);
-            }
-            else if (isDragging)
-            {
-                isDragging = false;
-
-                float normalizedDrag = (lastPos.x - startPos.x) / Screen.width;
-                EvaluateSwipe(normalizedDrag);
-
-                startPos = lastPos;
-            }
+            PlayerPrefs.SetInt(Constants.Prefs.LOBBY_THEME, (int)theme);
         }
-#endif
     }
 }

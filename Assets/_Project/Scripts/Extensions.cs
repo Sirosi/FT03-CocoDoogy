@@ -300,6 +300,14 @@ namespace CocoDoogy
             Theme.Sand => 3,
             _ => -1
         };
+        public static string ToName(this Theme theme) => theme switch
+        {
+            Theme.Forest => "숲",
+            Theme.Water => "물",
+            Theme.Snow => "눈",
+            Theme.Sand => "사막",
+            _ => "무지개랜드"
+        };
 
         /// <summary>
         /// Enable을 Method형태로 제공
@@ -329,9 +337,19 @@ namespace CocoDoogy
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static string Hex2(int value)
+        public static string Hex2(this int value)
         {
             return value.ToString("X2"); 
+        }
+        /// <summary>
+        /// 2자리의 16진수로 변환된 string 값을 정수로 변환하는 메서드 <br/>
+        /// ex) 0F > 15, 1A -> 26 ... 로 변환하여 반환함.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static int Hex2Int(this string value)
+        {
+            return Convert.ToInt32(value, 16);
         }
     }
 }

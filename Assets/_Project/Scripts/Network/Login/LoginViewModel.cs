@@ -1,11 +1,9 @@
 using CocoDoogy.Data;
-using CocoDoogy.Network.UI;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.UIManager;
 using Firebase.Auth;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace CocoDoogy.Network.Login
 {
@@ -35,14 +33,15 @@ namespace CocoDoogy.Network.Login
 
             if (!isExistingUser) // 기존 유저가 아닌 경우
             {
-                // string nickname = await GetValidNickNameAsync(user.UserId);
                 string nickname = await GetNickNameAsync(user.UserId);
                 await UserData.CreateOnServerAsync(user.UserId, nickname);
             }
 
             CurrentUser = user;
             DataManager.Instance.StartListeningForUserData(CurrentUser.UserId);
-            _ = FirebaseManager.Instance.RechargeTicketAsync();
+            
+            FirebaseManager.Instance.AuthStateChanged();
+            
             OnUserChanged?.Invoke(user);
         }
         private void HandleLoginFailed(string error)
@@ -53,6 +52,9 @@ namespace CocoDoogy.Network.Login
         private void HandleLogout()
         {
             CurrentUser = null;
+
+            FirebaseManager.Instance.AuthStateChanged();
+            
             OnLoggedOut?.Invoke();
         }
         public void SignIn() => authProvider.SignInWithGoogle();
@@ -62,7 +64,12 @@ namespace CocoDoogy.Network.Login
 
         #region < 익명로그인 기능 & 익명로그인 링크 구글 기능 > 
         public void SignInAnonymously() => authProvider.SignInAnonymously();
-        public void LinkGoogleAccount() => authProvider.LinkGoogleAccount();
+
+        public async Task<bool> LinkGoogleAccountAsync()
+        {
+            return await authProvider.LinkGoogleAccountAsync();
+        }
+
         #endregion
 
         #region < 로그인 이후 최초 가입 시 닉네임 입력 시퀀스 >

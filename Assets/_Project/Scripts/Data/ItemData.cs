@@ -16,6 +16,8 @@ namespace CocoDoogy.Data
         public string itemDescription;
         [Tooltip("DB 아이템 코드")]
         public string itemId;
+        [Tooltip("아이템 효과")]
+        public ItemEffect effect;
         private void Reset()
         {
             itemName = string.Empty;

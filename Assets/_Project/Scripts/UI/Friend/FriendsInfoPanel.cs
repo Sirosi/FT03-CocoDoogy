@@ -1,10 +1,10 @@
 using CocoDoogy.Network;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.Friend
+namespace CocoDoogy.UI.Friend
 {
     public class FriendsInfoPanel : RequestPanel
     {
@@ -57,7 +57,7 @@ namespace CocoDoogy.CameraSwiper.Friend
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "이런, 나는 친구가 없습니다!";
+                nullMessage.text = "등록된 친구가 없습니다.";
             }
             else
             {

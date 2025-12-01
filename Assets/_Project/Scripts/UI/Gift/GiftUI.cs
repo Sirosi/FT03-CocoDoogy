@@ -1,12 +1,13 @@
+using CocoDoogy.CameraSwiper;
 using CocoDoogy.Network;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace CocoDoogy.CameraSwiper.Gift
+namespace CocoDoogy.UI.Gift
 {
     public class GiftUI : UIPanel
     {
@@ -66,11 +67,13 @@ namespace CocoDoogy.CameraSwiper.Gift
 
             if (requestDict.Count < 1)
             {
+                getAllButton.interactable = false;
                 nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "이런, 아무도 나에게 선물을 주지 않습니다!";
+                nullMessage.text = "받을 수 있는 상품이 없습니다.";
             }
             else
             {
+                getAllButton.interactable = true;
                 nullMessage.gameObject.SetActive(false);
             }
         }

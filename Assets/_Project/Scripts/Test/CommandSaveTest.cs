@@ -9,20 +9,12 @@ namespace CocoDoogy.Test
 {
     public class CommandSaveTest: MonoBehaviour
     {
-        [SerializeField] private string save;
-
-
-        void Start()
+        public static string ReplayData { get; set; }
+        
+        [ContextMenu("Load")]
+        private void Load()
         {
-            if (string.IsNullOrEmpty(save)) return;
-            CommandManager.Load(save);
-        }
-
-
-        [ContextMenu("Save")]
-        private void Save()
-        {
-            save = CommandManager.Save();
+            CommandManager.Load(ReplayData);
         }
     }
 }

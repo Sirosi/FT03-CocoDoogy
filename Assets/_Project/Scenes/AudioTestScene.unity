@@ -151,7 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6dae0b8edcabd4690eb408b686fb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmBank: BGM
   bgmList:
   - type: 1
     eventReference:
@@ -220,7 +219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77100f07130aea14b8926f2fe3ff2598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxBank: SFX
   sfxList:
   - type: 1
     eventReference:
@@ -1262,7 +1260,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.IntroAndLogin
+namespace CocoDoogy.UI.IntroAndLogin
 {
     /// <summary>
     /// Intro Scene에서 Version을 띄우는 용도

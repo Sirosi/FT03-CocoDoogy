@@ -1,58 +1,87 @@
 using CocoDoogy.Data;
 using CocoDoogy.Network;
-using CocoDoogy.CameraSwiper;
-using CocoDoogy.CameraSwiper.UIManager;
+using CocoDoogy.UI;
+using CocoDoogy.UI.Popup;
+using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.StageSelect.Item
+namespace CocoDoogy.UI.StageSelect.Item
 {
     public class ItemButton : MonoBehaviour
     {
-        [Header("Item Buttons")]
-        [SerializeField] private CommonButton[] itemButton;
+        [Header("UI Elements")]
+        [SerializeField] private Button itemButton;
+        [SerializeField] private TextMeshProUGUI itemAmountText;
 
-        [Header("Item Data")]
-        [SerializeField] private ItemData[] itemData;
+        /// <summary>
+        /// 현재 해당 토글이 가리키는 아이템 데이터, 사용 안하면 삭제.
+        /// </summary>
+        public IDictionary<string, object> Data { get; private set; }
 
-        [Header("Item Panel")]
-        [SerializeField] private Button closeButton;
-        [SerializeField] private RectTransform itemPanel;
-        [SerializeField] private Image itemPanelImage;
-        [SerializeField] private TextMeshProUGUI itemPanelText;
-
-        [Header("Open Shop")]
-        [SerializeField] private CommonButton openItemshopButton;
-
-
-
+        public Action<ItemButton> OnClickEvent {get; set;}
+        
+        /// <summary>
+        /// 현재 해당 토글이 가리키는 아이템의 수량
+        /// </summary>
+        private int CurrentAmount {get; set;}
+        
+        public ItemData ItemData {get; set;}
+        
+        
+        
         private void Awake()
         {
-            closeButton.onClick.AddListener(OnCloseButtonClicked);
-            openItemshopButton.onClick.AddListener(() => LobbyUIManager.Instance.ShopUI.OpenItemShopUI());
-
-            itemPanel.gameObject.SetActive(false);
-
-            for (int i = 0; i < itemButton.Length; ++i)
+            // 실수로 Inspector에서 연결을 안했을 때를 대비한 코드 
+            if (!itemButton) itemButton = GetComponent<Button>();
+            if (!itemAmountText) itemAmountText = GetComponentInChildren<TextMeshProUGUI>();
+            
+            itemButton.onClick.AddListener(() =>
             {
-                int index = i;
-                itemButton[i].onClick.AddListener(() => OnItemInfoButtonClicked(index));
+                OnClickEvent?.Invoke(this);
+            });
+        }
+
+        public void Init(IDictionary<string, object> data, ItemData item)
+        {
+            Data = data;
+            ItemData = item;
+            
+            if (data.TryGetValue(item.itemId, out object value))
+            {
+                CurrentAmount = Convert.ToInt32(value);   
+            }
+            DataManager.Instance.CurrentItem[item] = CurrentAmount;
+            itemAmountText.text = $"{CurrentAmount}";
+
+            
+            var buttonColor = itemButton.GetComponentsInChildren<Graphic>();
+            if (CurrentAmount <= 0)
+            {
+                foreach (var colors in buttonColor)
+                {
+                    colors.DOColor(new Color(0.75f, 0.75f, 0.75f), 0.2f);
+                }
+            }
+            else
+            {
+                foreach (var colors in buttonColor)
+                {
+                    colors.DOColor(Color.white, 0.2f);
+                }
             }
         }
 
-        private void OnCloseButtonClicked()
+        public void Refresh()
         {
-            WindowAnimation.CloseWindow(itemPanel);
-        }
-
-
-        private void OnItemInfoButtonClicked(int index)
-        {
-            itemPanel.gameObject.SetActive(true);
-            itemPanelImage.sprite = itemData[index].itemSprite;
-            itemPanelText.text = itemData[index].itemDescription;
+            if (Data.TryGetValue(ItemData.itemId, out object value))
+            {
+                CurrentAmount = Convert.ToInt32(value);   
+            }
+            itemAmountText.text = $"{CurrentAmount}";
         }
     }
 }

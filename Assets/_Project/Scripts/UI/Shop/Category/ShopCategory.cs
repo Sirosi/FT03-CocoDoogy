@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.Shop.Category
+namespace CocoDoogy.UI.Shop.Category
 {
     public class ShopCategory : MonoBehaviour
     {
@@ -14,7 +14,7 @@ namespace CocoDoogy.CameraSwiper.Shop.Category
 
             foreach (var shopItem in shopItems)
             {
-                shopItem.OnClickSubscriptionEvent(() => shopUI.OpenPurchasePanel(shopItem.ItemData));
+                shopItem.OnClickSubscriptionEvent((data, isCountable) => shopUI.OpenPurchasePanel(data, isCountable));
             }
         }
 

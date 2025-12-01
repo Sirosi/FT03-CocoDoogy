@@ -6,16 +6,20 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
     public class WeatherCommand: CommandBase
     {
         public override bool IsUserCommand => false;
+
+
+        [UnityEngine.SerializeField] private WeatherType pw = WeatherType.Sunny;
+        [UnityEngine.SerializeField] private WeatherType nw = WeatherType.Sunny;
         
         
         /// <summary>
         /// 기존 위치
         /// </summary>
-        public WeatherType PreWeather = WeatherType.Sunny;
+        public WeatherType PreWeather { get => pw; private set => pw = value; }
         /// <summary>
         /// 이동한 위치
         /// </summary>
-        public WeatherType NextWeather = WeatherType.Sunny;
+        public WeatherType NextWeather { get => nw; private set => nw = value; }
 
 
         public WeatherCommand(object param): base(CommandType.Weather, param)

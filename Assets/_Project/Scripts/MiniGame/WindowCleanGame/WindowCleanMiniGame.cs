@@ -1,10 +1,8 @@
 using CocoDoogy.Core;
 using DG.Tweening;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 namespace CocoDoogy.MiniGame.WindowCleanGame
 {
@@ -30,8 +28,6 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
         private readonly List<WindowDirty> dirties = new();
         private Dictionary<Theme, Sprite[]> dirtiesDict;
         private Dictionary<Theme, Sprite> backgroundDict;
-
-
         
         private void Awake()
         {
@@ -49,11 +45,19 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
                 { Theme.Water, waterbackgroundSprite },
                 {Theme.Snow, snowbackgroundSprite },
             };
+            
         }
         protected override bool IsClear() => dirties.Count <= 0;
 
+        protected override void ShowRemainCount()
+        {
+            remainCount.gameObject.SetActive(true);
+            remainCount.text = dirties.Count.ToString()+$"/{dirtyCount}";
+        }
+        
         protected override void Disable()
         {
+            remainCount.gameObject.SetActive(false);
             dirties.Clear();
             foreach(WindowDirty obj in dirtyGroup.GetComponentsInChildren<WindowDirty>())
             {
@@ -144,6 +148,9 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
                 dirties.Add(obj);
 
             }
+            //클리어까지 남은 숫자카운트를 위한 세팅과 옵저버패턴으로 UI상에서 카운트를 구현했습니다.
+            // ShowRemainCount();
+            // remainCountCallback = ShowRemainCount;
         }
 
         /// <summary>

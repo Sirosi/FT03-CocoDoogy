@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.Popup
+namespace CocoDoogy.UI.Popup
 {
     public class CenterPanel : MonoBehaviour
     {
@@ -14,7 +14,7 @@ namespace CocoDoogy.CameraSwiper.Popup
 
             rect.localScale = Vector3.zero;
             rect.DOKill(true);
-            rect.DOScale(Vector3.one, 0.35f).SetEase(Ease.OutBack);
+            rect.DOScale(Vector3.one, 0.35f).SetEase(Ease.OutBack).SetUpdate(true);
         }
     }
 }

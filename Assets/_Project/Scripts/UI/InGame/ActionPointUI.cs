@@ -3,7 +3,7 @@ using CocoDoogy.Tile;
 using UnityEngine;
 using TMPro;
 
-namespace CocoDoogy.CameraSwiper.InGame
+namespace CocoDoogy.UI.InGame
 {
     public class ActionPointUI : MonoBehaviour
     {

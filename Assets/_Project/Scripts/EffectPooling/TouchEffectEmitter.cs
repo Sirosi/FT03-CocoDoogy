@@ -5,7 +5,7 @@ using Lean.Pool;
 using UnityEngine.InputSystem;
 #endif
 
-namespace CocoDoogy
+namespace CocoDoogy.EffectPooling
 {
     public class TouchEffectEmitter : MonoBehaviour
     {

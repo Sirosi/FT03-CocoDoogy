@@ -1,4 +1,4 @@
-using CocoDoogy.CameraSwiper;
+using CocoDoogy.UI;
 using UnityEngine;
 
 namespace CocoDoogy.MapEditor.UI

@@ -1,6 +1,6 @@
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.LifeCycle;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using DG.Tweening;
 using UnityEngine;
 
@@ -90,7 +90,7 @@ namespace CocoDoogy.Tile.Piece
                 piece.transform.rotation = preRot;
                 piece.transform.parent = tile.transform;
 
-                if (prePos == PlayerHandler.GridPos)
+                if (PlayerHandler.IsValid && prePos == PlayerHandler.GridPos)
                 {
                     DOTween.Kill(PlayerHandler.Instance, true);
                     PlayerHandler.GridPos = Parent.GridPos;
@@ -112,7 +112,7 @@ namespace CocoDoogy.Tile.Piece
             }
             Parent.ConnectPiece(HexDirection.Center, piece);
 
-            if (Parent.GridPos == PlayerHandler.GridPos)
+            if (PlayerHandler.IsValid && Parent.GridPos == PlayerHandler.GridPos)
             {
                 PlayerHandler.Instance.transform.parent = null;
                 DOTween.Kill(PlayerHandler.Instance, true);

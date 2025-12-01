@@ -12,21 +12,31 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override bool IsUserCommand => false;
 
 
+        [SerializeField] private int rp = 0;
+        [SerializeField] private Vector2Int gp = Vector2Int.zero;
+        [SerializeField] private int sc = 0;
+
+
         /// <summary>
         /// 남은 포인트
         /// </summary>
-        public int RemainPoints = 0;
+        public int RemainPoints { get => rp; private set => rp = value; }
         /// <summary>
         /// 마지막 위치
         /// </summary>
-        public Vector2Int GridPos = Vector2Int.zero;
+        public Vector2Int GridPos { get => gp; private set => gp = value; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int SandCount { get => sc; private set => sc = value; }
         
         
         public RefillCommand(object param) : base(CommandType.Refill, param)
         {
-            var data = ((int, Vector2Int))param;
+            var data = ((int, Vector2Int, int))param;
             RemainPoints = data.Item1;
             GridPos = data.Item2;
+            SandCount = data.Item3;
         }
 
         
@@ -34,6 +44,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             InGameManager.ConsumeActionPoint(RemainPoints);
             InGameManager.RefillActionPoint();
+            PlayerHandler.SandCount = 0;
             
             PlayerHandler.Deploy(HexTileMap.StartPos);
         }
@@ -42,6 +53,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             InGameManager.ClearActionPoint();
             InGameManager.RegenActionPoint(RemainPoints);
+            PlayerHandler.SandCount = SandCount;
             
             PlayerHandler.Deploy(GridPos);
         }

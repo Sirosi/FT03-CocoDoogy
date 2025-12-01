@@ -1,5 +1,3 @@
-using CocoDoogy.MiniGame;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using CocoDoogy.Utility;
@@ -27,6 +25,12 @@ public class ToyFindMiniGame : MiniGameBase
         public List<int> toies = new List<int>();
 
 
+        protected override void ShowRemainCount()
+        {
+            remainCount.gameObject.SetActive(true);
+            remainCount.text = toies.Count.ToString()+$"/{toyCount}";
+        }
+
         protected override void OnOpenInit()
         {
             SetBackground(baackground);
@@ -37,6 +41,7 @@ public class ToyFindMiniGame : MiniGameBase
 
         protected override void Disable()
         {
+            remainCount.gameObject.SetActive(false);
             spawnedTile.Clear();
             foreach(Transform child in sandTileParent)
             {

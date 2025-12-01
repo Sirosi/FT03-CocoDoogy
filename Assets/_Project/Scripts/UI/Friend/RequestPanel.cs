@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.Friend
+namespace CocoDoogy.UI.Friend
 {
     public abstract class RequestPanel : MonoBehaviour
     {

@@ -25,6 +25,12 @@ namespace CocoDoogy.Data
         /// 지금은 ItemToggleHandler에서 아이템 버튼에 아이템 정보를 찾아넣기 위해 사용 중.
         /// </summary>
         public IReadOnlyList<ItemData> ItemData => itemData;
+        
+        /// <summary>
+        /// 현재 로그인한 계정의 아이템 보유 수량을 저장하기 위한 딕셔너리 
+        /// </summary>
+        public readonly Dictionary<ItemData, int> CurrentItem = new();
+        
         /// <summary>
         /// Firebase Store의 Document 내부의 필드에 변화가 생기면 발생하는 이벤트. public Doc 하위 필드 변경시 발생
         /// </summary>
@@ -47,6 +53,9 @@ namespace CocoDoogy.Data
         /// Firebase의 변화를 알리는 Listener가 중복으로 생성되는것을 방지하기 위한 변수
         /// </summary>
         private PrivateUserData lastPrivateData;
+        
+        private static readonly Dictionary<ItemEffect, ItemData> ReplayItem = new();
+        
 #if UNITY_EDITOR
         void Reset()
         {
@@ -74,10 +83,11 @@ namespace CocoDoogy.Data
             if (Instance == this)
             {
                 InitTileData();
+                InitReplayItem(itemData);
                 DontDestroyOnLoad(gameObject);
             }
         }
-
+        
         //실시간 리스너 구독
         public void StartListeningForUserData(string userId)
         {
@@ -153,6 +163,24 @@ namespace CocoDoogy.Data
         {
             base.OnDestroy();
             StopListening();
+        }
+        
+        private void InitReplayItem(ItemData[] arr)
+        {
+            foreach (var item in arr)
+            {
+                if (item == null) continue;
+
+                if (!ReplayItem.TryAdd(item.effect, item))
+                {
+                    Debug.LogWarning($"중복 itemId 발견: {item.itemId}");
+                }
+            }
+        }
+
+        public static ItemData GetReplayItem(ItemEffect effect)
+        {
+            return ReplayItem.GetValueOrDefault(effect);
         }
     }
 }

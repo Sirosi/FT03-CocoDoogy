@@ -8,12 +8,15 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
     public class MoveCommand: CommandBase
     {
         public override bool IsUserCommand => true;
+
+
+        [SerializeField] private HexDirection dir = HexDirection.East;
         
         
         /// <summary>
         /// 움직이는 방향
         /// </summary>
-        public HexDirection Dir = HexDirection.East;
+        public HexDirection Dir { get => dir; private set => dir = value; }
 
 
         public MoveCommand(object param): base(CommandType.Move, param)
@@ -24,7 +27,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
 
         public override void Execute()
         {
-            InGameManager.ConsumeActionPoint(HexTile.GetTile(PlayerHandler.GridPos).CurrentData.moveCost);
+            InGameManager.ConsumeActionPoint(HexTile.GetTile(PlayerHandler.GridPos).CurrentData.RealMoveCost);
             
             PlayerHandler.LookDirection = Dir;
             Vector2Int nextPos = PlayerHandler.GridPos.GetDirectionPos(Dir);
@@ -37,7 +40,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             Vector2Int prePos = PlayerHandler.GridPos.GetDirectionPos(Dir.GetMirror());
             PlayerHandler.Move(prePos);
             
-            InGameManager.RegenActionPoint(HexTile.GetTile(PlayerHandler.GridPos).CurrentData.moveCost);
+            InGameManager.RegenActionPoint(HexTile.GetTile(PlayerHandler.GridPos).CurrentData.RealMoveCost);
         }
     }
 }

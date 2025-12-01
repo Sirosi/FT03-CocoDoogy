@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
@@ -7,7 +8,10 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override bool IsUserCommand => false;
 
 
-        public int Regen = 0;
+        [UnityEngine.SerializeField] private int rg = 0;
+
+
+        public int Regen { get => rg; private set => rg = value; }
         
         
         public IncreaseCommand(object param) : base(CommandType.Increase, param)
@@ -20,6 +24,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             HexTileMap.ActionPoint += Regen;
             InGameManager.RegenActionPoint(Regen, false);
+            SfxManager.PlaySfx(SfxType.Item_Recovery);
         }
 
         public override void Undo()

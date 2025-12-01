@@ -1,6 +1,6 @@
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Piece;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

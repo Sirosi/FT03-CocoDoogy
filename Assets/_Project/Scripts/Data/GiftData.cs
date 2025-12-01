@@ -1,15 +1,15 @@
 using Firebase.Firestore;
 
-namespace CocoDoogy._Project.Scripts.Data
+namespace CocoDoogy.Data
 {
     [FirestoreData]
     public class GiftData
     {
-        [FirestoreProperty] public string FromNickname { get; set; }
-        [FirestoreProperty] public string GiftType { get; set; }
-        [FirestoreProperty] public string GiftId { get; set; }
-        [FirestoreProperty] public int GiftCount { get; set; }
-        [FirestoreProperty] public bool IsClaimed { get; set; }
-        [FirestoreProperty] public long SentAt { get; set; }
+        [FirestoreProperty] public string fromNickname { get; set; }
+        [FirestoreProperty] public string giftType { get; set; }
+        [FirestoreProperty] public string giftId { get; set; }
+        [FirestoreProperty] public int giftCount { get; set; }
+        [FirestoreProperty] public bool isClaimed { get; set; }
+        [FirestoreProperty] public long sentAt { get; set; }
     }
 }

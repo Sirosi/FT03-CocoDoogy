@@ -1,6 +1,6 @@
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using UnityEngine.SceneManagement;
 
 namespace CocoDoogy.GameFlow.InGame.Phase
@@ -8,25 +8,24 @@ namespace CocoDoogy.GameFlow.InGame.Phase
     /// <summary>
     /// ActionPoint가 부족해서 이동 불가에 빠졌는지 체크
     /// </summary>
-    public class ActionPointCheckPhase : IPhase
+    public class ActionPointCheckPhase: IPhase
     {
         public bool OnPhase()
         {
             if (!InGameManager.IsValid) return false;
 
             HexTile nextTile = HexTile.GetTile(PlayerHandler.GridPos);
-            if (InGameManager.ActionPoints < nextTile.CurrentData.moveCost)
+            if (InGameManager.ActionPoints < nextTile.CurrentData.RealMoveCost)
             {
-                if (InGameManager.RefillPoints <= 1)
+                if (InGameManager.RefillPoints < 1)
                 {
                     ProcessDefeat();
                     return false;
                 }
-                CommandManager.Refill();
             }
 
-            if (InGameManager.RefillPoints > 0) return true;
-
+            if (InGameManager.RefillPoints >= 0) return true;
+            
             // TODO: 상징적인 패배를 넣어야 함.
             ProcessDefeat();
             return false;
@@ -34,7 +33,12 @@ namespace CocoDoogy.GameFlow.InGame.Phase
 
         private void ProcessDefeat()
         {
-            MessageDialog.ShowMessage("미아", "집을 영구적으로 잃었습니다.", DialogMode.Confirm, _ => SceneManager.LoadScene("Lobby"));
+            InGameManager.Timer.Pause();
+            ItemHandler.UseItem(() =>
+            {
+                GameEndPopup.OpenPopup(true);
+                InGameManager.Timer.Stop();
+            });
         }
     }
 }

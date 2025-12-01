@@ -1,9 +1,9 @@
 using CocoDoogy.Network;
-using CocoDoogy.CameraSwiper.Popup;
+using CocoDoogy.UI.Popup;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.Friend
+namespace CocoDoogy.UI.Friend
 {
     public class SentRequestPanel : RequestPanel
     {
@@ -47,7 +47,7 @@ namespace CocoDoogy.CameraSwiper.Friend
             if (requestDict.Count < 1)
             {
                 nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "이런, 나는 아직 아무도 찾지 못했습니다!";
+                nullMessage.text = "보낸 친구 요청이 없습니다.";
             }
             else
             {

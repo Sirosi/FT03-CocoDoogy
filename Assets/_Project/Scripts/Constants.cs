@@ -16,13 +16,17 @@ namespace CocoDoogy
         /// <summary>
         /// 타일 이동 시간
         /// </summary>
-        public const float MOVE_DURATION = 1f;
+        public const float MOVE_DURATION = 0.5f;
+        /// <summary>
+        /// 슬라이드 당 이동 시간
+        /// </summary>
+        public const float SLIDE_PER_DURATION = 0.2f;
+
 
 
         public static class Prefs
         {
-            // TODO: 임시 기능이라 날려야함
-            public const string REPLAY = "Replay";
+            public const string LOBBY_THEME = "LobbyTheme";
         }
     }
 }

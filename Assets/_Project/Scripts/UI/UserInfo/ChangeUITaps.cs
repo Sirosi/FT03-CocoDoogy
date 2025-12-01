@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CocoDoogy.CameraSwiper.UserInfo
+namespace CocoDoogy.UI.UserInfo
 {
     public static class ChangeUITabs
     {

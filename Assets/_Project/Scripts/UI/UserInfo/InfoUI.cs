@@ -1,5 +1,5 @@
 using CocoDoogy.Network;
-using CocoDoogy.CameraSwiper.UIManager;
+using CocoDoogy.UI.UIManager;
 using Firebase.Firestore;
 using System;
 using System.Collections.Generic;
@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-namespace CocoDoogy.CameraSwiper.UserInfo
+namespace CocoDoogy.UI.UserInfo
 {
     public class InfoUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI ticketCountText;
+        [SerializeField] private TextMeshProUGUI realtimeTicket;
         [SerializeField] private TextMeshProUGUI cashMoneyText;
+        [SerializeField] private TextMeshProUGUI realtimeMoney;
         [SerializeField] private CommonButton stampShopButton;
         [SerializeField] private CommonButton jemShopButton;
 
@@ -37,8 +39,25 @@ namespace CocoDoogy.CameraSwiper.UserInfo
                 var data = snapshot.ToDictionary();
 
                 long ticketCount = (long)data["gameTicket"] + (long)data["bonusTicket"];
-                ticketCountText.text = $"{ticketCount.ToString()} / 5";
-                cashMoneyText.text = data["cashMoney"].ToString();
+                if (ticketCount > 99)
+                {
+                    ticketCountText.text = $"99+/{FirebaseManager.MaxRegenTicket}";
+                }
+                else
+                {
+                    ticketCountText.text = $"{ticketCount.ToString()} / {FirebaseManager.MaxRegenTicket}";
+                }
+
+                long cashMoney = (long)data["cashMoney"];
+                if (cashMoney > 99999)
+                {
+                    cashMoneyText.text = "99,999+";
+                }
+                else cashMoneyText.text = cashMoney.ToString("N0");
+                
+                
+                realtimeTicket.text =  $"코코 도장 : {ticketCount.ToString()}개 보유 중\n5분마다 하나씩 충전됩니다.";
+                realtimeMoney.text=  $"두기 잼 : {cashMoney.ToString("N0")}개 보유 중\n상점을 이용해 볼까요?";
             }
             else
             {

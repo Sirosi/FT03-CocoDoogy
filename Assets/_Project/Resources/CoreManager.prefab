@@ -1,5 +1,106 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3251711112025085112
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5562867542316072731}
+  - component: {fileID: 6805782688759674857}
+  - component: {fileID: 2978525948539051975}
+  - component: {fileID: 8481729134330784853}
+  m_Layer: 0
+  m_Name: TouchEffectCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5562867542316072731
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251711112025085112}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3515511772029449768}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!223 &6805782688759674857
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251711112025085112}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &2978525948539051975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251711112025085112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!114 &8481729134330784853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251711112025085112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &4864466465157205230
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,7 +116,7 @@ GameObject:
   - component: {fileID: 2645735018059196249}
   - component: {fileID: 1829738561049236941}
   - component: {fileID: 8884511360502333469}
-  - component: {fileID: 1420184101508360434}
+  - component: {fileID: 4323839432311752655}
   m_Layer: 0
   m_Name: CoreManager
   m_TagString: Untagged
@@ -37,7 +138,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1771006052046265290}
-  - {fileID: 6380787119306318199}
+  - {fileID: 5562867542316072731}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8405631689666356922
@@ -64,319 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77100f07130aea14b8926f2fe3ff2598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxList:
-  - type: 1
-    eventReference:
-      Guid:
-        Data1: -345683676
-        Data2: 1220902991
-        Data3: 1237489546
-        Data4: 747204544
-      Path: event:/SFX/Interaction/LeverOn
-  - type: 2
-    eventReference:
-      Guid:
-        Data1: 94867625
-        Data2: 1245112528
-        Data3: 1244384956
-        Data4: -574479178
-      Path: event:/SFX/Interaction/LeverOff
-  - type: 3
-    eventReference:
-      Guid:
-        Data1: -1713403218
-        Data2: 1252982623
-        Data3: 1900329914
-        Data4: -1876803356
-      Path: event:/SFX/Interaction/SwitchOn
-  - type: 4
-    eventReference:
-      Guid:
-        Data1: 1755327612
-        Data2: 1224176504
-        Data3: 1531076757
-        Data4: -496202047
-      Path: event:/SFX/Interaction/SwitchOff
-  - type: 5
-    eventReference:
-      Guid:
-        Data1: -797451051
-        Data2: 1236502852
-        Data3: -747991890
-        Data4: -1657329013
-      Path: event:/SFX/Interaction/PressurePlate
-  - type: 6
-    eventReference:
-      Guid:
-        Data1: -911902704
-        Data2: 1087274748
-        Data3: -784333152
-        Data4: -1659654017
-      Path: event:/SFX/Interaction/PushChest
-  - type: 7
-    eventReference:
-      Guid:
-        Data1: 998630776
-        Data2: 1174227011
-        Data3: -1561604718
-        Data4: 259117023
-      Path: event:/SFX/Footstep/Water
-  - type: 8
-    eventReference:
-      Guid:
-        Data1: 1741829481
-        Data2: 1097456035
-        Data3: 1041627781
-        Data4: 1122355674
-      Path: event:/SFX/Footstep/Grass
-  - type: 9
-    eventReference:
-      Guid:
-        Data1: -1820351225
-        Data2: 1308382196
-        Data3: 112681908
-        Data4: 840734645
-      Path: event:/SFX/Footstep/Snow
-  - type: 10
-    eventReference:
-      Guid:
-        Data1: 981998330
-        Data2: 1139156831
-        Data3: -642995065
-        Data4: 192538791
-      Path: event:/SFX/Footstep/Sand
-  - type: 11
-    eventReference:
-      Guid:
-        Data1: 887947965
-        Data2: 1116254560
-        Data3: -472895057
-        Data4: 1906534427
-      Path: event:/SFX/Footstep/Wood
-  - type: 12
-    eventReference:
-      Guid:
-        Data1: -1787977346
-        Data2: 1139375707
-        Data3: -116805491
-        Data4: -289967193
-      Path: event:/SFX/Footstep/Dirt
-  - type: 13
-    eventReference:
-      Guid:
-        Data1: 722811114
-        Data2: 1250327366
-        Data3: -448214089
-        Data4: 1754502556
-      Path: event:/SFX/Gimmick/HouseEnter
-  - type: 14
-    eventReference:
-      Guid:
-        Data1: 1608868788
-        Data2: 1208935594
-        Data3: 1175306388
-        Data4: 548421215
-      Path: event:/SFX/Gimmick/OasisEnter
-  - type: 15
-    eventReference:
-      Guid:
-        Data1: -1066255062
-        Data2: 1338060809
-        Data3: -1693227122
-        Data4: -1986992765
-      Path: event:/SFX/Gimmick/DockEnter
-  - type: 16
-    eventReference:
-      Guid:
-        Data1: 1595957532
-        Data2: 1263970614
-        Data3: -1152263775
-        Data4: 1971873961
-      Path: event:/SFX/Weather/Clear
-  - type: 17
-    eventReference:
-      Guid:
-        Data1: -1386827239
-        Data2: 1225893509
-        Data3: -1540770173
-        Data4: -1835377869
-      Path: event:/SFX/Weather/Rain
-  - type: 18
-    eventReference:
-      Guid:
-        Data1: -1465955396
-        Data2: 1140725119
-        Data3: 658289052
-        Data4: -1665990607
-      Path: event:/SFX/Weather/Snow
-  - type: 19
-    eventReference:
-      Guid:
-        Data1: -1127212899
-        Data2: 1319373650
-        Data3: 83554486
-        Data4: -605360083
-      Path: event:/SFX/Weather/Wind
-  - type: 20
-    eventReference:
-      Guid:
-        Data1: -1293081751
-        Data2: 1239288175
-        Data3: 314958759
-        Data4: 304266229
-      Path: event:/SFX/Weather/Hail
-  - type: 21
-    eventReference:
-      Guid:
-        Data1: -1962054361
-        Data2: 1123200055
-        Data3: 1942296732
-        Data4: -1015552341
-      Path: event:/SFX/Weather/Mirage
-  - type: 22
-    eventReference:
-      Guid:
-        Data1: 388533925
-        Data2: 1318692388
-        Data3: -975551587
-        Data4: -517404191
-      Path: event:/SFX/Minigame/PickTrash
-  - type: 23
-    eventReference:
-      Guid:
-        Data1: -2114967419
-        Data2: 1188394001
-        Data3: -1264829044
-        Data4: 1792253202
-      Path: event:/SFX/Minigame/DropTrash
-  - type: 24
-    eventReference:
-      Guid:
-        Data1: -1164134178
-        Data2: 1314039632
-        Data3: -1092576619
-        Data4: 734757826
-      Path: event:/SFX/Minigame/PickCloth
-  - type: 25
-    eventReference:
-      Guid:
-        Data1: 1908865576
-        Data2: 1237541481
-        Data3: -494481524
-        Data4: 693025113
-      Path: event:/SFX/Minigame/DropCloth
-  - type: 26
-    eventReference:
-      Guid:
-        Data1: 496740920
-        Data2: 1221459681
-        Data3: 1407252130
-        Data4: 1948356037
-      Path: event:/SFX/Minigame/DigSand
-  - type: 27
-    eventReference:
-      Guid:
-        Data1: 763221275
-        Data2: 1216892797
-        Data3: -1632893505
-        Data4: -2023603027
-      Path: event:/SFX/UI/SuccessMission
-  - type: 28
-    eventReference:
-      Guid:
-        Data1: 1645129604
-        Data2: 1117692771
-        Data3: 757492373
-        Data4: 819175566
-      Path: event:/SFX/UI/SuccessStage
-  - type: 29
-    eventReference:
-      Guid:
-        Data1: -1777075120
-        Data2: 1146715641
-        Data3: 1609997197
-        Data4: -842941399
-      Path: event:/SFX/UI/FailStage
-  - type: 30
-    eventReference:
-      Guid:
-        Data1: 1952342693
-        Data2: 1159958890
-        Data3: -993283967
-        Data4: 903448127
-      Path: event:/SFX/UI/ButtonDown
-  - type: 31
-    eventReference:
-      Guid:
-        Data1: 86252079
-        Data2: 1167745429
-        Data3: 2116558465
-        Data4: -1147205353
-      Path: event:/SFX/UI/ButtonUp1
-  - type: 32
-    eventReference:
-      Guid:
-        Data1: 1440921346
-        Data2: 1087163163
-        Data3: 1636548000
-        Data4: -1687639625
-      Path: event:/SFX/UI/ButtonUp2
-  - type: 33
-    eventReference:
-      Guid:
-        Data1: 136054408
-        Data2: 1176063772
-        Data3: -33167702
-        Data4: 301100124
-      Path: event:/SFX/UI/PopUp
-  - type: 34
-    eventReference:
-      Guid:
-        Data1: -466790381
-        Data2: 1083001024
-        Data3: 1739776697
-        Data4: 352098150
-      Path: event:/SFX/Emote/Positive
-  - type: 35
-    eventReference:
-      Guid:
-        Data1: 1357268756
-        Data2: 1079850610
-        Data3: 910332082
-        Data4: 1423735083
-      Path: event:/SFX/Emote/Neutral
-  - type: 36
-    eventReference:
-      Guid:
-        Data1: -1621085955
-        Data2: 1189864900
-        Data3: 684788632
-        Data4: -1032527471
-      Path: event:/SFX/Emote/Negative
-  - type: 37
-    eventReference:
-      Guid:
-        Data1: -1012921921
-        Data2: 1098977815
-        Data3: 1087699333
-        Data4: 1877176503
-      Path: event:/SFX/Loop/Detecting
-  - type: 38
-    eventReference:
-      Guid:
-        Data1: 1989177838
-        Data2: 1189871063
-        Data3: -1758311286
-        Data4: 549782819
-      Path: event:/SFX/Loop/WaterSplash
-  - type: 39
-    eventReference:
-      Guid:
-        Data1: -1830622457
-        Data2: 1247549110
-        Data3: 779273139
-        Data4: -422208072
-      Path: event:/SFX/Loop/ShakeUmbrella
+  sfxListData: {fileID: 11400000, guid: 8c24714ef7628bb41b401a3b03c1c69b, type: 2}
   duckingSnapShot:
     Guid:
       Data1: -983966404
@@ -396,7 +185,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6dae0b8edcabd4690eb408b686fb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmList: []
+  bgmList:
+  - type: 1
+    eventReference:
+      Guid:
+        Data1: -1871572123
+        Data2: 1227680373
+        Data3: -611299399
+        Data4: 87268680
+      Path: event:/Bgm/Lobby
+  - type: 2
+    eventReference:
+      Guid:
+        Data1: 2017684373
+        Data2: 1112196163
+        Data3: 1949523112
+        Data4: 832450301
+      Path: event:/Bgm/Forest
+  - type: 3
+    eventReference:
+      Guid:
+        Data1: 1479585846
+        Data2: 1314546440
+        Data3: -1306047864
+        Data4: 1078399764
+      Path: event:/Bgm/Watery
+  - type: 4
+    eventReference:
+      Guid:
+        Data1: -1134364399
+        Data2: 1273195752
+        Data3: -688535678
+        Data4: 852089143
+      Path: event:/Bgm/Winter
+  - type: 5
+    eventReference:
+      Guid:
+        Data1: 2042359656
+        Data2: 1126332024
+        Data3: -1223441242
+        Data4: -1398206895
+      Path: event:/Bgm/Desert
+  themeBgmSettings:
+  - theme: 1
+    bgmType: 2
+  - theme: 2
+    bgmType: 5
+  - theme: 4
+    bgmType: 3
+  - theme: 8
+    bgmType: 4
 --- !u!114 &2645735018059196249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,9 +259,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece1467b44167c343bbb4ade6e31d7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: []
-  cashData: []
-  stampData: []
+  itemData:
+  - {fileID: 11400000, guid: cf2cdcc61f7af3c40ae74f249641df7e, type: 2}
+  - {fileID: 11400000, guid: 9977c4643fa872545aa7e2cfd4502856, type: 2}
+  - {fileID: 11400000, guid: 71e1d0dc13ee3b743adecc2ff15e3b88, type: 2}
+  cashData:
+  - {fileID: 11400000, guid: ac9ba659b74bb8b41a2e33d128542dd0, type: 2}
+  - {fileID: 11400000, guid: 36f2d91d6ab46f64c9e3c9728b58dc41, type: 2}
+  stampData:
+  - {fileID: 11400000, guid: 4fdf4c9e272c84345bc036b105bb3762, type: 2}
+  - {fileID: 11400000, guid: 62f5979cfb3beff4da1f1876fccc7888, type: 2}
+  - {fileID: 11400000, guid: 6386e37ee52e414478055e6106f44230, type: 2}
   tileData:
   - {fileID: 11400000, guid: 10a355761618d1c41af1aa2601864c67, type: 2}
   - {fileID: 11400000, guid: e444c73224af05f4d829c97839537cf9, type: 2}
@@ -442,6 +288,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 05d59deeb453744448f0a57d984ebde3, type: 2}
   - {fileID: 11400000, guid: 97ccd3564b4a66041ba33081f5174404, type: 2}
   - {fileID: 11400000, guid: d11a8d5cea36cbf478994f2c3440347c, type: 2}
+  - {fileID: 11400000, guid: d879caee80e1e7d488be9f5b8efa0f4a, type: 2}
   - {fileID: 11400000, guid: 486b79623ccc34a46b7ce3a27291aa0b, type: 2}
   - {fileID: 11400000, guid: 8d06a0c867fe8e44ab57d7b2b9d67bab, type: 2}
   - {fileID: 11400000, guid: b126a1f9f496fdf4394d4948a1ffda96, type: 2}
@@ -450,7 +297,59 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e9c340c6e45581429c28ca8812d2119, type: 2}
   - {fileID: 11400000, guid: 5741ab3793f0d54448f90e3a6010cdd0, type: 2}
   - {fileID: 11400000, guid: c659cd36e24cb6843946e62e090363a7, type: 2}
+  - {fileID: 11400000, guid: 11f41280b953c95418f64d79782f0c7b, type: 2}
   - {fileID: 11400000, guid: 62d8c3354581f204585ab8a6af2e8274, type: 2}
+  weatherData:
+  - {fileID: 11400000, guid: d15ea31344eb49e4db4465d64cd68482, type: 2}
+  - {fileID: 11400000, guid: f229f0107e941a04082610c90dd9ae34, type: 2}
+  - {fileID: 11400000, guid: 24eac19685ee56342949300be81272b6, type: 2}
+  - {fileID: 11400000, guid: b9f99e3a48fb58043912f42b203837be, type: 2}
+  stageData:
+  - {fileID: 11400000, guid: b7c68eaa69752af4194c84537b59c470, type: 2}
+  - {fileID: 11400000, guid: 8ff1ecbe0ef56c1498af63766bf2ee96, type: 2}
+  - {fileID: 11400000, guid: 072e4efcd9e9f2a4ca7786146f556491, type: 2}
+  - {fileID: 11400000, guid: 329c7de40af5f8d4fa90e0c8abad6be6, type: 2}
+  - {fileID: 11400000, guid: 95038cbc95de190418c0919277169f67, type: 2}
+  - {fileID: 11400000, guid: 73bbe470525d2db44ac9c03e40794a8e, type: 2}
+  - {fileID: 11400000, guid: 042b37aa1d6e86746a22527d0e4ca474, type: 2}
+  - {fileID: 11400000, guid: 98cc183d6d866c040a3e6f67a0eb74e1, type: 2}
+  - {fileID: 11400000, guid: 4fbe5b99acaaa344b969150524423566, type: 2}
+  - {fileID: 11400000, guid: 3bb92d2deb3ddfb4d87d0e7b4f70f5be, type: 2}
+  - {fileID: 11400000, guid: f5f2704ec1531334aaac489cee5e88bf, type: 2}
+  - {fileID: 11400000, guid: c4cf2401e7b3d1a439f0506965b7e14d, type: 2}
+  - {fileID: 11400000, guid: c620940d502eae0448a8b8835cbcf005, type: 2}
+  - {fileID: 11400000, guid: ed248f90ddde7aa4e9548dd86576ed31, type: 2}
+  - {fileID: 11400000, guid: 19d4f66e54064ce4d82a408d1e86f856, type: 2}
+  - {fileID: 11400000, guid: b4bd14191903f4949b632857f9c7fdc9, type: 2}
+  - {fileID: 11400000, guid: 2dfe1a2068f3b2f478d684cf6a20f954, type: 2}
+  - {fileID: 11400000, guid: 5c1324b85f710f244b37fc781ee5e12d, type: 2}
+  - {fileID: 11400000, guid: 20212d018f5865b418dd3c47525197c0, type: 2}
+  - {fileID: 11400000, guid: 01f266bbf68d2634d9f8fa5217605d50, type: 2}
+  - {fileID: 11400000, guid: 21425bd70d2888c42b7c4ae9b4f4e200, type: 2}
+  - {fileID: 11400000, guid: ec9d408c89e31844a969f11943f89ee2, type: 2}
+  - {fileID: 11400000, guid: e666180ce7776df46a3be4c0bebd7c9c, type: 2}
+  - {fileID: 11400000, guid: 62d5299d38724f741b7e98e59344e31f, type: 2}
+  - {fileID: 11400000, guid: 449145eec17147d4d90948550792ae32, type: 2}
+  - {fileID: 11400000, guid: 3cadf9383e7271b46a42b7416bdc7072, type: 2}
+  - {fileID: 11400000, guid: b16bb530f01c6ba45a9dc61cb0632377, type: 2}
+  - {fileID: 11400000, guid: a00034d20378e464782a6ef3c1250d1f, type: 2}
+  - {fileID: 11400000, guid: f9c8b6dc0d69b6a4aafe80129acedfb7, type: 2}
+  - {fileID: 11400000, guid: 9acd43213ead2f24db4d778cf5a78e47, type: 2}
+  - {fileID: 11400000, guid: 32cce6fd23123744c9e45a6ade5bd475, type: 2}
+  - {fileID: 11400000, guid: e0576ce62ff301048a86a870f4c7fa9f, type: 2}
+  - {fileID: 11400000, guid: af7fa7574d605fc46a8f2c9ed013f2ef, type: 2}
+  - {fileID: 11400000, guid: ae281c1048192cd42a35938ef58244f0, type: 2}
+  - {fileID: 11400000, guid: 2b3fa249b07bdbe40bb0a223165f60a0, type: 2}
+  - {fileID: 11400000, guid: 783e30395a150124bbd8a1adbb0b6e37, type: 2}
+  - {fileID: 11400000, guid: b38a560d212633a48a5b22dbae99302b, type: 2}
+  - {fileID: 11400000, guid: a96e66ebd3d02254f9b068d3e8191afb, type: 2}
+  - {fileID: 11400000, guid: 7707b9d542ad13d40972061c2a5271ae, type: 2}
+  - {fileID: 11400000, guid: 261d423050035a849bc78be233ea9c54, type: 2}
+  - {fileID: 11400000, guid: 4e43dee4a84922c4bb067654fa8932bc, type: 2}
+  - {fileID: 11400000, guid: 19373f9dae06cfe4d8d97e6cace02d9e, type: 2}
+  - {fileID: 11400000, guid: 1fb2a3b41cf95104e8978521eb66fff2, type: 2}
+  - {fileID: 11400000, guid: f861c19a3b6a6714a97a0453725c97fb, type: 2}
+  - {fileID: 11400000, guid: 8c399b2761878bd4196668321d53057a, type: 2}
 --- !u!114 &8884511360502333469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db2f9a0d9184805981be8ad5a492323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1420184101508360434
+--- !u!114 &4323839432311752655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -477,108 +376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   touchEffectPrefab: {fileID: 2322220917563826550, guid: 1746761676261dd458f073587443f9cb, type: 3}
   onlyOneFinger: 1
-  canvasRect: {fileID: 6380787119306318199}
---- !u!1 &6277949935089249357
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6380787119306318199}
-  - component: {fileID: 2919261737885270092}
-  - component: {fileID: 6725946022034956545}
-  - component: {fileID: 5692937276899754246}
-  m_Layer: 0
-  m_Name: TouchEffectCanvas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &6380787119306318199
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277949935089249357}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3515511772029449768}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
---- !u!223 &2919261737885270092
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277949935089249357}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 100
-  m_TargetDisplay: 0
---- !u!114 &6725946022034956545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277949935089249357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
---- !u!114 &5692937276899754246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277949935089249357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  canvasRect: {fileID: 5562867542316072731}
 --- !u!1 &8724078286053695815
 GameObject:
   m_ObjectHideFlags: 0

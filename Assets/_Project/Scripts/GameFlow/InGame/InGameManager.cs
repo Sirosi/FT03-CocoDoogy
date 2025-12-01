@@ -5,12 +5,11 @@ using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.GameFlow.InGame.Phase.Passage;
 using CocoDoogy.Test;
 using CocoDoogy.Tile;
+using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Utility;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace CocoDoogy.GameFlow.InGame
 {
@@ -18,7 +17,13 @@ namespace CocoDoogy.GameFlow.InGame
     {
         public static event Action<int> OnActionPointChanged = null;
         public static event Action<int> OnRefillCountChanged = null;
+        public static event Action<Action> OnInteractChanged = null;
+        public static event Action<StageData> OnMapDrawn = null;
 
+        /// <summary>
+        /// 맵 생성 후 리플레이 데이터를 불러오도록 하는 이벤트
+        /// </summary>
+        public static event Action OnLoadReplayData = null;
 
         /// <summary>
         /// 현재 인게임이 정상적인(= 플레이 가능) 상태인지 체크
@@ -95,12 +100,15 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static string MapData { get; private set; } = null;
 
+        public static Stopwatch Timer { get; } = new();
+        /// <summary>
+        /// 플레이 하고 있는 맵의 최대 행동력
+        /// </summary>
+        public static int CurrentMapMaxActionPoints { get; private set; } = 0;
+
 
         private static StageData stageData = null;
-
-
-        private Camera mainCamera = null;
-        private bool touched = false;
+        
 
         private int refillPoints = 0;
         private int actionPoints = 0;
@@ -114,50 +122,17 @@ namespace CocoDoogy.GameFlow.InGame
             new PassageCheckPhase(),
             new CrateMovePhase(),
             new CrateProcessPhase(),
-            new TriggerCheckPhase(),
             new RegenCheckPhase(),
+            new ActionPointCheckPhase(),
+            new TriggerCheckPhase(),
             new DeckCheckPhase(),
             new LockCheckPhase(),
-            new ActionPointCheckPhase(),
         };
 
 
         void Start()
         {
-            mainCamera = Camera.main;
-
             DrawMap(MapData);
-        }
-
-        void Update()
-        {
-            if (IsPointerOverUI()) return;
-            // TODO: 리팩토링 필요
-            if (TouchSystem.TouchCount > 0)
-            {
-                if (touched) return;
-                touched = true;
-
-                Ray ray = mainCamera.ScreenPointToRay(TouchSystem.TouchAverage);
-                if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, LayerMask.GetMask("Tile")))
-                {
-                    // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                    HexTile selectedTile = hit.collider.GetComponentInParent<HexTile>();
-                    if (!selectedTile) return;
-
-                    HexDirection? direction = PlayerHandler.GridPos.GetRelativeDirection(selectedTile.GridPos);
-                    if (!direction.HasValue) return;
-
-                    HexTile playerTile = HexTile.GetTile(PlayerHandler.GridPos);
-                    if (!playerTile.CanMove(direction.Value)) return;
-
-                    CommandManager.Move(direction.Value);
-                }
-            }
-            else
-            {
-                touched = false;
-            }
         }
 
 
@@ -174,7 +149,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             Instance.Clear();
             CommandManager.Clear();
-
+            
             if (mapJson is null)
             {
                 // MapData가 없이 InGame에 들어가면, Test데이터 생성
@@ -184,6 +159,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             RefillPoints = HexTileMap.RefillPoint;
             ActionPoints = HexTileMap.ActionPoint;
+            CurrentMapMaxActionPoints = HexTileMap.ActionPoint;
             CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
             CommandManager.Weather(HexTileMap.DefaultWeather);
 
@@ -192,8 +168,18 @@ namespace CocoDoogy.GameFlow.InGame
                 Passages.Add(new WeatherPassage(weather.Key, weather.Value));
             }
 
-            Camera.main.transform.position = new Vector3(HexTileMap.StartPos.x, 5, HexTileMap.StartPos.y - 3);
+            foreach(var gimmick in HexTileMap.Gimmicks.Values)
+            {
+                foreach(var trigger in gimmick.Triggers)
+                {
+                    GimmickExecutor.ExecuteFromTrigger(trigger.GridPos);
+                }
+            }
 
+            OnMapDrawn?.Invoke(Stage);
+            Timer.Start();
+            OnLoadReplayData?.Invoke();
+            
             ProcessPhase();
         }
 
@@ -205,6 +191,17 @@ namespace CocoDoogy.GameFlow.InGame
             ConsumedActionPoints = 0;
             RefillPoints = 0;
             ActionPoints = 0;
+            Timer.Stop();
+
+            ChangeInteract(null);
+
+            foreach(IPhase phase in turnPhases)
+            {
+                if(phase is IClearable clearable)
+                {
+                    clearable.OnClear();
+                }
+            }
         }
 
         /// <summary>
@@ -255,26 +252,9 @@ namespace CocoDoogy.GameFlow.InGame
             OutlineForTest.Draw();
         }
 
-        /// <summary>
-        /// UI위로 클릭하면 게임에 영향을 주지 않게 하는 메서드
-        /// </summary>
-        /// <returns></returns>
-        private bool IsPointerOverUI()
+        public static void ChangeInteract(Action callback)
         {
-            if (EventSystem.current.IsPointerOverGameObject()) // 에디터
-                return true;
-
-            if (Touchscreen.current != null) // 빌드
-            {
-                foreach (var touch in Touchscreen.current.touches)
-                {
-                    if (touch.isInProgress &&
-                        EventSystem.current.IsPointerOverGameObject(touch.touchId.ReadValue()))
-                        return true;
-                }
-            }
-
-            return false;
+            OnInteractChanged?.Invoke(callback);
         }
     }
 }

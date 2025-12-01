@@ -11,8 +11,10 @@ namespace CocoDoogy.Network
 {
     public partial class FirebaseManager
     {
+        public static Coroutine TicketCoroutine;
+        
+        public const int MaxRegenTicket = 10;
         private const long RechargeIntervalMs = 1 * 60 * 1000; // TODO: 지금은 1분 주기로 실행되게 되어있는데 나중에 10분 or 30분 주기로 변경 예정
-        private const int MaxRegenTicket = 5;
         private int TotalTicket => CurrentTicket + BonusTicket;
 
         private int CurrentTicket { get; set; }
@@ -71,23 +73,17 @@ namespace CocoDoogy.Network
         /// 티켓을 사용하는 메서드
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> UseTicketAsync()
+        public static async Task<bool> UseTicketAsync()
         {
-            // TODO : 티켓 구매 시 TotalTicket에 영향을 주게 변경해야함. 
-            // if (TotalTicket <= 0)
-            // {
-            //     Debug.LogWarning("로컬 확인: 사용 가능한 티켓이 없습니다.");
-            //     return false;
-            // }
-
+            var loading = FirebaseLoading.ShowLoading();
             try
             {
-                HttpsCallableResult result = await Functions.GetHttpsCallable("consumeTicket").CallAsync();
+                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("consumeTicket").CallAsync();
                 string json = JsonConvert.SerializeObject(result.Data);
                 TicketResponse response = JsonConvert.DeserializeObject<TicketResponse>(json);
 
-                if (response.Success) UpdateTicketState(result.Data);
-                
+                if (response.Success) Instance.UpdateTicketState(result.Data);
+
                 return response.Success;
             }
             catch (Exception e)
@@ -95,14 +91,42 @@ namespace CocoDoogy.Network
                 Debug.LogError("티켓 사용 함수 호출 실패: " + e.Message);
                 return false;
             }
+            finally
+            {
+                loading.Hide();
+            }
         }
+        
+        /// <summary>
+        /// 로그인에 성공하면 일정 시간마다 티켓을 충전하는 코루틴을 실행 <br/>
+        /// 로그아웃을 하면 코루틴을 멈춤.
+        /// </summary>
+        public void AuthStateChanged()
+        {
+            if (Auth.CurrentUser != null)
+            {
+                Debug.Log("로그인됨: " + Auth.CurrentUser.UserId);
 
+                if (TicketCoroutine == null)
+                    TicketCoroutine = StartCoroutine(UpdateTicketCoroutine());
+            }
+            else
+            {
+                Debug.Log("로그아웃 상태");
+
+                if (TicketCoroutine != null)
+                {
+                    StopCoroutine(TicketCoroutine);
+                    TicketCoroutine = null;
+                }
+            }
+        }
         /// <summary>
         /// 게임이 실행되고 무한 반복되는 코루틴 메서드 <br/>
         /// 일정 주기마다 RechargeTicketAsync를 실행시킴
         /// </summary>
         /// <returns></returns>
-        public IEnumerator UpdateLocalTimerCoroutine()
+        private IEnumerator UpdateTicketCoroutine()
         {
             while (true)
             {
