@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 using UnityEngine;
 
@@ -45,7 +46,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             InGameManager.ConsumeActionPoint(RemainPoints);
             InGameManager.RefillActionPoint();
             PlayerHandler.SandCount = 0;
-            
+            SfxManager.PlaySfx(SfxType.UI_Reset);
             PlayerHandler.Deploy(HexTileMap.StartPos);
         }
 

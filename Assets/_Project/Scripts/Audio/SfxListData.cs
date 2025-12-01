@@ -10,6 +10,8 @@ namespace CocoDoogy.Audio
         [Header("SFX List")]
         public List<SfxReference> sfxList = new();
         
+        //일부 컴퓨터에서 오류 발생으로 주석 처리했습니다. 지우지 마세요
+        
         // #region  SfxList Reset
         // //sfxList를 Reset 버튼 누름으로써 빠르게 초기화 하는 기능
         // [ContextMenu("Reset Sfx List")]
