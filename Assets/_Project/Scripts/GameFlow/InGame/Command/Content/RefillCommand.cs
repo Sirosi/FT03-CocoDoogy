@@ -9,7 +9,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
     [System.Serializable]
     public class RefillCommand: CommandBase
     {
-        public override bool IsUserCommand => false;
+        public override bool IsUserCommand => true;
 
 
         [SerializeField] private int rp = 0;

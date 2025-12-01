@@ -17,7 +17,7 @@ namespace CocoDoogy.UI
         
         private float scaleUp = 1.3f;
         private float scaleDown = 0.7f;
-        private float duration = 0.3f;
+        private float duration = 0.125f;
         
 
         private void Awake()
