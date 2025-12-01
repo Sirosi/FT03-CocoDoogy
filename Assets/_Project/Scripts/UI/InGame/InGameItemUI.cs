@@ -41,7 +41,7 @@ namespace CocoDoogy.UI.InGame
             if (itemData is null) return;
 
             // 아이템이 1개 이상 존재 하면 사용할 수 있도록
-            if (ItemHandler.UsedItems[itemData])
+            if (DataManager.Instance.CurrentItem[itemData] > 0)
             {
                 InfoDialog.ShowInfo("아이템 정보", itemData.itemName, itemData.itemDescription, itemData.itemSprite, DialogMode.YesNo,
                     (type => button.UseItem(type, itemData)));
