@@ -29,7 +29,7 @@ namespace CocoDoogy.UI.Shop
             if (!isSaleForCash)
             {
                 itemPrice.alignment = TextAlignmentOptions.Midline;
-                itemPrice.text = $"<size=300%><voffset=10><sprite name=Jem></voffset></size><space=-0.8em> {itemData.purchasePrice:N0}";
+                itemPrice.text = $"<size=200%><voffset=10><sprite name=Jem></voffset></size><space=-0.8em> {itemData.purchasePrice:N0}";
             }
             else
             {

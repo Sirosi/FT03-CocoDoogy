@@ -49,7 +49,7 @@ namespace CocoDoogy.UI.InGame
             else if (DataManager.Instance.CurrentItem[itemData] <= 0 && !button.IsPurchased) // 아이템이 존재하지 않으면 구매할 수 있도록
             {
                 InfoDialog.ShowInfo("아이템 정보", itemData.itemName, itemData.itemDescription, itemData.itemSprite, DialogMode.Confirm,
-                    (type => _ = button.PurchaseAsync(type, itemData)));
+                    (type => _ = button.PurchaseAsync(type, itemData)), $"<size=150%><voffset=6><sprite name=Jem></voffset></size><space=-0.6em>{itemData.purchasePrice}");
             }
         }
 
@@ -60,16 +60,17 @@ namespace CocoDoogy.UI.InGame
         /// <param name="value"></param>
         private void OnItemValueChanged(ItemData item, bool value)
         {
-            float rgb = value ? 1f : 0.2f;
+            float rgb = value ? 1f : 0.5f;
+            Color targetColor = new Color(rgb, rgb, rgb);
 
             foreach (var button in itemButtons)
             {
-                if (button.ItemData == item)
+                if (button.ItemData == item && button.Button)
                 {
-                    if (button.Button)
+                    button.Button.interactable = value;
+                    foreach (var graphic in button.GetComponentsInChildren<Graphic>(true))
                     {
-                        button.Button.interactable = value;
-                        button.ButtonColor.DOColor(new Color(rgb,rgb,rgb), 0.2f);
+                        graphic.DOColor(targetColor, 0.2f);
                     }
                 }
             }
