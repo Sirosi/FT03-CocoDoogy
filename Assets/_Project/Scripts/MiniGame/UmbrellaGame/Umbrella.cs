@@ -158,8 +158,8 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
                 needSwipeCount--;
                 if (needSwipeCount <= 0 && !isDry)
                 {
-                    isDry = true;
                     SetDry(drySprite);
+                    parent.CheckClear();
                     SfxManager.PlaySfx(SfxType.UI_SuccessMission);
                 }
             }

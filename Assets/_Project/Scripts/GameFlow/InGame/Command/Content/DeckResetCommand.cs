@@ -10,10 +10,14 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
     public class DeckResetCommand: CommandBase
     {
         public override bool IsUserCommand => false;
+
+
+        [SerializeField] private Vector2Int gp = Vector2Int.zero;
+        [SerializeField] private byte d = 0;
         
 
-        public Vector2Int GridPos = Vector2Int.zero;
-        public bool Docked = false;
+        public Vector2Int GridPos { get => gp; private set => gp = value; }
+        public bool Docked { get => d == 1; private set => d = value ? (byte)1 : (byte)0; }
 
 
         public DeckResetCommand(object param): base(CommandType.DeckReset, param)

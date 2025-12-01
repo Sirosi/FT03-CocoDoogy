@@ -13,12 +13,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
             List<CommandData> data = new();
             foreach (var command in Executed)
             {
-
-                data.Add(new()
-                {
-                    Type = command.Type,
-                    DataJson = JsonUtility.ToJson(command)
-                });
+                data.Add(new(command.Type, JsonUtility.ToJson(command)));
             }
             CommandSave result = new()
             {
@@ -53,6 +48,10 @@ namespace CocoDoogy.GameFlow.InGame.Command
                     CommandType.Gimmick => JsonUtility.FromJson<GimmickCommand>(data.DataJson),
                     CommandType.Increase => JsonUtility.FromJson<IncreaseCommand>(data.DataJson),
                     CommandType.DeckReset => JsonUtility.FromJson<DeckResetCommand>(data.DataJson),
+                    
+                    CommandType.MaxUp => JsonUtility.FromJson<MaxUpItemCommand>(data.DataJson),
+                    CommandType.Recover => JsonUtility.FromJson<RecoverItemCommand>(data.DataJson),
+                    CommandType.Undo => JsonUtility.FromJson<UndoItemCommand>(data.DataJson),
                     _ => null
                 };
 
@@ -71,8 +70,19 @@ namespace CocoDoogy.GameFlow.InGame.Command
         [System.Serializable]
         private class CommandData
         {
-            public CommandType Type = CommandType.None;
-            public string DataJson = string.Empty;
+            [SerializeField] private CommandType t = CommandType.None;
+            [SerializeField] private string jn = string.Empty;
+
+
+            public CommandType Type { get => t; private set => t = value; }
+            public string DataJson { get => jn; private set => jn = value; }
+
+
+            public CommandData(CommandType type, string json)
+            {
+                Type = type;
+                DataJson = json;
+            }
         }
     }
 }

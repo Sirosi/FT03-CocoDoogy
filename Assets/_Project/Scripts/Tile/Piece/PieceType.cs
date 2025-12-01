@@ -68,6 +68,10 @@ namespace CocoDoogy.Tile.Piece
         /// 숲
         /// </summary>
         Forest = 108,
+        /// <summary>
+        /// 선인장
+        /// </summary>
+        Cactus = 109,
         
         /// <summary>
         /// 강풍

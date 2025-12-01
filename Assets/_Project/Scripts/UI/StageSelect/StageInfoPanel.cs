@@ -85,6 +85,7 @@ namespace CocoDoogy.UI.StageSelect
             if (isReady)
             {
                 InGameManager.Stage = stageData;
+                PlayerHandler.IsReplay = false;
                 Loading.LoadScene("InGame");
             }
             else

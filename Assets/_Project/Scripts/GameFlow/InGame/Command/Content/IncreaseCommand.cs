@@ -8,7 +8,10 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override bool IsUserCommand => false;
 
 
-        public int Regen = 0;
+        [UnityEngine.SerializeField] private int rg = 0;
+
+
+        public int Regen { get => rg; private set => rg = value; }
         
         
         public IncreaseCommand(object param) : base(CommandType.Increase, param)

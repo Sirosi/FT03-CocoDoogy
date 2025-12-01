@@ -2,6 +2,7 @@ using CocoDoogy.Data;
 using CocoDoogy.Network;
 using CocoDoogy.UI;
 using CocoDoogy.UI.Popup;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -13,7 +14,7 @@ namespace CocoDoogy.UI.StageSelect.Item
     public class ItemButton : MonoBehaviour
     {
         [Header("UI Elements")]
-        [SerializeField] private CommonButton itemButton;
+        [SerializeField] private Button itemButton;
         [SerializeField] private TextMeshProUGUI itemAmountText;
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace CocoDoogy.UI.StageSelect.Item
         private void Awake()
         {
             // 실수로 Inspector에서 연결을 안했을 때를 대비한 코드 
-            if (!itemButton) itemButton = GetComponent<CommonButton>();
+            if (!itemButton) itemButton = GetComponent<Button>();
             if (!itemAmountText) itemAmountText = GetComponentInChildren<TextMeshProUGUI>();
             
             itemButton.onClick.AddListener(() =>
@@ -55,6 +56,23 @@ namespace CocoDoogy.UI.StageSelect.Item
             }
             DataManager.Instance.CurrentItem[item] = CurrentAmount;
             itemAmountText.text = $"{CurrentAmount}";
+
+            
+            var buttonColor = itemButton.GetComponentsInChildren<Graphic>();
+            if (CurrentAmount <= 0)
+            {
+                foreach (var colors in buttonColor)
+                {
+                    colors.DOColor(new Color(0.75f, 0.75f, 0.75f), 0.2f);
+                }
+            }
+            else
+            {
+                foreach (var colors in buttonColor)
+                {
+                    colors.DOColor(Color.white, 0.2f);
+                }
+            }
         }
 
         public void Refresh()

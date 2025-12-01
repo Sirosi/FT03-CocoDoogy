@@ -1,4 +1,4 @@
-using CocoDoogy.UI.StageSelect;
+using CocoDoogy.GameFlow.InGame;
 using TMPro;
 using UnityEngine;
 
@@ -6,16 +6,11 @@ namespace CocoDoogy.UI.InGame
 {
     public class CurrentStageUI : MonoBehaviour
     {
-        private TextMeshProUGUI currentStageText;
+        [SerializeField] private TextMeshProUGUI currentStageText;
 
         private void Awake()
         {
-            currentStageText = GetComponentInChildren<TextMeshProUGUI>();
-        }
-
-        private void Start()
-        {
-            currentStageText.text = $"{StageSelectManager.LastClearedStage.theme} 테마 - {StageSelectManager.LastClearedStage.level}";
+            currentStageText.text = $"{InGameManager.Stage.theme.Theme2Korean()} 테마 - {InGameManager.Stage.index}";
         }
     }
 }
