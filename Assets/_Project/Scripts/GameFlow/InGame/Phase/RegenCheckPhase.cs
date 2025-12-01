@@ -44,6 +44,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             CommandManager.Regen(centerPiece.BaseData.type == PieceType.Field ? 1 : 2);
             CommandManager.GimmickPieceChange(PlayerHandler.GridPos, HexDirection.Center, PieceType.None,
                 centerPiece.BaseData.type, centerPiece.LookDirection, centerPiece.LookDirection);
+            InGameManager.ProcessPhase();
         }
     }
 }
