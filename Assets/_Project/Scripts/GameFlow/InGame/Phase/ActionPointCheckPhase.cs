@@ -36,7 +36,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             InGameManager.Timer.Pause();
             ItemHandler.UseItem(() =>
             {
-                GameEndPopup.OpenPopup(true);
+                GameEndPopup.OpenPopup(true, 0);
                 InGameManager.Timer.Stop();
             });
         }

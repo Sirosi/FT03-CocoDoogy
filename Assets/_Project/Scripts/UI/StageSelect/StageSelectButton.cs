@@ -16,6 +16,8 @@ namespace CocoDoogy.UI.StageSelect
     /// </summary>
     public class StageSelectButton : MonoBehaviour
     {
+        public int Star { get; set; }
+
         [Header("UI Components")]
         [SerializeField] private TextMeshProUGUI stageNumberText;
 
@@ -31,7 +33,7 @@ namespace CocoDoogy.UI.StageSelect
 
 
         private StageData stageData = null;
-        private Action<StageData> callback = null;
+        private Action<StageData, int> callback = null;
 
 #if UNITY_EDITOR
         private void Reset()
@@ -56,11 +58,13 @@ namespace CocoDoogy.UI.StageSelect
         /// <param name="data">스테이지 데이터</param>
         /// <param name="starSize">스테이지 사이즈</param>
         /// <param name="actionCallback"></param>
-        public void Init(StageData data, int starSize, Action<StageData> actionCallback)
+        public void Init(StageData data, int starSize, Action<StageData, int> actionCallback)
         {
             stageData = data;
             callback = actionCallback;
-
+            
+            Star = starSize;
+            
             foreach (GameObject star in clearStars)
             {
                 star.SetActive(starSize-- > 0);
@@ -141,7 +145,7 @@ namespace CocoDoogy.UI.StageSelect
 
         private void OnButtonClicked()
         {
-            callback?.Invoke(stageData);
+            callback?.Invoke(stageData, Star);
         }
 
         private void OnLockedButtonClicked()

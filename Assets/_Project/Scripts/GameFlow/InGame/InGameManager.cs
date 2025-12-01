@@ -67,6 +67,8 @@ namespace CocoDoogy.GameFlow.InGame
                 OnRefillCountChanged?.Invoke(Instance.refillPoints);
             }
         }
+
+        public static int UseRefillCounts = 0;
         /// <summary>
         /// Refill전까지 남은 ActionPoints
         /// </summary>
@@ -158,6 +160,7 @@ namespace CocoDoogy.GameFlow.InGame
             MapSaveLoader.Apply(mapJson);
 
             RefillPoints = HexTileMap.RefillPoint;
+            UseRefillCounts = 0;
             ActionPoints = HexTileMap.ActionPoint;
             CurrentMapMaxActionPoints = HexTileMap.ActionPoint;
             CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
@@ -210,6 +213,7 @@ namespace CocoDoogy.GameFlow.InGame
         public static void RefillActionPoint()
         {
             RefillPoints--;
+            UseRefillCounts++;
             ActionPoints = HexTileMap.ActionPoint;
         }
         /// <summary>
@@ -218,6 +222,7 @@ namespace CocoDoogy.GameFlow.InGame
         public static void ClearActionPoint()
         {
             RefillPoints++;
+            UseRefillCounts--;
             ActionPoints = 0;
         }
 

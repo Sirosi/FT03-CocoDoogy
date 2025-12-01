@@ -791,8 +791,7 @@ MonoBehaviour:
     effectBackground: {fileID: 21300000, guid: 869c6580e44d28d4ab9d39687ed87a6b, type: 3}
   titleImage: {fileID: 5085751165967747968}
   titleTextImage: {fileID: 4613816396537121595}
-  complete: {fileID: 3348246304109890111}
-  defeat: {fileID: 6590091296117400151}
+  completeScore: {fileID: 4039141994228696040}
   clearEffectImage: {fileID: 5600730319090994244}
   remainAPText: {fileID: 6090620853338942466}
   clearTimeText: {fileID: 145756902994446985}
@@ -936,6 +935,7 @@ MonoBehaviour:
   rightStar: {fileID: 8893341850346117887}
   starParticle: {fileID: 7263402156197213005, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
   _3starParticle: {fileID: 7263402156197213005, guid: 76151aa2be3677042ba1609e4b75a0d1, type: 3}
+  defeat: {fileID: 0}
 --- !u!1 &3459102567645651456
 GameObject:
   m_ObjectHideFlags: 0
