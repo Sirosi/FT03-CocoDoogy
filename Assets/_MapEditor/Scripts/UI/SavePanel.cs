@@ -79,6 +79,8 @@ namespace CocoDoogy.MapEditor.UI
             string json = MapSaveLoader.ToJson();
             File.WriteAllText(path, json, Encoding.UTF8);
 
+            Debug.Log($"저장완료 - {path}");
+
             RefreshFileInfos();
         }
 

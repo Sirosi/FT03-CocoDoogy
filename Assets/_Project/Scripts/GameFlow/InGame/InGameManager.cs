@@ -17,7 +17,7 @@ namespace CocoDoogy.GameFlow.InGame
     {
         public static event Action<int> OnActionPointChanged = null;
         public static event Action<int> OnRefillCountChanged = null;
-        public static event Action<Action> OnInteractChanged = null;
+        public static event Action<Sprite, Action> OnInteractChanged = null;
         public static event Action<StageData> OnMapDrawn = null;
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static int LastConsumeActionPoints { get; private set; } = 0;
         /// <summary>
-        /// Map 시작 후, 소모된 ActionPoints
+        /// 초기화 후, 소모된 ActionPoints
         /// </summary>
         public static int ConsumedActionPoints
         {
@@ -126,8 +126,7 @@ namespace CocoDoogy.GameFlow.InGame
             new CrateProcessPhase(),
             new RegenCheckPhase(),
             new ActionPointCheckPhase(),
-            new TriggerCheckPhase(),
-            new DeckCheckPhase(),
+            new InteractableCheckPhase(),
             new LockCheckPhase(),
         };
 
@@ -196,7 +195,7 @@ namespace CocoDoogy.GameFlow.InGame
             ActionPoints = 0;
             Timer.Stop();
 
-            ChangeInteract(null);
+            ChangeInteract(null, null);
 
             foreach(IPhase phase in turnPhases)
             {
@@ -212,6 +211,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static void RefillActionPoint()
         {
+            ConsumedActionPoints = 0;
             RefillPoints--;
             UseRefillCounts++;
             ActionPoints = HexTileMap.ActionPoint;
@@ -257,9 +257,9 @@ namespace CocoDoogy.GameFlow.InGame
             OutlineForTest.Draw();
         }
 
-        public static void ChangeInteract(Action callback)
+        public static void ChangeInteract(Sprite icon, Action callback)
         {
-            OnInteractChanged?.Invoke(callback);
+            OnInteractChanged?.Invoke(icon, callback);
         }
     }
 }

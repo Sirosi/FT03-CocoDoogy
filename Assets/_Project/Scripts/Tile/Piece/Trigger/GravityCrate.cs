@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace CocoDoogy.Tile.Piece.Trigger
@@ -7,6 +8,9 @@ namespace CocoDoogy.Tile.Piece.Trigger
     /// </summary>
     public class GravityCrate: TriggerPieceBase
     {
+        [SerializeField] private Transform crate;
+
+
         public override bool IsOn => true;
         
         
@@ -23,6 +27,12 @@ namespace CocoDoogy.Tile.Piece.Trigger
         public override void UnInteract()
         {
             
+        }
+
+        public void ToMove(HexDirection direction)
+        {
+            crate.position = Parent.GridPos.GetDirectionPos(direction).ToWorldPos();
+            crate.DOMove(Parent.GridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(Piece);
         }
     }
 }

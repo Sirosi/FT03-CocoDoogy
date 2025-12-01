@@ -20,6 +20,17 @@ namespace CocoDoogy.CameraSwiper
 
     public class PageCameraSwiper : MonoBehaviour
     {
+        /// <summary>
+        /// 페이지 전환 이벤트 (index 인자 포함)
+        /// 외부 시스템(Lighting, BGM, UI 등)이 구독하여 페이지 변경에 반응
+        /// </summary>
+        public static event Action<Theme> OnStartPageChanged; // 페이지 전환 중
+
+        public static event Action<Theme> OnEndPageChanged; // 페이지 전환 완료 시 호출
+
+        public static Theme CurrentTheme { get; private set; } = Theme.None;
+
+        
         [Header("Page Settings")]
         [SerializeField] private Transform[] cameraPoints;
 
@@ -46,14 +57,6 @@ namespace CocoDoogy.CameraSwiper
         private bool isDragging = false;
 
         private float lerpSpeed = 12f; // 드래그 중 실시간 보간 속도
-
-        /// <summary>
-        /// 페이지 전환 이벤트 (index 인자 포함)
-        /// 외부 시스템(Lighting, BGM, UI 등)이 구독하여 페이지 변경에 반응
-        /// </summary>
-        public static event Action<Theme> OnStartPageChanged; // 페이지 전환 중
-
-        public static event Action<Theme> OnEndPageChanged; // 페이지 전환 완료 시 호출
 
 
         void Start()
@@ -184,7 +187,7 @@ namespace CocoDoogy.CameraSwiper
             mainCamera.transform.position = cameraPoints[index].position;
             mainCamera.transform.rotation = cameraPoints[index].rotation;
 
-            OnEndPageChanged?.Invoke(GetThemeByIndex(index));
+            OnEndPageChanged?.Invoke(CurrentTheme = GetThemeByIndex(index));
             SetActivePage(index);
         }
 

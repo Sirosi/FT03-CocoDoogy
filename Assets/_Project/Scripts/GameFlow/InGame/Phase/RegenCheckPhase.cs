@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.MiniGame;
 using CocoDoogy.Tile;
@@ -32,6 +33,15 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             }
 
             if (!centerPiece || centerPiece.BaseData.type is not (PieceType.Field or PieceType.Oasis)) return true;
+
+            if (centerPiece.BaseData.type is PieceType.Field)
+            {
+                SfxManager.PlaySfx(SfxType.Item_Recovery);
+            }
+            else if (centerPiece.BaseData.type is PieceType.Oasis)
+            {
+                SfxManager.PlaySfx(SfxType.Gimmick_OasisEnter);
+            }
             IncreaseActionPoints();
 
             
@@ -44,6 +54,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             CommandManager.Regen(centerPiece.BaseData.type == PieceType.Field ? 1 : 2);
             CommandManager.GimmickPieceChange(PlayerHandler.GridPos, HexDirection.Center, PieceType.None,
                 centerPiece.BaseData.type, centerPiece.LookDirection, centerPiece.LookDirection);
+            InGameManager.ProcessPhase();
         }
     }
 }
