@@ -43,6 +43,9 @@ const {clearStage} = require(
 const {stageClear} = require(
     "./functions/stage/stage-clear",
 );
+const {stageClearScore} = require(
+    "./functions/stage/stage-clear-score",
+);
 
 exports.clearStage = clearStage;
 exports.takeInGameMoney = takeInGameMoney;
@@ -62,3 +65,4 @@ exports.giftFriendsRequest = giftFriendsRequest;
 exports.takePresentRequest = takePresentRequest;
 exports.useItem = useItem;
 exports.stageClear = stageClear;
+exports.stageClearScore = stageClearScore;

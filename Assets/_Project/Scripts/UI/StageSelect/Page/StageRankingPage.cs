@@ -10,6 +10,7 @@ namespace CocoDoogy.UI.StageSelect.Page
 {
     public class StageRankingPage : StageInfoPage
     {
+        public int CurrentStageStar { get; set; } = 0;
         [SerializeField] private RankItem prefab;
         [SerializeField] private RectTransform container;
         
@@ -19,6 +20,7 @@ namespace CocoDoogy.UI.StageSelect.Page
             {
                 LeanPool.Despawn(child.gameObject);
             }
+            
             var ranking = await FirebaseManager.GetRanking((StageData.theme.ToIndex() + 1).Hex2(), StageData.index.Hex2());
             
             var sortedRanking = ranking.OrderBy(pair => pair.Value.rank).ToList();
@@ -27,13 +29,14 @@ namespace CocoDoogy.UI.StageSelect.Page
             {
                 RankData rank = kvp.Value;
                 
-                var rankItem = LeanPool.Spawn(prefab, container);
-                rankItem.GetComponent<RankItem>().Init(rank.rank.ToString(),
+                RankItem rankItem = LeanPool.Spawn(prefab, container);
+                rankItem.Init(rank.rank.ToString(),
                     rank.nickname,
                     rank.refillPoints.ToString(),
                     rank.remainAP,
                     rank.clearTime,
                     rank.replayId,
+                    CurrentStageStar,
                     StageData);
             }
         }

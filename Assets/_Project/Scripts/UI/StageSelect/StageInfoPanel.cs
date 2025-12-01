@@ -12,8 +12,6 @@ namespace CocoDoogy.UI.StageSelect
 {
     public class StageInfoPanel : MonoBehaviour
     {
-        private int selectedStage;
-        
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI title;
         
@@ -21,20 +19,16 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private StageInfoPage commonInfoPage;
         [SerializeField] private StageInfoPage detailInfoPage;
         [SerializeField] private StageRankingPage rankingPage;
-        /*-[Header("Ranks")]
-        [SerializeField] private GameObject[] ranks;
-        private TextMeshProUGUI[] rankTexts;
-        private CommonButton[] replayButtons;*/
         
         [Header("Buttons")]
         [SerializeField] private CommonButton pageChangeButton;
         [SerializeField] private CommonButton startButton;
-
+        
+        [SerializeField] private StageSelectStar stageSelectStar;
         public bool IsOpened { get; private set; } = false;
 
 
         private StageData stageData = null;
-
 
         void Awake()
         {
@@ -46,7 +40,7 @@ namespace CocoDoogy.UI.StageSelect
         {
             IsOpened = false;
         }
-
+        
 
         public void Show(StageData data)
         {
@@ -63,7 +57,12 @@ namespace CocoDoogy.UI.StageSelect
             rankingPage.Show(stageData);
             detailInfoPage.Close();
         }
-        
+
+        public void BrightStar(int count)
+        {
+            rankingPage.CurrentStageStar = count;
+            stageSelectStar.BrightStar(count);
+        }
         
         private void OnPageChangeButtonClicked()
         {

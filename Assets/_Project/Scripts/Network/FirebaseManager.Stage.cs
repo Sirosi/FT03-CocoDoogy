@@ -5,6 +5,7 @@ using Firebase.Firestore;
 using Firebase.Functions;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace CocoDoogy.Network
         /// </summary>
         /// <returns></returns>
         public static async Task<IDictionary<string, object>> ClearStageAsync(int theme, int level, int remainAP,
-            int refillPoints, float clearTime, string saveJson, Action openPopup)
+            int refillPoints, float clearTime, int star, string saveJson, Action openPopup)
         {
             var loading = FirebaseLoading.ShowLoading();
             try
@@ -32,6 +33,7 @@ namespace CocoDoogy.Network
                     { "clearTime", clearTime },
                     { "remainAP", remainAP },
                     { "replayData", saveJson },
+                    { "star", star },
                     { "refillPoints", refillPoints },
                 };
                 HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("stageClear").CallAsync(data);
@@ -82,6 +84,54 @@ namespace CocoDoogy.Network
             {
                 return null;
             }
+        }
+
+        public static async Task<int> GetStageScore(int refillCount, int[] scores)
+        {
+            var loading = FirebaseLoading.ShowLoading();
+            List<int> scoresList = scores.ToList();
+            Dictionary<string, object> data = new() { { "refillCount", refillCount }, { "scores", scoresList }, };
+            try
+            {
+                HttpsCallableResult result =
+                    await Instance.Functions.GetHttpsCallable("stageClearScore").CallAsync(data);
+
+                if (result.Data is IDictionary dict && dict.Contains("stars"))
+                {
+                    Debug.Log($"dict[\"star\"]: {Convert.ToInt32(dict["stars"])}");
+                    return Convert.ToInt32(dict["stars"]);
+                }
+
+                Debug.Log("안됨");
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Firebase 호출 실패: {ex.Message}");
+                return 1;
+            }
+            finally
+            {
+                loading.Hide();
+            }
+        }
+
+        public static async Task<int> GetStar(int theme, int level)
+        {
+            string stageId = $"{theme.Hex2()}{level.Hex2()}";
+
+            var docRef = Instance.Firestore
+                .Document($"users/{Instance.Auth.CurrentUser.UserId}/stageInfo/{stageId}");
+
+            var doc = await docRef.GetSnapshotAsync();
+
+            if (doc.Exists)
+            {
+                var star = doc.GetValue<int>("star");
+                return star;
+            }
+
+            return 0;
         }
     }
 }
