@@ -1,4 +1,9 @@
 using CocoDoogy.Audio;
+using CocoDoogy.Data;
+using CocoDoogy.GameFlow.InGame;
+using CocoDoogy.GameFlow.InGame.Command;
+using CocoDoogy.Tile.Gimmick;
+using CocoDoogy.UI.Popup;
 using UnityEngine;
 
 namespace CocoDoogy.Tile.Piece.Trigger
@@ -7,10 +12,13 @@ namespace CocoDoogy.Tile.Piece.Trigger
     /// LeverType용 트리거<br/>
     /// 토글 형태로 동작
     /// </summary>
-    public class LeverPiece : TriggerPieceBase
+    public class LeverPiece : TriggerPieceBase, IInteractable
     {
         [SerializeField] private Transform lever;
 
+
+        public bool CanInteract => HexTileMap.GetTriggers(Parent.GridPos).Length > 0;
+        public Sprite Icon => DataManager.GetPieceData(PieceType.Lever).pieceIcon;
 
         public override bool IsOn
         {
@@ -47,5 +55,21 @@ namespace CocoDoogy.Tile.Piece.Trigger
             IsOn = !IsOn;
         }
         public override void UnInteract() => Interact();
+
+
+        public void OnInteractClicked()
+        {
+            MessageDialog.ShowMessage("기믹 동작", "해당 타일에 있는 래버를 당길거야?", DialogMode.YesNo, OnTriggerControlled);
+        }
+
+        private void OnTriggerControlled(CallbackType type)
+        {
+            if (type == CallbackType.Yes)
+            {
+                CommandManager.Trigger(Parent.GridPos);
+                GimmickExecutor.ExecuteFromTrigger(Parent.GridPos);
+                InGameManager.ProcessPhase();
+            }
+        }
     }
 }
