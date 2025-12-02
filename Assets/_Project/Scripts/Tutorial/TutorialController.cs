@@ -186,6 +186,35 @@ namespace CocoDoogy.Tutorial
             Highlighter.Invisible();
             TutorialUI.Close();
         }
+        private void Tutorial2_16(int index = 0)
+        {
+            switch(index)
+            {
+                case 0:
+                    TutorialLocker.CameraLock = true;
+                    TutorialUI.Show("날씨가 너무 흐려");
+                    TutorialUI.OnRaycast();
+                    return;
+                case 1:
+                    TutorialUI.Show("금방이라도 비 형이 와서 레이니즘을 부를 것 같아");
+                    return;
+                case 2:
+                    PlayerHandler.OnEvent += OnPlayerActioned;
+                    targetGridPos = new Vector2Int(1, -2);
+                    targetEventType = PlayerEventType.Move;
+                    Highlighter.FocusTile(new Vector2Int(1, -2));
+                    TutorialUI.Show("일단 맛있는 걸 먹고 조금만 더 놀아야지");
+                    return;
+                case 4:
+                    PlayerHandler.OnEvent -= OnPlayerActioned;
+                    Highlighter.FocusUI(refillButton.position);
+                    TutorialUI.Show("이제 다시 돌아가면 집으로 갈 수 있을 거 같아!");
+                    return;
+            }
+            TutorialLocker.CameraLock = false;
+            Highlighter.Invisible();
+            TutorialUI.Close();
+        }
 
         
         private Vector2Int targetGridPos = Vector2Int.zero;
