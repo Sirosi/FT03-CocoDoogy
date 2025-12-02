@@ -11,32 +11,35 @@ namespace CocoDoogy.Animation
         
         private Animator anim;
 
-        [SerializeField] private GameObject panel;
+        public static VehicleAnimHandler _instance;
+
 
         private void Awake()
         {
+         
             anim = GetComponent<Animator>();
-            panel.SetActive(false);
+            _instance = this;
+            gameObject.SetActive(false);
         }
 
-        
-        [ContextMenu("Test")]
-        public void Test()
+        public static void SetActive()
         {
-            PlayVehicleAnim(Animation.VehicleType.Ship, VehicleToIdle).Forget();
+            _instance.gameObject.SetActive(true);
         }
-        
 
-       
+        private void OnEnable()
+        {
+            PlayVehicleAnim(Animation.VehicleType.Ship, null).Forget();
+        }
+
         /// <summary>
         /// 탈것으로 이동시 애니메이션
         /// UniTask로 애니메이션 시간만큼 딜레이를 준뒤에 Idle상태로 돌아감
         /// </summary>
-        /// <param name="vehicleType">탈것의 타입에 따라 다른 애니메이션을 실행가능 애니메이션에 따라 스프라이트 변경 해야함</param>
-        /// <param name="onComplete">애니메이션 실행후 메서드 VehicleToIdle고정</param>
+        /// <param name="vehicleType">탈것의 타입에 따라 다른 애니메이션을 실행가능 애니메이션 클립으로 필요한 스프라이트 변경 해야함</param>
+        /// <param name="onComplete">애니메이션 실행후 메서드</param>
         public async UniTask PlayVehicleAnim(VehicleType vehicleType, Action onComplete)
         {
-            panel.SetActive(true);
             anim.SetInteger(VehicleType, (int)vehicleType);
             anim.SetTrigger(Transport);
 
@@ -47,7 +50,8 @@ namespace CocoDoogy.Animation
             
             await UniTask.Delay(TimeSpan.FromSeconds(animLength));
             
-            onComplete.Invoke();
+            VehicleToIdle();
+            onComplete?.Invoke();
         }
         
         /// <summary>
@@ -55,9 +59,9 @@ namespace CocoDoogy.Animation
         /// </summary>
         public void VehicleToIdle()
         {
+            gameObject.SetActive(false);
             anim.SetInteger(VehicleType, 0);
             anim.SetTrigger(Transport);
-            panel.SetActive(false);
         }
         
         

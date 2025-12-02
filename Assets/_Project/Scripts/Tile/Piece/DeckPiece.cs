@@ -1,3 +1,4 @@
+using CocoDoogy.Animation;
 using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.InGame.Command;
@@ -57,7 +58,7 @@ namespace CocoDoogy.Tile.Piece
             if (type == CallbackType.Yes)
             {
                 CommandManager.Sail(piece.Target.Value);
-                
+                VehicleAnimHandler.SetActive();
                 InGameManager.ProcessPhase();
             }
         }
