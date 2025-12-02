@@ -18,7 +18,7 @@ namespace CocoDoogy.GameFlow.InGame.Weather
             set
             {
                 if (!Instance) return;
-                
+                if (Instance.nowWeather == value) return;
                 Instance.nowWeather = value;
                 OnWeatherChanged?.Invoke(value);
             }
