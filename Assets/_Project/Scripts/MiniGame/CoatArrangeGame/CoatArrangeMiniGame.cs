@@ -30,10 +30,7 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
         private const float HintYOffsetRatio = 375f / 1080f;
         
 
-        protected override void ShowRemainCount()
-        {
-            //remainCount.text = "정렬되지 않은 코트: "+unArrangedCoatSlots.Count.ToString();
-        }
+        protected override void ShowRemainCount() { }
 
         protected override void Disable()
         {
@@ -54,7 +51,6 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
             ResizePanel();
             SummonCoatAndCoatSlot();
             ShowHint();
-            CoatSlotsCheck();
         }
 
         protected override bool IsClear() => unArrangedCoatSlots.Count <= 0;
@@ -194,16 +190,18 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
                 suffledCoats[i].transform.SetParent(coatSlots.GetChild(i), false);
             }
 
+            CoatSlotsCheck();
         }
 
         void CoatSlotsCheck()
         {
-            foreach  (CoatSlot coatslot in unArrangedCoatSlots)
+            for (int i = unArrangedCoatSlots.Count - 1; i >= 0; i--)
             {
+                CoatSlot coatslot = unArrangedCoatSlots[i];
                 coatslot.CheckID();
+                print($"{coatslot.Id}번째 코트슬롯 ID 체크");
             }
             CheckClear();
-            
         }
 
         /// <summary>

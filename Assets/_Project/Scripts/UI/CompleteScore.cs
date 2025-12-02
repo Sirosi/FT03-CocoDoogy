@@ -12,14 +12,12 @@ namespace CocoDoogy.UI
         [SerializeField] private Star leftStar;
         [SerializeField] private Star centerStar;
         [SerializeField] private Star rightStar;
-        [SerializeField] private UIParticle starParticle;
         [SerializeField] private UIParticle _3starParticle;
-        
-        private RectTransform rectTransform;
+
 
         private void Awake()
         {
-            rectTransform = GetComponent<RectTransform>();
+            _3starParticle.Stop();
         }
 
         [ContextMenu("GetStar1")]
@@ -52,9 +50,7 @@ namespace CocoDoogy.UI
                      seq.AppendInterval(0.1f)
                          .AppendCallback(() =>
                          {
-                             Instantiate(starParticle, leftStar.StarPos(), Quaternion.identity,  rectTransform);
                              //TODO: 사운드 추가
-                             //SfxManager.PlaySfx(SfxType.UI_ClearStar1);
                              leftStar.TryGetStar(null);
                          });
                      break;
@@ -62,10 +58,8 @@ namespace CocoDoogy.UI
                      seq.AppendInterval(0.1f)
                          .AppendCallback(() =>
                          {
-                             Instantiate(starParticle, leftStar.StarPos(), Quaternion.identity,  rectTransform);
                              leftStar.TryGetStar(()=>
                              {
-                                 Instantiate(starParticle, centerStar.StarPos(), Quaternion.identity,  rectTransform);
                                  centerStar.TryGetStar(null);
                              });
                          });
@@ -75,16 +69,13 @@ namespace CocoDoogy.UI
                      seq.AppendInterval(0.1f)
                          .AppendCallback(() =>
                          {
-                             Instantiate(starParticle, leftStar.StarPos(), Quaternion.identity,  rectTransform);
                              leftStar.TryGetStar(()=>
                              {
-                                 Instantiate(starParticle, centerStar.StarPos(), Quaternion.identity,  rectTransform);
                                  centerStar.TryGetStar(()=>
                                  {
-                                     Instantiate(starParticle, rightStar.StarPos(), Quaternion.identity,  rectTransform);
                                      rightStar.TryGetStar(()=>
                                      {
-                                         Instantiate(_3starParticle, rectTransform);
+                                         _3starParticle.Play();
                                          leftStar.TryGetStar(null);
                                          centerStar.TryGetStar(null);
                                          rightStar.TryGetStar(null);

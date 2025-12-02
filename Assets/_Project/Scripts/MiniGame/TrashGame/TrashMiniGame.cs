@@ -158,7 +158,8 @@ namespace CocoDoogy.MiniGame.TrashGame
             panelRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
         }
 
-
+        
+        
         /// <summary>
         /// 쓰레기소환
         /// </summary>
@@ -177,7 +178,7 @@ namespace CocoDoogy.MiniGame.TrashGame
             for (int i = 0; i < trashCount; i++)
             {
                 Sprite sprite = trashes[Random.Range(0, trashes.Length)];
-                float randomX = Random.Range(-halfWidth, halfWidth);
+                float randomX = Random.Range(-halfWidth+50, halfWidth-50);
 
                 Trash trash = Instantiate(trashPrefab, trashParent);
                 RectTransform rt = trash.GetComponent<RectTransform>();
@@ -206,7 +207,7 @@ namespace CocoDoogy.MiniGame.TrashGame
             float panelHeight = trashParent.rect.height;
 
             float halfWidth = panelWidth * 0.5f;
-            float randomX = Random.Range(-halfWidth, halfWidth);
+            float randomX = Random.Range(-halfWidth+50, halfWidth-50);
 
             // Y축 위치선정 아래에서 위로 정도 위치(숫자를 키울수록 아래로감)
             float fixedY = -panelHeight * 0.43f;

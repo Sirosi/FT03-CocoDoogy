@@ -10,7 +10,7 @@ namespace CocoDoogy.UI.InGame
 
         private void Awake()
         {
-            currentStageText.text = $"{InGameManager.Stage.theme.Theme2Korean()} 테마 - {InGameManager.Stage.index}";
+            //currentStageText.text = $"{InGameManager.Stage.theme.Theme2Korean()} 테마 - {InGameManager.Stage.index}";
         }
     }
 }
