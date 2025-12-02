@@ -3,6 +3,7 @@ using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.GameFlow.InGame.Phase.Passage;
+using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Test;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
@@ -188,6 +189,7 @@ namespace CocoDoogy.GameFlow.InGame
         private void Clear()
         {
             OutlineForTest.Clear();
+            WeatherManager.NowWeather = WeatherType.None;
             Passages.Clear();
             LastConsumeActionPoints = 0;
             ConsumedActionPoints = 0;
