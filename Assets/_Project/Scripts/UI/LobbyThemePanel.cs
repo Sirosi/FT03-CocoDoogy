@@ -20,7 +20,7 @@ namespace CocoDoogy.UI
         {
             PageCameraSwiper.OnEndPageChanged += OnThemeChanged;
         }
-        void Oestroy()
+        void OnDestroy()
         {
             PageCameraSwiper.OnEndPageChanged -= OnThemeChanged;
             Stop();

@@ -64,7 +64,7 @@ namespace CocoDoogy.UI.StageSelect
             callback = actionCallback;
             
             Star = starSize;
-            
+            Debug.Log(Star);
             foreach (GameObject star in clearStars)
             {
                 star.SetActive(starSize-- > 0);
