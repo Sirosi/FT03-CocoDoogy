@@ -52,7 +52,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
         private void IncreaseActionPoints()
         {
             Piece centerPiece = HexTile.GetTile(PlayerHandler.GridPos)?.GetPiece(HexDirection.Center);
-            CommandManager.Regen(centerPiece.BaseData.type == PieceType.Field ? 1 : 2);
+            CommandManager.Regen(centerPiece.BaseData.type == PieceType.House ? 2 : 1);
             CommandManager.GimmickPieceChange(PlayerHandler.GridPos, HexDirection.Center, PieceType.None,
                 centerPiece.BaseData.type, centerPiece.LookDirection, centerPiece.LookDirection);
             InGameManager.ProcessPhase();

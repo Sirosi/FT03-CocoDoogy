@@ -1,4 +1,5 @@
 using CocoDoogy.Tile;
+using CocoDoogy.Tutorial;
 using CocoDoogy.Utility;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -42,7 +43,8 @@ namespace CocoDoogy.GameFlow.InGame
 
         void Update()
         {
-            if (IsPointerOverUI()) return;
+            if (TouchSystem.IsPointerOverUI) return;
+            if (TutorialLocker.CameraLock) return;
 
             Move();
             Zoom();
@@ -54,23 +56,6 @@ namespace CocoDoogy.GameFlow.InGame
             cameraPivot.transform.position = (HexTileMap.MaxPoint + HexTileMap.MinPoint) * 0.5f;
             mainCamera.fieldOfView = FOV_PIVOT;
             ChangeCameraMoveRate();
-        }
-
-
-        private bool IsPointerOverUI()
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return true;
-            }
-
-            if (Input.touchCount > 0)
-            {
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                    return true;
-            }
-
-            return false;
         }
 
 
