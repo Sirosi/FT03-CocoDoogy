@@ -6,10 +6,7 @@ using Firebase.Extensions;
 using Firebase.Firestore;
 using Firebase.Functions;
 using Firebase.Storage;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace CocoDoogy.Network

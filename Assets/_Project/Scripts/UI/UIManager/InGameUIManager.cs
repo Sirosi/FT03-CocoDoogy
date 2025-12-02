@@ -1,12 +1,9 @@
 using CocoDoogy.Audio;
 using CocoDoogy.Core;
-using CocoDoogy.Network;
 using CocoDoogy.UI.InGame;
-using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.UserInfo;
-using CocoDoogy.Utility.Loading;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 namespace CocoDoogy.UI.UIManager
 {

@@ -1,7 +1,4 @@
 using CocoDoogy.Data;
-using CocoDoogy.UI.StageSelect;
-using Firebase.Extensions;
-using Firebase.Firestore;
 using Firebase.Functions;
 using Newtonsoft.Json;
 using System;
@@ -9,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 
 namespace CocoDoogy.Network
