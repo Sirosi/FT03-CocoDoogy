@@ -161,15 +161,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 76151aa2be3677042ba1609e4b75a0d1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 76151aa2be3677042ba1609e4b75a0d1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 76151aa2be3677042ba1609e4b75a0d1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 76151aa2be3677042ba1609e4b75a0d1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -222,6 +222,10 @@ PrefabInstance:
     - target: {fileID: 6778525093618375056, guid: 76151aa2be3677042ba1609e4b75a0d1, type: 3}
       propertyPath: m_Name
       value: 3StarParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 9004625419612043084, guid: 76151aa2be3677042ba1609e4b75a0d1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -286,15 +290,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -347,6 +351,10 @@ PrefabInstance:
     - target: {fileID: 6778525093618375056, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_Name
       value: RightStarParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 9004625419612043084, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -411,15 +419,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -472,6 +480,10 @@ PrefabInstance:
     - target: {fileID: 6778525093618375056, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_Name
       value: CenterStarParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 9004625419612043084, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1510,7 +1522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3393883007741900052, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3495450639893358333, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
       propertyPath: starParticle
@@ -1671,6 +1683,10 @@ PrefabInstance:
     - target: {fileID: 8039745097985414120, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8413531359673766961, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8449167748889867589, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2246,15 +2262,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2941261480158991049, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2307,6 +2323,10 @@ PrefabInstance:
     - target: {fileID: 6778525093618375056, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
       propertyPath: m_Name
       value: LeftStarParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 9004625419612043084, guid: 103c5e9186e04184599f2a5583e63ee6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
