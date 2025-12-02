@@ -1,4 +1,5 @@
 using CocoDoogy.Core;
+using CocoDoogy.WeatherEffect;
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections.Generic;
@@ -150,6 +151,7 @@ namespace CocoDoogy.Audio
                 if (scene.name == "Loading")
                 {
                     SfxManager.PlayMuting();
+                    SfxManager.StopSfx(SfxType.Weather_Rain); //지속성 이벤트는 이것하나라서 직접 불렀습니다.
                 }
                 
                 if (scene.name == "InGame" && Instance.nextBgmToPlay != BgmType.None)

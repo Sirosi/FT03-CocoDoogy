@@ -58,6 +58,7 @@ namespace CocoDoogy.WeatherEffect
         {
             if (weatherEffectDictionary.TryGetValue(weatherType, out WeatherEffectInfo effectInfo))
             {
+                SfxManager.StopSfx(weatherEffectDictionary[weatherType].sfxType);
                 PlayEffect(weatherType, effectInfo.duration);
             }
         }
@@ -107,7 +108,6 @@ namespace CocoDoogy.WeatherEffect
             {
                 StopCoroutine(_currentEffectCoroutine);
             }
-            SfxManager.StopLoopSfx(SfxType.Weather_Rain);
             SfxManager.PlaySfx(weatherEffectDictionary[weatherType].sfxType);
             // 여기서 코루틴 사용
             _currentEffectCoroutine = StartCoroutine(PlayEffectCoroutine(

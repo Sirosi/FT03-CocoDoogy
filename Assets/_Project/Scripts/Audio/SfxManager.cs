@@ -186,28 +186,9 @@ namespace CocoDoogy.Audio
         }
         #endregion
         
-        /// <summary>
-        /// 루프를 토글이 아닌 직접 조절가능한 메서드입니다.
-        /// 사실상 Rain전용입니다. 완전히 다른 스크립트에서 호출될 예정이어서 버그를 방지하기 위해 분리가 필요했습니다.
-        /// </summary>
-        /// <param name="sfxType"></param>
-        public static void PlayLoopSfx(SfxType sfxType)
+        public static void StopSfx(SfxType sfxType)
         {
             if (!HasInstance) return;
-            
-            if (sfxType != SfxType.Weather_Rain) return;
-            
-            if (!Instance.sfxDictionary.TryGetValue(sfxType, out EventInstance eventInstance)) return;
-            
-            eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            eventInstance.start();
-        }
-
-        public static void StopLoopSfx(SfxType sfxType)
-        {
-            if (!HasInstance) return;
-            
-            if (sfxType != SfxType.Weather_Rain) return;
             
             if (!Instance.sfxDictionary.TryGetValue(sfxType, out EventInstance eventInstance)) return;
 
