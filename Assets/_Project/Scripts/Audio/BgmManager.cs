@@ -126,7 +126,7 @@ namespace CocoDoogy.Audio
         }
         
         //BgmType과 EventInstance를 매칭 시켜 줍니다.
-        private static void InitBgmDictionary()
+        private void InitBgmDictionary()
         {
             if (!Instance)
             {
@@ -147,13 +147,29 @@ namespace CocoDoogy.Audio
             //SceneManager의 이벤트를 구독 (메서드는 따로 만들어야함)
             SceneManager.sceneLoaded += (scene, mode) =>
             {
+                if (scene.name == "Loading")
+                {
+                    SfxManager.PlayMuting();
+                }
+                
                 if (scene.name == "InGame" && Instance.nextBgmToPlay != BgmType.None)
                 {
                     PlayBgm(Instance.nextBgmToPlay);
                     Instance.nextBgmToPlay = BgmType.None;
                 }
-                //else에서 로비씬으로 돌아올 떄는 다시 로비브금을 재생하게 할 수도 있음
-                //하지만 현재로써 너무 자주 바뀌기 때문에 플레이 경험에 악영향을 미칠 수 있다고 판단 했습니다.
+                
+                if (scene.name == "Lobby")
+                {
+                    PlayBgm(BgmType.LobbyBgm);
+                }
+            };
+            
+            SceneManager.sceneUnloaded += (scene) =>
+            {
+                if (scene.name == "Loading")
+                {
+                    SfxManager.StopMuting();
+                }
             };
         }
         #endregion

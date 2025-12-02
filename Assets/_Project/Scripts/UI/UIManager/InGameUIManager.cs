@@ -35,7 +35,7 @@ namespace CocoDoogy.UI.UIManager
         private void OnClickPause()
         {
             pauseUI.OpenUI();
-            SfxManager.PlayDucking(0.7f);
+            SfxManager.PlayDucking();
         }
     }
 }

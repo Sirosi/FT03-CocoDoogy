@@ -50,6 +50,7 @@ namespace CocoDoogy.Audio
         Minigame_ShakeUmbrella,
         Minigame_PickLeaf,
         Minigame_MinigameStart,
+        Minigame_TouchTrashCan,
         
         //UI계열 - event:/Sfx/UI/
         UI_SuccessMission,
@@ -62,6 +63,10 @@ namespace CocoDoogy.Audio
         UI_PopUp,
         UI_FailButton1,
         UI_FailButton2,
+        UI_ClearStar1,
+        UI_ClearStar2,
+        UI_ClearStar3,
+        UI_Reset,
         
         //감정표현 계열 - event:/Sfx/Emote/
         Emote_Positive,

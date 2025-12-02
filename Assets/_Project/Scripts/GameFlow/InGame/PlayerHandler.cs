@@ -161,7 +161,7 @@ namespace CocoDoogy.GameFlow.InGame
 
 
         /// <summary>
-        /// 순간이동 등의 갑작스래 위치가 변경
+        /// 게임 시작 시 첫 위치 배치
         /// </summary>
         /// <param name="gridPos"></param>
         public static void Deploy(Vector2Int gridPos)
@@ -188,6 +188,13 @@ namespace CocoDoogy.GameFlow.InGame
             OnBehaviourCompleted();
         }
 
+        public static void Comeback(Vector2Int gridPos)
+        {
+            if(!IsValid) return;
+
+
+        }
+
         /// <summary>
         /// 토네이도용 이동방식
         /// </summary>
@@ -206,7 +213,7 @@ namespace CocoDoogy.GameFlow.InGame
             sequence.SetId(Instance);
             sequence.Append(Instance.transform.DOMoveY(10, Constants.MOVE_DURATION));
             sequence.Append(Instance.transform.DOMove(GridPos.ToWorldPos() + Vector3.up * 10, Constants.MOVE_DURATION));
-            sequence.Append(Instance.transform.DOMoveY(0, Constants.MOVE_DURATION));
+            sequence.Append(Instance.transform.DOMove(GridPos.ToWorldPos(), Constants.MOVE_DURATION));
             sequence.OnComplete(OnBehaviourCompleted);
             sequence.Play();
 

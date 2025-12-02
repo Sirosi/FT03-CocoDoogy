@@ -20,6 +20,9 @@ namespace CocoDoogy.Audio
         //효과음 재생간 브금 감소를 위한 변수들 (Ducking)
         public EventReference duckingSnapShot;
         private EventInstance duckingInstance;
+        public EventReference mutingSnapShot;
+        private EventInstance mutingInstance;
+        
         
         protected override void Awake()
         {
@@ -30,6 +33,7 @@ namespace CocoDoogy.Audio
             
             InitializeDictionary();
             duckingInstance = RuntimeManager.CreateInstance(duckingSnapShot);
+            mutingInstance = RuntimeManager.CreateInstance(mutingSnapShot);
         }
 
         protected override void OnDestroy()
@@ -39,6 +43,9 @@ namespace CocoDoogy.Audio
             {
                 sfxType.Value.release();
             }
+            
+            duckingInstance.release();
+            mutingInstance.release();
         }
         
         /// <summary>
@@ -52,12 +59,14 @@ namespace CocoDoogy.Audio
                 Debug.LogWarning("PlaySfx : 인스턴스가 존재하지 않습니다!");
                 return;
             }
-            
-            if (Instance.sfxDictionary.TryGetValue(sfxType, out EventInstance eventInstance))
+
+            if (!Instance.sfxDictionary.TryGetValue(sfxType, out EventInstance eventInstance))
             {
-                eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                eventInstance.start();
+                return;
             }
+
+            eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            eventInstance.start();
         }
         
         private static void InitializeDictionary()
@@ -80,7 +89,7 @@ namespace CocoDoogy.Audio
                 Debug.Log(path + " " + id);*/
             }
         }
-
+        
         public static void ToggleLoopSound(SfxType sfxType)
         {
             if (!HasInstance)
@@ -105,7 +114,9 @@ namespace CocoDoogy.Audio
                 Instance.sfxDictionary[sfxType].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             }
         }
-
+        
+        //
+        
         public static void InitDetectingLevelParameter(int level)
         {
             if (!HasInstance)
@@ -121,10 +132,12 @@ namespace CocoDoogy.Audio
                 Instance.sfxDictionary[SfxType.Loop_Detecting].setParameterByName("Level", level);
             }
         }
-        
+
+        #region Ducking & Muting
         //Ducking이란? 특정 상황에서 BGM을 줄여서 몰입도를 늘리는 기능입니다.
         //Ducking이 필요하면 이 메서드를 PlaySfx 메서드를 불러오기 전에 같이 불러오고, 종료시 StopDucking 불러오면 됩니다.
-        public static void PlayDucking(float duckingVolume)
+        //FMOD의 심각한 결함으로 어쩔 수 없이 두가지 기능을 나누었습니다. (이중 오토메이션 구현시 프로그램 다운 현상)
+        public static void PlayDucking(float duckingVolume = 0.7f)
         {
             if (!HasInstance)
             {
@@ -134,7 +147,7 @@ namespace CocoDoogy.Audio
             
             duckingVolume = Mathf.Clamp(duckingVolume, 0, 1);
             
-            Instance.duckingInstance.setParameterByName("Volume", duckingVolume);
+            Instance.duckingInstance.setParameterByName("DuckingVolume", duckingVolume);
             Instance.duckingInstance.start();
         }
 
@@ -147,6 +160,58 @@ namespace CocoDoogy.Audio
             }
             
             Instance.duckingInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+
+        public static void PlayMuting()
+        {
+            if (!HasInstance)
+            {
+                Debug.LogWarning("PlayMuting : 인스턴스가 존재하지 않습니다!");
+                return;
+            }
+            
+            Instance.mutingInstance.setParameterByName("MutingVolume", 0f);
+            Instance.mutingInstance.start();
+        }
+
+        public static void StopMuting()
+        {
+            if (!HasInstance)
+            {
+                Debug.LogWarning("PlayMuting : 인스턴스가 존재하지 않습니다!");
+                return;
+            }
+            
+            Instance.mutingInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+        #endregion
+        
+        /// <summary>
+        /// 루프를 토글이 아닌 직접 조절가능한 메서드입니다.
+        /// 사실상 Rain전용입니다. 완전히 다른 스크립트에서 호출될 예정이어서 버그를 방지하기 위해 분리가 필요했습니다.
+        /// </summary>
+        /// <param name="sfxType"></param>
+        public static void PlayLoopSfx(SfxType sfxType)
+        {
+            if (!HasInstance) return;
+            
+            if (sfxType != SfxType.Weather_Rain) return;
+            
+            if (!Instance.sfxDictionary.TryGetValue(sfxType, out EventInstance eventInstance)) return;
+            
+            eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            eventInstance.start();
+        }
+
+        public static void StopLoopSfx(SfxType sfxType)
+        {
+            if (!HasInstance) return;
+            
+            if (sfxType != SfxType.Weather_Rain) return;
+            
+            if (!Instance.sfxDictionary.TryGetValue(sfxType, out EventInstance eventInstance)) return;
+
+            eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
     }
 }

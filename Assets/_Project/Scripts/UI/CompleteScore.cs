@@ -14,95 +14,91 @@ namespace CocoDoogy.UI
         [SerializeField] private Star rightStar;
         [SerializeField] private UIParticle _3starParticle;
 
-
+        [SerializeField] private Defeat defeat;
+        
+        private RectTransform rectTransform;
+        private Star[] stars;
+        
         private void Awake()
         {
-            _3starParticle.Stop();
+            rectTransform = GetComponent<RectTransform>();
+            stars = new[] { leftStar, centerStar, rightStar };
         }
 
-        [ContextMenu("GetStar1")]
-        public void GetStar1()
+        /// <summary>
+        /// 생성된 UIParticle 한번에 제거 아니면 TryGetStar의 Callback으로 넣어도 되고
+        /// </summary>
+        private void OnDisable()
         {
-            GetStar(1);
+            // transform.childCount를 활용하거나 ToArray로 복사
+            for (int i = transform.childCount - 1; i >= 0; i--)
+            {
+                Transform child = transform.GetChild(i);
+                UIParticle particle = child.GetComponent<UIParticle>();
+                if (particle != null)
+                {
+                    Destroy(particle.gameObject);
+                }
+            }
         }
-        [ContextMenu("GetStar2")]
-        public void GetStar2()
+
+        /// <summary>
+        /// score를 매개변수로 받아 switch로 분기
+        /// //TODO: 사운드 추가작업 남음
+        /// </summary>
+        /// <param name="isDefeat"></param>
+        /// <param name="score"></param>
+        public void GetStageClearResult(bool isDefeat, int score)
         {
-            GetStar(2);
+            Debug.Log($"GetStageClearResult : score = {score}");
+            if (isDefeat)
+            {
+                PlayDefeat();
+            }
+            else
+            {
+                Sequence seq = DOTween.Sequence();
+                seq.AppendInterval(0.1f)
+                    .AppendCallback(() =>
+                    {
+                        PlayStarRecursive(0, score);
+                    });
+            }
         }
-        [ContextMenu("GetStar3")]
-        public void GetStar3()
+
+        /// <summary>
+        /// 별을 반복해서 최대 3번 변경하는 메서드. 재귀함수
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="max"></param>
+        private void PlayStarRecursive(int index, int max)
         {
-            GetStar(3);
+            if (index >= max)
+            {
+                if (max == 3)
+                {
+                    Instantiate(_3starParticle, rectTransform);
+
+                    stars[0].TryGetStar(null);
+                    stars[1].TryGetStar(null);
+                    stars[2].TryGetStar(null);
+                }
+                return;
+            }
+
+            Star star = stars[index];
+            
+            Instantiate(starParticle, star.StarPos(), Quaternion.identity, rectTransform);
+
+            star.TryGetStar(() =>
+            {
+                PlayStarRecursive(index + 1, max); // 재귀 함수 부분
+            });
         }
-        
-         /// <summary>
-         /// score를 매개변수로 받아 switch로 분기
-         /// //TODO: 사운드 추가작업 남음
-         /// </summary>
-         /// <param name="score"></param>
-         public void GetStar(int  score)
-         {
-             Sequence seq = DOTween.Sequence();
-             switch (score) 
-             {
-                 case 1:
-                     seq.AppendInterval(0.1f)
-                         .AppendCallback(() =>
-                         {
-                             //TODO: 사운드 추가
-                             leftStar.TryGetStar(null);
-                         });
-                     break;
-                 case 2:
-                     seq.AppendInterval(0.1f)
-                         .AppendCallback(() =>
-                         {
-                             leftStar.TryGetStar(()=>
-                             {
-                                 centerStar.TryGetStar(null);
-                             });
-                         });
-                     
-                     break;
-                 case 3:
-                     seq.AppendInterval(0.1f)
-                         .AppendCallback(() =>
-                         {
-                             leftStar.TryGetStar(()=>
-                             {
-                                 centerStar.TryGetStar(()=>
-                                 {
-                                     rightStar.TryGetStar(()=>
-                                     {
-                                         _3starParticle.Play();
-                                         leftStar.TryGetStar(null);
-                                         centerStar.TryGetStar(null);
-                                         rightStar.TryGetStar(null);
-                                     });
-                                 });
-                             });
-                         });
-                     
-                     break;
-             }
-         }
-        
-         /// <summary>
-         /// 생성된 UIParticle 한번에 제거 아니면 TryGetStar의 Callback으로 넣어도 되고
-         /// </summary>
-         private void OnDisable()
-         {
-             // transform.childCount를 활용하거나 ToArray로 복사
-             for (int i = transform.childCount - 1; i >= 0; i--)
-             {
-                 Transform child = transform.GetChild(i);
-                 UIParticle particle = child.GetComponent<UIParticle>();
-                 if (particle != null)
-                 {
-                     Destroy(particle.gameObject);
-                 }
-             }
-         }
+
+        private void PlayDefeat()
+        {
+            
+        }
     }
 }

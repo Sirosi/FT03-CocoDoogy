@@ -1,5 +1,6 @@
 using CocoDoogy.Core;
 using CocoDoogy.Data;
+using CocoDoogy.Network;
 using Lean.Pool;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace CocoDoogy.UI.StageSelect
             stageGroup.position = new Vector2(0, stageGroup.position.y);
         }
         
-        public void DrawButtons(Theme theme, int start)
+        public async void DrawButtons(Theme theme, int start)
         {
             while (spawnedButtons.Count > 0)
             {
@@ -30,10 +31,10 @@ namespace CocoDoogy.UI.StageSelect
             
             foreach (StageData data in DataManager.GetStageData(theme))
             {
-                if (data.index < start) continue; 
-                
+                if (data.index < start) continue;
+                int star = await FirebaseManager.GetStar(data.theme.ToIndex() + 1, data.index);
                 StageSelectButton stageButton = LeanPool.Spawn(stageButtonPrefab, stageGroup);
-                stageButton.Init(data, 0, StageSelectManager.ShowReadyView);
+                stageButton.Init(data, star, StageSelectManager.ShowReadyView);
                 
                 spawnedButtons.Push(stageButton);
                 if (spawnedButtons.Count >= LIST_SIZE) break;

@@ -9,24 +9,21 @@ namespace CocoDoogy.UI.UIManager
 {
     public class ReplayUIManager : Singleton<ReplayUIManager>
     {
+        // private 
         [Header("Buttons")]
         [SerializeField] private CommonButton openSettingsButton;
         [SerializeField] private CommonButton openPauseButton;
-        [SerializeField] private CommonButton redoButton;
-        [SerializeField] private CommonButton undoButton;
         
         [Header("UI Panel")]
         [SerializeField] private SettingsUI settingsUI;
         [SerializeField] private ReplayPauseUI replayPauseUI;
         
+        [SerializeField] private ReplayConsole console;
         protected override void Awake()
         {
             base.Awake();
             openSettingsButton.onClick.AddListener(OnClickOpenSetting);
             openPauseButton.onClick.AddListener(OnClickOpenPause);
-            
-            redoButton.onClick.AddListener(Redo);
-            undoButton.onClick.AddListener(Undo);
         }
 
         private void OnClickOpenSetting()
@@ -38,15 +35,6 @@ namespace CocoDoogy.UI.UIManager
         private void OnClickOpenPause()
         {
             replayPauseUI.OpenUI();
-        }
-        
-        private void Undo()
-        {
-            CommandManager.UndoCommandAuto();
-        }
-        private void Redo()
-        {
-            CommandManager.RedoCommandAuto();
         }
     }
 }

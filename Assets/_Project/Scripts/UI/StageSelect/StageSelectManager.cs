@@ -1,6 +1,7 @@
 using CocoDoogy.CameraSwiper;
 using CocoDoogy.Core;
 using CocoDoogy.Data;
+using CocoDoogy.Network;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -78,10 +79,11 @@ namespace CocoDoogy.UI.StageSelect
         }
 
 
-        public static void ShowReadyView(StageData data)
+        public static void ShowReadyView(StageData data, int count)
         {
             if (!Instance) return;
-            CurrentStageData =  data;
+            CurrentStageData = data;
+            Instance.stageInfoPanel.BrightStar(count);
             Instance.stageInfoPanel.Show(data);
         }
     }

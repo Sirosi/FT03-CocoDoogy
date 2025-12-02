@@ -6,8 +6,7 @@ namespace CocoDoogy.UI.Popup
     public class CenterPanel : MonoBehaviour
     {
         private RectTransform rect = null;
-
-
+        
         void OnEnable()
         {
             if (!rect) rect = GetComponent<RectTransform>();

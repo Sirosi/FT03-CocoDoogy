@@ -1,6 +1,7 @@
 using CocoDoogy.GameFlow.InGame;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CocoDoogy.UI.InGame
 {
@@ -9,6 +10,7 @@ namespace CocoDoogy.UI.InGame
     /// </summary>
     public class InteractButton: MonoBehaviour
     {
+        [SerializeField] private Image iconImage;
         [SerializeField] private CommonButton button;
 
 
@@ -18,7 +20,7 @@ namespace CocoDoogy.UI.InGame
         void Awake()
         {
             button.onClick.AddListener(OnButtonClicked);
-            button.gameObject.SetActive(false);
+            OnInteractChanged(null, null);
 
             InGameManager.OnInteractChanged += OnInteractChanged;
         }
@@ -34,9 +36,10 @@ namespace CocoDoogy.UI.InGame
         }
 
 
-        private void OnInteractChanged(Action callback)
+        private void OnInteractChanged(Sprite icon, Action callback)
         {
-            button.gameObject.SetActive((action = callback) != null);
+            iconImage.gameObject.SetActive(iconImage.sprite = icon);
+            button.interactable = (action = callback) != null;
         }
     }
 }
