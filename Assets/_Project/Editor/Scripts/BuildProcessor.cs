@@ -8,7 +8,7 @@ namespace CocoDoogy.Editor
     public class BuildProcessor
     {
         // Android Keystore 설정
-        private const string KeystorePath = @"C:\Users\KYJ\Documents\Git Repositories\FT03-CocoDoogy\Assets\NotShared\user.keystore";
+        private const string KeystorePath = @"C:.\Assets\NotShared\user.keystore";
         private const string keystorePass = "qwer1234!@#$";
         private const string KeyaliasName = "CocoDoogy";
         private const string KeyaliasPass = "qwer1234!@#$";
