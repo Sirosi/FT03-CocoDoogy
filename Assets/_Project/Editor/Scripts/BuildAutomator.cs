@@ -14,6 +14,12 @@ namespace CocoDoogy.Editor
         private const string AliasName = "CocoDoogy";      // 네 alias 이름
         private const string AliasPass = "qwer1234!@#$";   // alias 비번
 
+        // PlayerSettings.bundleVersion (사용자에게 보이는 앱 버전, 예: 1.0.3)
+        private const string ArgName_BuildVersion = "v0.2.26";
+
+        // 출력될 파일명 (예: MyGame.apk) - outputPath와 합쳐져 최종 파일 이름이 됨
+        private const string ArgName_OutputFileName = "CocoDoogy";
+
 
         [MenuItem("Build/Windows")]
         public static void BuildForWindows()
@@ -45,6 +51,18 @@ namespace CocoDoogy.Editor
             BuildPipeline.BuildPlayer(buildPlayerOptions);
         }
 
+        private static string GetCommandLineArgument(string name)
+        {
+            var args = System.Environment.GetCommandLineArgs();
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i] == $"-{name}" && i + 1 < args.Length)
+                    return args[i + 1];
+            }
+
+            return null;
+        }
+
         private static string[] GetScenesFromBuildSettings()
         {
             return EditorBuildSettings.scenes
@@ -60,6 +78,26 @@ namespace CocoDoogy.Editor
             PlayerSettings.Android.keystorePass = KeystorePass;
             PlayerSettings.Android.keyaliasName = AliasName;
             PlayerSettings.Android.keyaliasPass = AliasPass;
+        }
+
+        private static void pat()
+        {
+            // BuildVersion 자동 증가
+            string currentVersion = GetCommandLineArgument(ArgName_BuildVersion) ?? PlayerSettings.bundleVersion;
+            string[] parts = currentVersion.Split('.');
+            int major = int.Parse(parts[0]);
+            int minor = int.Parse(parts[1]);
+            int patch = int.Parse(parts[2]);
+
+            patch++; // 이전 patch 값 +1 ex) v0.2.25 -> v0.2.26
+            string newVersion = $"{major}.{minor}.{patch}";
+            PlayerSettings.bundleVersion = newVersion;
+
+            AssetDatabase.SaveAssets(); // 변경 사항 저장 (다음 빌드에 반영하기 위해서)
+
+            // BuildNum 자동 증가
+            int buildNum = PlayerSettings.Android.bundleVersionCode + 1;
+            PlayerSettings.Android.bundleVersionCode = buildNum;
         }
     }
 }

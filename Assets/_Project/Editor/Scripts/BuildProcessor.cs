@@ -49,8 +49,6 @@ namespace CocoDoogy.Editor
         [MenuItem("Build/Build Android")]
         public static void BuildAndroid()
         {
-#if UNITY_ANDROID
-            
             // BuildVersion 자동 증가
             string currentVersion = GetCommandLineArgument(ArgName_BuildVersion) ?? PlayerSettings.bundleVersion;
             string[] parts = currentVersion.Split('.');
@@ -62,23 +60,23 @@ namespace CocoDoogy.Editor
             string newVersion = $"{major}.{minor}.{patch}";
             PlayerSettings.bundleVersion = newVersion;
             Debug.Log($"자동 증가된 BuildVersion: {newVersion}");
-            
+
             AssetDatabase.SaveAssets(); // 변경 사항 저장 (다음 빌드에 반영하기 위해서)
-            
+
             // BuildNum 자동 증가
             int buildNum = PlayerSettings.Android.bundleVersionCode + 1;
             PlayerSettings.Android.bundleVersionCode = buildNum;
             Debug.Log($"자동 증가된 BuildNum(versionCode): {buildNum}");
-            
+
             // OutputPath 및 옵션 처리
-            string outputPath = GetCommandLineArgument(ArgName_OutputPath) ?? "Builds/Android/"; 
+            string outputPath = GetCommandLineArgument(ArgName_OutputPath) ?? "Builds/Android/";
             string extension = GetCommandLineArgument(ArgName_BuildType) ?? "apk";
             bool enableAab = extension == "aab";
             bool enableDev = GetCommandLineArgument(ArgName_EnableDev) == "true";
             bool enableDeepProfiling = GetCommandLineArgument(ArgName_EnableDeepProfiling) == "true";
-            string outputFileName = GetCommandLineArgument($"{ArgName_OutputFileName}{newVersion}.{extension}") 
+            string outputFileName = GetCommandLineArgument($"{ArgName_OutputFileName}{newVersion}.{extension}")
                                     ?? $"CocoDoogy{newVersion}_{buildNum}.{extension}";
-            
+
             if (Directory.Exists(outputPath))
             {
                 outputPath = Path.Combine(outputPath, outputFileName);
@@ -89,7 +87,7 @@ namespace CocoDoogy.Editor
             }
 
             Debug.Log($"최종 빌드 경로: {outputPath}");
-            
+
             // BuildPlayerOptions
             var buildPlayerOptions = new BuildPlayerOptions
             {
@@ -101,18 +99,17 @@ namespace CocoDoogy.Editor
             EditorUserBuildSettings.buildAppBundle = enableAab;
             EditorUserBuildSettings.development = enableDev;
             EditorUserBuildSettings.buildWithDeepProfilingSupport = enableDeepProfiling;
-            
-            
+
+
             // Keystore 설정
             PlayerSettings.Android.useCustomKeystore = true;
             PlayerSettings.Android.keystoreName = KeystorePath;
             PlayerSettings.Android.keystorePass = keystorePass;
             PlayerSettings.Android.keyaliasName = KeyaliasName;
             PlayerSettings.Android.keyaliasPass = KeyaliasPass;
-            
+
             var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
             Debug.Log($"빌드 완료! 결과: {report.summary.result}, Path: {outputPath}");
-#endif
         }
         private static string[] FindEnabledEditorScenes()
         {
