@@ -16,12 +16,10 @@ namespace CocoDoogy.UI
 
         [SerializeField] private Defeat defeat;
         
-        private RectTransform rectTransform;
         private Star[] stars;
         
         private void Awake()
         {
-            rectTransform = GetComponent<RectTransform>();
             stars = new[] { leftStar, centerStar, rightStar };
         }
 
@@ -65,7 +63,7 @@ namespace CocoDoogy.UI
                     });
             }
         }
-
+        
         /// <summary>
         /// 별을 반복해서 최대 3번 변경하는 메서드. 재귀함수
         /// </summary>
@@ -77,8 +75,7 @@ namespace CocoDoogy.UI
             {
                 if (max == 3)
                 {
-                    Instantiate(_3starParticle, rectTransform);
-
+                    _3starParticle.Play();
                     stars[0].TryGetStar(null);
                     stars[1].TryGetStar(null);
                     stars[2].TryGetStar(null);
@@ -87,9 +84,6 @@ namespace CocoDoogy.UI
             }
 
             Star star = stars[index];
-            
-            Instantiate(starParticle, star.StarPos(), Quaternion.identity, rectTransform);
-
             star.TryGetStar(() =>
             {
                 PlayStarRecursive(index + 1, max); // 재귀 함수 부분

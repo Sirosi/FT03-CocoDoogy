@@ -25,7 +25,6 @@ namespace CocoDoogy.UI
         {
             image =  GetComponent<Image>();
             rectTransform = GetComponent<RectTransform>();
-            starParticle.Stop();
         }
 
         private void Start()
