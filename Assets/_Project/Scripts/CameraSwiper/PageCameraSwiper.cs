@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Utility;
 using UnityEngine;
 using DG.Tweening;
@@ -138,6 +139,7 @@ namespace CocoDoogy.CameraSwiper
 
             newIndex = Mathf.Clamp(newIndex, 0, cameraPoints.Length - 1);
             MoveToPageSmooth(newIndex);
+            SfxManager.PlaySfx(SfxType.UI_ButtonUp2);
 
             // 다음 스와이프를 위해 기준점 갱신
             startPos = lastPos;

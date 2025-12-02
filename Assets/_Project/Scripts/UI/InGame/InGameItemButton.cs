@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.InGame.Command;
@@ -67,14 +68,17 @@ namespace CocoDoogy.UI.InGame
                     Debug.Log("행동력을 1 소모하고 최대 행동력을 1 증가시킵니다.");
                     if (InGameManager.ActionPoints <= 0) break;
                     CommandManager.MaxUp(itemData.effect);
+                    SfxManager.PlaySfx(SfxType.Item_DogSleeping);
                     break;
                 case ItemEffect.RecoverAP:
                     Debug.Log("행동력을 1 증가시킵니다.");
                     CommandManager.Recover(itemData.effect);
+                    SfxManager.PlaySfx(SfxType.Item_Eating);
                     break;
                 case ItemEffect.UndoTurn:
                     Debug.Log("1턴 전으로 돌아갑니다.");
                     CommandManager.Undo(itemData.effect);
+                    SfxManager.PlaySfx(SfxType.Item_Undo);
                     break;
                 case ItemEffect.None:
                 default:
