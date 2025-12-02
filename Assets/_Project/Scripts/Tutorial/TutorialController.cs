@@ -10,6 +10,7 @@ namespace CocoDoogy.Tutorial
     {
         [Header("For UI Trace")]
         [SerializeField] private RectTransform actionPointsUI;
+        [SerializeField] private RectTransform refillButton;
 
 
         private int index = 0;
@@ -43,6 +44,10 @@ namespace CocoDoogy.Tutorial
             else if(IsEqual(stage, Theme.Forest, 3))
             {
                 Tutorial1_3(index);
+            }
+            else if(IsEqual(stage, Theme.Forest, 4))
+            {
+                Tutorial1_4(index);
             }
             else
             {
@@ -165,40 +170,16 @@ namespace CocoDoogy.Tutorial
                     TutorialUI.Show("집까지는 너무 먼 것 같아...");
                     return;
                 case 2:
-                    targetGridPos = new Vector2Int(-2, -1);
-                    targetEventType = PlayerEventType.Move;
-                    TutorialLocker.WhiteListPoses.Add(new Vector2Int(-2, -1));
-                    
                     PlayerHandler.OnEvent += OnPlayerActioned;
-                    Highlighter.FocusTile(new Vector2Int(-2, -1));
-                    TutorialUI.OffRaycast();
-                    return;
-                case 3:
-                    targetGridPos = new Vector2Int(-1, -1);
+                    targetGridPos = new Vector2Int(1, -2);
                     targetEventType = PlayerEventType.Move;
-                    TutorialLocker.WhiteListPoses.Clear();
-                    TutorialLocker.WhiteListPoses.Add(new Vector2Int(-1, -1));
-                    
-                    Highlighter.FocusTile(new Vector2Int(-1, -1));
+                    Highlighter.FocusTile(new Vector2Int(1, -2));
+                    TutorialUI.Show("일단 맛있는 걸 먹고 조금만 더 놀아야지");
                     return;
                 case 4:
-                    targetGridPos = new Vector2Int(0, -1);
-                    targetEventType = PlayerEventType.Move;
-                    TutorialLocker.WhiteListPoses.Clear();
-                    TutorialLocker.WhiteListPoses.Add(new Vector2Int(0, -1));
-                    
-                    Highlighter.FocusTile(new Vector2Int(0, -1));
-                    return;
-                case 5:
-                    TutorialLocker.WhiteListPoses.Clear();
-
                     PlayerHandler.OnEvent -= OnPlayerActioned;
-                    Highlighter.Invisible();
-                    TutorialUI.Show("맛있는 걸 먹으니 행동력이 오르네?");
-                    TutorialUI.OnRaycast();
-                    return;
-                case 6:
-                    TutorialUI.Show("이제 집으로 돌아가보자!");
+                    Highlighter.FocusUI(refillButton.position);
+                    TutorialUI.Show("이제 다시 돌아가면 집으로 갈 수 있을 거 같아!");
                     return;
             }
             TutorialLocker.CameraLock = false;
