@@ -1,4 +1,5 @@
 using CocoDoogy.Core;
+using CocoDoogy.Tutorial;
 using UnityEngine;
 
 namespace CocoDoogy.UI.Highlight
@@ -9,7 +10,6 @@ namespace CocoDoogy.UI.Highlight
 
 
         [SerializeField] private RectTransform highlightRect;
-        [SerializeField] private Canvas canvas;
 
 
         private Camera mainCamera = null;
@@ -35,6 +35,7 @@ namespace CocoDoogy.UI.Highlight
             if(!IsValid) return;
             Instance.highlightRect.gameObject.SetActive(true);
             Instance.highlightRect.position = pos;
+            TutorialUI.OffBackground();
         }
         /// <summary>
         /// GridPos로 이동
@@ -44,6 +45,7 @@ namespace CocoDoogy.UI.Highlight
             if(!IsValid) return;
             Instance.highlightRect.gameObject.SetActive(true);
             Instance.highlightRect.position = Instance.mainCamera.WorldToScreenPoint(gridPos.ToWorldPos());
+            TutorialUI.OffBackground();
         }
 
         /// <summary>
@@ -53,6 +55,7 @@ namespace CocoDoogy.UI.Highlight
         {
             if(!IsValid) return;
             Instance.highlightRect.gameObject.SetActive(false);
+            TutorialUI.OnBackground();
         }
     }
 }
