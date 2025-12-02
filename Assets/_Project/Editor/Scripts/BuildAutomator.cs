@@ -24,7 +24,7 @@ namespace CocoDoogy.Editor
                 scenes = GetScenesFromBuildSettings(),
                 locationPathName = "./Builds/CocoDoogy.exe",
                 target = BuildTarget.StandaloneWindows64,
-                options = BuildOptions.Development,
+                options = BuildOptions.None,
             };
 
             BuildPipeline.BuildPlayer(buildPlayerOptions);
@@ -39,7 +39,7 @@ namespace CocoDoogy.Editor
                 scenes = GetScenesFromBuildSettings(),
                 locationPathName = "./Builds/CocoDoogy.apk",
                 target = BuildTarget.Android,
-                options = BuildOptions.Development,
+                options = BuildOptions.None,
             };
 
             BuildPipeline.BuildPlayer(buildPlayerOptions);
