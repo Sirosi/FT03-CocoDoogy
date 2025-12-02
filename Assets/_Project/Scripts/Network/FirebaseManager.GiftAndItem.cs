@@ -102,7 +102,8 @@ namespace CocoDoogy.Network
 
             if (!userDoc.Exists) return new List<IDictionary<string, object>>();
 
-            if (userDoc.TryGetValue("giftList", out List<object> giftListRaw))
+            if (userDoc.TryGetValue("giftList", out List<object> giftListRaw) &&
+                giftListRaw != null)
             {
                 var giftList = new List<IDictionary<string, object>>();
                 foreach (var item in giftListRaw)
