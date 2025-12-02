@@ -100,12 +100,69 @@ namespace CocoDoogy.Tutorial
             {
                 case 0:
                     TutorialLocker.CameraLock = true;
+                    TutorialUI.Show("헤에~?");
+                    TutorialUI.OnRaycast(); 
+                    return;
+                case 1:
                     Highlighter.FocusTile(new Vector2Int(0, -1));
                     TutorialUI.Show("저기 먹을 게 있어!");
+                    return;
+                case 2:
+                    TutorialUI.Show("한 번 가볼까?");
+                    return;
+                case 3:
+                    targetGridPos = new Vector2Int(-2, -1);
+                    targetEventType = PlayerEventType.Move;
+                    TutorialLocker.WhiteListPoses.Add(new Vector2Int(-2, -1));
+                    
+                    PlayerHandler.OnEvent += OnPlayerActioned;
+                    Highlighter.FocusTile(new Vector2Int(-2, -1));
+                    TutorialUI.OffRaycast();
+                    return;
+                case 4:
+                    targetGridPos = new Vector2Int(-1, -1);
+                    targetEventType = PlayerEventType.Move;
+                    TutorialLocker.WhiteListPoses.Clear();
+                    TutorialLocker.WhiteListPoses.Add(new Vector2Int(-1, -1));
+                    
+                    Highlighter.FocusTile(new Vector2Int(-1, -1));
+                    return;
+                case 5:
+                    targetGridPos = new Vector2Int(0, -1);
+                    targetEventType = PlayerEventType.Move;
+                    TutorialLocker.WhiteListPoses.Clear();
+                    TutorialLocker.WhiteListPoses.Add(new Vector2Int(0, -1));
+                    
+                    Highlighter.FocusTile(new Vector2Int(0, -1));
+                    return;
+                case 6:
+                    TutorialLocker.WhiteListPoses.Clear();
+
+                    PlayerHandler.OnEvent -= OnPlayerActioned;
+                    Highlighter.Invisible();
+                    TutorialUI.Show("맛있는 걸 먹으니 행동력이 오르네?");
+                    TutorialUI.OnRaycast();
+                    return;
+                case 7:
+                    TutorialUI.Show("이제 집으로 돌아가보자!");
+                    return;
+            }
+            TutorialLocker.CameraLock = false;
+            Highlighter.Invisible();
+            TutorialUI.Close();
+        }
+        private void Tutorial1_4(int index = 0)
+        {
+            switch(index)
+            {
+                case 0:
+                    TutorialLocker.CameraLock = true;
+                    TutorialUI.Show("헥.. 헥..토르");
                     TutorialUI.OnRaycast();
                     return;
                 case 1:
-                    TutorialUI.Show("한 번 가볼까?");
+                    Highlighter.FocusTile(new Vector2Int(2, 0));
+                    TutorialUI.Show("집까지는 너무 먼 것 같아...");
                     return;
                 case 2:
                     targetGridPos = new Vector2Int(-2, -1);
