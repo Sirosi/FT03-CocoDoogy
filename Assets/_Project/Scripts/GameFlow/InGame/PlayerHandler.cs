@@ -285,8 +285,8 @@ namespace CocoDoogy.GameFlow.InGame
 
         private static void OnBehaviourCompleted()
         {
+            DOTween.Kill(Instance, false);
             Instance.anim.ChangeAnim(AnimType.Idle);
-
             Instance.lockBehaviour = false;
             InGameManager.ProcessPhase();
         }

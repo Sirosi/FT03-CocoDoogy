@@ -57,8 +57,6 @@ namespace CocoDoogy.Tile.Piece
             if (type == CallbackType.Yes)
             {
                 CommandManager.Sail(piece.Target.Value);
-                
-                InGameManager.ProcessPhase();
             }
         }
     }

@@ -48,9 +48,7 @@ namespace CocoDoogy.Network
                             refillPoints = Convert.ToInt32(rankMap["refillPoints"]),
                             nickname = rankMap["nickname"].ToString(),
                         };
-                        /*Debug.Log($"pair.Key: {pair.Key}, rank: {rankData.rank}, nickname: {rankData.nickname}," +
-                                  $"clearTime: {rankData.clearTime}, remainAP: {rankData.remainAP}," +
-                                  $"replayId: {rankData.replayId}, refillPoints: {rankData.refillPoints}");*/
+
                         result[pair.Key] = rankData;
                     }
                 }

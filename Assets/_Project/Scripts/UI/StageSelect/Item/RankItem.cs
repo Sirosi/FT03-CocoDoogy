@@ -24,7 +24,7 @@ namespace CocoDoogy.UI.StageSelect.Item
         /// <summary>
         /// 스테이지 선택창에서 스테이지를 선택하면 해당 스테이지의 랭킹을 띄우는 아이템의 초기화
         /// </summary>
-        public void Init(string rank, string nickname, string resetCount, string remainAP, double clearTime, string replay, int starCount,StageData stage)
+        public void Init(string rank, string nickname, string resetCount, string remainAP, double clearTime, string replay, int starCount, StageData stage)
         {
             rankText.text = rank;
             nicknameText.text = nickname;

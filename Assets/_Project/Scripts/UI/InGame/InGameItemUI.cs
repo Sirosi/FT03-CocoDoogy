@@ -49,7 +49,7 @@ namespace CocoDoogy.UI.InGame
             else if (DataManager.Instance.CurrentItem[itemData] <= 0 && !button.IsPurchased) // 아이템이 존재하지 않으면 구매할 수 있도록
             {
                 InfoDialog.ShowInfo("아이템 정보", itemData.itemName, itemData.itemDescription, itemData.itemSprite, DialogMode.Confirm,
-                    (type => _ = button.PurchaseAsync(type, itemData)), $"<size=150%><voffset=6><sprite name=Jem></voffset></size><space=-0.6em>{itemData.purchasePrice}");
+                    (type => _ = button.PurchaseAsync(type, itemData)), $"<size=150%><voffset=10><sprite name=Jem></voffset></size><space=-0.6em>{itemData.purchasePrice}");
             }
         }
 

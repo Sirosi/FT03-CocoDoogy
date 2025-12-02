@@ -35,7 +35,9 @@ namespace CocoDoogy.Tile.Piece
             }
         }
 
-        public bool IsTrigger => BaseData && BaseData.type is PieceType.Lever or PieceType.Button or PieceType.GravityButton;
+        public bool IsTrigger => BaseData &&
+            BaseData.type is PieceType.Lever or PieceType.Button or
+            PieceType.GravityButton or PieceType.GravityCrate;
         
         
         /// <summary>
