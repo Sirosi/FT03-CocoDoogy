@@ -37,15 +37,22 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             InGameManager.Timer.Pause();
 
             ItemHandler.UseItem();
-                
+            
+            if(!PlayerHandler.IsReplay)
             // 이 부분에서 popup이 열리고나서 시간이 초기화 되게 
-            _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex() + 1,
-                InGameManager.Stage.index, remainAp, refillCount, time, star, saveJson, 
-                () =>
-                {
-                    GameEndPopup.OpenPopup(false, star);
-                    InGameManager.Timer.Stop();
-                });
+            {
+                _ = FirebaseManager.ClearStageAsync(InGameManager.Stage.theme.ToIndex() + 1,
+                    InGameManager.Stage.index, remainAp, refillCount, time, star, saveJson,
+                    () =>
+                    {
+                        GameEndPopup.OpenPopup(false, star);
+                        InGameManager.Timer.Stop();
+                    });
+            }
+            else
+            {
+                GameEndPopup.OpenPopup(false, star);
+            }
         }
     }
 }

@@ -84,7 +84,8 @@ namespace CocoDoogy.MapEditor.UI.GimmickConnector
         /// <param name="data"></param>
         private void SetUI(GimmickData data)
         {
-            gimmickTypeDropdown.value = (int)data.Type;
+            gimmickTypeDropdown.SetValueWithoutNotify((int)data.Type);
+            OnGimmickTypeChanged((int)data.Type);
 
             // 기존의 TriggerButton 삭제
             foreach (Transform child in triggerButtonGroup)
