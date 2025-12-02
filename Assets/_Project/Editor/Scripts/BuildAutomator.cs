@@ -55,6 +55,7 @@ namespace CocoDoogy.Editor
 
         private static void ApplyAndroidKeystoreSettings()
         {
+            PlayerSettings.Android.useCustomKeystore = true;
             PlayerSettings.Android.keystoreName = KeystorePath;
             PlayerSettings.Android.keystorePass = KeystorePass;
             PlayerSettings.Android.keyaliasName = AliasName;
