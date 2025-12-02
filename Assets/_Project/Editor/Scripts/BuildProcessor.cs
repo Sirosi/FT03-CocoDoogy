@@ -10,14 +10,14 @@ namespace CocoDoogy.Editor
         // Android Keystore 설정
         private const string KeystorePath = @"C:\Users\KYJ\Documents\Git Repositories\FT03-CocoDoogy\Assets\NotShared\user.keystore";
         private const string keystorePass = "qwer1234!@#$";
-        private const string KeyaliasName = "cocoDoogy";
+        private const string KeyaliasName = "CocoDoogy";
         private const string KeyaliasPass = "qwer1234!@#$";
 
         // Android versionCode (구글 플레이 업데이트용 내부 빌드 번호, 반드시 증가해야 함)
         private const string ArgName_BuildNum = "1";
 
         // 최종 빌드 파일이 생성될 전체 경로 (예: /workspace/build/app.apk 또는 .aab)
-        private const string ArgName_OutputPath = @"C:\Jenkins\CocoDoogy";
+        private const string ArgName_OutputPath = @"./Builds/CocoDoogy.apk";
 
         // 빌드 타입 (apk 또는 aab) - aab면 AppBundle 빌드
         private const string ArgName_BuildType = "apk";
@@ -45,7 +45,7 @@ namespace CocoDoogy.Editor
 
             return null;
         }
-        
+
         [MenuItem("Build/Build Android")]
         public static void BuildAndroid()
         {
