@@ -18,19 +18,9 @@ namespace CocoDoogy.Editor
         [MenuItem("Build/Android")]
         public static void BuildForAndroid()
         {
-            Debug.Log("[CI] Android 빌드 시작");
 
-            // 1) Android 플랫폼 전환
-            EditorUserBuildSettings.SwitchActiveBuildTarget(
-                BuildTargetGroup.Android,
-                BuildTarget.Android
-            );
-            AssetDatabase.Refresh();
-
-            // 2) Keystore 설정
             ApplyAndroidKeystoreSettings();
 
-            // 3) 출력 폴더 보장
             string outputDir = "Builds";
             if (!Directory.Exists(outputDir))
                 Directory.CreateDirectory(outputDir);
