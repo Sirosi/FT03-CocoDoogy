@@ -28,8 +28,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7873965319924181787}
   - {fileID: 2487303456935413633}
+  - {fileID: 7873965319924181787}
   - {fileID: 2551937798216203900}
   m_Father: {fileID: 1841377831031420124}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 9039351002146318139}
   - component: {fileID: 64676755737219457}
   m_Layer: 5
-  m_Name: StarIcon
+  m_Name: CenterStarIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 637736938782892503}
   - component: {fileID: 3747822109960207554}
   m_Layer: 5
-  m_Name: StarIcon
+  m_Name: LeftStarIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -321,8 +321,8 @@ MonoBehaviour:
   startButton: {fileID: 6497694282808918929}
   starGroup: {fileID: 4240126153524678774}
   clearStars:
-  - {fileID: 4526598719905088840}
   - {fileID: 5053392819420798846}
+  - {fileID: 4526598719905088840}
   - {fileID: 7820053204339605162}
   defaultSprite: {fileID: 21300000, guid: 6699d803cb100ab409b9aba0042e1f05, type: 3}
   lockedSprite: {fileID: 21300000, guid: 04ea54a00b2aa13459140be70cc33d00, type: 3}
@@ -366,7 +366,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 3959230598307050726}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -572,7 +572,7 @@ GameObject:
   - component: {fileID: 8063843739199356945}
   - component: {fileID: 5877038485394496302}
   m_Layer: 5
-  m_Name: StarIcon
+  m_Name: RightStarIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

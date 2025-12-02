@@ -6,12 +6,12 @@ namespace CocoDoogy.UI.StageSelect
 {
     public class StageSelectStar : MonoBehaviour
     {
-        public static int StarCount = 0;
+        private int StarCount = 0;
         [SerializeField] private GameObject[] stageStar;
 
         private void Awake()
         {
-            Init();
+            BrightStar(StarCount);
         }
         
         private void OnDisable()
@@ -28,6 +28,7 @@ namespace CocoDoogy.UI.StageSelect
         
         public void BrightStar(int star = 1)
         {
+            StarCount = star;
             for (int i = 0; i < star; i++)
             {
                 stageStar[i].SetActive(true);

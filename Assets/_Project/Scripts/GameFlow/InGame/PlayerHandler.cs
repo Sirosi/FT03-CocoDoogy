@@ -5,14 +5,20 @@ using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
+using CocoDoogy.Tutorial;
 using CocoDoogy.Utility;
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
     public class PlayerHandler: Singleton<PlayerHandler>
     {
+        public static event Action<Vector2Int, PlayerEventType> OnEvent = null;
+        public static Action<Vector2Int, PlayerEventType> OnEventCallback => OnEvent;
+
+
         /// <summary>
         /// 플레이어가 인게임에 들어와서 행동을 했는지 여부
         /// </summary>
@@ -31,8 +37,10 @@ namespace CocoDoogy.GameFlow.InGame
             set
             {
                 if (!IsValid) return;
-
+                if (Instance.gridPos == value) return;
+                
                 Instance.gridPos = value;
+                OnEvent?.Invoke(value, PlayerEventType.Move);
             }
         }
 
@@ -122,6 +130,7 @@ namespace CocoDoogy.GameFlow.InGame
                 Ray ray = mainCamera.ScreenPointToRay(touchLast);
                 HexTile selectedTile = GetRayTile(ray);
                 if (!selectedTile) return;
+                if (!TutorialLocker.CanPos(selectedTile.GridPos)) return;
 
                 HexDirection? direction = GridPos.GetRelativeDirection(selectedTile.GridPos);
                 if (!direction.HasValue) return;
@@ -276,8 +285,8 @@ namespace CocoDoogy.GameFlow.InGame
 
         private static void OnBehaviourCompleted()
         {
+            DOTween.Kill(Instance, false);
             Instance.anim.ChangeAnim(AnimType.Idle);
-
             Instance.lockBehaviour = false;
             InGameManager.ProcessPhase();
         }
