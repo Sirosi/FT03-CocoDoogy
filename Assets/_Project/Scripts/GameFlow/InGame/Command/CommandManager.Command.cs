@@ -66,7 +66,6 @@ namespace CocoDoogy.GameFlow.InGame.Command
         public static void Weather(WeatherType weather)
         {
             ExecuteCommand(CommandType.Weather, (WeatherManager.NowWeather, weather));
-            InGameManager.ProcessPhase();
         }
         public static void GimmickTileRotate(Vector2Int gridPos, HexRotate rotate, bool didGimmicked = false)
         {

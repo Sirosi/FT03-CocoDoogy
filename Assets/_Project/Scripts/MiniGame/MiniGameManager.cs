@@ -59,6 +59,7 @@ namespace CocoDoogy.MiniGame
              PlayerPrefs.Save();
             Instance.letterBoxd.SetActive(true);
             Instance.ExplainText(selectedMiniGame.tutorialExplainData.description);
+            print($"{selectedMiniGame.ToString()}미니게임 호출");
             selectedMiniGame.Open(callback);
         }
 

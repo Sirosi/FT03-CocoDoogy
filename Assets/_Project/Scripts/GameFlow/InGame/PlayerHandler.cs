@@ -236,6 +236,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// <param name="gridPos"></param>
         public static void Move(Vector2Int gridPos)
         {
+            print("Move호출");
             if (!IsValid) return;
             if (!IsBehaviour) IsBehaviour = true;
 
@@ -274,7 +275,7 @@ namespace CocoDoogy.GameFlow.InGame
         }
 
 
-        private static void OnBehaviourCompleted()
+        public static void OnBehaviourCompleted()
         {
             Instance.anim.ChangeAnim(AnimType.Idle);
 
