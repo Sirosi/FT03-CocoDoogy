@@ -1314,6 +1314,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+--- !u!224 &1214811591 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2280679031150887174, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+  m_PrefabInstance: {fileID: 1214811590}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1398407013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1451,6 +1456,7 @@ GameObject:
   - component: {fileID: 1530506119}
   - component: {fileID: 1530506120}
   - component: {fileID: 1530506121}
+  - component: {fileID: 1530506122}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1524,6 +1530,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraPivot: {fileID: 623703541}
   mainCamera: {fileID: 348081548}
+--- !u!114 &1530506122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530506116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f6c2b2d7163a459a8f701549eb46f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionPointsUI: {fileID: 1214811591}
 --- !u!1 &1559489399
 GameObject:
   m_ObjectHideFlags: 0
