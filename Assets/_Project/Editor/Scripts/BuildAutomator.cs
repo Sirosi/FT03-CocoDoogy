@@ -1,15 +1,19 @@
 using UnityEditor;
 using System.Linq;
 using UnityEngine;
+using System.IO;
 
 namespace CocoDoogy.Editor
 {
     public static class BuildAutomator
     {
-        private const string KeystorePath = "./Assets/NotShared/user.keystore";
-        private const string KeystorePass = "qwer1234!@#$";
-        private const string AliasName = "CocoDoogy";
-        private const string AliasPass = "qwer1234!@#$";
+        private static string KeystorePass => "qwer1234!@#$";
+        private static string AliasName => "CocoDoogy";
+        private static string AliasPass => "qwer1234!@#$";
+
+        // === 절대 경로로 변환된 Keystore 경로 ===
+        private static string KeystoreAbsolutePath =>
+            Path.Combine(Application.dataPath, "NotShared/user.keystore");
 
         [MenuItem("Build/Android")]
         public static void BuildForAndroid()
@@ -21,13 +25,18 @@ namespace CocoDoogy.Editor
                 BuildTargetGroup.Android,
                 BuildTarget.Android
             );
+            AssetDatabase.Refresh();
 
-            // 2) Keystore 적용
+            // 2) Keystore 설정
             ApplyAndroidKeystoreSettings();
 
-            // 3) 출력 경로 설정
-            string outputPath = "Builds/CocoDoogy.apk";
-            Debug.Log($"[CI] 출력 경로: {outputPath}");
+            // 3) 출력 폴더 보장
+            string outputDir = "Builds";
+            if (!Directory.Exists(outputDir))
+                Directory.CreateDirectory(outputDir);
+
+            string outputPath = Path.Combine(outputDir, "CocoDoogy.apk");
+            Debug.Log($"[CI] 출력 경로: {Path.GetFullPath(outputPath)}");
 
             BuildPlayerOptions buildPlayerOptions = new()
             {
@@ -61,11 +70,16 @@ namespace CocoDoogy.Editor
         {
             Debug.Log("[CI] Keystore 설정 적용");
 
+            if (!File.Exists(KeystoreAbsolutePath))
+                Debug.LogError("[CI] Keystore 파일을 찾을 수 없습니다: " + KeystoreAbsolutePath);
+
             PlayerSettings.Android.useCustomKeystore = true;
-            PlayerSettings.Android.keystoreName = KeystorePath;
+            PlayerSettings.Android.keystoreName = KeystoreAbsolutePath;   // ★ 절대경로 적용
             PlayerSettings.Android.keystorePass = KeystorePass;
             PlayerSettings.Android.keyaliasName = AliasName;
             PlayerSettings.Android.keyaliasPass = AliasPass;
+
+            Debug.Log("[CI] 적용된 Keystore 경로: " + KeystoreAbsolutePath);
         }
     }
 }
