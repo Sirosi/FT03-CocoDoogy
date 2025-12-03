@@ -15,5 +15,6 @@ namespace CocoDoogy.UI.Popup
         
         [Header("Effect Element")]
         public Sprite effectBackground;
+        public Sprite effectText;
     }
 }

@@ -13,5 +13,8 @@ namespace CocoDoogy.Data
         public TextAsset mapData;
 
         public int[] starThresholds;
+        public StageInfoData[] tileData;
+        public StageInfoData[] gimmickData;
+        public StageInfoData[] weatherData;
     }
 }
