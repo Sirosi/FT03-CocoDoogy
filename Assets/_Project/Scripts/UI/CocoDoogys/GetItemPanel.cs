@@ -31,6 +31,12 @@ namespace CocoDoogy._Project.Scripts.UI.CocoDoogys
 
         public static void GetItem(ItemUIType itemUIType, int amount, Action callback = null)
         {
+            if (!instance)
+            {
+                callback?.Invoke();
+                return;
+            }
+            
             instance.GetSomething(itemUIType, amount, callback);
         }
 
