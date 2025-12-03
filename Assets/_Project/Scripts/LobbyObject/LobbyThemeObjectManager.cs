@@ -59,6 +59,7 @@ namespace CocoDoogy.LobbyObject
                 int themeIndex = theme.ToIndex();              // 0~3
                 int levelIndex = lastStage.level.Hex2Int(); // 1~20
 
+                Debug.Log($"{themeIndex}_{levelIndex}_{stageNum[theme]}");
                 // 전역 클리어 스테이지 인덱스 계산
                 cleared = (themeIndex * stageNum[theme]) + levelIndex;      // 0~79
             }
@@ -107,7 +108,7 @@ namespace CocoDoogy.LobbyObject
         {
             int max = stageNum[theme];
             int localCleared = Mathf.Clamp(cleared - themeStart, 0, max);
-            Debug.Log($"Theme:{theme},cleared:{cleared},themeStart:{themeStart},max:{max},localCleared:{localCleared}");
+            Debug.Log($"Theme:{theme},cleared:{cleared},themeStart:{themeStart}, max:{max},localCleared:{localCleared}");
             for (int i = 0; i < objs.Length; i++)
                 objs[i].SetActive(i < localCleared);
         }

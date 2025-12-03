@@ -60,7 +60,6 @@ namespace CocoDoogy.Network
                 var snapshot = await Instance.Firestore
                     .Collection($"users/{uid}/stageInfo")
                     .GetSnapshotAsync();
-
                 // 유저가 클리어한 정보를 내림차순으로 정리하여 가장 첫번째 정보를 반환 (가장 높은 스테이지 찾기)
                 var lastDoc = snapshot.Documents
                     .Select(doc => new
@@ -73,7 +72,7 @@ namespace CocoDoogy.Network
 
                 // StageInfo로 변환
                 StageInfo stage = lastDoc.ConvertTo<StageInfo>();
-                
+
                 return stage;
             }
             catch

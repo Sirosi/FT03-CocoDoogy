@@ -73,7 +73,11 @@ namespace CocoDoogy.UI.StageSelect
             }
             else
             {
-                detailInfoPage.Close(() => commonInfoPage.Show(stageData));
+                detailInfoPage.Close(() =>
+                {
+                    commonInfoPage.Show(stageData);
+                    stageSelectStar.BrightStar(rankingPage.CurrentStageStar);
+                });
             }
         }
         
