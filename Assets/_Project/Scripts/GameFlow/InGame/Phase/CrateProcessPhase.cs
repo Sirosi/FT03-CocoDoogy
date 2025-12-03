@@ -28,6 +28,8 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                     SfxManager.PlaySfx(SfxType.Interaction_WaterSplash);
                     CommandManager.GimmickPieceChange(tile.GridPos, HexDirection.Center, PieceType.FloatedCrate, pieceType,
                         centerPiece.LookDirection, centerPiece.LookDirection);
+                    centerPiece = tile.GetPiece(HexDirection.Center);
+                    centerPiece.GetComponent<FloatedCaskPiece>().ToMove(PlayerHandler.LookDirection.GetMirror());
                 }
                 else if (tileType == TileType.Ice && pieceType == PieceType.FloatedCrate)
                 {

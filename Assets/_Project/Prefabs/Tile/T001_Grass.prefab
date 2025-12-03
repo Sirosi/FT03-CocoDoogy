@@ -160,6 +160,17 @@ MonoBehaviour:
     CullMode: 2
     cutoutTextureName: 
     cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 9684101545432113}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
   renderStyle: 2
   outlineParameters:
     enabled: 1
