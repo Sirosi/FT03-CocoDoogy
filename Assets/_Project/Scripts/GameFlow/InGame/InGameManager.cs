@@ -239,7 +239,6 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 LastConsumeActionPoints = consume;
                 ConsumedActionPoints += consume;
-                UseActionPoints += consume;
             }
             ActionPoints -= consume;
         }

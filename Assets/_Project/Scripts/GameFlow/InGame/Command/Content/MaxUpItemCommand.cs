@@ -29,7 +29,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             InGameManager.ConsumeActionPoint(Delta, false);
             
             Debug.Log(DataManager.GetReplayItem(Effect));
-            
+            InGameManager.UseActionPoints++;
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
         }
@@ -38,6 +38,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             HexTileMap.ActionPoint -= Delta;
             InGameManager.RegenActionPoint(Delta, false);
+            InGameManager.UseActionPoints--;
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), true);
             PlayerHandler.IsBehaviour = false;
         }
