@@ -12,9 +12,9 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             get => ie;
             set => ie = value;
         }
-        
+
         [SerializeField] private ItemEffect ie;
-        
+
         public UndoItemCommand(object param) : base(CommandType.Undo, param)
         {
             Effect = (ItemEffect)param;
@@ -23,9 +23,9 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override void Execute()
         {
             CommandManager.UndoCommandAuto();
-            
+
             Debug.Log(DataManager.GetReplayItem(Effect));
-            
+
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
         }

@@ -38,9 +38,8 @@ namespace CocoDoogy.EmoteBillboard
         private Sequence currentSequence; // 이모트가 움직이는 애니메이션을 위한 시퀀스
         private Action onCompleteCallback; // 감정 표시 완료 콜백
 
-        private void Start()
+        private void Awake()
         {
-            mainCamera = Camera.main;
             spriteRenderer = GetComponent<SpriteRenderer>();
             originalScale = transform.localScale;
 
@@ -48,9 +47,11 @@ namespace CocoDoogy.EmoteBillboard
             Color color = spriteRenderer.color;
             color.a = 0;
             spriteRenderer.color = color;
+        }
 
-            // 테스트용 (나중에 제거 가능)
-            // ShowEmote();
+        private void Start()
+        {
+            mainCamera = Camera.main;
         }
 
         private void LateUpdate() // 여기서 계속 위치를 초기화 해서 카메라가 움직여도 무조건 타겟 위에 이모지가 보이도록 
@@ -86,6 +87,7 @@ namespace CocoDoogy.EmoteBillboard
         public void ShowEmotion(Emotion emotion, Action onComplete = null)
         {
             if (emotion == Emotion.None) return;
+            if (!spriteRenderer) return; // null 체크
 
             onCompleteCallback = onComplete;
 

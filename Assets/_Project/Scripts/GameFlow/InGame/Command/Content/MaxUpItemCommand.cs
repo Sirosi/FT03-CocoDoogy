@@ -13,23 +13,23 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             get => itemEffect;
             set => itemEffect = value;
         }
-        
+
         [SerializeField] private ItemEffect itemEffect;
-        
+
         private const int Delta = 1;
-        
+
         public MaxUpItemCommand(object param) : base(CommandType.MaxUp, param)
         {
             Effect = (ItemEffect)param;
         }
-        
+
         public override void Execute()
         {
             HexTileMap.ActionPoint += Delta;
             InGameManager.ConsumeActionPoint(Delta, false);
-            
+
             Debug.Log(DataManager.GetReplayItem(Effect));
-            
+
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
         }

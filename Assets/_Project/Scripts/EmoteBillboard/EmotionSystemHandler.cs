@@ -118,16 +118,23 @@ namespace CocoDoogy.EmoteBillboard
         /// </summary>
         private void OnActionPointChanged(int newActionPoints)
         {
+            int difference = newActionPoints - previousActionPoints;
+
             // 만족: 행동력이 증가했을 때
-            if (newActionPoints > previousActionPoints)
+            // 초기화(최대 행동력만큼 증가)는 제외
+            if (difference > 0)
             {
-                TryShowEmotion(Emotion.Satisfaction, 3); // 우선순위 3
+                // 초기화 제외: 현재 최대 행동력만큼 증가한 경우
+                if (difference < HexTileMap.ActionPoint)
+                {
+                    TryShowEmotion(Emotion.Satisfaction, 3); // 우선순위 3
+                }
             }
 
-            // 슬픔: 행동력이 0이 되었을 때 (이전에는 0보다 컸어야 함)
-            if (previousActionPoints > 0 && newActionPoints == 0)
+            // 슬픔: 행동력 0 + 초기화 횟수 0 (진짜 게임 오버)
+            if (previousActionPoints > 0 && newActionPoints == 0 && InGameManager.RefillPoints < 1)
             {
-                TryShowEmotion(Emotion.Sad, 1); // 우선순위 1
+                TryShowEmotion(Emotion.Sad, 4); // 우선순위 4
             }
 
             previousActionPoints = newActionPoints;
@@ -265,7 +272,6 @@ namespace CocoDoogy.EmoteBillboard
                    weather == WeatherType.Snow ||
                    weather == WeatherType.Mirage;
         }
-
         #endregion
     }
 }
