@@ -24,6 +24,7 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private CommonButton pageChangeButton;
         [SerializeField] private CommonButton startButton;
         
+        
         [SerializeField] private StageSelectStar stageSelectStar;
         public bool IsOpened { get; private set; } = false;
 

@@ -32,6 +32,7 @@ namespace CocoDoogy.UI.StageSelect
             foreach (StageData data in DataManager.GetStageData(theme))
             {
                 if (data.index < start) continue;
+                // TODO : 네트워크 싱크 이슈. 버튼이 생성되는 중에 나갔다가 들어오면 겹쳐서 생성되는 이슈가 있음.
                 int star = await FirebaseManager.GetStar(data.theme.ToIndex() + 1, data.index);
                 StageSelectButton stageButton = LeanPool.Spawn(stageButtonPrefab, stageGroup);
                 stageButton.Init(data, star, StageSelectManager.ShowReadyView);
