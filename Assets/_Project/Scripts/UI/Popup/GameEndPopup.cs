@@ -41,6 +41,7 @@ namespace CocoDoogy.UI.Popup
         [SerializeField] private Image clearEffectImage;
         
         [Header("Info Elements")]
+        [SerializeField] private TextMeshProUGUI remainResetText;
         [SerializeField] private TextMeshProUGUI remainAPText;
         [SerializeField] private TextMeshProUGUI clearTimeText;
         
@@ -85,6 +86,9 @@ namespace CocoDoogy.UI.Popup
             
             gameEndPopup.backgroundStarImage.sprite =
                 !isDefeat ? gameEndPopup.completeUI.effectText : gameEndPopup.defeatUI.effectText;
+
+            gameEndPopup.remainResetText.text =
+                $"{InGameManager.RefillPoints}";
             
             gameEndPopup.remainAPText.text =
                 $"{InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints}";
