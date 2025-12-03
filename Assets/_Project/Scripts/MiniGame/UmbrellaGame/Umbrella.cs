@@ -18,7 +18,7 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
         [SerializeField] private float distanceCheckInterval = 0.1f;
         private float distanceCheckTimer = 0f;
         // 최소 실행 간격 (1초)
-        [SerializeField] private float shakeCooldown = 1f;
+        [SerializeField] private float shakeCooldown = 0.5f;
         private float lastShakeTime = 0f;
         // 거리 누적
         private float accumulatedDistance = 0f;
