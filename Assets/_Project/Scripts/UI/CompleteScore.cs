@@ -14,8 +14,6 @@ namespace CocoDoogy.UI
         [SerializeField] private Star rightStar;
         [SerializeField] private UIParticle starParticle;
         [SerializeField] private UIParticle _3starParticle;
-
-        [SerializeField] private Defeat defeat;
         
         private RectTransform rectTransform;
         private Star[] stars;

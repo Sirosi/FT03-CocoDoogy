@@ -35,6 +35,7 @@ namespace CocoDoogy.UI.Popup
 
         [Header("Score Elements")] 
         [SerializeField] private CompleteScore completeScore;
+        [SerializeField] private GameObject defeatScore;
         
         [Header("Clear Effect Element")]
         [SerializeField] private Image clearEffectImage;
@@ -78,13 +79,17 @@ namespace CocoDoogy.UI.Popup
             gameEndPopup.clearEffectImage.sprite = !isDefeat
                 ? gameEndPopup.completeUI.effectBackground
                 : gameEndPopup.defeatUI.effectBackground;
+            
+            gameEndPopup.completeScore.gameObject.SetActive(!isDefeat);
+            gameEndPopup.defeatScore.SetActive(isDefeat);
+            
             gameEndPopup.backgroundStarImage.sprite =
                 !isDefeat ? gameEndPopup.completeUI.effectText : gameEndPopup.defeatUI.effectText;
-
+            
             gameEndPopup.remainAPText.text =
                 $"{InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints}";
             OnTimeChanged(InGameManager.Timer.NowTime);
-            
+
             gameEndPopup.completeScore.GetStageClearResult(isDefeat, star);
             
             if (isDefeat || !DataManager.GetStageData(InGameManager.Stage.theme, InGameManager.Stage.index + 1) || PlayerHandler.IsReplay)
