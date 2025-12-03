@@ -21,6 +21,7 @@ namespace CocoDoogy._Project.Scripts.UI.CocoDoogys
         private void Awake()
         {
             instance = this;
+            panel.gameObject.SetActive(false);
         }
 
         [ContextMenu("test")]
