@@ -107,7 +107,7 @@ namespace CocoDoogy.GameFlow.InGame
 
 
         private static StageData stageData = null;
-        
+
 
         private int refillPoints = 0;
         private int actionPoints = 0;
@@ -147,7 +147,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             Instance.Clear();
             CommandManager.Clear();
-            
+
             if (mapJson is null)
             {
                 // MapData가 없이 InGame에 들어가면, Test데이터 생성
@@ -168,9 +168,9 @@ namespace CocoDoogy.GameFlow.InGame
                 Passages.Add(new WeatherPassage(weather.Key, weather.Value));
             }
 
-            foreach(var gimmick in HexTileMap.Gimmicks.Values)
+            foreach (var gimmick in HexTileMap.Gimmicks.Values)
             {
-                foreach(var trigger in gimmick.Triggers)
+                foreach (var trigger in gimmick.Triggers)
                 {
                     GimmickExecutor.ExecuteFromTrigger(trigger.GridPos);
                 }
@@ -178,7 +178,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             OnMapDrawn?.Invoke(Stage);
             Timer.Start();
-            
+
             ProcessPhase();
         }
 
@@ -195,9 +195,9 @@ namespace CocoDoogy.GameFlow.InGame
 
             ChangeInteract(null, null);
 
-            foreach(IPhase phase in turnPhases)
+            foreach (IPhase phase in turnPhases)
             {
-                if(phase is IClearable clearable)
+                if (phase is IClearable clearable)
                 {
                     clearable.OnClear();
                 }

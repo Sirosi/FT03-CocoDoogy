@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
@@ -19,9 +20,9 @@ namespace CocoDoogy.GameFlow.InGame.Weather
             {
                 if (!Instance) return;
                 if (Instance.nowWeather == value) return;
-
+                
                 Instance.nowWeather = value;
-
+                SfxManager.StopSfx(SfxType.Weather_Rain);
                 if (value == WeatherType.None) return;
                 OnWeatherChanged?.Invoke(value);
             }
