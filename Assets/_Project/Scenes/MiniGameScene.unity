@@ -170,6 +170,13 @@ MonoBehaviour:
       Data3: -2089836869
       Data4: -1104273429
     Path: snapshot:/Sfx Ducking
+  mutingSnapShot:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &1007779798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,30 +634,6 @@ PrefabInstance:
     - target: {fileID: 2237289094780422460, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8773684869998366166, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: m_Color.b
-      value: 0.09803922
-      objectReference: {fileID: 0}
-    - target: {fileID: 8773684869998366166, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: m_Color.g
-      value: 0.09803922
-      objectReference: {fileID: 0}
-    - target: {fileID: 8773684869998366166, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: m_Color.r
-      value: 0.09803922
-      objectReference: {fileID: 0}
-    - target: {fileID: 9202185555700269072, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: m_Color.b
-      value: 0.09803922
-      objectReference: {fileID: 0}
-    - target: {fileID: 9202185555700269072, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: m_Color.g
-      value: 0.09803922
-      objectReference: {fileID: 0}
-    - target: {fileID: 9202185555700269072, guid: f8eb2899e0df2944997b6d2164d052e7, type: 3}
-      propertyPath: m_Color.r
-      value: 0.09803922
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
