@@ -1,8 +1,10 @@
+using CocoDoogy.Animation;
 using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.LifeCycle;
 using CocoDoogy.UI.Popup;
+using System;
 using UnityEngine;
 
 namespace CocoDoogy.Tile.Piece
@@ -28,14 +30,14 @@ namespace CocoDoogy.Tile.Piece
         private bool preDocked = false;
 
         private Piece piece = null;
-        
+
 
         public void OnInit(Piece piece)
         {
             this.piece = piece;
         }
 
-        
+
         public void OnDataInsert(string data)
         {
             if (!bool.TryParse(data, out bool docked)) docked = false;
@@ -57,6 +59,7 @@ namespace CocoDoogy.Tile.Piece
             if (type == CallbackType.Yes)
             {
                 CommandManager.Sail(piece.Target.Value);
+                VehicleAnimHandler.SetActive();
             }
         }
     }

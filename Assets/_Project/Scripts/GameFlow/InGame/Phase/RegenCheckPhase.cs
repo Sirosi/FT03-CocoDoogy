@@ -28,6 +28,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             gridPos = PlayerHandler.GridPos;
             if (centerPiece && centerPiece.BaseData.type == PieceType.House)
             {
+                Debug.Log("OnPhase호출");
                 MiniGameManager.OpenRandomGame(IncreaseActionPoints);
                 return false; 
             }
