@@ -1,3 +1,5 @@
+using CocoDoogy.Data;
+using CocoDoogy.Network;
 using System;
 using TMPro;
 using UnityEngine;
@@ -8,6 +10,8 @@ namespace CocoDoogy.UI.Friend
     public class FriendRequestItem : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI nicknameText;
+        [SerializeField] private TextMeshProUGUI recordText;
+        
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button rejectButton;
         [SerializeField] private Button cancelButton;
@@ -27,10 +31,12 @@ namespace CocoDoogy.UI.Friend
         /// <param name="receivedUid"></param>
         /// <param name="acceptCallback"></param>
         /// <param name="rejectCallback"></param>
-        public void ReceivedInit(string nickname, string receivedUid, Action<string> acceptCallback, Action<string> rejectCallback)
+        public async void ReceivedInit(string nickname, string receivedUid, Action<string> acceptCallback, Action<string> rejectCallback)
         {
             uid = receivedUid;
             nicknameText.text = nickname;
+            StageInfo record = await FirebaseManager.GetLastClearStage(uid);
+            recordText.text = $"{record.theme.Hex2Int()}테마 {record.level.Hex2Int()}";
             onAccept = acceptCallback;
             onReject = rejectCallback;
 
@@ -53,15 +59,17 @@ namespace CocoDoogy.UI.Friend
             cancelButton.onClick.AddListener(() => onCancel?.Invoke(sentUid));
         }
 
-        public void FriendInit(string nickname, string deletedUid, Action<string> presentCallback, Action<string> cancelCallback)
+        public async void FriendInit(string nickname, string uid, Action<string> presentCallback, Action<string> cancelCallback)
         {
-            uid = deletedUid;
+            this.uid = uid;
             nicknameText.text = nickname;
+            StageInfo record = await FirebaseManager.GetLastClearStage(uid);
+            recordText.text = $"{record.theme.Hex2Int()}테마 {record.level.Hex2Int()}";
             onPresent = presentCallback;
             onDelete = cancelCallback;
 
-            presentButton.onClick.AddListener(() => onPresent?.Invoke(uid));
-            deleteButton.onClick.AddListener(() => onDelete?.Invoke(uid));
+            presentButton.onClick.AddListener(() => onPresent?.Invoke(this.uid));
+            deleteButton.onClick.AddListener(() => onDelete?.Invoke(this.uid));
         }
     }
 }

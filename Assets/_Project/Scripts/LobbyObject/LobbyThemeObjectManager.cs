@@ -48,7 +48,7 @@ namespace CocoDoogy.LobbyObject
 
         private async void ForceRefresh()
         {
-            var lastStage = await FirebaseManager.GetLastClearStage();
+            var lastStage = await FirebaseManager.GetLastClearStage(FirebaseManager.Instance.Auth.CurrentUser.UserId);
             int cleared = 0;
 
             if (lastStage != null)
@@ -57,7 +57,7 @@ namespace CocoDoogy.LobbyObject
                 Theme theme = (Theme)Convert.ToInt32(lastStage.theme, 16);
 
                 int themeIndex = theme.ToIndex();              // 0~3
-                int levelIndex = Convert.ToInt32(lastStage.level, 16); // 1~20
+                int levelIndex = lastStage.level.Hex2Int(); // 1~20
 
                 // 전역 클리어 스테이지 인덱스 계산
                 cleared = (themeIndex * stageNum[theme]) + levelIndex;      // 0~79
@@ -107,7 +107,7 @@ namespace CocoDoogy.LobbyObject
         {
             int max = stageNum[theme];
             int localCleared = Mathf.Clamp(cleared - themeStart, 0, max);
-
+            Debug.Log($"Theme:{theme},cleared:{cleared},themeStart:{themeStart},max:{max},localCleared:{localCleared}");
             for (int i = 0; i < objs.Length; i++)
                 objs[i].SetActive(i < localCleared);
         }

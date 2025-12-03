@@ -53,12 +53,12 @@ namespace CocoDoogy.Network
         /// 클리어 한 스테이지 정보를 찾아 가장 최근에 클리어한 스테이지를 반환.
         /// </summary>
         /// <returns></returns>
-        public static async Task<StageInfo> GetLastClearStage()
+        public static async Task<StageInfo> GetLastClearStage(string uid)
         {
             try
             {
                 var snapshot = await Instance.Firestore
-                    .Collection($"users/{Instance.Auth.CurrentUser.UserId}/stageInfo")
+                    .Collection($"users/{uid}/stageInfo")
                     .GetSnapshotAsync();
 
                 // 유저가 클리어한 정보를 내림차순으로 정리하여 가장 첫번째 정보를 반환 (가장 높은 스테이지 찾기)
