@@ -55,12 +55,12 @@ namespace CocoDoogy.UI.Shop
 
         public override void ClosePanel()
         {
-            WindowAnimation.SwipeWindow(transform as RectTransform);
-            
             if (!stageSelectUI.activeSelf)
             {
                 PageCameraSwiper.IsSwipeable = true;
             }
+            
+            WindowAnimation.SwipeWindow(transform as RectTransform);
         }
 
         public void OpenPurchasePanel(ItemData itemData, bool isCountable) => purchasePanel.Open(itemData, isCountable, OnPurchaseRequest);
