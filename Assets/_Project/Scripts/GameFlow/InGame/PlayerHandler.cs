@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
-    public class PlayerHandler: Singleton<PlayerHandler>
+    public class PlayerHandler : Singleton<PlayerHandler>
     {
         public static event Action<Vector2Int, PlayerEventType> OnEvent = null;
         public static Action<Vector2Int, PlayerEventType> OnEventCallback => OnEvent;
@@ -29,7 +29,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static bool IsReplay { get; set; } = false;
 
-        public static int SandCount{ get; set; } = 0;
+        public static int SandCount { get; set; } = 0;
 
         public static Vector2Int GridPos
         {
@@ -38,7 +38,7 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 if (!IsValid) return;
                 if (Instance.gridPos == value) return;
-                
+
                 Instance.gridPos = value;
                 OnEvent?.Invoke(value, PlayerEventType.Move);
             }
@@ -115,7 +115,7 @@ namespace CocoDoogy.GameFlow.InGame
                 }
 
                 float distance = Vector2.Distance(touchLast, touchStart);
-                if(distance > 20) // TODO: 값은 나중에 바뀔 수 있음
+                if (distance > 20) // TODO: 값은 나중에 바뀔 수 있음
                 {
                     touched = false;
                 }
@@ -155,7 +155,7 @@ namespace CocoDoogy.GameFlow.InGame
             HexTile result = null;
             if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, LayerMask.GetMask("Tile")))
             {
-                result = hit.collider.GetComponentInParent<HexTile>();                ;
+                result = hit.collider.GetComponentInParent<HexTile>(); ;
             }
             return result;
         }
@@ -199,7 +199,7 @@ namespace CocoDoogy.GameFlow.InGame
 
         public static void Comeback(Vector2Int gridPos)
         {
-            if(!IsValid) return;
+            if (!IsValid) return;
 
 
         }

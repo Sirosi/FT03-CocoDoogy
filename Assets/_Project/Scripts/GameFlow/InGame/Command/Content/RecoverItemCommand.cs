@@ -14,12 +14,12 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             get => itemEffect;
             set => itemEffect = value;
         }
-        
+
         [SerializeField] private ItemEffect itemEffect;
-        
+
         private const int Recover = 1;
-        
-        
+
+
         public RecoverItemCommand(object param) : base(CommandType.Recover, param)
         {
             Effect = (ItemEffect)param;
@@ -28,9 +28,9 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override void Execute()
         {
             InGameManager.RegenActionPoint(Recover, true);
-            
+
             Debug.Log(DataManager.GetReplayItem(Effect));
-            
+
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
         }

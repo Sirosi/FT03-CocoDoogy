@@ -415,7 +415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3799143848597074601}
   - component: {fileID: 223770790836693376}
-  - component: {fileID: 6544485316837667717}
+  - component: {fileID: 8267541112434903531}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -452,7 +452,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526734741368781873}
   m_CullTransparentMesh: 1
---- !u!114 &6544485316837667717
+--- !u!114 &8267541112434903531
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -461,10 +461,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1526734741368781873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac951cfbaf548644e9757bac428a522d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9eb86288a30441f08cd7449f8e11147f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 7800221818205418930}
+  timer: {fileID: 7800221818205418930}
 --- !u!1 &2327225617153694483
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,9 +549,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2564256122773393251}
-  - component: {fileID: 5389638501951222577}
-  - component: {fileID: 7754611083550445558}
   - component: {fileID: 5347528721309144262}
+  - component: {fileID: 603133637924600722}
   m_Layer: 5
   m_Name: Console
   m_TagString: Untagged
@@ -581,32 +580,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -200, y: 200}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &5389638501951222577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2561651720918253127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc8d18eea9ccb4a4baa49614b2062f0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7754611083550445558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2561651720918253127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53329e1345ab45a4b99a0661206355bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonGroup: {fileID: 0}
-  buttonPrefab: {fileID: 1302401079353950518, guid: 9dba4e43a47af4b4cbe2d0fbbe20d0eb, type: 3}
 --- !u!114 &5347528721309144262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,6 +606,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &603133637924600722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2561651720918253127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a61628753f84c7ca8c4445a282dfa95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoButton: {fileID: 409481467982366544}
+  pauseButton: {fileID: 1620394125751149866}
+  redoButton: {fileID: 2771359872061784711}
+  delay: 0.5
 --- !u!1 &2686658928085576257
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,7 +1591,7 @@ GameObject:
   - component: {fileID: 5321682025842118680}
   - component: {fileID: 1528001517853443441}
   m_Layer: 5
-  m_Name: StopButton
+  m_Name: PauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1672,7 +1661,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5389638501951222577}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CocoDoogy.Test.InGameTestButtons, Assembly-CSharp
         m_MethodName: Undo
         m_Mode: 1
@@ -1906,10 +1895,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openSettingsButton: {fileID: 5066088171783007366}
   openPauseButton: {fileID: 4174647596506084579}
-  redoButton: {fileID: 2771359872061784711}
-  undoButton: {fileID: 409481467982366544}
   settingsUI: {fileID: 1000479542261993409}
   replayPauseUI: {fileID: 6193936134033477513}
+  replayTimerUI: {fileID: 0}
+  console: {fileID: 603133637924600722}
 --- !u!1 &5691124416954298801
 GameObject:
   m_ObjectHideFlags: 0

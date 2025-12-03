@@ -24,7 +24,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
 
             // 타일 존재 확인
             HexTile tile = HexTile.GetTile(PlayerHandler.GridPos);
-            if (!tile) return true;
+            if (!tile) return false;
 
             for(int i = 0 ;i < tile.Pieces.Length;i++)
             {
@@ -37,7 +37,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 break;
             }
 
-            return false;
+            return true;
         }
     }
 }

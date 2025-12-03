@@ -9,7 +9,9 @@ namespace CocoDoogy.UI.UIManager
 {
     public class ReplayUIManager : Singleton<ReplayUIManager>
     {
-        // private 
+        public static double timer;
+        public static string consumeAP;
+        public static string refillCount;
         [Header("Buttons")]
         [SerializeField] private CommonButton openSettingsButton;
         [SerializeField] private CommonButton openPauseButton;
@@ -17,13 +19,14 @@ namespace CocoDoogy.UI.UIManager
         [Header("UI Panel")]
         [SerializeField] private SettingsUI settingsUI;
         [SerializeField] private ReplayPauseUI replayPauseUI;
-        
+        [SerializeField] private ReplayTimer replayTimerUI;
         [SerializeField] private ReplayConsole console;
         protected override void Awake()
         {
             base.Awake();
             openSettingsButton.onClick.AddListener(OnClickOpenSetting);
             openPauseButton.onClick.AddListener(OnClickOpenPause);
+            replayTimerUI.SetTimer(timer);
         }
 
         private void OnClickOpenSetting()
@@ -36,5 +39,6 @@ namespace CocoDoogy.UI.UIManager
         {
             replayPauseUI.OpenUI();
         }
+        
     }
 }

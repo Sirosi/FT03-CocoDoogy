@@ -55,8 +55,6 @@ namespace CocoDoogy.UI.Replay
         {
             while (CommandManager.Undid.Count > 0)
             {
-                Debug.Log("코루틴 반복");
-
                 // 일시정지 처리
                 await UniTask.WaitWhile(() => IsPaused);
 
