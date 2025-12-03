@@ -16,13 +16,17 @@ namespace CocoDoogy._Project.Scripts.UI.CocoDoogys
         [SerializeField] private CocoDoogyUIIcon  cocoDoogyUIIcon;
 
 
+        public static GetItemPanel instance;
 
-        [ContextMenu("GetSomething")]
-        public void Test()
+        private void Awake()
         {
-            GetSomething(ItemUIType.Movement, 10, ()=>print("행동력 오름!"));
+            instance = this;
         }
-        
+
+        public static void GetItem(ItemUIType itemUIType, int amount, Action callback = null)
+        {
+            instance.GetSomething(itemUIType, amount, callback);
+        }
 
         /// <summary>
         /// getSomething 이벤트로 호출되는 메서드
@@ -37,11 +41,11 @@ namespace CocoDoogy._Project.Scripts.UI.CocoDoogys
             cocoDoogyUIIcon.ChangeIcon(itemUIType);
             this.amount.text = amount.ToString();
             panel.gameObject.SetActive(true);
-            panel.DOLocalMove(panel.localPosition + new Vector3(0, 100), 1f)
+            panel.DOLocalMove(panel.localPosition + new Vector3(0, 100), 0.5f)
                 .SetEase(Ease.OutQuad)
                 .OnComplete(() =>
                 {
-                    panel.DOLocalMove(target.localPosition, 0.5f)
+                    panel.DOLocalMove(target.localPosition, 0.2f)
                         .SetEase(Ease.InOutCubic)
                         .OnComplete(() =>
                         {
