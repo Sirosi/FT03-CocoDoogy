@@ -87,13 +87,12 @@ namespace CocoDoogy.UI.Popup
             gameEndPopup.backgroundStarImage.sprite =
                 !isDefeat ? gameEndPopup.completeUI.effectText : gameEndPopup.defeatUI.effectText;
 
-            gameEndPopup.remainResetText.text =
-                $"{InGameManager.UseRefillCounts}";
+            gameEndPopup.remainResetText.text = PlayerHandler.IsReplay ?
+                $"{InGameManager.UseRefillCounts}" : $"{ReplayUIManager.refillCount}";
             
-            gameEndPopup.remainAPText.text =
-                $"{InGameManager.UseActionPoints}";
-            OnTimeChanged(InGameManager.Timer.NowTime);
-
+            gameEndPopup.remainAPText.text = PlayerHandler.IsReplay ?
+                $"{InGameManager.UseActionPoints}" : $"{ReplayUIManager.consumeAP}";
+            OnTimeChanged(!PlayerHandler.IsReplay ? InGameManager.Timer.NowTime : (float)ReplayUIManager.timer);
             gameEndPopup.completeScore.GetStageClearResult(isDefeat, star);
             
             if (isDefeat || !DataManager.GetStageData(InGameManager.Stage.theme, InGameManager.Stage.index + 1) || PlayerHandler.IsReplay)
