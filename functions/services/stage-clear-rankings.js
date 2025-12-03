@@ -19,7 +19,20 @@ const rankingService = {
             }
 
             let arr = Object.entries(data).map(([userUid, d]) => ({ userUid, ...d }));
-            arr.sort((a, b) => a.clearTime - b.clearTime);
+            arr.sort((a, b) => {
+                // 1. 초기화(refillPoints) 적은 순서
+                if (a.refillPoints !== b.refillPoints) {
+                    return a.refillPoints - b.refillPoints;
+                }
+
+                // 2. 행동력(remainAP) 적은 순서
+                if (a.remainAP !== b.remainAP) {
+                    return a.remainAP - b.remainAP;
+                }
+
+                // 3. 클리어 시간(clearTime) 짧은 순서
+                return a.clearTime - b.clearTime;
+            });
 
             arr = arr.slice(0, MAX_RANKINGS);
 

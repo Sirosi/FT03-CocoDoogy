@@ -2,6 +2,7 @@ using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Network;
 using CocoDoogy.Tile;
 using CocoDoogy.UI.Popup;
+using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Phase
 {
@@ -28,9 +29,11 @@ namespace CocoDoogy.GameFlow.InGame.Phase
         private async void StageClearProcess()
         {
             float time = InGameManager.Timer.NowTime;
-            int remainAp = InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints;
+            int remainAp = InGameManager.UseActionPoints;
             int refillCount = InGameManager.UseRefillCounts;
             string saveJson = CommandManager.Save();
+            
+            Debug.Log($"remainAp: {remainAp}, refillCount: {refillCount}");
             
             star = await FirebaseManager.GetStageScore(refillCount, InGameManager.Stage.starThresholds);
             // 여기서 Timer.Stop을 하면 Popup에 0초로 기록됨. 그래서 일단 시간을 멈추고

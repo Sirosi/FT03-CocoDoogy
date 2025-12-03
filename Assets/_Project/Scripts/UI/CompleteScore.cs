@@ -90,7 +90,7 @@ namespace CocoDoogy.UI
 
             Star star = stars[index];
 
-            Instantiate(starParticle, star.StarPos(), Quaternion.identity, rectTransform);
+            // Instantiate(starParticle, star.StarPos(), Quaternion.identity, rectTransform);
 
             PlayStarSfx(index);
 

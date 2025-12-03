@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 6239931057886756280}
   - component: {fileID: 4797960468065032329}
   - component: {fileID: 3918940539168616726}
-  - component: {fileID: 1045761271190771949}
+  - component: {fileID: 73648058145574004}
   m_Layer: 5
   m_Name: Bg
   m_TagString: Untagged
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1045761271190771949
+--- !u!114 &73648058145574004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1483,7 +1483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 50
-    m_Right: 0
+    m_Right: 50
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
@@ -2095,7 +2095,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 50
-    m_Right: 0
+    m_Right: 50
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
@@ -3971,7 +3971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 50
-    m_Right: 0
+    m_Right: 50
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
@@ -4736,7 +4736,7 @@ MonoBehaviour:
   purchasedItemImage: {fileID: 1371040232258847453}
   quantityText: {fileID: 8743455186483244296}
   confirmButton: {fileID: 8024582697325655484}
-  backGround: {fileID: 1045761271190771949}
+  backGround: {fileID: 73648058145574004}
 --- !u!1 &6743073093714375012
 GameObject:
   m_ObjectHideFlags: 0
@@ -5524,7 +5524,7 @@ GameObject:
   - component: {fileID: 4468970539153156679}
   - component: {fileID: 6960626437274179450}
   - component: {fileID: 8240729398161037726}
-  - component: {fileID: 6567609409070024479}
+  - component: {fileID: 1584238566089200921}
   m_Layer: 5
   m_Name: Bg
   m_TagString: Untagged
@@ -5589,7 +5589,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6567609409070024479
+--- !u!114 &1584238566089200921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5746,7 +5746,7 @@ MonoBehaviour:
   currentQuantityText: {fileID: 4663329917491354330}
   purchaseButton: {fileID: 5245557685745493699}
   cancelButton: {fileID: 4429797069720718232}
-  backGround: {fileID: 6567609409070024479}
+  backGround: {fileID: 1584238566089200921}
 --- !u!1 &8711448690779566264
 GameObject:
   m_ObjectHideFlags: 0

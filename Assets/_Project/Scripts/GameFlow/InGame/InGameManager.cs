@@ -64,6 +64,7 @@ namespace CocoDoogy.GameFlow.InGame
             }
         }
 
+        public static int UseActionPoints = 0;
         public static int UseRefillCounts = 0;
         /// <summary>
         /// Refill전까지 남은 ActionPoints
@@ -156,6 +157,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             RefillPoints = HexTileMap.RefillPoint;
             UseRefillCounts = 0;
+            UseActionPoints = 0;
             ActionPoints = HexTileMap.ActionPoint;
             CurrentMapMaxActionPoints = HexTileMap.ActionPoint;
             CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
@@ -227,6 +229,7 @@ namespace CocoDoogy.GameFlow.InGame
             if (containConsume)
             {
                 ConsumedActionPoints -= regen;
+                UseActionPoints -= regen;
             }
             ActionPoints += regen;
         }
@@ -236,6 +239,7 @@ namespace CocoDoogy.GameFlow.InGame
             {
                 LastConsumeActionPoints = consume;
                 ConsumedActionPoints += consume;
+                UseActionPoints += consume;
             }
             ActionPoints -= consume;
         }

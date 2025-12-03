@@ -88,10 +88,10 @@ namespace CocoDoogy.UI.Popup
                 !isDefeat ? gameEndPopup.completeUI.effectText : gameEndPopup.defeatUI.effectText;
 
             gameEndPopup.remainResetText.text =
-                $"{InGameManager.RefillPoints}";
+                $"{InGameManager.UseRefillCounts}";
             
             gameEndPopup.remainAPText.text =
-                $"{InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints}";
+                $"{InGameManager.UseActionPoints}";
             OnTimeChanged(InGameManager.Timer.NowTime);
 
             gameEndPopup.completeScore.GetStageClearResult(isDefeat, star);
