@@ -148,11 +148,12 @@ namespace CocoDoogy.Tutorial
                     TutorialLocker.WhiteListPoses.Clear();
 
                     PlayerHandler.OnEvent -= OnPlayerActioned;
-                    Highlighter.Invisible();
+                    Highlighter.FocusUI(actionPointsUI.position);
                     TutorialUI.Show("맛있는 걸 먹으니 행동력이 오르네?");
                     TutorialUI.OnRaycast();
                     return;
                 case 7:
+                    Highlighter.Invisible();
                     TutorialUI.Show("이제 집으로 돌아가보자!");
                     return;
             }
@@ -182,12 +183,21 @@ namespace CocoDoogy.Tutorial
                     return;
                 case 4:
                     TutorialLocker.CameraLock = true;
-                    PlayerHandler.OnEvent -= OnPlayerActioned;
+                    targetEventType = PlayerEventType.Refill;
+
                     Highlighter.FocusUI(refillButton.position);
+                    TutorialLocker.WhiteListPoses.Add(new Vector2Int(-10, -10));
                     TutorialUI.Show("이제 다시 돌아가면 집으로 갈 수 있을 거 같아!");
                     return;
+                case 5:
+                    TutorialUI.Close();
+                    return;
+                case 6:
+                    PlayerHandler.OnEvent -= OnPlayerActioned;
+                    break;
             }
             TutorialLocker.CameraLock = false;
+            TutorialLocker.WhiteListPoses.Clear();
             Highlighter.Invisible();
             TutorialUI.Close();
         }
@@ -226,7 +236,8 @@ namespace CocoDoogy.Tutorial
         private PlayerEventType targetEventType = PlayerEventType.None;
         private void OnPlayerActioned(Vector2Int gridPos, PlayerEventType eventType)
         {
-            if( targetGridPos != gridPos || targetEventType != eventType ) return;
+            if ( targetEventType != eventType ) return;
+            if ( targetGridPos != gridPos && targetEventType == PlayerEventType.Move ) return;
 
             OnTouched();
         }
