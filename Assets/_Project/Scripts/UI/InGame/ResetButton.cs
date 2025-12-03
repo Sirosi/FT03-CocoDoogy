@@ -38,6 +38,7 @@ namespace CocoDoogy.UI.InGame
         {
             if (type != CallbackType.Yes) return;
 
+            PlayerHandler.OnEventCallback?.Invoke(Vector2Int.zero, PlayerEventType.Refill);
             CommandManager.Refill();
         }
 
