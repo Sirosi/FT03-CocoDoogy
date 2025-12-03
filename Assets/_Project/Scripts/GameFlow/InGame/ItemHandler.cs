@@ -2,6 +2,7 @@ using CocoDoogy.Data;
 using CocoDoogy.Network;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
@@ -28,6 +29,7 @@ namespace CocoDoogy.GameFlow.InGame
         {
             foreach (var itemData in UsedItems)
             {
+                Debug.Log($"itemData:{itemData.Key.itemName}, value: {itemData.Value}");
                 if (!itemData.Value)
                 {
                      _ = FirebaseManager.UseItemAsync(itemData.Key.itemId);

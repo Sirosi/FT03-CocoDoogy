@@ -32,6 +32,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             PlayerHandler.LookDirection = Dir;
             Vector2Int nextPos = PlayerHandler.GridPos.GetDirectionPos(Dir);
             PlayerHandler.Move(nextPos);
+            InGameManager.UseActionPoints += HexTile.GetTile(PlayerHandler.GridPos).CurrentData.RealMoveCost;
         }
 
         public override void Undo()
@@ -39,7 +40,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             PlayerHandler.LookDirection = Dir;
             Vector2Int prePos = PlayerHandler.GridPos.GetDirectionPos(Dir.GetMirror());
             PlayerHandler.Move(prePos);
-            
+            InGameManager.UseActionPoints -= HexTile.GetTile(PlayerHandler.GridPos).CurrentData.RealMoveCost;
             InGameManager.RegenActionPoint(HexTile.GetTile(PlayerHandler.GridPos).CurrentData.RealMoveCost);
         }
     }

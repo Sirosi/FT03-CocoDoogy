@@ -31,8 +31,7 @@ namespace CocoDoogy.UI.InGame
                 ItemData itemData = DataManager.Instance.ItemData[i];
                 itemButtons[i].ItemData = itemData;
                 itemButtons[i].OnClicked += ShowInfo;
-
-                ItemHandler.SetValue(itemData, true);
+                ItemHandler.SetValue(itemData, DataManager.Instance.CurrentItem[itemData] > 0);
             }
         }
 
@@ -61,7 +60,7 @@ namespace CocoDoogy.UI.InGame
         private void OnItemValueChanged(ItemData item, bool value)
         {
             float rgb = value ? 1f : 0.5f;
-            Color targetColor = new Color(rgb, rgb, rgb);
+            Color targetColor = new(rgb, rgb, rgb);
 
             foreach (var button in itemButtons)
             {

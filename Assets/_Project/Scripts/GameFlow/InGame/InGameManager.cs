@@ -224,24 +224,37 @@ namespace CocoDoogy.GameFlow.InGame
             ActionPoints = 0;
         }
 
-        public static void RegenActionPoint(int regen, bool containConsume = true)
+        public static void RegenActionPoint(int regen, bool containConsume = true, bool notify = true)
         {
             if (containConsume)
             {
                 ConsumedActionPoints -= regen;
                 UseActionPoints -= regen;
             }
-            ActionPoints += regen;
+            if(notify)
+            {
+                ActionPoints += regen;
+            }
+            else
+            {
+                Instance.actionPoints += regen;
+            }
         }
-        public static void ConsumeActionPoint(int consume, bool containConsume = true)
+        public static void ConsumeActionPoint(int consume, bool containConsume = true, bool notify = true)
         {
             if (containConsume)
             {
                 LastConsumeActionPoints = consume;
                 ConsumedActionPoints += consume;
-                UseActionPoints += consume;
             }
-            ActionPoints -= consume;
+            if(notify)
+            {
+                ActionPoints -= consume;
+            }
+            else
+            {
+                Instance.actionPoints -= consume;
+            }
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
