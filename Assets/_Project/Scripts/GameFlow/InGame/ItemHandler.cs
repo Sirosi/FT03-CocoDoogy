@@ -29,10 +29,10 @@ namespace CocoDoogy.GameFlow.InGame
         {
             foreach (var itemData in UsedItems)
             {
-                Debug.Log($"itemData:{itemData.Key.itemName}, value: {itemData.Value}");
                 if (!itemData.Value)
                 {
-                     _ = FirebaseManager.UseItemAsync(itemData.Key.itemId);
+                    Debug.Log($"itemData:{itemData.Key.itemName}, value: {itemData.Value}");
+                    _ = FirebaseManager.UseItemAsync(itemData.Key.itemId);
                 }
             }
             openPopup?.Invoke();
