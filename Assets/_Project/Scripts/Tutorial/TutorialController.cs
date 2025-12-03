@@ -162,7 +162,7 @@ namespace CocoDoogy.Tutorial
             {
                 case 0:
                     TutorialLocker.CameraLock = true;
-                    TutorialUI.Show("헥.. 헥..토르");
+                    TutorialUI.Show("헥.. 헥..");
                     TutorialUI.OnRaycast();
                     return;
                 case 1:
