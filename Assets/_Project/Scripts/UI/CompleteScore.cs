@@ -74,6 +74,7 @@ namespace CocoDoogy.UI
         /// <param name="max"></param>
         private void PlayStarRecursive(int index, int max)
         {
+            SfxManager.PlayDucking();
             if (index >= max)
             {
                 if (max == 3)
@@ -83,6 +84,9 @@ namespace CocoDoogy.UI
                     stars[0].TryGetStar(null);
                     stars[1].TryGetStar(null);
                     stars[2].TryGetStar(null);
+                    
+                    SfxManager.PlaySfx(SfxType.UI_SuccessStage);
+                    SfxManager.StopDucking();
                 }
                 return;
             }
@@ -90,7 +94,9 @@ namespace CocoDoogy.UI
             Star star = stars[index];
             
             Instantiate(starParticle, star.StarPos(), Quaternion.identity, rectTransform);
-
+            
+            PlayStarSfx(index);
+            
             star.TryGetStar(() =>
             {
                 PlayStarRecursive(index + 1, max); // 재귀 함수 부분
@@ -99,7 +105,23 @@ namespace CocoDoogy.UI
 
         private void PlayDefeat()
         {
-            
+            SfxManager.PlaySfx(SfxType.UI_FailStage);
+        }
+
+        private void PlayStarSfx(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    SfxManager.PlaySfx(SfxType.UI_ClearStar1);
+                    break;
+                case 1:
+                    SfxManager.PlaySfx(SfxType.UI_ClearStar2);
+                    break;
+                case 2:
+                    SfxManager.PlaySfx(SfxType.UI_ClearStar3);
+                    break;
+            }
         }
     }
 }

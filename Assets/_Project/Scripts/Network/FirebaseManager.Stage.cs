@@ -121,9 +121,8 @@ namespace CocoDoogy.Network
 
             var doc = await docRef.GetSnapshotAsync();
 
-            if (doc.Exists)
+            if (doc.Exists && doc.TryGetValue("star", out int star))
             {
-                var star = doc.GetValue<int>("star");
                 return star;
             }
 

@@ -1,4 +1,5 @@
 using CocoDoogy.Data;
+using CocoDoogy.EmoteBillboard;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
@@ -14,12 +15,12 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             get => itemEffect;
             set => itemEffect = value;
         }
-        
+
         [SerializeField] private ItemEffect itemEffect;
-        
+
         private const int Recover = 1;
-        
-        
+
+
         public RecoverItemCommand(object param) : base(CommandType.Recover, param)
         {
             Effect = (ItemEffect)param;
@@ -28,11 +29,14 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override void Execute()
         {
             InGameManager.RegenActionPoint(Recover, false);
-            
+
             Debug.Log(DataManager.GetReplayItem(Effect));
-            
+
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
+
+            // 만족 감정 트리거 (비상식량 아이템 사용)
+            EmotionSystemHandler.TriggerActionPointRecovered();
         }
 
         public override void Undo()

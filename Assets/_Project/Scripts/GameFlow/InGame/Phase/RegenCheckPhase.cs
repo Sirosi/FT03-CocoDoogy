@@ -1,4 +1,5 @@
 using CocoDoogy.Audio;
+using CocoDoogy.EmoteBillboard;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.MiniGame;
 using CocoDoogy.Tile;
@@ -8,28 +9,28 @@ using UnityEngine;
 namespace CocoDoogy.GameFlow.InGame.Phase
 {
     // TODO: 임시 Phase
-    public class RegenCheckPhase: IPhase, IClearable
+    public class RegenCheckPhase : IPhase, IClearable
     {
         private Vector2Int gridPos = Vector2Int.zero;
-        
+
 
         public void OnClear()
         {
             gridPos = Vector2Int.zero;
         }
-        
+
         public bool OnPhase()
         {
             if (!InGameManager.IsValid) return false;
 
             Piece centerPiece = HexTile.GetTile(PlayerHandler.GridPos)?.GetPiece(HexDirection.Center);
-            if(!centerPiece) return true;
+            if (!centerPiece) return true;
 
             gridPos = PlayerHandler.GridPos;
             if (centerPiece && centerPiece.BaseData.type == PieceType.House)
             {
                 MiniGameManager.OpenRandomGame(IncreaseActionPoints);
-                return false; 
+                return false;
             }
 
             if (!centerPiece || centerPiece.BaseData.type is not (PieceType.Field or PieceType.Oasis)) return true;
@@ -44,16 +45,20 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             }
             IncreaseActionPoints();
 
-            
+
             return true;
         }
 
         private void IncreaseActionPoints()
         {
             Piece centerPiece = HexTile.GetTile(PlayerHandler.GridPos)?.GetPiece(HexDirection.Center);
-            CommandManager.Regen(centerPiece.BaseData.type == PieceType.Field ? 1 : 2);
+            CommandManager.Regen(centerPiece.BaseData.type == PieceType.House ? 2 : 1);
             CommandManager.GimmickPieceChange(PlayerHandler.GridPos, HexDirection.Center, PieceType.None,
                 centerPiece.BaseData.type, centerPiece.LookDirection, centerPiece.LookDirection);
+
+            // 만족 감정 트리거 (밭 또는 미니게임으로 행동력 획득)
+            EmotionSystemHandler.TriggerActionPointRecovered();
+
             InGameManager.ProcessPhase();
         }
     }

@@ -18,16 +18,19 @@ namespace CocoDoogy.GameFlow.InGame.Weather
             set
             {
                 if (!Instance) return;
-                
+                if (Instance.nowWeather == value) return;
+
                 Instance.nowWeather = value;
+
+                if (value == WeatherType.None) return;
                 OnWeatherChanged?.Invoke(value);
             }
         }
-        
-        
+
+
         private readonly Stack<HexTile> weatheredTiles = new();
         private WeatherType nowWeather = WeatherType.Sunny;
-        
+
 
 
         #if UNITY_EDITOR
@@ -52,7 +55,7 @@ namespace CocoDoogy.GameFlow.InGame.Weather
             CommandManager.Weather(WeatherType.Mirage);
         }
         #endif
-        
+
 
         public static void StartGlobalWeather(WeatherType type)
         {

@@ -44,6 +44,7 @@ namespace CocoDoogy.UI.InGame
         private void OnClickResume()
         {
             gameObject.SetActive(false);
+            SfxManager.StopDucking();
         }
 
         /// <summary>

@@ -3,11 +3,14 @@ using CocoDoogy.Core;
 using CocoDoogy.Network;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace CocoDoogy.LobbyObject
 {
     public class LobbyThemeObjectManager : MonoBehaviour
     {
+        private Dictionary<Theme, int> stageNum;
+        
         public GameObject[] forestObjects;
         public GameObject[] waterObjects;
         public GameObject[] snowObjects;
@@ -16,6 +19,17 @@ namespace CocoDoogy.LobbyObject
         private Theme lastTheme = Theme.None;
         private int lastClearedStageCount = -1;
 
+        private void Awake()
+        {
+            stageNum = new()
+            {
+                { Theme.Forest, forestObjects.Length },
+                { Theme.Water, waterObjects.Length },
+                { Theme.Snow, snowObjects.Length },
+                { Theme.Sand, sandObjects.Length },
+            };
+        }
+        
         private void OnEnable()
         {
             PageCameraSwiper.OnEndPageChanged += OnThemeChanged;
@@ -46,7 +60,7 @@ namespace CocoDoogy.LobbyObject
                 int levelIndex = Convert.ToInt32(lastStage.level, 16); // 1~20
 
                 // 전역 클리어 스테이지 인덱스 계산
-                cleared = (themeIndex * 20) + levelIndex;      // 0~79
+                cleared = (themeIndex * stageNum[theme]) + levelIndex;      // 0~79
             }
 
             lastClearedStageCount = -1;
@@ -72,26 +86,27 @@ namespace CocoDoogy.LobbyObject
             {
                 case Theme.Forest:
                     themeStartIndex = theme.ToIndex() * forestObjects.Length;
-                    ApplyActivation(forestObjects, themeStartIndex, cleared);
+                    ApplyActivation(forestObjects, themeStartIndex, cleared, theme);
                     break;
                 case Theme.Water:
                     themeStartIndex = theme.ToIndex() * waterObjects.Length;
-                    ApplyActivation(waterObjects, themeStartIndex, cleared);
+                    ApplyActivation(waterObjects, themeStartIndex, cleared, theme);
                     break;
                 case Theme.Snow:
                     themeStartIndex = theme.ToIndex() * snowObjects.Length;
-                    ApplyActivation(snowObjects, themeStartIndex, cleared);
+                    ApplyActivation(snowObjects, themeStartIndex, cleared, theme);
                     break;
                 case Theme.Sand:
                     themeStartIndex = theme.ToIndex() * sandObjects.Length;
-                    ApplyActivation(sandObjects, themeStartIndex, cleared);
+                    ApplyActivation(sandObjects, themeStartIndex, cleared, theme);
                     break;
             }
         }
 
-        private void ApplyActivation(GameObject[] objs, int themeStart, int cleared)
+        private void ApplyActivation(GameObject[] objs, int themeStart, int cleared, Theme theme)
         {
-            int localCleared = Mathf.Clamp(cleared - themeStart, 0, 20);
+            int max = stageNum[theme];
+            int localCleared = Mathf.Clamp(cleared - themeStart, 0, max);
 
             for (int i = 0; i < objs.Length; i++)
                 objs[i].SetActive(i < localCleared);

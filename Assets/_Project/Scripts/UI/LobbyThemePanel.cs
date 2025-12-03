@@ -14,13 +14,14 @@ namespace CocoDoogy.UI
 
 
         private CancellationTokenSource token = null;
+        private Theme currentTheme = Theme.None;
 
 
         void Awake()
         {
             PageCameraSwiper.OnEndPageChanged += OnThemeChanged;
         }
-        void Oestroy()
+        void OnDestroy()
         {
             PageCameraSwiper.OnEndPageChanged -= OnThemeChanged;
             Stop();
@@ -29,9 +30,11 @@ namespace CocoDoogy.UI
 
         private void OnThemeChanged(Theme theme)
         {
+            if (currentTheme == theme) return;
+            
             Stop();
 
-            text.text = theme.ToName();
+            text.text = (currentTheme = theme).ToName();
             _ = ChangeAlphaAsync();
         }
 
