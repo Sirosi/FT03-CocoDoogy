@@ -2,6 +2,8 @@ namespace CocoDoogy.GameFlow.InGame.Weather
 {
     public enum WeatherType
     {
+        None = -1,
+        
         /// <summary>
         /// 기본적인 날씨
         /// </summary>
