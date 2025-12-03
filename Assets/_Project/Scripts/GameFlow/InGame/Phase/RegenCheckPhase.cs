@@ -1,5 +1,4 @@
 using CocoDoogy.Audio;
-using CocoDoogy.EmoteBillboard;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.MiniGame;
 using CocoDoogy.Tile;
@@ -55,9 +54,6 @@ namespace CocoDoogy.GameFlow.InGame.Phase
             CommandManager.Regen(centerPiece.BaseData.type == PieceType.House ? 2 : 1);
             CommandManager.GimmickPieceChange(PlayerHandler.GridPos, HexDirection.Center, PieceType.None,
                 centerPiece.BaseData.type, centerPiece.LookDirection, centerPiece.LookDirection);
-
-            // 만족 감정 트리거 (밭 또는 미니게임으로 행동력 획득)
-            EmotionSystemHandler.TriggerActionPointRecovered();
 
             InGameManager.ProcessPhase();
         }

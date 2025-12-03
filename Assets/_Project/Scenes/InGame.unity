@@ -1583,7 +1583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emoteBillboard: {fileID: 2038829596}
   boredomCheckInterval: 0.5
-  boredomThreshold: 3
+  boredomThreshold: 10
 --- !u!1 &1530506116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1958,34 +1958,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1515081991}
-    - target: {fileID: 993366297293258334, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
-      propertyPath: offset.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 993366297293258334, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
-      propertyPath: popInDuration
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 993366297293258334, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
-      propertyPath: displayDuration
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 993366297293258334, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
-      propertyPath: fadeOutDuration
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1449602449946130155, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1449602449946130155, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1449602449946130155, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 1449602449946130155, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2025,18 +1997,6 @@ PrefabInstance:
     - target: {fileID: 1449602449946130155, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2609318974841611779, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2609318974841611779, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2609318974841611779, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
-      propertyPath: m_Color.r
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5513495110980380275, guid: 37c05082034f82c458c104f8153e17d7, type: 3}
       propertyPath: m_Name

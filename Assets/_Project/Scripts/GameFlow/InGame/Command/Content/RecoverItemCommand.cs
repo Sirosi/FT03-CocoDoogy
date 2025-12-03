@@ -1,5 +1,4 @@
 using CocoDoogy.Data;
-using CocoDoogy.EmoteBillboard;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
@@ -34,9 +33,6 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
 
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
-
-            // 만족 감정 트리거 (비상식량 아이템 사용)
-            EmotionSystemHandler.TriggerActionPointRecovered();
         }
 
         public override void Undo()

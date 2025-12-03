@@ -38,43 +38,21 @@ namespace CocoDoogy.EmoteBillboard
 
         // 행동력 변경 추적용
         private int previousActionPoints = 0;
-        private bool isActionPointRecovered = false;
-
-        public static event Action OnActionPointRecovered = null; // 행동력 회복 시 발생하는 이벤트 (만족 감정 트리거용)
-        public static event Action OnGameFailed = null; // 행동력 회복 이벤트 발생 (외부에서 호출)
-
-        /// <summary>
-        /// 게임 실패 이벤트 발생 (외부에서 호출)
-        /// </summary>
-        public static void TriggerGameFailed()
-        {
-            OnGameFailed?.Invoke();
-        }
-
-        public static void TriggerActionPointRecovered()
-        {
-            OnActionPointRecovered?.Invoke();
-        }
 
         private void OnEnable()
         {
             // InGame 씬 초기화 이벤트 구독
             InGameManager.OnMapDrawn += OnMapInitialized;
 
-            // 날씨 변경 이벤트 구독
+            // 날씨 변경 이벤트 구독 (설렘, 불안 감정 트리거용)
             WeatherManager.OnWeatherChanged += OnWeatherChanged;
 
-            // 행동력 변경 이벤트 구독
+            // 행동력 변경 이벤트 구독 (만족 감정 트리거용)
             InGameManager.OnActionPointChanged += OnActionPointChanged;
 
-            // 플레이어 이벤트 구독
+            // 플레이어 이벤트 구독 (기쁨 감정 트리거용)
             PlayerHandler.OnEvent += OnPlayerEvent;
 
-            // 행동력 회복 이벤트 구독 (만족 감정)
-            OnActionPointRecovered += OnSatisfactionTriggered;
-
-            // 게임 실패 이벤트 구독 (슬픔 감정)
-            OnGameFailed += OnGameFailedTriggered;
         }
 
         private void OnDisable()
@@ -83,8 +61,6 @@ namespace CocoDoogy.EmoteBillboard
             WeatherManager.OnWeatherChanged -= OnWeatherChanged;
             InGameManager.OnActionPointChanged -= OnActionPointChanged;
             PlayerHandler.OnEvent -= OnPlayerEvent;
-            OnActionPointRecovered -= OnSatisfactionTriggered;
-            OnGameFailed -= OnGameFailedTriggered;
 
             if (boredomCheckCoroutine != null)
             {
@@ -142,12 +118,16 @@ namespace CocoDoogy.EmoteBillboard
         /// </summary>
         private void OnActionPointChanged(int newActionPoints)
         {
-            // 행동력이 증가했는지 확인 (만족 트리거)
-            if (newActionPoints > previousActionPoints && isActionPointRecovered)
+            // 만족: 행동력이 증가했을 때
+            if (newActionPoints > previousActionPoints)
             {
-                isActionPointRecovered = false;
-                // RegenActionPoint가 호출된 직후이므로 약간의 지연을 두고 체크
-                StartCoroutine(CheckSatisfactionDelayed());
+                TryShowEmotion(Emotion.Satisfaction, 3); // 우선순위 3
+            }
+
+            // 슬픔: 행동력이 0이 되었을 때 (이전에는 0보다 컸어야 함)
+            if (previousActionPoints > 0 && newActionPoints == 0)
+            {
+                TryShowEmotion(Emotion.Sad, 1); // 우선순위 1
             }
 
             previousActionPoints = newActionPoints;
@@ -170,40 +150,6 @@ namespace CocoDoogy.EmoteBillboard
 
         #endregion
 
-        #region 만족 감지 (행동력 회복)
-
-        /// <summary>
-        /// 행동력 회복 이벤트 발생 시 호출
-        /// </summary>
-        private void OnSatisfactionTriggered()
-        {
-            isActionPointRecovered = true;
-        }
-
-        /// <summary>
-        /// 만족 감지를 위한 지연 체크
-        /// RegenActionPoint 호출 후 실제로 행동력이 증가했는지 확인
-        /// </summary>
-        private IEnumerator CheckSatisfactionDelayed()
-        {
-            yield return null; // 1프레임 대기
-
-            TryShowEmotion(Emotion.Satisfaction, 3); // 우선순위 3
-        }
-
-        #endregion
-
-        #region 슬픔 감지 (게임 실패)
-
-        /// <summary>
-        /// 게임 실패 이벤트 발생 시 호출
-        /// </summary>
-        private void OnGameFailedTriggered()
-        {
-            TryShowEmotion(Emotion.Sad, 1); // 우선순위 1
-        }
-
-        #endregion
 
         #region 지루 감지
 

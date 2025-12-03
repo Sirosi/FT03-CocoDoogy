@@ -1,4 +1,3 @@
-using CocoDoogy.EmoteBillboard;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.UI.Popup;
@@ -34,9 +33,6 @@ namespace CocoDoogy.GameFlow.InGame.Phase
 
         private void ProcessDefeat()
         {
-            // 슬픔 감정 트리거 (게임 실패)
-            EmotionSystemHandler.TriggerGameFailed();
-
             InGameManager.Timer.Pause();
             ItemHandler.UseItem(() =>
             {
