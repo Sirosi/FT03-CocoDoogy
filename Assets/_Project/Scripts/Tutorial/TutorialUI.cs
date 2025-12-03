@@ -22,11 +22,19 @@ namespace CocoDoogy.Tutorial
         [SerializeField] private TextMeshProUGUI descriptionText;
         [SerializeField] private Image messageBox;
         [SerializeField] private Image backgroundImage;
+
+
+        private bool preRaycastTarget = true;
         
 
         public static void Show(string content)
         {
             if(!Instance) return;
+            
+            if(Instance.preRaycastTarget)
+            {
+                OnRaycast();
+            }
 
             Instance.descriptionText.text = content;
 
@@ -37,6 +45,8 @@ namespace CocoDoogy.Tutorial
         {
             if(!Instance) return;
 
+            Instance.preRaycastTarget = Instance.messageBox.raycastTarget;
+            OffRaycast();
             Instance.messageBox.transform.DOScale(0f, 0.2f).SetId(Instance).OnComplete(Instance.OnCloseComplete);
         }
 
