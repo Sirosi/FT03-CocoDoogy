@@ -49,6 +49,10 @@ namespace CocoDoogy.Tutorial
             {
                 Tutorial1_4(index);
             }
+            /*else if(IsEqual(stage, Theme.Forest, 2))
+            {
+                Tutorial2_16(index);
+            }*/
             else
             {
                 TutorialLocker.CameraLock = false;
@@ -199,7 +203,7 @@ namespace CocoDoogy.Tutorial
                 case 1:
                     TutorialUI.Show("금방이라도 비 형이 와서 레이니즘을 부를 것 같아");
                     return;
-                case 2:
+                case 3:
                     PlayerHandler.OnEvent += OnPlayerActioned;
                     targetGridPos = new Vector2Int(1, -2);
                     targetEventType = PlayerEventType.Move;
