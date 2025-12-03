@@ -39,9 +39,10 @@ namespace CocoDoogy.Tile
 
                 bool canTileMove = CurrentData.canMove;
                 bool canPieceMove = !centerPiece || centerPiece.BaseData.canMove;
-                bool canPiece = centerPiece &&
+                bool hasBridge = centerPiece &&
+                                CurrentData.type is TileType.Water &&
                                 centerPiece.BaseData.type is PieceType.Bridge or PieceType.FloatedCrate;
-                return canTileMove && canPieceMove || canPiece;
+                return canTileMove && canPieceMove || hasBridge;
             }
         }
 
