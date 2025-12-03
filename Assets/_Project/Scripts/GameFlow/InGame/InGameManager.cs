@@ -224,9 +224,9 @@ namespace CocoDoogy.GameFlow.InGame
             ActionPoints = 0;
         }
 
-        public static void RegenActionPoint(int regen, bool notify = true)
+        public static void RegenActionPoint(int regen, bool containConsume = true, bool notify = true)
         {
-            if (notify)
+            if (containConsume)
             {
                 ConsumedActionPoints -= regen;
                 UseActionPoints -= regen;
@@ -240,9 +240,9 @@ namespace CocoDoogy.GameFlow.InGame
                 Instance.actionPoints += regen;
             }
         }
-        public static void ConsumeActionPoint(int consume, bool notify = true)
+        public static void ConsumeActionPoint(int consume, bool containConsume = true, bool notify = true)
         {
-            if (notify)
+            if (containConsume)
             {
                 LastConsumeActionPoints = consume;
                 ConsumedActionPoints += consume;
