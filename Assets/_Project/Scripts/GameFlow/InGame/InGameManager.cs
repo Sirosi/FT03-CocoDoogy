@@ -22,11 +22,6 @@ namespace CocoDoogy.GameFlow.InGame
         public static event Action<StageData> OnMapDrawn = null;
 
         /// <summary>
-        /// 맵 생성 후 리플레이 데이터를 불러오도록 하는 이벤트
-        /// </summary>
-        public static event Action OnLoadReplayData = null;
-
-        /// <summary>
         /// 현재 인게임이 정상적인(= 플레이 가능) 상태인지 체크
         /// </summary>
         public static bool IsValid
@@ -181,7 +176,6 @@ namespace CocoDoogy.GameFlow.InGame
 
             OnMapDrawn?.Invoke(Stage);
             Timer.Start();
-            OnLoadReplayData?.Invoke();
             
             ProcessPhase();
         }

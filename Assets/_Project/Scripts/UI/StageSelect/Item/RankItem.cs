@@ -48,7 +48,6 @@ namespace CocoDoogy.UI.StageSelect.Item
         {
             ReplayHandler.ReplayData = await FirebaseManager.GetReplayData(replayId);
             PlayerHandler.IsReplay = true;
-            InGameManager.OnLoadReplayData += ReplayHandler.Load;
             
             InGameManager.Stage = stageData;
             SceneManager.LoadScene("Replay");
