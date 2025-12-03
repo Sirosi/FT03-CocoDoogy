@@ -14,14 +14,23 @@ namespace CocoDoogy.EmoteBillboard
     /// </summary>
     public class EmotionSystemHandler : MonoBehaviour
     {
+        // 게임오버 이벤트 (슬픔 감정 트리거용)
+        private static event Action OnGameDefeat;
+
+        // 게임오버 트리거 (외부에서 호출)
+        public static void TriggerGameDefeat()
+        {
+            OnGameDefeat?.Invoke();
+        }
+
         [Header("References")]
         [Tooltip("이모티콘을 표시할 EmoteBillboard 컴포넌트")]
         [SerializeField] private EmoteBillboard emoteBillboard;
 
         [Header("Settings")]
-        [Tooltip("지루 체크 간격 (초)")]
+        [Tooltip("지루함 감지 체크 간격 (초)")]
         [SerializeField] private float boredomCheckInterval = 0.5f;
-        [Tooltip("지루 트리거 시간 (초)")]
+        [Tooltip("지루함 감지 트리거 시간 (초)")]
         [SerializeField] private float boredomThreshold = 10f;
 
         // 현재 표시 중인 감정 (중첩 방지)
@@ -53,6 +62,8 @@ namespace CocoDoogy.EmoteBillboard
             // 플레이어 이벤트 구독 (기쁨 감정 트리거용)
             PlayerHandler.OnEvent += OnPlayerEvent;
 
+            // 게임오버 이벤트 구독 (슬픔 감정 트리거용)
+            OnGameDefeat += OnGameDefeatTriggered;
         }
 
         private void OnDisable()
@@ -61,6 +72,7 @@ namespace CocoDoogy.EmoteBillboard
             WeatherManager.OnWeatherChanged -= OnWeatherChanged;
             InGameManager.OnActionPointChanged -= OnActionPointChanged;
             PlayerHandler.OnEvent -= OnPlayerEvent;
+            OnGameDefeat -= OnGameDefeatTriggered;
 
             if (boredomCheckCoroutine != null)
             {
@@ -131,13 +143,15 @@ namespace CocoDoogy.EmoteBillboard
                 }
             }
 
-            // 슬픔: 행동력 0 + 초기화 횟수 0 (진짜 게임 오버)
-            if (previousActionPoints > 0 && newActionPoints == 0 && InGameManager.RefillPoints < 1)
-            {
-                TryShowEmotion(Emotion.Sad, 4); // 우선순위 4
-            }
-
             previousActionPoints = newActionPoints;
+        }
+
+        /// <summary>
+        /// 게임오버 발생 시 호출
+        /// </summary>
+        private void OnGameDefeatTriggered()
+        {
+            TryShowEmotion(Emotion.Sad, 4); // 우선순위 4
         }
 
         /// <summary>
@@ -158,10 +172,10 @@ namespace CocoDoogy.EmoteBillboard
         #endregion
 
 
-        #region 지루 감지
+        #region 지루함 감지
 
         /// <summary>
-        /// 지루 상태를 주기적으로 체크하는 코루틴
+        /// 지루함 상태를 주기적으로 체크하는 코루틴
         /// </summary>
         private IEnumerator CheckBoredomCoroutine()
         {
@@ -254,7 +268,7 @@ namespace CocoDoogy.EmoteBillboard
             return emotion switch
             {
                 Emotion.Joy => 1,
-                Emotion.Sad => 1,
+                Emotion.Sad => 4,
                 Emotion.Thrill => 2,
                 Emotion.Anxiety => 2,
                 Emotion.Satisfaction => 3,
