@@ -65,8 +65,11 @@ namespace CocoDoogy.UI.Replay
         
         private void ResetOrNot(CallbackType type)
         {
-            SfxManager.StopDucking();
-            Loading.LoadScene("Replay");
+            if (type == CallbackType.Yes)
+            {
+                SfxManager.StopDucking();
+                Loading.LoadScene("Replay");
+            }
         }
 
         private void QuitOrNot(CallbackType type)

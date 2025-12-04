@@ -2,6 +2,7 @@ using CocoDoogy.Animation;
 using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame.Command;
+using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
@@ -85,6 +86,8 @@ namespace CocoDoogy.GameFlow.InGame
         private Vector2 touchStart = Vector2.zero;
         private Vector2 touchLast = Vector2.zero;
         private int touchCount = 0;
+
+        private ClearCheckPhase replayPhase = new();
         
         protected override void Awake()
         {
@@ -289,7 +292,14 @@ namespace CocoDoogy.GameFlow.InGame
             DOTween.Kill(Instance, false);
             Instance.anim.ChangeAnim(AnimType.Idle);
             Instance.lockBehaviour = false;
-            InGameManager.ProcessPhase();
+            if (!IsReplay)
+            {
+                InGameManager.ProcessPhase();
+            }
+            else
+            {
+                Instance.replayPhase.OnPhase();
+            }
         }
 
 
