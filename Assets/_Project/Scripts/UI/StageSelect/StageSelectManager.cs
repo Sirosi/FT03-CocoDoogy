@@ -9,7 +9,7 @@ namespace CocoDoogy.UI.StageSelect
 {
     public class StageSelectManager : Singleton<StageSelectManager>
     {
-        public static event Action<StageInfo> OnLastClearStageChanged = null;
+        public static event Action<StageInfo> OnLastClearedStageChanged = null;
 
         /// <summary>
         /// 해당 계정이 가장 마지막에 클리어한 가장 높은 스테이지
@@ -20,7 +20,7 @@ namespace CocoDoogy.UI.StageSelect
             set
             {
                 lastClearedStage = value;
-                OnLastClearStageChanged?.Invoke(lastClearedStage);
+                OnLastClearedStageChanged?.Invoke(lastClearedStage);
             }
         }
         private static StageInfo lastClearedStage = null;
@@ -41,10 +41,8 @@ namespace CocoDoogy.UI.StageSelect
 
         [Header("StageOptions")]
         [SerializeField] private int clearedStages;
+        
 
-
-        private Theme nowTheme = Theme.None;
-        private Image[] stageIcons;
         public static StageData CurrentStageData { get; set; }
 
         protected override void Awake()
@@ -71,7 +69,7 @@ namespace CocoDoogy.UI.StageSelect
 
         private void OnChangedThemeAsync(Theme theme)
         {
-            stageListPage.DrawButtons(nowTheme = theme, 1);
+            stageListPage.DrawButtons(theme, 1);
         }
 
 

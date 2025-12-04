@@ -19,12 +19,12 @@ namespace CocoDoogy.LobbyObject
         void Awake()
         {
             OnLastClearStageChanged(null);
-            StageSelectManager.OnLastClearStageChanged += OnLastClearStageChanged;
+            StageSelectManager.OnLastClearedStageChanged += OnLastClearStageChanged;
         }
 
         void OnDestroy()
         {
-            StageSelectManager.OnLastClearStageChanged -= OnLastClearStageChanged;
+            StageSelectManager.OnLastClearedStageChanged -= OnLastClearStageChanged;
         }
 
 
