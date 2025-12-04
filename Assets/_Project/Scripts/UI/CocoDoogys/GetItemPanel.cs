@@ -23,8 +23,20 @@ namespace CocoDoogy._Project.Scripts.UI.CocoDoogys
             instance = this;
         }
 
+        [ContextMenu("test")]
+        public void test()
+        {
+            GetSomething(ItemUIType.Movement, 3,null);
+        }
+
         public static void GetItem(ItemUIType itemUIType, int amount, Action callback = null)
         {
+            if (!instance)
+            {
+                callback?.Invoke();
+                return;
+            }
+            
             instance.GetSomething(itemUIType, amount, callback);
         }
 

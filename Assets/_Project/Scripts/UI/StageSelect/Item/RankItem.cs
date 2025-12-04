@@ -2,6 +2,7 @@ using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.Replay;
 using CocoDoogy.Network;
+using CocoDoogy.UI.UIManager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +21,7 @@ namespace CocoDoogy.UI.StageSelect.Item
         [SerializeField] private Button replayButton;
 
         private string replayId;
+        private double replayTime;
         private StageData stageData;
         /// <summary>
         /// 스테이지 선택창에서 스테이지를 선택하면 해당 스테이지의 랭킹을 띄우는 아이템의 초기화
@@ -31,6 +33,9 @@ namespace CocoDoogy.UI.StageSelect.Item
             resetCountText.text = resetCount;
             remainAPText.text = remainAP;
             OnTimeChanged((float)clearTime);
+
+            ReplayUIManager.consumeAP = remainAP;
+            ReplayUIManager.refillCount = resetCount;
             
             replayButton.onClick.RemoveAllListeners();
             replayButton.onClick.AddListener(OnClickReplayStart);
@@ -48,12 +53,13 @@ namespace CocoDoogy.UI.StageSelect.Item
         {
             ReplayHandler.ReplayData = await FirebaseManager.GetReplayData(replayId);
             PlayerHandler.IsReplay = true;
-            
+            ReplayUIManager.timer = replayTime;
             InGameManager.Stage = stageData;
             SceneManager.LoadScene("Replay");
         }
         private void OnTimeChanged(float time)
         {
+            replayTime = time;
             int minutes = (int)(time / 60);
             int seconds = (int)(time % 60);
             clearTimeText.text = $"{minutes:00}:{seconds:00}";

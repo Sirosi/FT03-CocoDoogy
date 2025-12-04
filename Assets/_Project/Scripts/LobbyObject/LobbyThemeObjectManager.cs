@@ -56,12 +56,10 @@ namespace CocoDoogy.LobbyObject
                 // theme hex → Theme enum
                 Theme theme = (Theme)Convert.ToInt32(lastStage.theme, 16);
 
-                int themeIndex = theme.ToIndex();              // 0~3
-                int levelIndex = lastStage.level.Hex2Int(); // 1~20
+                int themeIndex = theme.ToIndex();             
+                int levelIndex = lastStage.level.Hex2Int(); 
 
-                Debug.Log($"{themeIndex}_{levelIndex}_{stageNum[theme]}");
-                // 전역 클리어 스테이지 인덱스 계산
-                cleared = (themeIndex * stageNum[theme]) + levelIndex;      // 0~79
+                cleared = (themeIndex * stageNum[theme]) + levelIndex;    
             }
 
             lastClearedStageCount = -1;
@@ -83,24 +81,25 @@ namespace CocoDoogy.LobbyObject
         {
             int themeStartIndex;
 
-            switch (theme)
+            if (theme == Theme.Forest)
             {
-                case Theme.Forest:
-                    themeStartIndex = theme.ToIndex() * forestObjects.Length;
-                    ApplyActivation(forestObjects, themeStartIndex, cleared, theme);
-                    break;
-                case Theme.Water:
-                    themeStartIndex = theme.ToIndex() * waterObjects.Length;
-                    ApplyActivation(waterObjects, themeStartIndex, cleared, theme);
-                    break;
-                case Theme.Snow:
-                    themeStartIndex = theme.ToIndex() * snowObjects.Length;
-                    ApplyActivation(snowObjects, themeStartIndex, cleared, theme);
-                    break;
-                case Theme.Sand:
-                    themeStartIndex = theme.ToIndex() * sandObjects.Length;
-                    ApplyActivation(sandObjects, themeStartIndex, cleared, theme);
-                    break;
+                themeStartIndex = theme.ToIndex() * forestObjects.Length;
+                ApplyActivation(forestObjects, themeStartIndex, cleared, theme);
+            }
+            if (theme == Theme.Water)
+            {
+                themeStartIndex = theme.ToIndex() * waterObjects.Length;
+                ApplyActivation(waterObjects, themeStartIndex, cleared, theme);
+            }
+            if (theme == Theme.Snow)
+            {
+                themeStartIndex = theme.ToIndex() * snowObjects.Length;
+                ApplyActivation(snowObjects, themeStartIndex, cleared, theme);
+            }
+            if (theme == Theme.Sand)
+            {
+                themeStartIndex = theme.ToIndex() * sandObjects.Length;
+                ApplyActivation(sandObjects, themeStartIndex, cleared, theme);
             }
         }
 
