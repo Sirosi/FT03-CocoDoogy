@@ -38,6 +38,7 @@ namespace CocoDoogy.UI.InGame
             {
                 ButtonColor = GetComponent<Image>();
             }
+            
             Button.onClick.AddListener(() => OnClicked?.Invoke(this, ItemData));
         }
 

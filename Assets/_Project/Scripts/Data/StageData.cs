@@ -1,4 +1,7 @@
 using CocoDoogy.Core;
+using CocoDoogy.GameFlow.InGame.Weather;
+using CocoDoogy.Tile;
+using CocoDoogy.Tile.Piece;
 using UnityEngine;
 
 namespace CocoDoogy.Data
@@ -13,5 +16,8 @@ namespace CocoDoogy.Data
         public TextAsset mapData;
 
         public int[] starThresholds;
+        public HexTileData[] tileData;
+        public PieceData[] pieceData;
+        public WeatherData[] weatherData;
     }
 }

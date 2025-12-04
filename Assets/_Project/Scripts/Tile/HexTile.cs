@@ -268,7 +268,7 @@ namespace CocoDoogy.Tile
         public Piece.Piece ConnectPiece(HexDirection direction, Piece.Piece piece)
         {
             var prePiece = GetPiece(direction);
-            if (prePiece && prePiece != piece)
+            if (prePiece && prePiece != piece && piece.BaseData.type != PieceType.Bridge)
             {
                 RemovePiece(direction);
             }

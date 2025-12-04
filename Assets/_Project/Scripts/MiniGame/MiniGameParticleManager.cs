@@ -17,7 +17,6 @@ namespace CocoDoogy.MiniGame
             UIParticle p = LeanPool.Spawn(particlePrefab, position, Quaternion.identity, parent);
             p.Play();
             StartCoroutine(RetrunAfter(p, p.timeScaleMultiplier));
-            print("파티클 실행");
         }
 
         public void ParticleWatering(Transform parent)

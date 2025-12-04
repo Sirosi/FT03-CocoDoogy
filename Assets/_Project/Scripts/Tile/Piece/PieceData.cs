@@ -10,6 +10,7 @@ namespace CocoDoogy.Tile.Piece
         [Tooltip("Piece의 고유 Type")] public PieceType type = PieceType.None;
         [Tooltip("Piece 아이콘")] public Sprite pieceIcon = null;
         [Tooltip("Piece 명칭")] public string pieceName = string.Empty;
+        [Tooltip("Tile 설명")][TextArea(3, 10)] public string description = string.Empty;
         [Tooltip("Piece의 시각적 표시용 GameObject")] public Piece modelPrefab = null;
         
         [Header("Piece Setting")]

@@ -7,10 +7,10 @@ namespace CocoDoogy.GameFlow.InGame.Weather
     {
         [Header("Weather Data")]
         public WeatherType type;
-        public Sprite icon;
+        public Sprite weatherIcon;
         public string weatherName;
         
         [Header("Editor")]
-        [Tooltip("비고")] [TextArea(3, 10)] [SerializeField] private string editorDescription = string.Empty;
+        [Tooltip("비고")] [TextArea(3, 10)] public string description = string.Empty;
     }
 }

@@ -54,7 +54,7 @@ namespace CocoDoogy.UI.UIManager
 
         private async void OnEnable()
         {
-            StageSelectManager.LastClearedStage = await FirebaseManager.GetLastClearStage();
+            StageSelectManager.LastClearedStage = await FirebaseManager.GetLastClearStage(FirebaseManager.Instance.Auth.CurrentUser.UserId);
         }
         
         private IEnumerator Start()

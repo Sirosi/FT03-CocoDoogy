@@ -10,6 +10,7 @@ namespace CocoDoogy.UI
     {
         [SerializeField] private Sprite brightStarSprite;
         [SerializeField] private Sprite darkStarSprite;
+        [SerializeField] private UIParticle starParticle;
         
         private Image image;
         private RectTransform rectTransform;
@@ -38,6 +39,7 @@ namespace CocoDoogy.UI
          [ContextMenu("TryGetStar실행")]
          public void TryGetStar(Action callback)
          {
+             PlayStarParticle();
              rectTransform.DOKill();
              image.sprite = brightStarSprite;
              Sequence seq = DOTween.Sequence();
@@ -50,13 +52,11 @@ namespace CocoDoogy.UI
                  });
          }
 
-         public Vector3 StarPos()
+         public void PlayStarParticle()
          {
-             return rectTransform.position;
+             starParticle.Play();
          }
 
-        
-        
         /// <summary>
         /// 초기화
         /// </summary>

@@ -22,11 +22,6 @@ namespace CocoDoogy.GameFlow.InGame
         public static event Action<StageData> OnMapDrawn = null;
 
         /// <summary>
-        /// 맵 생성 후 리플레이 데이터를 불러오도록 하는 이벤트
-        /// </summary>
-        public static event Action OnLoadReplayData = null;
-
-        /// <summary>
         /// 현재 인게임이 정상적인(= 플레이 가능) 상태인지 체크
         /// </summary>
         public static bool IsValid
@@ -69,6 +64,7 @@ namespace CocoDoogy.GameFlow.InGame
             }
         }
 
+        public static int UseActionPoints = 0;
         public static int UseRefillCounts = 0;
         /// <summary>
         /// Refill전까지 남은 ActionPoints
@@ -111,7 +107,7 @@ namespace CocoDoogy.GameFlow.InGame
 
 
         private static StageData stageData = null;
-
+        
 
         private int refillPoints = 0;
         private int actionPoints = 0;
@@ -151,7 +147,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             Instance.Clear();
             CommandManager.Clear();
-
+            
             if (mapJson is null)
             {
                 // MapData가 없이 InGame에 들어가면, Test데이터 생성
@@ -161,6 +157,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             RefillPoints = HexTileMap.RefillPoint;
             UseRefillCounts = 0;
+            UseActionPoints = 0;
             ActionPoints = HexTileMap.ActionPoint;
             CurrentMapMaxActionPoints = HexTileMap.ActionPoint;
             CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
@@ -171,9 +168,9 @@ namespace CocoDoogy.GameFlow.InGame
                 Passages.Add(new WeatherPassage(weather.Key, weather.Value));
             }
 
-            foreach (var gimmick in HexTileMap.Gimmicks.Values)
+            foreach(var gimmick in HexTileMap.Gimmicks.Values)
             {
-                foreach (var trigger in gimmick.Triggers)
+                foreach(var trigger in gimmick.Triggers)
                 {
                     GimmickExecutor.ExecuteFromTrigger(trigger.GridPos);
                 }
@@ -181,8 +178,7 @@ namespace CocoDoogy.GameFlow.InGame
 
             OnMapDrawn?.Invoke(Stage);
             Timer.Start();
-            OnLoadReplayData?.Invoke();
-
+            
             ProcessPhase();
         }
 
@@ -199,9 +195,9 @@ namespace CocoDoogy.GameFlow.InGame
 
             ChangeInteract(null, null);
 
-            foreach (IPhase phase in turnPhases)
+            foreach(IPhase phase in turnPhases)
             {
-                if (phase is IClearable clearable)
+                if(phase is IClearable clearable)
                 {
                     clearable.OnClear();
                 }
@@ -228,22 +224,37 @@ namespace CocoDoogy.GameFlow.InGame
             ActionPoints = 0;
         }
 
-        public static void RegenActionPoint(int regen, bool containConsume = true)
+        public static void RegenActionPoint(int regen, bool containConsume = true, bool notify = true)
         {
             if (containConsume)
             {
                 ConsumedActionPoints -= regen;
+                UseActionPoints -= regen;
             }
-            ActionPoints += regen;
+            if(notify)
+            {
+                ActionPoints += regen;
+            }
+            else
+            {
+                Instance.actionPoints += regen;
+            }
         }
-        public static void ConsumeActionPoint(int consume, bool containConsume = true)
+        public static void ConsumeActionPoint(int consume, bool containConsume = true, bool notify = true)
         {
             if (containConsume)
             {
                 LastConsumeActionPoints = consume;
                 ConsumedActionPoints += consume;
             }
-            ActionPoints -= consume;
+            if(notify)
+            {
+                ActionPoints -= consume;
+            }
+            else
+            {
+                Instance.actionPoints -= consume;
+            }
         }
 
         // ReSharper disable Unity.PerformanceAnalysis

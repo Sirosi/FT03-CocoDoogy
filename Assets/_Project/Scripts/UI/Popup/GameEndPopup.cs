@@ -31,14 +31,17 @@ namespace CocoDoogy.UI.Popup
         [Header("Title Elements")]
         [SerializeField] private Image titleImage;
         [SerializeField] private Image titleTextImage;
+        [SerializeField] private Image backgroundStarImage;
 
         [Header("Score Elements")] 
         [SerializeField] private CompleteScore completeScore;
+        [SerializeField] private GameObject defeatScore;
         
         [Header("Clear Effect Element")]
         [SerializeField] private Image clearEffectImage;
         
         [Header("Info Elements")]
+        [SerializeField] private TextMeshProUGUI remainResetText;
         [SerializeField] private TextMeshProUGUI remainAPText;
         [SerializeField] private TextMeshProUGUI clearTimeText;
         
@@ -77,11 +80,20 @@ namespace CocoDoogy.UI.Popup
             gameEndPopup.clearEffectImage.sprite = !isDefeat
                 ? gameEndPopup.completeUI.effectBackground
                 : gameEndPopup.defeatUI.effectBackground;
-
-            gameEndPopup.remainAPText.text =
-                $"{InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints}";
-            OnTimeChanged(InGameManager.Timer.NowTime);
             
+            gameEndPopup.completeScore.gameObject.SetActive(!isDefeat);
+            gameEndPopup.defeatScore.SetActive(isDefeat);
+            
+            gameEndPopup.backgroundStarImage.sprite =
+                !isDefeat ? gameEndPopup.completeUI.effectText : gameEndPopup.defeatUI.effectText;
+
+            gameEndPopup.remainResetText.text =
+                $"{InGameManager.UseRefillCounts}";
+            
+            gameEndPopup.remainAPText.text =
+                $"{InGameManager.UseActionPoints}";
+            OnTimeChanged(InGameManager.Timer.NowTime);
+
             gameEndPopup.completeScore.GetStageClearResult(isDefeat, star);
             
             if (isDefeat || !DataManager.GetStageData(InGameManager.Stage.theme, InGameManager.Stage.index + 1) || PlayerHandler.IsReplay)

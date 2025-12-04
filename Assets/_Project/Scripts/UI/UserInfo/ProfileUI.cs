@@ -92,7 +92,7 @@ namespace CocoDoogy.UI.UserInfo
                 var data = snapshot.ToDictionary();
                 nicknameText.text = $"닉네임 : {data["nickName"]}";
                 recordText.text =
-                    $"스테이지 : {StageSelectManager.LastClearedStage.theme} 테마 - {StageSelectManager.LastClearedStage.level}";
+                    $"스테이지 : {StageSelectManager.LastClearedStage.theme.Hex2Int()} 테마 - {StageSelectManager.LastClearedStage.level.Hex2Int()}";
             }
             else
             {

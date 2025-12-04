@@ -2,7 +2,9 @@ using CocoDoogy.Core;
 using CocoDoogy.Data;
 using CocoDoogy.Network;
 using Lean.Pool;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace CocoDoogy.UI.StageSelect
@@ -13,7 +15,8 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private StageSelectButton stageButtonPrefab;
         [SerializeField] private Transform stageGroup;
 
-
+        private CancellationTokenSource drawCts;
+        
         private Stack<StageSelectButton> spawnedButtons = new();
 
 
@@ -21,23 +24,45 @@ namespace CocoDoogy.UI.StageSelect
         {
             stageGroup.position = new Vector2(0, stageGroup.position.y);
         }
-        
+
         public async void DrawButtons(Theme theme, int start)
         {
-            while (spawnedButtons.Count > 0)
+            drawCts?.Cancel();
+            drawCts = new CancellationTokenSource();
+            var token = drawCts.Token;
+            try
             {
-                LeanPool.Despawn(spawnedButtons.Pop());
-            }
+                while (spawnedButtons.Count > 0)
+                {
+                    LeanPool.Despawn(spawnedButtons.Pop());
+                }
             
-            foreach (StageData data in DataManager.GetStageData(theme))
-            {
-                if (data.index < start) continue;
-                int star = await FirebaseManager.GetStar(data.theme.ToIndex() + 1, data.index);
-                StageSelectButton stageButton = LeanPool.Spawn(stageButtonPrefab, stageGroup);
-                stageButton.Init(data, star, StageSelectManager.ShowReadyView);
+                foreach (StageData data in DataManager.GetStageData(theme))
+                {
+                    if (data.index < start) continue;
+                    // TODO : 네트워크 싱크 이슈. 버튼이 생성되는 중에 나갔다가 들어오면 겹쳐서 생성되는 이슈가 있음.
+                    token.ThrowIfCancellationRequested();
+                    
+                    int star = await FirebaseManager.GetStar(data.theme.ToIndex() + 1, data.index);
+                    
+                    token.ThrowIfCancellationRequested();
+                    
+                    StageSelectButton stageButton = LeanPool.Spawn(stageButtonPrefab, stageGroup);
+                    stageButton.Init(data, star, StageSelectManager.ShowReadyView);
                 
-                spawnedButtons.Push(stageButton);
-                if (spawnedButtons.Count >= LIST_SIZE) break;
+                    spawnedButtons.Push(stageButton);
+                    if (spawnedButtons.Count >= LIST_SIZE) break;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // 정상 취소, 로그 남기지 않기
+                // Debug.Log("DrawButtons canceled"); // 필요하면 이렇게
+            }
+            catch (Exception ex)
+            {
+                // 진짜 오류만 찍기
+                Debug.LogError(ex);
             }
         }
     }

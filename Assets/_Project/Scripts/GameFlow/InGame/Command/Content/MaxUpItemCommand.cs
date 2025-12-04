@@ -13,23 +13,22 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             get => itemEffect;
             set => itemEffect = value;
         }
-
+        
         [SerializeField] private ItemEffect itemEffect;
-
+        
         private const int Delta = 1;
-
+        
         public MaxUpItemCommand(object param) : base(CommandType.MaxUp, param)
         {
             Effect = (ItemEffect)param;
         }
-
+        
         public override void Execute()
         {
             HexTileMap.ActionPoint += Delta;
-            InGameManager.ConsumeActionPoint(Delta, false);
-
-            Debug.Log(DataManager.GetReplayItem(Effect));
-
+            InGameManager.ConsumeActionPoint(Delta, true);
+            
+            InGameManager.UseActionPoints++;
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
         }
@@ -37,7 +36,8 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public override void Undo()
         {
             HexTileMap.ActionPoint -= Delta;
-            InGameManager.RegenActionPoint(Delta, false);
+            InGameManager.RegenActionPoint(Delta, true);
+            InGameManager.UseActionPoints--;
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), true);
             PlayerHandler.IsBehaviour = false;
         }

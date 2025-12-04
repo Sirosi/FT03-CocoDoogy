@@ -162,7 +162,7 @@ namespace CocoDoogy.Tutorial
             {
                 case 0:
                     TutorialLocker.CameraLock = true;
-                    TutorialUI.Show("헥.. 헥..토르");
+                    TutorialUI.Show("헥.. 헥..");
                     TutorialUI.OnRaycast();
                     return;
                 case 1:
@@ -177,6 +177,7 @@ namespace CocoDoogy.Tutorial
                     TutorialUI.Show("일단 맛있는 걸 먹고 조금만 더 놀아야지");
                     return;
                 case 4:
+                    TutorialLocker.CameraLock = true;
                     PlayerHandler.OnEvent -= OnPlayerActioned;
                     Highlighter.FocusUI(refillButton.position);
                     TutorialUI.Show("이제 다시 돌아가면 집으로 갈 수 있을 거 같아!");

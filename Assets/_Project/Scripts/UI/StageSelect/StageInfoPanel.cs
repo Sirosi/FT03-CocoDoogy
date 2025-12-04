@@ -24,6 +24,7 @@ namespace CocoDoogy.UI.StageSelect
         [SerializeField] private CommonButton pageChangeButton;
         [SerializeField] private CommonButton startButton;
         
+        
         [SerializeField] private StageSelectStar stageSelectStar;
         public bool IsOpened { get; private set; } = false;
 
@@ -72,7 +73,11 @@ namespace CocoDoogy.UI.StageSelect
             }
             else
             {
-                detailInfoPage.Close(() => commonInfoPage.Show(stageData));
+                detailInfoPage.Close(() =>
+                {
+                    commonInfoPage.Show(stageData);
+                    stageSelectStar.BrightStar(rankingPage.CurrentStageStar);
+                });
             }
         }
         
