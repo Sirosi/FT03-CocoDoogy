@@ -69,9 +69,9 @@ namespace CocoDoogy.UI.StageSelect
             {
                 star.SetActive(starSize-- > 0);
             }
-
+        
             stageNumberText.text = $"{data.stageName}";
-
+        
             var last = StageSelectManager.LastClearedStage;
             StageData lastClearStage = null;
             
@@ -79,7 +79,7 @@ namespace CocoDoogy.UI.StageSelect
             {
                 lastClearStage = DataManager.GetStageData((Theme)(1 << (last.theme.Hex2Int() - 1)), last.level.Hex2Int());
             }
-
+        
             
             bool isLocked = true;
             foreach (var check in IsStageOpen)
@@ -96,17 +96,17 @@ namespace CocoDoogy.UI.StageSelect
         
         // TODO: 스테이지 테스트 할때 위에 Init 비활성화 하고 이거 활성화 해서 사용하면 됨 
         
-        // public void Init(StageData data, int starSize, Action<StageData> actionCallback)
+        // public void Init(StageData data, int starSize, Action<StageData, int> actionCallback)
         // {
-        //     if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
-        //         StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
-        //     {
-        //         startButton.interactable = false;
-        //         startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
-        //         starGroup.gameObject.SetActive(false);
-        //         stageNumberText.text = $"{data.stageName}";
-        //         return;
-        //     }
+        //     // if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
+        //     //     StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
+        //     // {
+        //     //     startButton.interactable = false;
+        //     //     startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
+        //     //     starGroup.gameObject.SetActive(false);
+        //     //     stageNumberText.text = $"{data.stageName}";
+        //     //     return;
+        //     // }
         //
         //     startButton.interactable = true;
         //     startButton.GetComponentInChildren<Image>().sprite = defaultSprite;
@@ -121,8 +121,9 @@ namespace CocoDoogy.UI.StageSelect
         //     }
         //
         //     stageNumberText.text = $"{data.stageName}";
+        //     startButton.onClick.AddListener(OnButtonClicked);
         // }
-        
+        //
         private void ApplyLockedState(bool locked)
         {
             var img = startButton.GetComponentInChildren<Image>();

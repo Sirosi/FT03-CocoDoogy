@@ -15,7 +15,7 @@ namespace CocoDoogy.UI.InGame
     // TODO : Undo 아이템 사용 시 이전 행동에 
     public class InGameItemButton : MonoBehaviour
     {
-        public CommonButton Button { get; private set; }
+        public Button Button { get; private set; }
         public Image ButtonColor { get; private set; }
         
         /// <summary>
@@ -24,14 +24,13 @@ namespace CocoDoogy.UI.InGame
         public ItemData ItemData { get; set; }
 
         public Action<InGameItemButton, ItemData> OnClicked;
-
         public bool IsPurchased { get; private set; } = false; 
         
         private void Awake()
         {
             if (!Button)
             {
-                Button = GetComponent<CommonButton>();
+                Button = GetComponent<Button>();
             }
 
             if (!ButtonColor)
@@ -39,7 +38,11 @@ namespace CocoDoogy.UI.InGame
                 ButtonColor = GetComponent<Image>();
             }
             
-            Button.onClick.AddListener(() => OnClicked?.Invoke(this, ItemData));
+            Button.onClick.AddListener(() =>
+            {
+                OnClicked?.Invoke(this, ItemData);
+                SfxManager.PlaySfx(SfxType.UI_ButtonUp1);
+            });
         }
 
         /// <summary>
@@ -67,7 +70,6 @@ namespace CocoDoogy.UI.InGame
             {
                 case ItemEffect.ConsumeAndRecoverMaxAP:
                     Debug.Log("행동력을 1 소모하고 최대 행동력을 1 증가시킵니다.");
-                    if (InGameManager.ActionPoints <= 0) break;
                     CommandManager.MaxUp(itemData.effect);
                     SfxManager.PlaySfx(SfxType.Item_DogSleeping);
                     break;
@@ -117,6 +119,16 @@ namespace CocoDoogy.UI.InGame
             catch (Exception e)
             {
                 Debug.LogError($"구매 실패: {e.Message}");
+            }
+        }
+
+        public void SetColor(bool active)
+        {
+            float rgb = active ? 1f : 0.5f;
+            Color targetColor = new(rgb, rgb, rgb);
+            foreach (var graphic in Button.GetComponentsInChildren<Graphic>(true))
+            {
+                graphic.DOColor(targetColor, 0.2f);
             }
         }
     }

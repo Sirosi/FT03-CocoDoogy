@@ -84,12 +84,12 @@ namespace CocoDoogy.EffectPooling
         private IEnumerator<WaitForEndOfFrame> DelayGrowStart()
         {
             yield return new WaitForEndOfFrame();
-            growStartTime = Time.time;
+            growStartTime = Time.unscaledTime;
         }
 
         private void Update()
         {
-            t = Mathf.Clamp01((Time.time - growStartTime) / growTime);
+            t = Mathf.Clamp01((Time.unscaledTime - growStartTime) / growTime);
 
             rect.sizeDelta = Vector2.Lerp(
                 new Vector2(initialSize, initialSize),

@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.LifeCycle;
 using DG.Tweening;
 using UnityEngine;
@@ -51,7 +52,8 @@ namespace CocoDoogy.Tile.Piece
 
             Sequence sequence = DOTween.Sequence();
             sequence.SetId(this);
-            sequence.Append(cratePivot.DOMove(Parent.GridPos.ToWorldPos() + offset, Constants.MOVE_DURATION));
+            sequence.Append(cratePivot.DOMove(Parent.GridPos.ToWorldPos() + offset, Constants.MOVE_DURATION))
+                .AppendCallback(()=>SfxManager.PlaySfx(SfxType.Interaction_WaterSplash));
             sequence.Append(cratePivot.DOMoveY(-0.1f, 0.5f).SetEase(Ease.OutBack));
             sequence.Append(cratePivot.DOMoveY(0, 0.2f).SetEase(Ease.OutQuad));
             sequence.OnComplete(Float);

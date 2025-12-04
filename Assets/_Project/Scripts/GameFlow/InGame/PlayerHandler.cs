@@ -2,10 +2,12 @@ using CocoDoogy.Animation;
 using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame.Command;
+using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
 using CocoDoogy.Tutorial;
+using CocoDoogy.UI.Replay;
 using CocoDoogy.Utility;
 using DG.Tweening;
 using System;
@@ -17,7 +19,7 @@ namespace CocoDoogy.GameFlow.InGame
     {
         public static event Action<Vector2Int, PlayerEventType> OnEvent = null;
         public static Action<Vector2Int, PlayerEventType> OnEventCallback => OnEvent;
-
+        
 
         /// <summary>
         /// 플레이어가 인게임에 들어와서 행동을 했는지 여부
@@ -85,7 +87,8 @@ namespace CocoDoogy.GameFlow.InGame
         private Vector2 touchLast = Vector2.zero;
         private int touchCount = 0;
 
-
+        private ClearCheckPhase replayPhase = new();
+        
         protected override void Awake()
         {
             base.Awake();
@@ -193,7 +196,7 @@ namespace CocoDoogy.GameFlow.InGame
                 GimmickExecutor.ExecuteFromTrigger(preGravityButton
                     .Value); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
             }
-
+            Debug.Log("리필?");
             OnBehaviourCompleted();
         }
 
@@ -248,9 +251,9 @@ namespace CocoDoogy.GameFlow.InGame
             print("Move호출");
             if (!IsValid) return;
             if (!IsBehaviour) IsBehaviour = true;
-
+            
+            
             Instance.lockBehaviour = true;
-
             Instance.transform.parent = null;
             prevGridPos = GridPos;
             GridPos = gridPos;
@@ -289,7 +292,14 @@ namespace CocoDoogy.GameFlow.InGame
             DOTween.Kill(Instance, false);
             Instance.anim.ChangeAnim(AnimType.Idle);
             Instance.lockBehaviour = false;
-            InGameManager.ProcessPhase();
+            if (!IsReplay)
+            {
+                InGameManager.ProcessPhase();
+            }
+            else
+            {
+                Instance.replayPhase.OnPhase();
+            }
         }
 
 

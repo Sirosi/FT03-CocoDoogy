@@ -64,7 +64,12 @@ namespace CocoDoogy.GameFlow.InGame
             }
         }
 
-        public static int UseActionPoints = 0;
+        public static int UseActionPoints
+        {
+            get => _UseActionPoints;
+            set => print(_UseActionPoints = value);
+        }
+        private static int _UseActionPoints = 0;
         public static int UseRefillCounts = 0;
         /// <summary>
         /// Refill전까지 남은 ActionPoints
@@ -229,7 +234,6 @@ namespace CocoDoogy.GameFlow.InGame
             if (containConsume)
             {
                 ConsumedActionPoints -= regen;
-                UseActionPoints -= regen;
             }
             if(notify)
             {
