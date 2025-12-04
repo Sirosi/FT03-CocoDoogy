@@ -38,7 +38,11 @@ namespace CocoDoogy.UI.InGame
                 ButtonColor = GetComponent<Image>();
             }
             
-            Button.onClick.AddListener(() => OnClicked?.Invoke(this, ItemData));
+            Button.onClick.AddListener(() =>
+            {
+                OnClicked?.Invoke(this, ItemData);
+                SfxManager.PlaySfx(SfxType.UI_ButtonUp1);
+            });
         }
 
         /// <summary>
