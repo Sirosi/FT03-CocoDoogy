@@ -70,7 +70,7 @@ namespace CocoDoogy.MiniGame
              Instance.gameObject.SetActive(true);
              Instance.backGround.SetActive(true);
         
-             Theme nowTheme = Theme.Forest; // TODO: 나중에 맵 데이터에서 호출하게 변경
+             Theme nowTheme = Theme.Sand; // TODO: 나중에 맵 데이터에서 호출하게 변경
         
              //nowTheme를 갖고 있는 게임을 가져옴//즉, 테마가 없는 게임은 모든 테마를 갖고있도록 설정해야 랜덤게임에 선택될수있음
              MiniGameBase[] possibleGames = Instance.miniGames.Where(x => x.HasWithTheme(nowTheme)).ToArray();

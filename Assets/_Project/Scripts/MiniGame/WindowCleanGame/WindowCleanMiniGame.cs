@@ -1,4 +1,5 @@
 using CocoDoogy.Core;
+using CocoDoogy.GameFlow.InGame;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
@@ -123,9 +124,9 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
 
         protected override void OnOpenInit()
         {
-            Theme theme = Theme.Forest;  //TODO: 나중에 맵 데이터에서 호출하게 변경
+            Theme nowTheme = InGameManager.Stage.theme;   //TODO: 나중에 맵 데이터에서 호출하게 변경
             //테마받고 배경바꾸기
-            SetBackground(BackgroundFromTheme(theme));
+            SetBackground(BackgroundFromTheme(nowTheme));
             ResizePanel();
             dirties.Clear();
             Vector3[] corners = new Vector3[4];
@@ -135,7 +136,7 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
             Vector2 slotEndPoint = corners[2];
 
 
-            Sprite[] dirtySprites = dirtiesDict[theme];
+            Sprite[] dirtySprites = dirtiesDict[nowTheme];
             for(int i = 0;i < dirtyCount; i++)
             {
                 float x = Random.Range(slotStartPoint.x, slotEndPoint.x);
