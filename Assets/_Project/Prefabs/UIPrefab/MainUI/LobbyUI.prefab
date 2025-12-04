@@ -11209,18 +11209,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7017041052099295563}
     m_Modifications:
-    - target: {fileID: 308260064055784330, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_fontSize
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 308260064055784330, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 308260064055784330, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1062678397815924334, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -11301,73 +11289,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3111776259968040752, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111776259968040752, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -175
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443660220609609864, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443660220609609864, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443660220609609864, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443660220609609864, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443660220609609864, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633110172036305351, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633110172036305351, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633110172036305351, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633110172036305351, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633110172036305351, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7535496796256276957, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 7535496796256276957, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -175
-      objectReference: {fileID: 0}
     - target: {fileID: 8263487088396514254, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_fontSize
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 8263487088396514254, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 8263487088396514254, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 0
+      propertyPath: m_lineSpacing
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 8890221282855712916, guid: a85db3dd741f83a4298ae0940c093f5e, type: 3}
       propertyPath: m_Name
