@@ -78,6 +78,7 @@ namespace CocoDoogy.UI.UIManager
 
         private void OnStartButtonClicked()
         {
+            if (stageSelectUIPanel.gameObject.activeSelf) return;
             WindowAnimation.SwipeWindow(lobbyUIPanel);
             stageSelectUIPanel.gameObject.SetActive(true);
         }
