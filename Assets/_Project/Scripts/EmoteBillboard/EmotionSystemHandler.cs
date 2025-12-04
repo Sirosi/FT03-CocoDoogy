@@ -33,7 +33,7 @@ namespace CocoDoogy.EmoteBillboard
         [Tooltip("지루함 감지 트리거 시간 (초)")]
         [SerializeField] private float boredomThreshold = 10f;
 
-        [SerializeField] private float eotionDelay = 0.5f; // 감정 표시 딜레이 (초)
+        [SerializeField] private float emotionDelay = 0.5f; // 감정 표시 딜레이 (초)
 
         // 현재 표시 중인 감정 (중첩 방지)
         private Emotion currentEmotion = Emotion.None;
@@ -246,7 +246,7 @@ namespace CocoDoogy.EmoteBillboard
         private IEnumerator ShowEmotionWithDelay(Emotion emotion)
         {
             // 딜레이 대기
-            yield return new WaitForSeconds(eotionDelay);
+            yield return new WaitForSeconds(emotionDelay);
 
             // 실제 감정 표시
             if (!emoteBillboard) yield break;
