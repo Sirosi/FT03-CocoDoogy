@@ -1,115 +1,64 @@
-using CocoDoogy.CameraSwiper;
 using CocoDoogy.Core;
-using CocoDoogy.Network;
 using UnityEngine;
-using System;
-using System.Collections.Generic;
+using CocoDoogy.UI.StageSelect;
+using CocoDoogy.Data;
 
 namespace CocoDoogy.LobbyObject
 {
+    /// <summary>
+    /// Lobby Scene의 각 Theme별 장식의 Active를 ClearData를 기준으로 관리하는 class
+    /// </summary>
     public class LobbyThemeObjectManager : MonoBehaviour
     {
-        private Dictionary<Theme, int> stageNum;
-        
         public GameObject[] forestObjects;
         public GameObject[] waterObjects;
         public GameObject[] snowObjects;
         public GameObject[] sandObjects;
-
-        private Theme lastTheme = Theme.None;
-        private int lastClearedStageCount = -1;
-
-        private void Awake()
-        {
-            stageNum = new()
-            {
-                { Theme.Forest, forestObjects.Length },
-                { Theme.Water, waterObjects.Length },
-                { Theme.Snow, snowObjects.Length },
-                { Theme.Sand, sandObjects.Length },
-            };
-        }
         
-        private void OnEnable()
+
+        void Awake()
         {
-            PageCameraSwiper.OnEndPageChanged += OnThemeChanged;
-            ForceRefresh(); // Firebase에서 최신 데이터 로드
+            OnLastClearStageChanged(null);
+            StageSelectManager.OnLastClearStageChanged += OnLastClearStageChanged;
         }
 
-        private void OnDisable()
+        void OnDestroy()
         {
-            PageCameraSwiper.OnEndPageChanged -= OnThemeChanged;
+            StageSelectManager.OnLastClearStageChanged -= OnLastClearStageChanged;
         }
 
-        private void OnThemeChanged(Theme theme)
-        {
-            TryUpdate(theme, lastClearedStageCount);
-        }
 
-        private async void ForceRefresh()
+        private void OnLastClearStageChanged(StageInfo data)
         {
-            var lastStage = await FirebaseManager.GetLastClearStage(FirebaseManager.Instance.Auth.CurrentUser.UserId);
-            int cleared = 0;
-
-            if (lastStage != null)
+            StageData lastClearStage = null;
+            if (data != null)
             {
-                // theme hex → Theme enum
-                Theme theme = (Theme)Convert.ToInt32(lastStage.theme, 16);
-
-                int themeIndex = theme.ToIndex();             
-                int levelIndex = lastStage.level.Hex2Int(); 
-
-                cleared = (themeIndex * stageNum[theme]) + levelIndex;    
+                lastClearStage = DataManager.GetStageData((Theme)(1 << (data.theme.Hex2Int() - 1)), data.level.Hex2Int());
             }
 
-            lastClearedStageCount = -1;
-            TryUpdate(PageCameraSwiper.CurrentTheme, cleared);
+            ChangeActive(forestObjects, Theme.Forest, lastClearStage);
+            ChangeActive(waterObjects, Theme.Water, lastClearStage);
+            ChangeActive(snowObjects, Theme.Snow, lastClearStage);
+            ChangeActive(sandObjects, Theme.Sand, lastClearStage);
         }
-
-        private void TryUpdate(Theme theme, int cleared)
+        private void ChangeActive(GameObject[] objs, Theme theme, StageData clearData)
         {
-            if (theme == lastTheme && cleared == lastClearedStageCount)
-                return;
-
-            UpdateThemeObjects(theme, cleared);
-
-            lastTheme = theme;
-            lastClearedStageCount = cleared;
-        }
-
-        private void UpdateThemeObjects(Theme theme, int cleared)
-        {
-            int themeStartIndex;
-
-            if (theme == Theme.Forest)
+            for(int i = 0;i < objs.Length;i++)
             {
-                themeStartIndex = theme.ToIndex() * forestObjects.Length;
-                ApplyActivation(forestObjects, themeStartIndex, cleared, theme);
+                bool isActive =
+                    clearData && // 일단 data가 존재해야 함
+                    (
+                        clearData.theme > theme || // 클리어 Theme가 더 크면 하이패스
+                        (
+                            clearData.theme >= theme && // 클리어 Theme가 Theme 이상에
+                            (
+                                clearData.index >= DataManager.GetThemeMaxIndex(clearData.theme) || // 모든 Stage를 클리어했거나
+                                clearData.index >= i + 1 // index도 이상이면
+                            )
+                        )
+                    );
+                objs[i].SetActive(isActive);
             }
-            if (theme == Theme.Water)
-            {
-                themeStartIndex = theme.ToIndex() * waterObjects.Length;
-                ApplyActivation(waterObjects, themeStartIndex, cleared, theme);
-            }
-            if (theme == Theme.Snow)
-            {
-                themeStartIndex = theme.ToIndex() * snowObjects.Length;
-                ApplyActivation(snowObjects, themeStartIndex, cleared, theme);
-            }
-            if (theme == Theme.Sand)
-            {
-                themeStartIndex = theme.ToIndex() * sandObjects.Length;
-                ApplyActivation(sandObjects, themeStartIndex, cleared, theme);
-            }
-        }
-
-        private void ApplyActivation(GameObject[] objs, int themeStart, int cleared, Theme theme)
-        {
-            int max = stageNum[theme];
-            int localCleared = Mathf.Clamp(cleared - themeStart, 0, max);
-            Debug.Log($"Theme:{theme},cleared:{cleared},themeStart:{themeStart}, max:{max},localCleared:{localCleared}");
-            for (int i = 0; i < objs.Length; i++)
-                objs[i].SetActive(i < localCleared);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
         [SerializeField] private float distanceCheckInterval = 0.1f;
         private float distanceCheckTimer = 0f;
         // 최소 실행 간격 (1초)
-        [SerializeField] private float shakeCooldown = 0.5f;
+        [SerializeField] private float shakeCooldown = 0.3f;
         private float lastShakeTime = 0f;
         // 거리 누적
         private float accumulatedDistance = 0f;
@@ -35,13 +35,12 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
 
         private void Start()
         {
-            thresholdDistance = ((RectTransform)transform).rect.width*2;
+            thresholdDistance = ((RectTransform)transform).rect.width*1.5f;
             lastPosition = transform.position;
             
             if (Accelerometer.current != null)
             {
                 InputSystem.EnableDevice(Accelerometer.current);
-                Debug.Log("Accelerometer enabled");
             }
             MiniGameParticleManager.Instance.ParticleWatering(transform);
         }
