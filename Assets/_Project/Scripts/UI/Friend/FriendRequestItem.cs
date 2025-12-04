@@ -50,10 +50,12 @@ namespace CocoDoogy.UI.Friend
         /// <param name="nickname"></param>
         /// <param name="sentUid"></param>
         /// <param name="cancelCallback"></param>
-        public void SentInit(string nickname, string sentUid, Action<string> cancelCallback)
+        public async void SentInit(string nickname, string sentUid, Action<string> cancelCallback)
         {
             uid = sentUid;
             nicknameText.text = nickname;
+            StageInfo record = await FirebaseManager.GetLastClearStage(uid);
+            recordText.text = $"{record.theme.Hex2Int()}테마 {record.level.Hex2Int()}";
             onCancel = cancelCallback;
 
             cancelButton.onClick.AddListener(() => onCancel?.Invoke(sentUid));

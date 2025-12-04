@@ -43,7 +43,7 @@ class GiftFriendsRequest extends Request {
 
         if (now - lastPresentTime < cooldownTime) {
             const remainingTime = Math.ceil((cooldownTime - (now - lastPresentTime)) / (1000 * 60 * 60));
-            throw new Error(`선물은 24시간에 한 번만 보낼 수 있습니다. ${remainingTime}시간 후에 다시 시도해주세요.`);
+            throw new Error(`선물은 24시간에 한 번만 보낼 수 있습니다.\n ${remainingTime}시간 후에 다시 시도해주세요.`);
         }
     }
 }
