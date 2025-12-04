@@ -1,6 +1,7 @@
 using CocoDoogy.CameraSwiper;
 using CocoDoogy.Core;
 using CocoDoogy.Data;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +9,21 @@ namespace CocoDoogy.UI.StageSelect
 {
     public class StageSelectManager : Singleton<StageSelectManager>
     {
+        public static event Action<StageInfo> OnLastClearedStageChanged = null;
+
         /// <summary>
         /// 해당 계정이 가장 마지막에 클리어한 가장 높은 스테이지
         /// </summary>
-        public static StageInfo LastClearedStage { get; set; }
+        public static StageInfo LastClearedStage
+        {
+            get => lastClearedStage;
+            set
+            {
+                lastClearedStage = value;
+                OnLastClearedStageChanged?.Invoke(lastClearedStage);
+            }
+        }
+        private static StageInfo lastClearedStage = null;
 
         [Header("Main UIs")]
         [SerializeField] private RectTransform lobbyUIPanel;
@@ -29,11 +41,9 @@ namespace CocoDoogy.UI.StageSelect
 
         [Header("StageOptions")]
         [SerializeField] private int clearedStages;
+        
 
-
-        private Theme nowTheme = Theme.None;
-        private Image[] stageIcons;
-
+        public static StageData CurrentStageData { get; set; }
 
         protected override void Awake()
         {
@@ -59,7 +69,7 @@ namespace CocoDoogy.UI.StageSelect
 
         private void OnChangedThemeAsync(Theme theme)
         {
-            stageListPage.DrawButtons(nowTheme = theme, 1);
+            stageListPage.DrawButtons(theme, 1);
         }
 
 
@@ -78,10 +88,11 @@ namespace CocoDoogy.UI.StageSelect
         }
 
 
-        public static void ShowReadyView(StageData data)
+        public static void ShowReadyView(StageData data, int count)
         {
             if (!Instance) return;
-
+            CurrentStageData = data;
+            Instance.stageInfoPanel.BrightStar(count);
             Instance.stageInfoPanel.Show(data);
         }
     }

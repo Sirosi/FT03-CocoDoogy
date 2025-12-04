@@ -21,14 +21,26 @@ namespace CocoDoogy.MiniGame.ToyFindGame
         private void OnEnable()
         {
             StartDetectingCoroutine(Color.green, 1f);
-            SfxManager.ToggleLoopSound(SfxType.Loop_Detecting);
+            
             
         }
         private void OnDisable()
         {
             StopDetectingCoroutine();
-            SfxManager.ToggleLoopSound(SfxType.Loop_Detecting);
+            
             DOTween.Kill(transform, complete:false);
+        }
+
+        public override void OnBeginDrag(PointerEventData eventData)
+        {
+            base.OnBeginDrag(eventData);
+            SfxManager.ToggleLoopSound(SfxType.Loop_Detecting);
+        }
+
+        public override void OnEndDrag(PointerEventData eventData)
+        {
+            base.OnEndDrag(eventData);
+            SfxManager.ToggleLoopSound(SfxType.Loop_Detecting);
         }
 
         public override void OnDrag(PointerEventData eventData)

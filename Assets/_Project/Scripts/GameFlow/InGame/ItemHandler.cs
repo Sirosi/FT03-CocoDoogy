@@ -20,16 +20,22 @@ namespace CocoDoogy.GameFlow.InGame
                 OnValueChanged?.Invoke(key, value);
             }
         }
-
-        public static void UseItem()
+         
+        /// <summary>
+        /// 스테이지를 클리어 혹은 실패 후 아이템을 사용한 적이 있다면 해당 아이템을 DB에서 -1 하고
+        /// </summary>
+        /// <param name="openPopup"></param>
+        public static void UseItem(Action openPopup = null)
         {
             foreach (var itemData in UsedItems)
             {
                 if (!itemData.Value)
                 {
+                    Debug.Log($"itemData:{itemData.Key.itemName}, value: {itemData.Value}");
                     _ = FirebaseManager.UseItemAsync(itemData.Key.itemId);
                 }
             }
+            openPopup?.Invoke();
         }
     }
 }

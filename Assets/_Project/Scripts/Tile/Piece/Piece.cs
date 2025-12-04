@@ -1,5 +1,6 @@
 using CocoDoogy.Data;
 using CocoDoogy.LifeCycle;
+using CocoDoogy.Tile.Piece.Trigger;
 using DG.Tweening;
 using Lean.Pool;
 using System;
@@ -34,7 +35,9 @@ namespace CocoDoogy.Tile.Piece
             }
         }
 
-        public bool IsTrigger => BaseData && BaseData.type is PieceType.Lever or PieceType.Button or PieceType.GravityButton;
+        public bool IsTrigger => BaseData &&
+            BaseData.type is PieceType.Lever or PieceType.Button or
+            PieceType.GravityButton or PieceType.GravityCrate;
         
         
         /// <summary>
@@ -112,26 +115,26 @@ namespace CocoDoogy.Tile.Piece
             PieceType centerType =  centerPiece ? centerPiece.BaseData.type : PieceType.None;
             if (BaseData.type == PieceType.Crate && centerType == PieceType.GravityButton)
             {
-                MoveToGravityButton(tile);
+                MoveToGravityButton(tile, direction);
             }
             else if (BaseData.type == PieceType.GravityCrate)
             {
                 if (centerType == PieceType.GravityButton)
                 {
-                    MoveButtonToButton(tile);
+                    MoveButtonToButton(tile, direction);
                 }
                 else
                 {
-                    MoveFromGravityButton(tile);
+                    MoveFromGravityButton(tile, direction);
                 }
             }
             else
             {
-                MoveDefault(tile);
+                MoveDefault(tile, direction);
             }
         }
 
-        private void MoveDefault(HexTile nextTile)
+        private void MoveDefault(HexTile nextTile, HexDirection direction)
         {
             Vector3 prePos = Parent.GridPos.ToWorldPos() + DirectionPos.GetPos();
             Parent.Pieces[(int)DirectionPos] = null;
@@ -144,25 +147,23 @@ namespace CocoDoogy.Tile.Piece
                 .SetId(this);
         }
 
-        private void MoveToGravityButton(HexTile nextTile)
+        private void MoveToGravityButton(HexTile nextTile, HexDirection direction)
         {
             Piece piece = nextTile.SetPiece(HexDirection.Center, PieceType.GravityCrate, LookDirection);
-            piece.transform.position = Parent.GridPos.ToWorldPos() + DirectionPos.GetPos();
-            piece.transform.DOMove(nextTile.GridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(piece);
+            piece.GetComponent<GravityCrate>().ToMove(direction.GetMirror());
             Release();
         }
-        private void MoveFromGravityButton(HexTile nextTile)
+        private void MoveFromGravityButton(HexTile nextTile, HexDirection direction)
         {
             Piece piece = nextTile.SetPiece(HexDirection.Center, PieceType.Crate, LookDirection);
             piece.transform.position = Parent.GridPos.ToWorldPos() + DirectionPos.GetPos();
             piece.transform.DOMove(nextTile.GridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(piece);
             Parent.SetPiece(HexDirection.Center, PieceType.GravityButton, LookDirection);
         }
-        private void MoveButtonToButton(HexTile nextTile)
+        private void MoveButtonToButton(HexTile nextTile, HexDirection direction)
         {
             Piece piece = nextTile.SetPiece(HexDirection.Center, PieceType.GravityCrate, LookDirection);
-            piece.transform.position = Parent.GridPos.ToWorldPos() + DirectionPos.GetPos();
-            piece.transform.DOMove(nextTile.GridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(piece);
+            piece.GetComponent<GravityCrate>().ToMove(direction.GetMirror());
             Parent.SetPiece(HexDirection.Center, PieceType.GravityButton, LookDirection);
         }
 

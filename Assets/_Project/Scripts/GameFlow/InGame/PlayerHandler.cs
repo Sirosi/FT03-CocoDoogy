@@ -5,18 +5,31 @@ using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
+using CocoDoogy.Tutorial;
 using CocoDoogy.Utility;
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame
 {
-    public class PlayerHandler: Singleton<PlayerHandler>
+    public class PlayerHandler : Singleton<PlayerHandler>
     {
-        // 플레이어가 인게임에 들어와서 행동을 했는지 여부
+        public static event Action<Vector2Int, PlayerEventType> OnEvent = null;
+        public static Action<Vector2Int, PlayerEventType> OnEventCallback => OnEvent;
+
+
+        /// <summary>
+        /// 플레이어가 인게임에 들어와서 행동을 했는지 여부
+        /// </summary>
         public static bool IsBehaviour { get; set; } = false;
 
-        public static int SandCount{ get; set; } = 0;
+        /// <summary>
+        /// 현재 플레이 하고있는 씬이 Replay면 true로, InGame이면 false로
+        /// </summary>
+        public static bool IsReplay { get; set; } = false;
+
+        public static int SandCount { get; set; } = 0;
 
         public static Vector2Int GridPos
         {
@@ -24,8 +37,10 @@ namespace CocoDoogy.GameFlow.InGame
             set
             {
                 if (!IsValid) return;
+                if (Instance.gridPos == value) return;
 
                 Instance.gridPos = value;
+                OnEvent?.Invoke(value, PlayerEventType.Move);
             }
         }
 
@@ -70,7 +85,7 @@ namespace CocoDoogy.GameFlow.InGame
         private Vector2 touchLast = Vector2.zero;
         private int touchCount = 0;
 
-        
+
         protected override void Awake()
         {
             base.Awake();
@@ -86,7 +101,8 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (lockBehaviour) return;
             if (TouchSystem.IsPointerOverUI) return;
-            
+            if (IsReplay) return;
+
             if (TouchSystem.TouchCount > 0)
             {
                 touchLast = TouchSystem.TouchAverage;
@@ -99,7 +115,7 @@ namespace CocoDoogy.GameFlow.InGame
                 }
 
                 float distance = Vector2.Distance(touchLast, touchStart);
-                if(distance > 20) // TODO: 값은 나중에 바뀔 수 있음
+                if (distance > 20) // TODO: 값은 나중에 바뀔 수 있음
                 {
                     touched = false;
                 }
@@ -114,7 +130,8 @@ namespace CocoDoogy.GameFlow.InGame
                 Ray ray = mainCamera.ScreenPointToRay(touchLast);
                 HexTile selectedTile = GetRayTile(ray);
                 if (!selectedTile) return;
-                
+                if (!TutorialLocker.CanPos(selectedTile.GridPos)) return;
+
                 HexDirection? direction = GridPos.GetRelativeDirection(selectedTile.GridPos);
                 if (!direction.HasValue) return;
 
@@ -138,7 +155,7 @@ namespace CocoDoogy.GameFlow.InGame
             HexTile result = null;
             if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, LayerMask.GetMask("Tile")))
             {
-                result = hit.collider.GetComponentInParent<HexTile>();                ;
+                result = hit.collider.GetComponentInParent<HexTile>(); ;
             }
             return result;
         }
@@ -153,7 +170,7 @@ namespace CocoDoogy.GameFlow.InGame
 
 
         /// <summary>
-        /// 순간이동 등의 갑작스래 위치가 변경
+        /// 게임 시작 시 첫 위치 배치
         /// </summary>
         /// <param name="gridPos"></param>
         public static void Deploy(Vector2Int gridPos)
@@ -180,6 +197,13 @@ namespace CocoDoogy.GameFlow.InGame
             OnBehaviourCompleted();
         }
 
+        public static void Comeback(Vector2Int gridPos)
+        {
+            if (!IsValid) return;
+
+
+        }
+
         /// <summary>
         /// 토네이도용 이동방식
         /// </summary>
@@ -189,7 +213,7 @@ namespace CocoDoogy.GameFlow.InGame
             if (!IsValid) return;
 
             Instance.lockBehaviour = true;
-            
+
             Instance.transform.parent = null;
             GridPos = gridPos;
             DOTween.Kill(Instance, true);
@@ -198,7 +222,7 @@ namespace CocoDoogy.GameFlow.InGame
             sequence.SetId(Instance);
             sequence.Append(Instance.transform.DOMoveY(10, Constants.MOVE_DURATION));
             sequence.Append(Instance.transform.DOMove(GridPos.ToWorldPos() + Vector3.up * 10, Constants.MOVE_DURATION));
-            sequence.Append(Instance.transform.DOMoveY(0, Constants.MOVE_DURATION));
+            sequence.Append(Instance.transform.DOMove(GridPos.ToWorldPos(), Constants.MOVE_DURATION));
             sequence.OnComplete(OnBehaviourCompleted);
             sequence.Play();
 
@@ -221,6 +245,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// <param name="gridPos"></param>
         public static void Move(Vector2Int gridPos)
         {
+            print("Move호출");
             if (!IsValid) return;
             if (!IsBehaviour) IsBehaviour = true;
 
@@ -236,7 +261,7 @@ namespace CocoDoogy.GameFlow.InGame
                 .SetId(Instance)
                 .OnComplete(OnBehaviourCompleted);
         }
-        
+
         /// <summary>
         /// 미끄러지듯 이동
         /// </summary>
@@ -259,11 +284,12 @@ namespace CocoDoogy.GameFlow.InGame
         }
 
 
-        private static void OnBehaviourCompleted()
+        public static void OnBehaviourCompleted()
         {
+            DOTween.Kill(Instance, false);
             Instance.anim.ChangeAnim(AnimType.Idle);
-
             Instance.lockBehaviour = false;
+            InGameManager.ProcessPhase();
         }
 
 

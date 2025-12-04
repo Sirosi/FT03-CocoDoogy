@@ -32,12 +32,13 @@ namespace CocoDoogy.UI.InGame
 
         private void OnButtonClicked()
         {
-            MessageDialog.ShowMessage("초기화", "초기화 하시겠습니까?", DialogMode.YesNo, OnMessageCallback);
+            MessageDialog.ShowMessage("원위치", "시작 지점으로 돌아가시겠습니까?", DialogMode.YesNo, OnMessageCallback);
         }
         private void OnMessageCallback(CallbackType type)
         {
             if (type != CallbackType.Yes) return;
 
+            PlayerHandler.OnEventCallback?.Invoke(Vector2Int.zero, PlayerEventType.Refill);
             CommandManager.Refill();
         }
 

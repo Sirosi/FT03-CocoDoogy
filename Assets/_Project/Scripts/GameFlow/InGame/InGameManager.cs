@@ -3,6 +3,7 @@ using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Phase;
 using CocoDoogy.GameFlow.InGame.Phase.Passage;
+using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.Test;
 using CocoDoogy.Tile;
 using CocoDoogy.Tile.Gimmick;
@@ -10,8 +11,6 @@ using CocoDoogy.Utility;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace CocoDoogy.GameFlow.InGame
 {
@@ -19,9 +18,8 @@ namespace CocoDoogy.GameFlow.InGame
     {
         public static event Action<int> OnActionPointChanged = null;
         public static event Action<int> OnRefillCountChanged = null;
-        public static event Action<Action> OnInteractChanged = null;
+        public static event Action<Sprite, Action> OnInteractChanged = null;
         public static event Action<StageData> OnMapDrawn = null;
-
 
         /// <summary>
         /// 현재 인게임이 정상적인(= 플레이 가능) 상태인지 체크
@@ -43,7 +41,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static int LastConsumeActionPoints { get; private set; } = 0;
         /// <summary>
-        /// Map 시작 후, 소모된 ActionPoints
+        /// 초기화 후, 소모된 ActionPoints
         /// </summary>
         public static int ConsumedActionPoints
         {
@@ -65,6 +63,9 @@ namespace CocoDoogy.GameFlow.InGame
                 OnRefillCountChanged?.Invoke(Instance.refillPoints);
             }
         }
+
+        public static int UseActionPoints = 0;
+        public static int UseRefillCounts = 0;
         /// <summary>
         /// Refill전까지 남은 ActionPoints
         /// </summary>
@@ -106,7 +107,7 @@ namespace CocoDoogy.GameFlow.InGame
 
 
         private static StageData stageData = null;
-        
+
 
         private int refillPoints = 0;
         private int actionPoints = 0;
@@ -122,8 +123,7 @@ namespace CocoDoogy.GameFlow.InGame
             new CrateProcessPhase(),
             new RegenCheckPhase(),
             new ActionPointCheckPhase(),
-            new TriggerCheckPhase(),
-            new DeckCheckPhase(),
+            new InteractableCheckPhase(),
             new LockCheckPhase(),
         };
 
@@ -156,6 +156,8 @@ namespace CocoDoogy.GameFlow.InGame
             MapSaveLoader.Apply(mapJson);
 
             RefillPoints = HexTileMap.RefillPoint;
+            UseRefillCounts = 0;
+            UseActionPoints = 0;
             ActionPoints = HexTileMap.ActionPoint;
             CurrentMapMaxActionPoints = HexTileMap.ActionPoint;
             CommandManager.Deploy(HexTileMap.StartPos, HexDirection.NorthEast);
@@ -166,9 +168,9 @@ namespace CocoDoogy.GameFlow.InGame
                 Passages.Add(new WeatherPassage(weather.Key, weather.Value));
             }
 
-            foreach(var gimmick in HexTileMap.Gimmicks.Values)
+            foreach (var gimmick in HexTileMap.Gimmicks.Values)
             {
-                foreach(var trigger in gimmick.Triggers)
+                foreach (var trigger in gimmick.Triggers)
                 {
                     GimmickExecutor.ExecuteFromTrigger(trigger.GridPos);
                 }
@@ -183,6 +185,7 @@ namespace CocoDoogy.GameFlow.InGame
         private void Clear()
         {
             OutlineForTest.Clear();
+            WeatherManager.NowWeather = WeatherType.None;
             Passages.Clear();
             LastConsumeActionPoints = 0;
             ConsumedActionPoints = 0;
@@ -190,11 +193,11 @@ namespace CocoDoogy.GameFlow.InGame
             ActionPoints = 0;
             Timer.Stop();
 
-            ChangeInteract(null);
+            ChangeInteract(null, null);
 
-            foreach(IPhase phase in turnPhases)
+            foreach (IPhase phase in turnPhases)
             {
-                if(phase is IClearable clearable)
+                if (phase is IClearable clearable)
                 {
                     clearable.OnClear();
                 }
@@ -206,7 +209,9 @@ namespace CocoDoogy.GameFlow.InGame
         /// </summary>
         public static void RefillActionPoint()
         {
+            ConsumedActionPoints = 0;
             RefillPoints--;
+            UseRefillCounts++;
             ActionPoints = HexTileMap.ActionPoint;
         }
         /// <summary>
@@ -215,25 +220,41 @@ namespace CocoDoogy.GameFlow.InGame
         public static void ClearActionPoint()
         {
             RefillPoints++;
+            UseRefillCounts--;
             ActionPoints = 0;
         }
 
-        public static void RegenActionPoint(int regen, bool containConsume = true)
+        public static void RegenActionPoint(int regen, bool containConsume = true, bool notify = true)
         {
             if (containConsume)
             {
                 ConsumedActionPoints -= regen;
+                UseActionPoints -= regen;
             }
-            ActionPoints += regen;
+            if(notify)
+            {
+                ActionPoints += regen;
+            }
+            else
+            {
+                Instance.actionPoints += regen;
+            }
         }
-        public static void ConsumeActionPoint(int consume, bool containConsume = true)
+        public static void ConsumeActionPoint(int consume, bool containConsume = true, bool notify = true)
         {
             if (containConsume)
             {
                 LastConsumeActionPoints = consume;
                 ConsumedActionPoints += consume;
             }
-            ActionPoints -= consume;
+            if(notify)
+            {
+                ActionPoints -= consume;
+            }
+            else
+            {
+                Instance.actionPoints -= consume;
+            }
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
@@ -249,9 +270,9 @@ namespace CocoDoogy.GameFlow.InGame
             OutlineForTest.Draw();
         }
 
-        public static void ChangeInteract(Action callback)
+        public static void ChangeInteract(Sprite icon, Action callback)
         {
-            OnInteractChanged?.Invoke(callback);
+            OnInteractChanged?.Invoke(icon, callback);
         }
     }
 }

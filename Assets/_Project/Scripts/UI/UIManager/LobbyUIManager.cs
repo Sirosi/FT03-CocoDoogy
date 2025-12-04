@@ -49,11 +49,12 @@ namespace CocoDoogy.UI.UIManager
             startButton.onClick.AddListener(OnStartButtonClicked);
             
             // StartCoroutine(FirebaseManager.Instance.UpdateTicketCoroutine());
+            _ = FirebaseManager.Instance.RechargeTicketAsync();
         }
 
         private async void OnEnable()
         {
-            StageSelectManager.LastClearedStage = await FirebaseManager.GetLastClearStage();
+            StageSelectManager.LastClearedStage = await FirebaseManager.GetLastClearStage(FirebaseManager.Instance.Auth.CurrentUser.UserId);
         }
         
         private IEnumerator Start()

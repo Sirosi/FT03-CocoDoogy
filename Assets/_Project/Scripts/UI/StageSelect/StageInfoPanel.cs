@@ -12,32 +12,24 @@ namespace CocoDoogy.UI.StageSelect
 {
     public class StageInfoPanel : MonoBehaviour
     {
-        private int selectedStage;
-        
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI title;
         
         [Header("Stage Information")]
         [SerializeField] private StageInfoPage commonInfoPage;
         [SerializeField] private StageInfoPage detailInfoPage;
-        
-        /*-[Header("Ranks")]
-        [SerializeField] private GameObject[] ranks;
-        private TextMeshProUGUI[] rankTexts;
-        private CommonButton[] replayButtons;*/
+        [SerializeField] private StageRankingPage rankingPage;
         
         [Header("Buttons")]
         [SerializeField] private CommonButton pageChangeButton;
         [SerializeField] private CommonButton startButton;
         
-        [SerializeField] private CommonButton replayButton; // TODO: 테스트용 버튼
-
-
+        
+        [SerializeField] private StageSelectStar stageSelectStar;
         public bool IsOpened { get; private set; } = false;
 
 
         private StageData stageData = null;
-
 
         void Awake()
         {
@@ -49,7 +41,7 @@ namespace CocoDoogy.UI.StageSelect
         {
             IsOpened = false;
         }
-
+        
 
         public void Show(StageData data)
         {
@@ -63,9 +55,15 @@ namespace CocoDoogy.UI.StageSelect
             BgmManager.PrepareStageBgm(data.theme);
             
             commonInfoPage.Show(stageData);
+            rankingPage.Show(stageData);
             detailInfoPage.Close();
         }
-        
+
+        public void BrightStar(int count)
+        {
+            rankingPage.CurrentStageStar = count;
+            stageSelectStar.BrightStar(count);
+        }
         
         private void OnPageChangeButtonClicked()
         {
@@ -75,7 +73,11 @@ namespace CocoDoogy.UI.StageSelect
             }
             else
             {
-                detailInfoPage.Close(() => commonInfoPage.Show(stageData));
+                detailInfoPage.Close(() =>
+                {
+                    commonInfoPage.Show(stageData);
+                    stageSelectStar.BrightStar(rankingPage.CurrentStageStar);
+                });
             }
         }
         
@@ -87,6 +89,7 @@ namespace CocoDoogy.UI.StageSelect
             if (isReady)
             {
                 InGameManager.Stage = stageData;
+                PlayerHandler.IsReplay = false;
                 Loading.LoadScene("InGame");
             }
             else

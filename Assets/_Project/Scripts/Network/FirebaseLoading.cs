@@ -19,7 +19,7 @@ namespace CocoDoogy.Network
             dotTween?.Kill();
         }
 
-        public void Show()
+        private void Show()
         {
             PlayAnimation();
         }
@@ -50,9 +50,9 @@ namespace CocoDoogy.Network
 
         public static FirebaseLoading ShowLoading()
         {
-            var dlg = Create();
-            dlg.Show();
-            return dlg;
+            var loading = Create();
+            loading.Show();
+            return loading;
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

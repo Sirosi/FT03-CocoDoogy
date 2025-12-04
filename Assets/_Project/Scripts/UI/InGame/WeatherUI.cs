@@ -28,7 +28,7 @@ namespace CocoDoogy.UI.InGame
             Sprite weatherIcon = null;
             try
             {
-                weatherIcon = DataManager.GetWeatherData(type).icon;
+                weatherIcon = DataManager.GetWeatherData(type).weatherIcon;
             }
             catch
             {

@@ -11,6 +11,7 @@ namespace CocoDoogy.Tile
         [Tooltip("Tile의 고유 Type")] public TileType type = TileType.None;
         [Tooltip("Tile 아이콘")] public Sprite tileIcon = null;
         [Tooltip("Tile 명칭")] public string tileName = string.Empty;
+        [Tooltip("Tile 설명")][TextArea(3, 10)] public string description = string.Empty;
         [Tooltip("Tile의 시각적 표시용 GameObject")] public GameObject modelPrefab = null;
 
         [Header("Move Setting")]

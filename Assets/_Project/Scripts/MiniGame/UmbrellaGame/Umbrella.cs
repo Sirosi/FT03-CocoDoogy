@@ -18,7 +18,7 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
         [SerializeField] private float distanceCheckInterval = 0.1f;
         private float distanceCheckTimer = 0f;
         // 최소 실행 간격 (1초)
-        [SerializeField] private float shakeCooldown = 1f;
+        [SerializeField] private float shakeCooldown = 0.3f;
         private float lastShakeTime = 0f;
         // 거리 누적
         private float accumulatedDistance = 0f;
@@ -35,13 +35,12 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
 
         private void Start()
         {
-            thresholdDistance = ((RectTransform)transform).rect.width*2;
+            thresholdDistance = ((RectTransform)transform).rect.width*1.5f;
             lastPosition = transform.position;
             
             if (Accelerometer.current != null)
             {
                 InputSystem.EnableDevice(Accelerometer.current);
-                Debug.Log("Accelerometer enabled");
             }
             MiniGameParticleManager.Instance.ParticleWatering(transform);
         }
@@ -87,7 +86,13 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
             base.OnPointerDown(eventData);
             Handheld.Vibrate();
         }
-        
+
+        public override void OnBeginDrag(PointerEventData eventData)
+        {
+            base.OnBeginDrag(eventData);
+            SfxManager.ToggleLoopSound(SfxType.Loop_ShakeUmbrella);
+        }
+
         /// <summary>
         /// 거리와 시간을 기반으로 우산의 흔들림을 감지하도록 설계
         /// 거리는 우산의 자체크기에 비례하도록하여(Start의 thresholdDistance = ((RectTransform)transform).rect.width*2;) 어떤 모바일상황에서도 대응될수 있도록 함 
@@ -116,7 +121,7 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
                     {
                         needSwipeCount--;
                         parent.CheckClear();
-                        SfxManager.PlaySfx(SfxType.Minigame_ShakeUmbrella);
+                        //SfxManager.PlaySfx(SfxType.Minigame_ShakeUmbrella);
                     }
                     else if (!isDry)
                     {
@@ -135,6 +140,12 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
             }
         }
 
+        public override void OnEndDrag(PointerEventData eventData)
+        {
+            base.OnEndDrag(eventData);
+            SfxManager.ToggleLoopSound(SfxType.Loop_ShakeUmbrella);
+        }
+        
         #region 모바일 환경
         /// <summary>
         /// 모바일기기 흔들기 감지(테스트 완)
@@ -154,12 +165,12 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
             {
                 timeSinceLastShake = 0f;
                 Handheld.Vibrate();
-                SfxManager.PlaySfx(SfxType.Minigame_ShakeUmbrella);
+                //SfxManager.PlaySfx(SfxType.Minigame_ShakeUmbrella);
                 needSwipeCount--;
                 if (needSwipeCount <= 0 && !isDry)
                 {
-                    isDry = true;
                     SetDry(drySprite);
+                    parent.CheckClear();
                     SfxManager.PlaySfx(SfxType.UI_SuccessMission);
                 }
             }

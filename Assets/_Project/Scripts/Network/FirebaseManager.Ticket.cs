@@ -3,7 +3,6 @@ using Firebase.Functions;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -11,6 +10,8 @@ namespace CocoDoogy.Network
 {
     public partial class FirebaseManager
     {
+        public static Coroutine TicketCoroutine;
+        
         public const int MaxRegenTicket = 10;
         private const long RechargeIntervalMs = 1 * 60 * 1000; // TODO: 지금은 1분 주기로 실행되게 되어있는데 나중에 10분 or 30분 주기로 변경 예정
         private int TotalTicket => CurrentTicket + BonusTicket;
@@ -94,13 +95,37 @@ namespace CocoDoogy.Network
                 loading.Hide();
             }
         }
+        
+        /// <summary>
+        /// 로그인에 성공하면 일정 시간마다 티켓을 충전하는 코루틴을 실행 <br/>
+        /// 로그아웃을 하면 코루틴을 멈춤.
+        /// </summary>
+        public void AuthStateChanged()
+        {
+            if (Auth.CurrentUser != null)
+            {
+                Debug.Log("로그인됨: " + Auth.CurrentUser.UserId);
 
+                if (TicketCoroutine == null)
+                    TicketCoroutine = StartCoroutine(UpdateTicketCoroutine());
+            }
+            else
+            {
+                Debug.Log("로그아웃 상태");
+
+                if (TicketCoroutine != null)
+                {
+                    StopCoroutine(TicketCoroutine);
+                    TicketCoroutine = null;
+                }
+            }
+        }
         /// <summary>
         /// 게임이 실행되고 무한 반복되는 코루틴 메서드 <br/>
         /// 일정 주기마다 RechargeTicketAsync를 실행시킴
         /// </summary>
         /// <returns></returns>
-        public IEnumerator UpdateTicketCoroutine()
+        private IEnumerator UpdateTicketCoroutine()
         {
             while (true)
             {

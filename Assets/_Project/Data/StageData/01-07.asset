@@ -15,4 +15,13 @@ MonoBehaviour:
   theme: 1
   index: 7
   stageName: 1-7
-  mapData: {fileID: 4900000, guid: aca5115bfc5a65f4daa2e4ff98188cbd, type: 3}
+  mapData: {fileID: 4900000, guid: e2df87f32a49ef54783cd4087fb158c9, type: 3}
+  starThresholds: 010000000200000003000000
+  tileData:
+  - {fileID: 11400000, guid: 10a355761618d1c41af1aa2601864c67, type: 2}
+  pieceData:
+  - {fileID: 11400000, guid: 472d00a6d50fbb04b8428f579421295d, type: 2}
+  - {fileID: 11400000, guid: 8d06a0c867fe8e44ab57d7b2b9d67bab, type: 2}
+  - {fileID: 11400000, guid: c659cd36e24cb6843946e62e090363a7, type: 2}
+  weatherData:
+  - {fileID: 11400000, guid: d15ea31344eb49e4db4465d64cd68482, type: 2}

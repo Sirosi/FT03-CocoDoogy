@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,7 +25,7 @@ namespace CocoDoogy.MiniGame.TrashGame
         /// <param name="eventData"></param>
         public void OnPointerClick(PointerEventData eventData)
         {
-            print("쓰레기통을 건드리는 사운드");
+            SfxManager.PlaySfx(SfxType.Minigame_TouchTrashCan);
             if (shakeTween != null && shakeTween.IsActive()) shakeTween.Kill();
             shakeTween = rect.DOShakeAnchorPos(duration:0.3f, strength: 30f, vibrato: 20, randomness:90f,snapping: false,fadeOut: true);
 

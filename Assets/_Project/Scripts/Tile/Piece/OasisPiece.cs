@@ -24,11 +24,8 @@ namespace CocoDoogy.Tile.Piece
 
         private void OnWeatherChanged(WeatherType type)
         {
-            // TODO: 추후 원복해야 함
-            //defaultObject.SetActive(type != WeatherType.Mirage);
-            //mirageObject.SetActive(type == WeatherType.Mirage);
-            defaultObject.SetActive(false);
-            mirageObject.SetActive(true);
+            defaultObject.SetActive(type != WeatherType.Mirage);
+            mirageObject.SetActive(type == WeatherType.Mirage);
         }
     }
 }

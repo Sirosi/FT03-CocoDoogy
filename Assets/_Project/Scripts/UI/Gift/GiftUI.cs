@@ -14,11 +14,9 @@ namespace CocoDoogy.UI.Gift
         [Header("Buttons")]
         [SerializeField] private Button closeThisButton;
         [SerializeField] private CommonButton getAllButton;
-        [SerializeField] private CommonButton confirmButton;
 
         [Header("UI Elements")]
         [SerializeField] private RectTransform giftWindow;
-        [SerializeField] private RectTransform getGiftWindow;
 
         [SerializeField] private RectTransform container;
         [SerializeField] private GiftItem prefabItem;
@@ -32,8 +30,12 @@ namespace CocoDoogy.UI.Gift
         {
             closeThisButton.onClick.AddListener(ClosePanel);
             getAllButton.onClick.AddListener(OnGetAllButtonClicked);
-            confirmButton.onClick.AddListener(OnConfirmButtonClicked);
         }
+        private void OnEnable()
+        {
+            _ = RefreshPanelAsync();
+        }
+        
         public override void ClosePanel()
         {
             WindowAnimation.SwipeWindow(giftWindow);
@@ -41,16 +43,15 @@ namespace CocoDoogy.UI.Gift
         }
 
         public void SubscriptionEvent() => _ = RefreshPanelAsync();
-        private void OnGetAllButtonClicked() => getGiftWindow.gameObject.SetActive(true);
-        private void OnConfirmButtonClicked() => WindowAnimation.CloseWindow(getGiftWindow);
+        private void OnGetAllButtonClicked() => OnTakeAllAsync();
 
-        private void OnEnable()
-        {
-            _ = RefreshPanelAsync();
-        }
 
         private async Task RefreshPanelAsync()
         {
+            getAllButton.interactable = false;
+            nullMessage.gameObject.SetActive(true);
+            nullMessage.text = "받을 수 있는 상품이 없습니다.";
+            
             foreach (Transform child in container)
             {
                 Destroy(child.gameObject);
@@ -65,17 +66,22 @@ namespace CocoDoogy.UI.Gift
                     , OnTakePresentAsync);
             }
 
-            if (requestDict.Count < 1)
+            if (requestDict.Count > 0)
             {
-                nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "받을 수 있는 상품이 없습니다.";
-            }
-            else
-            {
+                getAllButton.interactable = true;
                 nullMessage.gameObject.SetActive(false);
             }
         }
 
+        private async void OnTakeAllAsync()
+        {
+            var requestDict = await FirebaseManager.GetGiftListAsync();
+            foreach (var kvp in requestDict)
+            {
+                OnTakePresentAsync(kvp["giftId"].ToString());
+            }
+        }
+        
         private async void OnTakePresentAsync(string itemType)
         {
             var result = await FirebaseManager.TakeGiftRequestAsync(itemType);

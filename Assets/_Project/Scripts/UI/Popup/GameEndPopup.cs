@@ -1,7 +1,10 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Core;
 using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
+using CocoDoogy.Network;
 using CocoDoogy.UI.UIManager;
+using CocoDoogy.Utility.Loading;
 using System;
 using TMPro;
 using UnityEngine;
@@ -28,15 +31,17 @@ namespace CocoDoogy.UI.Popup
         [Header("Title Elements")]
         [SerializeField] private Image titleImage;
         [SerializeField] private Image titleTextImage;
+        [SerializeField] private Image backgroundStarImage;
 
         [Header("Score Elements")] 
-        [SerializeField] private GameObject complete;
-        [SerializeField] private GameObject defeat;
+        [SerializeField] private CompleteScore completeScore;
+        [SerializeField] private GameObject defeatScore;
         
         [Header("Clear Effect Element")]
         [SerializeField] private Image clearEffectImage;
         
         [Header("Info Elements")]
+        [SerializeField] private TextMeshProUGUI remainResetText;
         [SerializeField] private TextMeshProUGUI remainAPText;
         [SerializeField] private TextMeshProUGUI clearTimeText;
         
@@ -64,7 +69,7 @@ namespace CocoDoogy.UI.Popup
             nextButton.onClick.AddListener(OnClickNext);
         }
 
-        public static void OpenPopup(bool isDefeat)
+        public static void OpenPopup(bool isDefeat, int star)
         {
             gameEndPopup.panel.SetActive(true);
 
@@ -72,20 +77,25 @@ namespace CocoDoogy.UI.Popup
                 !isDefeat ? gameEndPopup.completeUI.titleSprite : gameEndPopup.defeatUI.titleSprite;
             gameEndPopup.titleTextImage.sprite =
                 !isDefeat ? gameEndPopup.completeUI.titleTextSprite : gameEndPopup.defeatUI.titleTextSprite;
-
             gameEndPopup.clearEffectImage.sprite = !isDefeat
                 ? gameEndPopup.completeUI.effectBackground
                 : gameEndPopup.defeatUI.effectBackground;
+            
+            gameEndPopup.completeScore.gameObject.SetActive(!isDefeat);
+            gameEndPopup.defeatScore.SetActive(isDefeat);
+            
+            gameEndPopup.backgroundStarImage.sprite =
+                !isDefeat ? gameEndPopup.completeUI.effectText : gameEndPopup.defeatUI.effectText;
 
-            gameEndPopup.complete.SetActive(!isDefeat);
-            gameEndPopup.defeat.SetActive(isDefeat);
-
-            gameEndPopup.remainAPText.text =
-                $"{InGameManager.RefillPoints * InGameManager.CurrentMapMaxActionPoints + InGameManager.ActionPoints}";
-
-            OnTimeChanged(InGameManager.Timer.NowTime);
-
-            if (isDefeat || !DataManager.GetStageData(InGameManager.Stage.theme, InGameManager.Stage.index + 1))
+            gameEndPopup.remainResetText.text = PlayerHandler.IsReplay ?
+                $"{InGameManager.UseRefillCounts}" : $"{ReplayUIManager.refillCount}";
+            
+            gameEndPopup.remainAPText.text = PlayerHandler.IsReplay ?
+                $"{InGameManager.UseActionPoints}" : $"{ReplayUIManager.consumeAP}";
+            OnTimeChanged(!PlayerHandler.IsReplay ? InGameManager.Timer.NowTime : (float)ReplayUIManager.timer);
+            gameEndPopup.completeScore.GetStageClearResult(isDefeat, star);
+            
+            if (isDefeat || !DataManager.GetStageData(InGameManager.Stage.theme, InGameManager.Stage.index + 1) || PlayerHandler.IsReplay)
             {
                 // 다음 스테이지가 없다면 NextButton을 비활성화
                 gameEndPopup.nextButton.interactable = false;
@@ -107,11 +117,12 @@ namespace CocoDoogy.UI.Popup
         }
         private void OnClickRestart()
         {
-            InGameUIManager.Instance.OnResetButtonClicked();
+            Restart();
         }
         private void OnClickHome()
         {
-            InGameUIManager.Instance.OnQuitButtonClicked();
+            SfxManager.StopDucking();
+            Loading.LoadScene("Lobby");
         }
         private void OnClickNext()
         {
@@ -128,8 +139,27 @@ namespace CocoDoogy.UI.Popup
                Debug.Log("다음 스테이지로 이동합니다.");
                
                InGameManager.Stage = nextStage;
-               InGameUIManager.Instance.OnResetButtonClicked();
+               Restart();
            }
+        }
+
+        private async void Restart()
+        {
+            bool isReady = await FirebaseManager.UseTicketAsync();
+            if (isReady)
+            {
+                SfxManager.StopDucking();
+                Loading.LoadScene(PlayerHandler.IsReplay ? "Replay" : "InGame");
+            }
+            else
+            {
+                // TODO : 티켓이 부족하면 메세지를 띄우게만 해뒀는데 여기에서 상점으로 연결까지 할 수도?
+                MessageDialog.ShowMessage(
+                    "티켓 부족",
+                    "티켓이 부족하여 게임을 진행할 수 없습니다.",
+                    DialogMode.Confirm,
+                    null);
+            }
         }
     }
 }

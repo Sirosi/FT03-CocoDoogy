@@ -28,11 +28,12 @@ namespace CocoDoogy.UI.Shop
             itemName.text = itemData.itemName;
             if (!isSaleForCash)
             {
-                itemPrice.text = $"{itemData.purchasePrice:N0} 두기 잼";
+                itemPrice.alignment = TextAlignmentOptions.Midline;
+                itemPrice.text = $"<size=200%><voffset=10><sprite name=Jem></voffset></size><space=-0.8em> {itemData.purchasePrice:N0}";
             }
             else
             {
-                itemPrice.text = $"₩{itemData.purchasePrice:N0}";
+                itemPrice.text = $"₩ {itemData.purchasePrice:N0}";
             }
         }
         

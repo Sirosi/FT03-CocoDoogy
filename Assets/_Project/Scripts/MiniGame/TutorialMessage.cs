@@ -46,11 +46,11 @@ namespace CocoDoogy.MiniGame
         /// <returns></returns>
         IEnumerator InActiveMessage()
         {
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(1f);
             //4초동안 DoTween으로 사라지기
-            description.DOFade(0f, 4f);
-            background.DOFade(0f, 4f);
-            yield return new WaitForSeconds(3f);
+            description.DOFade(0f, 2f);
+            background.DOFade(0f, 2f);
+            yield return new WaitForSeconds(2.5f);
             transform.gameObject.SetActive(false);
         }
         

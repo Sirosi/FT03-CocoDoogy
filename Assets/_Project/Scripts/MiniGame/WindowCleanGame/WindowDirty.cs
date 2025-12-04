@@ -14,6 +14,7 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
         void Start()
         {
             SetVisualEmphasize();
+            outline.effectDistance = new Vector2(7,7);
         }
 
         void SetVisualEmphasize()
@@ -34,8 +35,12 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
             image.sprite = sprite;
         }
 
+        public override void OnPointerDown(PointerEventData eventData)
+        {
+            base.OnPointerDown(eventData);
+            SfxManager.PlaySfx(SfxType.Minigame_PickLeaf);
+        }
         
-
         public override void OnEndDrag(PointerEventData eventData)
         {
             base.OnEndDrag(eventData);

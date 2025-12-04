@@ -1,6 +1,7 @@
 using CocoDoogy.Core;
 using CocoDoogy.GameFlow.InGame;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 namespace CocoDoogy.MiniGame
@@ -9,10 +10,12 @@ namespace CocoDoogy.MiniGame
     {
         [SerializeField] private MiniGameBase[] miniGames;
         [SerializeField] private GameObject backGround;
-        [SerializeField] public GameObject BackGround => backGround;
+         public GameObject BackGround => backGround;
 
         [SerializeField] private TutorialMessage tutorialMessage;
-        
+        [SerializeField] private TextMeshProUGUI miniGameExplainText;
+        [SerializeField] private GameObject letterBoxd;
+        public GameObject LetterBoxd => letterBoxd;
         
         protected override void Awake()
         {
@@ -21,6 +24,12 @@ namespace CocoDoogy.MiniGame
             {
                 miniGame.gameObject.SetActive(false);
             }
+        }
+        
+        private void ExplainText(string tutorialExplainData)
+        {
+            miniGameExplainText.gameObject.SetActive(true);
+            miniGameExplainText.text = tutorialExplainData;
         }
 
 
@@ -41,13 +50,15 @@ namespace CocoDoogy.MiniGame
             MiniGameBase selectedMiniGame = possibleGames[randomIdx];
             selectedMiniGame.gameObject.SetActive(true);
             //PlayerPrefs로 튜토리얼 설명여부저장
-            string key = $"TutorialShown_{selectedMiniGame.MiniGameID}";
-            if (PlayerPrefs.GetInt(key, 0) == 0)
-            {
-                Instance.tutorialMessage.ShowTutorialExplain(selectedMiniGame.tutorialExplainData.description);
-            }
-            PlayerPrefs.SetInt(key, 1);
-            PlayerPrefs.Save();
+             string key = $"TutorialShown_{selectedMiniGame.MiniGameID}";
+             if (PlayerPrefs.GetInt(key, 0) == 0)
+             {
+              Instance.tutorialMessage.ShowTutorialExplain(selectedMiniGame.tutorialExplainData.description);
+             }
+             PlayerPrefs.SetInt(key, 1);
+             PlayerPrefs.Save();
+            Instance.letterBoxd.SetActive(true);
+            Instance.ExplainText(selectedMiniGame.tutorialExplainData.description);
             selectedMiniGame.Open(callback);
         }
 
@@ -68,13 +79,15 @@ namespace CocoDoogy.MiniGame
              MiniGameBase selectedMiniGame = possibleGames[randomIdx];
              selectedMiniGame.gameObject.SetActive(true);
              //PlayerPrefs로 튜토리얼 설명여부저장
-             string key = $"TutorialShown_{selectedMiniGame.MiniGameID}";
-             if (PlayerPrefs.GetInt(key, 0) == 0)
-             {
-                 Instance.tutorialMessage.ShowTutorialExplain(selectedMiniGame.tutorialExplainData.description);
-             }
-             PlayerPrefs.SetInt(key, 1);
-             PlayerPrefs.Save();
+              string key = $"TutorialShown_{selectedMiniGame.MiniGameID}";
+              if (PlayerPrefs.GetInt(key, 0) == 0)
+              { 
+                  Instance.tutorialMessage.ShowTutorialExplain(selectedMiniGame.tutorialExplainData.description);
+              }
+              PlayerPrefs.SetInt(key, 1);
+              PlayerPrefs.Save();
+             Instance.ExplainText(selectedMiniGame.tutorialExplainData.description);
+             Instance.letterBoxd.SetActive(true);
              
              selectedMiniGame.Open(()=> { });
          }

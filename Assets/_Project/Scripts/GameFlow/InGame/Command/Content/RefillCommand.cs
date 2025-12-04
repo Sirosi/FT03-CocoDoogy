@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Tile;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
     [System.Serializable]
     public class RefillCommand: CommandBase
     {
-        public override bool IsUserCommand => false;
+        public override bool IsUserCommand => true;
 
 
         [SerializeField] private int rp = 0;
@@ -45,7 +46,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             InGameManager.ConsumeActionPoint(RemainPoints);
             InGameManager.RefillActionPoint();
             PlayerHandler.SandCount = 0;
-            
+            SfxManager.PlaySfx(SfxType.UI_Reset);
             PlayerHandler.Deploy(HexTileMap.StartPos);
         }
 

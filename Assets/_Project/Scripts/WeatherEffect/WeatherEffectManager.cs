@@ -58,6 +58,7 @@ namespace CocoDoogy.WeatherEffect
         {
             if (weatherEffectDictionary.TryGetValue(weatherType, out WeatherEffectInfo effectInfo))
             {
+                SfxManager.StopSfx(weatherEffectDictionary[weatherType].sfxType);
                 PlayEffect(weatherType, effectInfo.duration);
             }
         }
@@ -73,6 +74,11 @@ namespace CocoDoogy.WeatherEffect
             }
         }
         
+        /// <summary>
+        /// 이펙트를 키고 끕니다.
+        /// </summary>
+        /// <param name="weatherType"></param>
+        /// <param name="duration"></param>
         public static void PlayEffect(WeatherType weatherType, float duration = 3f)
         {
             if (!HasInstance) return;
@@ -86,6 +92,7 @@ namespace CocoDoogy.WeatherEffect
             Instance.PlayEffectInternal(weatherType, duration);
         }
 
+        #region 내부 로직
         // 코루틴용 메서드
         private void PlayEffectInternal(WeatherType weatherType, float duration)
         {
@@ -101,7 +108,6 @@ namespace CocoDoogy.WeatherEffect
             {
                 StopCoroutine(_currentEffectCoroutine);
             }
-            
             SfxManager.PlaySfx(weatherEffectDictionary[weatherType].sfxType);
             // 여기서 코루틴 사용
             _currentEffectCoroutine = StartCoroutine(PlayEffectCoroutine(
@@ -148,8 +154,9 @@ namespace CocoDoogy.WeatherEffect
                     break;
                     
                 case EffectSystemType.None:
-                    // UI만 사용하는 경우 즉시 종료
-                    effectObject.SetActive(false);
+                    //확장형 컨트롤러 스크립트로 리팩토링 가능성?
+                    WaveDistortionController waveDistortionController = effectObject.GetComponentInChildren<WaveDistortionController>();
+                    waveDistortionController.Deactivate();
                     break;
             }
         }
@@ -227,5 +234,6 @@ namespace CocoDoogy.WeatherEffect
             
             effectObject.SetActive(false);
         }
+        #endregion
     }
 }

@@ -20,9 +20,9 @@ namespace CocoDoogy.UI.UserInfo
         
         [Header("Volume Icons")]
         [SerializeField] private Image masterIcon;
-        [SerializeField] private Image masterInnerIcon;
         [SerializeField] private Image bgmIcon;
         [SerializeField] private Image sfxIcon;
+        [SerializeField] private Image sfxInnerIcon;
         
         [Header("Volume UI Sliders")]
         [SerializeField] private Slider masterVolume;
@@ -30,9 +30,9 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private Slider sfxVolume;
 
         [Header("Mute")]
-        [SerializeField] private Toggle masterMute;
-        [SerializeField] private Toggle bgmMute;
-        [SerializeField] private Toggle sfxMute;
+        [SerializeField] private Button masterMute;
+        [SerializeField] private Button bgmMute;
+        [SerializeField] private Button sfxMute;
         private float lastMasterVolume;
         private float lastBgmVolume;
         private float lastSfxVolume;
@@ -47,9 +47,9 @@ namespace CocoDoogy.UI.UserInfo
             bgmVolume.onValueChanged.AddListener(BGMControl);
             sfxVolume.onValueChanged.AddListener(SfxControl);
 
-            masterMute.onValueChanged.AddListener(MasterMute);
-            bgmMute.onValueChanged.AddListener(BgmMute);
-            sfxMute.onValueChanged.AddListener(SfxMute);
+            masterMute.onClick.AddListener(()=> MasterMute(true));
+            bgmMute.onClick.AddListener(()=> BgmMute(true));
+            sfxMute.onClick.AddListener(()=> SfxMute(true));
         }
         void Start()
         {
@@ -74,7 +74,7 @@ namespace CocoDoogy.UI.UserInfo
         
         public override void ClosePanel()
         {
-            WindowAnimation.SwipeWindow(settingsWindow);
+            settingsWindow.gameObject.SetActive(false);
             PageCameraSwiper.IsSwipeable = true;
         }
 
@@ -83,13 +83,11 @@ namespace CocoDoogy.UI.UserInfo
             if (value <= 0)
             {
                 masterIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
-                masterInnerIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
             }
             else
             {
                 masterIcon.DOColor(new Color(1, 1, 1), 0.2f);
-                masterInnerIcon.DOColor(new Color(1, 1, 1), 0.2f);
-                masterMute.isOn = false;
+                MasterMute(false);
             }
 
             AudioSetting.MasterVolume = value;
@@ -104,7 +102,7 @@ namespace CocoDoogy.UI.UserInfo
             else
             {
                 bgmIcon.DOColor(new Color(1, 1, 1), 0.2f);
-                bgmMute.isOn = false;
+                BgmMute(false);
             }
 
             AudioSetting.BgmVolume = value;
@@ -115,11 +113,13 @@ namespace CocoDoogy.UI.UserInfo
             if (value <= 0)
             {
                 sfxIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
+                sfxInnerIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
             }
             else
             {
                 sfxIcon.DOColor(new Color(1, 1, 1), 0.2f);
-                sfxMute.isOn = false;
+                sfxInnerIcon.DOColor(new Color(1, 1, 1), 0.2f);
+                SfxMute(false);
             }
 
             AudioSetting.SfxVolume = value;
@@ -127,41 +127,53 @@ namespace CocoDoogy.UI.UserInfo
         }
 
         #region Mute Events
-        void MasterMute(bool isOn)
+        void MasterMute(bool mute)
         {
-            if (isOn)
+            masterMute.onClick.RemoveAllListeners();
+            
+            if (mute)
             {
+                masterMute.onClick.AddListener(()=> MasterMute(false));
                 lastMasterVolume = masterVolume.value;
                 masterVolume.value = 0;
             }
             else
             {
+                masterMute.onClick.AddListener(()=> MasterMute(true));
                 if (masterVolume.value <= 0) masterVolume.value = lastMasterVolume;
                 AudioSetting.MasterVolume = masterVolume.value;
             }
         }
-        void BgmMute(bool isOn)
+        void BgmMute(bool mute)
         {
-            if (isOn)
+            bgmMute.onClick.RemoveAllListeners();
+            
+            if (mute)
             {
+                bgmMute.onClick.AddListener(()=> BgmMute(false));
                 lastBgmVolume = bgmVolume.value;
                 bgmVolume.value = 0;
             }
             else
             {
+                bgmMute.onClick.AddListener(()=> BgmMute(true));
                 if (bgmVolume.value <= 0) bgmVolume.value = lastBgmVolume;
                 AudioSetting.BgmVolume = bgmVolume.value;
             }
         }
-        void SfxMute(bool isOn)
+        void SfxMute(bool mute)
         {
-            if (isOn)
+            sfxMute.onClick.RemoveAllListeners();
+            
+            if (mute)
             {
+                sfxMute.onClick.AddListener(()=> SfxMute(false));
                 lastSfxVolume = sfxVolume.value;
                 sfxVolume.value = 0;
             }
             else
             {
+                sfxMute.onClick.AddListener(()=> SfxMute(true));
                 if (sfxVolume.value <= 0) sfxVolume.value = lastSfxVolume;
                 AudioSetting.SfxVolume = sfxVolume.value;
             }

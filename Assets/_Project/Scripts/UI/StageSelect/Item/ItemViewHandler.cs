@@ -23,7 +23,7 @@ namespace CocoDoogy.UI.StageSelect.Item
         {
             DataManager.Instance.OnPrivateUserDataLoaded += Refresh;
         }
-        
+
         private void OnEnable()
         {
             InitAsync();
@@ -34,7 +34,7 @@ namespace CocoDoogy.UI.StageSelect.Item
             ClearToggleEvent();
             DataManager.Instance.OnPrivateUserDataLoaded -= Refresh;
         }
-        
+
         /// <summary>
         /// 스테이지 버튼을 클릭해서 StageUI가 나오게 되면 UI를 초기화 하는 메서드
         /// </summary>
@@ -59,7 +59,7 @@ namespace CocoDoogy.UI.StageSelect.Item
                 itemInfoButtons[i].Init(itemDictionary, initItem);
             }
         }
-        
+
         private void ClearToggleEvent()
         {
             foreach (var button in itemInfoButtons)
@@ -74,7 +74,7 @@ namespace CocoDoogy.UI.StageSelect.Item
         /// <param name="itemButton"></param>
         private void OnClickButton(ItemButton itemButton)
         {
-            InfoDialog.ShowInfo("아이템 정보", "아이템 설명",itemButton.ItemData.itemDescription, itemButton.ItemData.itemSprite, DialogMode.Confirm, OpenShopUI, "상점가기");
+            InfoDialog.ShowInfo("아이템 정보", itemButton.ItemData.itemName,itemButton.ItemData.itemDescription, itemButton.ItemData.itemSprite, DialogMode.Confirm, OpenShopUI, "상점");
         }
 
         private void OpenShopUI(CallbackType callbackType)

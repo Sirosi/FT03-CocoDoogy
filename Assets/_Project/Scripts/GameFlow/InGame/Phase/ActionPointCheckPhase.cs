@@ -1,3 +1,4 @@
+using CocoDoogy.EmoteBillboard;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.Tile;
 using CocoDoogy.UI.Popup;
@@ -8,7 +9,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
     /// <summary>
     /// ActionPoint가 부족해서 이동 불가에 빠졌는지 체크
     /// </summary>
-    public class ActionPointCheckPhase: IPhase
+    public class ActionPointCheckPhase : IPhase
     {
         public bool OnPhase()
         {
@@ -33,10 +34,15 @@ namespace CocoDoogy.GameFlow.InGame.Phase
 
         private void ProcessDefeat()
         {
-            // TODO: 추후, 아이템을 사용할 거냔 그런 거 넣어야 함
-            ItemHandler.UseItem();
-            GameEndPopup.OpenPopup(true);
-            // MessageDialog.ShowMessage("미아", "집을 영구적으로 잃었습니다.", DialogMode.Confirm, _ => SceneManager.LoadScene("Lobby"));
+            // 슬픔 감정 트리거 (게임오버 확정)
+            EmotionSystemHandler.TriggerGameDefeat();
+
+            InGameManager.Timer.Pause();
+            ItemHandler.UseItem(() =>
+            {
+                GameEndPopup.OpenPopup(true, 0);
+                InGameManager.Timer.Stop();
+            });
         }
     }
 }
