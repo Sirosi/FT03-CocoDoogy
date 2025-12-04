@@ -33,6 +33,8 @@ namespace CocoDoogy.EmoteBillboard
         [Tooltip("지루함 감지 트리거 시간 (초)")]
         [SerializeField] private float boredomThreshold = 10f;
 
+        [SerializeField] private float eotionDelay = 0.5f; // 감정 표시 딜레이 (초)
+
         // 현재 표시 중인 감정 (중첩 방지)
         private Emotion currentEmotion = Emotion.None;
         private bool isShowingEmotion = false;
@@ -47,6 +49,8 @@ namespace CocoDoogy.EmoteBillboard
 
         // 행동력 변경 추적용
         private int previousActionPoints = 0;
+
+        private float lastShowEmotionTime = 0f;
 
         private void OnEnable()
         {
@@ -232,17 +236,21 @@ namespace CocoDoogy.EmoteBillboard
                 }
             }
 
-            // 감정 표시
-            ShowEmotion(emotion);
+            // 감정 표시 (딜레이 후)
+            StartCoroutine(ShowEmotionWithDelay(emotion));
         }
 
         /// <summary>
-        /// 감정 표시
+        /// 딜레이 후 감정 표시 코루틴
         /// </summary>
-        private void ShowEmotion(Emotion emotion)
+        private IEnumerator ShowEmotionWithDelay(Emotion emotion)
         {
-            if (!emoteBillboard) return;
-            if (!InGameManager.IsValid) return;
+            // 딜레이 대기
+            yield return new WaitForSeconds(eotionDelay);
+
+            // 실제 감정 표시
+            if (!emoteBillboard) yield break;
+            if (!InGameManager.IsValid) yield break;
 
             currentEmotion = emotion;
             isShowingEmotion = true;
