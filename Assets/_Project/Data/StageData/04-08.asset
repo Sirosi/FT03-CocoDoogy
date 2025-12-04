@@ -15,8 +15,11 @@ MonoBehaviour:
   theme: 8
   index: 8
   stageName: 4-8
-  mapData: {fileID: 4900000, guid: 4ddeb0029f5edca479f63d3f253aaa7f, type: 3}
-  starThresholds: 020000000300000004000000
-  tileData: []
+  mapData: {fileID: 4900000, guid: 411288f2870695c48acb0256a83499f4, type: 3}
+  starThresholds: 000000000000000000000000
+  tileData:
+  - {fileID: 11400000, guid: 0e2c8b312dcb6b64fb128855ad2758c5, type: 2}
+  - {fileID: 11400000, guid: dc8a330fa474952409900717bdb611e9, type: 2}
   pieceData: []
-  weatherData: []
+  weatherData:
+  - {fileID: 11400000, guid: b9f99e3a48fb58043912f42b203837be, type: 2}

@@ -31,7 +31,8 @@ namespace CocoDoogy.UI.InGame
                 ItemData itemData = DataManager.Instance.ItemData[i];
                 itemButtons[i].ItemData = itemData;
                 itemButtons[i].OnClicked += ShowInfo;
-                ItemHandler.SetValue(itemData, DataManager.Instance.CurrentItem[itemData] > 0);
+                itemButtons[i].SetColor(DataManager.Instance.CurrentItem[itemData] > 0);
+                ItemHandler.SetValue(itemData, true);
             }
         }
 
@@ -59,18 +60,12 @@ namespace CocoDoogy.UI.InGame
         /// <param name="value"></param>
         private void OnItemValueChanged(ItemData item, bool value)
         {
-            float rgb = value ? 1f : 0.5f;
-            Color targetColor = new(rgb, rgb, rgb);
-
             foreach (var button in itemButtons)
             {
                 if (button.ItemData == item && button.Button)
                 {
                     button.Button.interactable = value;
-                    foreach (var graphic in button.GetComponentsInChildren<Graphic>(true))
-                    {
-                        graphic.DOColor(targetColor, 0.2f);
-                    }
+                    button.SetColor(value);
                 }
             }
         }

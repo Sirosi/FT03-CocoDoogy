@@ -1,3 +1,4 @@
+using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Command.Content;
 using Cysharp.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace CocoDoogy.UI.Replay
         
         [SerializeField] private float delay = 0.5f; // 명령 간 딜레이 (초)
         
+        
         private bool IsPaused;
         private void Awake()
         {
@@ -29,7 +31,13 @@ namespace CocoDoogy.UI.Replay
             undoButton.onClick.AddListener(Undo);
             pauseButton.onClick.AddListener(ReplayPause);
 
-            
+            PlayerHandler.IsBehaviourEnd += ButtonStateChange;
+        }
+
+        private void ButtonStateChange()
+        {
+            undoButton.interactable = !undoButton.interactable;
+            redoButton.interactable = !redoButton.interactable;
         }
 
         private void Start()
@@ -63,14 +71,17 @@ namespace CocoDoogy.UI.Replay
                 await UniTask.Delay((int)(delay * 1000)); // ms 단위
             }
         }
-        
+
         private void Undo()
         {
             CommandManager.UndoCommandAuto();
+            ButtonStateChange();
         }
+
         private void Redo()
         {
             CommandManager.RedoCommandAuto();
+            ButtonStateChange();
         }
     }
 }
