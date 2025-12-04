@@ -26,19 +26,12 @@ namespace CocoDoogy.UI.Replay
             undoButton.interactable = false;
             pauseButton.interactable = true;
             redoButton.interactable = false;
-            
+            Debug.Log("버튼 비활성화");
             redoButton.onClick.AddListener(Redo);
             undoButton.onClick.AddListener(Undo);
             pauseButton.onClick.AddListener(ReplayPause);
-
-            PlayerHandler.IsBehaviourEnd += ButtonStateChange;
         }
 
-        private void ButtonStateChange()
-        {
-            undoButton.interactable = !undoButton.interactable;
-            redoButton.interactable = !redoButton.interactable;
-        }
 
         private void Start()
         {
@@ -74,14 +67,26 @@ namespace CocoDoogy.UI.Replay
 
         private void Undo()
         {
+            undoButton.interactable = false;
+            redoButton.interactable = false;
             CommandManager.UndoCommandAuto();
-            ButtonStateChange();
+            _ = StateChange();
         }
 
         private void Redo()
         {
+            undoButton.interactable = false;
+            redoButton.interactable = false;
             CommandManager.RedoCommandAuto();
-            ButtonStateChange();
+            _ = StateChange();
         }
+
+        private async UniTask StateChange()
+        {
+            await UniTask.Delay((int)(delay * 1000));
+            undoButton.interactable = true;
+            redoButton.interactable = true;
+        }
+        
     }
 }

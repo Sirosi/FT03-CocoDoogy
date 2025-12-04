@@ -18,8 +18,7 @@ namespace CocoDoogy.GameFlow.InGame
     {
         public static event Action<Vector2Int, PlayerEventType> OnEvent = null;
         public static Action<Vector2Int, PlayerEventType> OnEventCallback => OnEvent;
-
-        public static Action IsBehaviourEnd = null;
+        
 
         /// <summary>
         /// 플레이어가 인게임에 들어와서 행동을 했는지 여부
@@ -194,7 +193,7 @@ namespace CocoDoogy.GameFlow.InGame
                 GimmickExecutor.ExecuteFromTrigger(preGravityButton
                     .Value); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
             }
-
+            Debug.Log("리필?");
             OnBehaviourCompleted();
         }
 
@@ -290,7 +289,6 @@ namespace CocoDoogy.GameFlow.InGame
             DOTween.Kill(Instance, false);
             Instance.anim.ChangeAnim(AnimType.Idle);
             Instance.lockBehaviour = false;
-            IsBehaviourEnd?.Invoke();
             InGameManager.ProcessPhase();
         }
 
