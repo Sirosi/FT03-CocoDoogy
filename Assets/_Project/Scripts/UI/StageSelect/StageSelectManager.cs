@@ -1,7 +1,7 @@
 using CocoDoogy.CameraSwiper;
 using CocoDoogy.Core;
 using CocoDoogy.Data;
-using CocoDoogy.Network;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,10 +9,21 @@ namespace CocoDoogy.UI.StageSelect
 {
     public class StageSelectManager : Singleton<StageSelectManager>
     {
+        public static event Action<StageInfo> OnLastClearStageChanged = null;
+
         /// <summary>
         /// 해당 계정이 가장 마지막에 클리어한 가장 높은 스테이지
         /// </summary>
-        public static StageInfo LastClearedStage { get; set; }
+        public static StageInfo LastClearedStage
+        {
+            get => lastClearedStage;
+            set
+            {
+                lastClearedStage = value;
+                OnLastClearStageChanged?.Invoke(lastClearedStage);
+            }
+        }
+        private static StageInfo lastClearedStage = null;
 
         [Header("Main UIs")]
         [SerializeField] private RectTransform lobbyUIPanel;
