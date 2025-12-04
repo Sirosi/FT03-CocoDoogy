@@ -25,6 +25,14 @@ namespace CocoDoogy.Tutorial
 
 
         private bool preRaycastTarget = true;
+        private float lastTouchTime = 0f;
+
+
+        protected override void Awake()
+        {
+            base.Awake();
+            lastTouchTime = Time.time;
+        }
         
 
         public static void Show(string content)
@@ -87,6 +95,9 @@ namespace CocoDoogy.Tutorial
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if(lastTouchTime + 0.1f > Time.time) return;
+
+            lastTouchTime = Time.time;
             OnTouched?.Invoke();
         }
     }
