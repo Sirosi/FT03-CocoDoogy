@@ -1,4 +1,5 @@
 using CocoDoogy.Core;
+using CocoDoogy.GameFlow.InGame;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -78,9 +79,9 @@ namespace CocoDoogy.MiniGame.TrashGame
         /// </summary>
         protected override void OnOpenInit()
         {
-            Theme theme = Theme.Forest;  //TODO: 나중에 맵 데이터에서 호출하게 변경
+            Theme nowTheme = InGameManager.Stage.theme;  //TODO: 나중에 맵 데이터에서 호출하게 변경
             trashes.Clear();
-            StartTrashGame(theme);
+            StartTrashGame(nowTheme);
         }
 
         protected override void Disable()

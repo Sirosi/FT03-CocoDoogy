@@ -29,7 +29,7 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
 
         #region 핸드폰 흔들기를 감지하기위해 필요한 필드
          [SerializeField] private float shakeThreshold = 1.5f; // 감지 임계값
-         [SerializeField] private float minIntervalShake = 1f;
+         [SerializeField] private float minIntervalShake = 0.3f;
          private float timeSinceLastShake = 0f;
         #endregion
 
