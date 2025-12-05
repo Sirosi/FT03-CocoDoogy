@@ -1,6 +1,7 @@
 using CocoDoogy.Core;
 using CocoDoogy.Data;
 using CocoDoogy.GameFlow.InGame;
+using CocoDoogy.GameFlow.InGame.Weather;
 using CocoDoogy.UI.Highlight;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace CocoDoogy.Tutorial
         [Header("For UI Trace")]
         [SerializeField] private RectTransform actionPointsUI;
         [SerializeField] private RectTransform refillButton;
+        [SerializeField] private RectTransform weatherIcon;
 
 
         private int index = 0;
@@ -211,19 +213,22 @@ namespace CocoDoogy.Tutorial
                     TutorialUI.OnRaycast();
                     return;
                 case 1:
-                    TutorialUI.Show("금방이라도 비 형이 와서 레이니즘을 부를 것 같아");
+                    TutorialUI.Show("금방이라도 비가 올 것 같아!");
+                    return;
+                case 2:
+                    targetWeather = WeatherType.Rain;
+                    WeatherManager.OnWeatherChanged += OnWeatherChagned;
+                    TutorialUI.Close();
                     return;
                 case 3:
-                    PlayerHandler.OnEvent += OnPlayerActioned;
-                    targetGridPos = new Vector2Int(1, -2);
-                    targetEventType = PlayerEventType.Move;
-                    Highlighter.FocusTile(new Vector2Int(1, -2));
-                    TutorialUI.Show("일단 맛있는 걸 먹고 조금만 더 놀아야지");
+                    print("박정희");
+                    WeatherManager.OnWeatherChanged -= OnWeatherChagned;
+                    TutorialUI.Show("비가 오니까 흙이 진흙이 됐어!");
+                    Highlighter.FocusUI(weatherIcon.position);
                     return;
                 case 4:
-                    PlayerHandler.OnEvent -= OnPlayerActioned;
-                    Highlighter.FocusUI(refillButton.position);
-                    TutorialUI.Show("이제 다시 돌아가면 집으로 갈 수 있을 거 같아!");
+                    Highlighter.FocusTile(new Vector2Int(-2, 2));
+                    TutorialUI.Show("조심해서 마저 가보자!");
                     return;
             }
             TutorialLocker.CameraLock = false;
@@ -238,6 +243,15 @@ namespace CocoDoogy.Tutorial
         {
             if ( targetEventType != eventType ) return;
             if ( targetGridPos != gridPos && targetEventType == PlayerEventType.Move ) return;
+
+            OnTouched();
+        }
+
+        private WeatherType targetWeather = WeatherType.None;
+        private void OnWeatherChagned(WeatherType weather)
+        {
+            print($"야스가 좋은 7세:{weather}");
+            if(weather != targetWeather) return;
 
             OnTouched();
         }
