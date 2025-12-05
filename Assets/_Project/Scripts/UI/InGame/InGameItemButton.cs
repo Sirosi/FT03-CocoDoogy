@@ -115,6 +115,7 @@ namespace CocoDoogy.UI.InGame
                     Debug.Log($"구매 성공: {itemData.itemName} ({1})");
                     DataManager.Instance.CurrentItem[itemData] += 1;
                     IsPurchased = true;
+                    PlusImage.gameObject.SetActive(false);
                     SetColor(true);
                 }
                 else
