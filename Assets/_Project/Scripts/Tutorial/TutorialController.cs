@@ -49,10 +49,10 @@ namespace CocoDoogy.Tutorial
             {
                 Tutorial1_4(index);
             }
-            /*else if(IsEqual(stage, Theme.Forest, 2))
+            else if(IsEqual(stage, Theme.Water, 16))
             {
                 Tutorial2_16(index);
-            }*/
+            }
             else
             {
                 TutorialLocker.CameraLock = false;
@@ -190,7 +190,7 @@ namespace CocoDoogy.Tutorial
                     TutorialUI.Show("이제 다시 돌아가면 집으로 갈 수 있을 거 같아!");
                     return;
                 case 5:
-                    TutorialUI.Close();
+                    TutorialUI.OffRaycast();
                     return;
                 case 6:
                     PlayerHandler.OnEvent -= OnPlayerActioned;
