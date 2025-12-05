@@ -23,9 +23,7 @@ namespace CocoDoogy.UI.Gift
 
         [Header("Null Message")]
         [SerializeField] private TextMeshProUGUI nullMessage;
-
-        FirebaseManager Firebase => FirebaseManager.Instance;
-
+        
         private void Awake()
         {
             closeThisButton.onClick.AddListener(ClosePanel);
@@ -62,7 +60,8 @@ namespace CocoDoogy.UI.Gift
                 var item = Instantiate(prefabItem, container);
                 item.GetComponent<GiftItem>().Init(kvp["fromNickname"].ToString(),
                     kvp["giftId"].ToString(),
-                    kvp["giftCount"].ToString()
+                    kvp["giftCount"].ToString(),
+                    false
                     , OnTakePresentAsync);
             }
 
@@ -78,23 +77,28 @@ namespace CocoDoogy.UI.Gift
             var requestDict = await FirebaseManager.GetGiftListAsync();
             foreach (var kvp in requestDict)
             {
-                OnTakePresentAsync(kvp["giftId"].ToString());
+                OnTakePresentAsync(kvp["giftId"].ToString(), true);
             }
+            MessageDialog.ShowMessage("선물 받기 성공", "선물 받기를 성공했습니다.", DialogMode.Confirm, null);
         }
-        
-        private async void OnTakePresentAsync(string itemType)
+
+        private async void OnTakePresentAsync(string itemType, bool allTake = false)
         {
             var result = await FirebaseManager.TakeGiftRequestAsync(itemType);
             bool success = (bool)result["success"];
 
-            if (success)
+            if (success && !allTake)
             {
                 MessageDialog.ShowMessage("선물 받기 성공", "선물 받기를 성공했습니다.", DialogMode.Confirm, null);
             }
-            else
+            else if (!success)
             {
                 string reason = result.ContainsKey("reason") ? result["reason"].ToString() : "알 수 없는 이유";
                 MessageDialog.ShowMessage("선물 받기 실패", reason, DialogMode.Confirm, null);
+            }
+            else
+            {
+                Debug.Log("선물 모두 받기 중 에러 발생");
             }
         }
     }

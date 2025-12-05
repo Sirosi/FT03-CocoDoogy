@@ -12,17 +12,17 @@ namespace CocoDoogy.UI.Gift
         [SerializeField] private TextMeshProUGUI giftCount;
         [SerializeField] private Button takeGiftButton;
 
-        private Action<string> onTake;
+        private Action<string, bool> onTake;
 
         private string itemType;
-        public void Init(string nickname, string type, string itemCount, Action<string> takeCallback)
+        public void Init(string nickname, string type, string itemCount, bool allTake, Action<string, bool> takeCallback)
         {
             itemType = type;
             giftName.text = nickname;
             giftCount.text = itemCount;
             onTake = takeCallback;
 
-            takeGiftButton.onClick.AddListener(() => onTake?.Invoke(itemType));
+            takeGiftButton.onClick.AddListener(() => onTake?.Invoke(itemType, allTake));
         }
     }
 }

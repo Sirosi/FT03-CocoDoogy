@@ -42,25 +42,25 @@ namespace CocoDoogy.UI.UserInfo
                 if (ticketCount > 99)
                 {
                     ticketCountText.text = $"99+/{FirebaseManager.MaxRegenTicket}";
-                    realtimeTicket.text =  $"코코 도장 : 99+개 보유 중\n5분마다 하나씩 충전됩니다.";
                 }
                 else
                 {
                     ticketCountText.text = $"{ticketCount.ToString()} / {FirebaseManager.MaxRegenTicket}";
-                    realtimeTicket.text =  $"코코 도장 : {ticketCount.ToString()}개 보유 중\n5분마다 하나씩 충전됩니다.";
                 }
 
                 long cashMoney = (long)data["cashMoney"];
                 if (cashMoney > 99999)
                 {
                     cashMoneyText.text = "99,999+";
-                    realtimeMoney.text = $"두기 잼 : 99,999+개 보유 중\n해당 재화를 통해\n코코 도장과 아이템 구매 가능";
                 }
                 else
                 {
                     cashMoneyText.text = cashMoney.ToString("N0");
-                    realtimeMoney.text = $"두기 잼 : {cashMoney.ToString("N0")}개 보유 중\n해당 재화를 통해\n코코 도장과 아이템 구매 가능";
                 }
+                    
+                
+                realtimeTicket.text =  $"코코 도장 : {ticketCount.ToString()}개 보유 중\n5분마다 하나씩 충전됩니다.";
+                realtimeMoney.text = $"두기 잼 : {cashMoney.ToString("N0")}개 보유 중\n해당 재화를 통해\n코코 도장과 아이템 구매 가능";
             }
             else
             {

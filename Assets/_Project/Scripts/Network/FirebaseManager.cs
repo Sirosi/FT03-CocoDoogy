@@ -29,6 +29,8 @@ namespace CocoDoogy.Network
         /// </summary>
         public event Action OnFirebaseInitialized;
 
+        public event Action OnDisconnectInternet;
+
         protected override void Awake()
         {
             base.Awake();

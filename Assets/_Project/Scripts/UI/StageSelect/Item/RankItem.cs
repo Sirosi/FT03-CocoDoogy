@@ -26,13 +26,13 @@ namespace CocoDoogy.UI.StageSelect.Item
         /// <summary>
         /// 스테이지 선택창에서 스테이지를 선택하면 해당 스테이지의 랭킹을 띄우는 아이템의 초기화
         /// </summary>
-        public void Init(string rank, string nickname, string resetCount, string remainAP, double clearTime, string replay, int starCount, StageData stage)
+        public void Init(string rank, string nickname, string resetCount, string remainAP, float clearTime, string replay, int starCount, StageData stage)
         {
             rankText.text = rank;
             nicknameText.text = nickname;
             resetCountText.text = resetCount;
             remainAPText.text = remainAP;
-            OnTimeChanged((float)clearTime);
+            OnTimeChanged(clearTime);
 
             ReplayUIManager.consumeAP = remainAP;
             ReplayUIManager.refillCount = resetCount;
@@ -44,6 +44,16 @@ namespace CocoDoogy.UI.StageSelect.Item
             stageData = stage;
             // TODO: 본인이 클리어한 스테이지가 별이3개 
             replayButton.interactable = starCount == 3;
+        }
+
+        public void Clear()
+        {
+            rankText.text = "순위외";
+            nicknameText.text = DataManager.Instance.UserData.NickName;
+            replayButton.interactable = false;
+            resetCountText.text = "0";
+            remainAPText.text = "0";
+            OnTimeChanged(0);
         }
         
         /// <summary>

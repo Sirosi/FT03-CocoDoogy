@@ -18,7 +18,9 @@ namespace CocoDoogy.UI.Replay
         [SerializeField] private Button redoButton;
         
         [SerializeField] private float delay = 0.5f; // 명령 간 딜레이 (초)
-        
+
+        [SerializeField] private GameObject playIcon;
+        [SerializeField] private GameObject pauseIcon;
         
         private bool IsPaused;
         private void Awake()
@@ -26,10 +28,13 @@ namespace CocoDoogy.UI.Replay
             undoButton.interactable = false;
             pauseButton.interactable = true;
             redoButton.interactable = false;
-            Debug.Log("버튼 비활성화");
+            
             redoButton.onClick.AddListener(Redo);
             undoButton.onClick.AddListener(Undo);
             pauseButton.onClick.AddListener(ReplayPause);
+            
+            playIcon.gameObject.SetActive(IsPaused);
+            pauseIcon.gameObject.SetActive(!IsPaused);
         }
 
 
@@ -43,6 +48,8 @@ namespace CocoDoogy.UI.Replay
             IsPaused = !IsPaused;
             undoButton.interactable = !undoButton.interactable;
             redoButton.interactable = !redoButton.interactable;
+            playIcon.gameObject.SetActive(IsPaused);
+            pauseIcon.gameObject.SetActive(!IsPaused);
         }
         
         private async UniTaskVoid StartReplay()

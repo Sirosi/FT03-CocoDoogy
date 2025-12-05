@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1829738561049236941}
   - component: {fileID: 8884511360502333469}
   - component: {fileID: 907077531411847894}
+  - component: {fileID: 2393562919345064266}
   m_Layer: 0
   m_Name: CoreManager
   m_TagString: Untagged
@@ -291,6 +292,18 @@ MonoBehaviour:
   touchEffectPrefab: {fileID: 2322220917563826550, guid: 1746761676261dd458f073587443f9cb, type: 3}
   onlyOneFinger: 1
   canvasRect: {fileID: 1771006052046265290}
+--- !u!114 &2393562919345064266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864466465157205230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beaa1ddf50774870885f6617ba3d519f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8724078286053695815
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,7 +35,8 @@ exports.stageClear = onCall(fnConfig, async (request) => {
                 replayId,
                 theme,
                 level,
-                star
+                star,
+                refillPoints,
             );
         });
 

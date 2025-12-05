@@ -36,7 +36,7 @@ namespace CocoDoogy.UI.Friend
             uid = receivedUid;
             nicknameText.text = nickname;
             StageInfo record = await FirebaseManager.GetLastClearStage(uid);
-            recordText.text = $"{record.theme.Hex2Int()}테마 {record.level.Hex2Int()}";
+            recordText.text = $"{(record != null ? record.theme.Hex2Int():"X" )} 테마 {(record != null ? record.level.Hex2Int():"X")} 스테이지";
             onAccept = acceptCallback;
             onReject = rejectCallback;
 
@@ -55,7 +55,7 @@ namespace CocoDoogy.UI.Friend
             uid = sentUid;
             nicknameText.text = nickname;
             StageInfo record = await FirebaseManager.GetLastClearStage(uid);
-            recordText.text = $"{record.theme.Hex2Int()}테마 {record.level.Hex2Int()}";
+            recordText.text = $"{(record != null ? record.theme.Hex2Int():"X" )} 테마 {(record != null ? record.level.Hex2Int():"X")} 스테이지";
             onCancel = cancelCallback;
 
             cancelButton.onClick.AddListener(() => onCancel?.Invoke(sentUid));
@@ -66,7 +66,7 @@ namespace CocoDoogy.UI.Friend
             this.uid = uid;
             nicknameText.text = nickname;
             StageInfo record = await FirebaseManager.GetLastClearStage(uid);
-            recordText.text = $"{record.theme.Hex2Int()}테마 {record.level.Hex2Int()}";
+            recordText.text = $"{(record != null ? record.theme.Hex2Int():"X" )} 테마 {(record != null ? record.level.Hex2Int():"X")} 스테이지";
             onPresent = presentCallback;
             onDelete = cancelCallback;
 

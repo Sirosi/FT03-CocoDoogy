@@ -64,12 +64,14 @@ namespace CocoDoogy.UI.UserInfo
 
         void OnEnable()
         {
+            Time.timeScale = 0;
             InGameManager.Timer.Pause();
         }
 
         void OnDisable()
         {
             InGameManager.Timer.Start();
+            Time.timeScale = 1;
         }
         
         public override void ClosePanel()

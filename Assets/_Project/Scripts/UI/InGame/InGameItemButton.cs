@@ -15,8 +15,15 @@ namespace CocoDoogy.UI.InGame
     // TODO : Undo 아이템 사용 시 이전 행동에 
     public class InGameItemButton : MonoBehaviour
     {
+        [SerializeField] private Image plusImage;
         public Button Button { get; private set; }
         public Image ButtonColor { get; private set; }
+
+        public Image PlusImage
+        {
+            get =>  plusImage;
+            set => plusImage = value;
+        }
         
         /// <summary>
         /// 해당 버튼이 가지고 있는 ItemData를 InGameItemUI에서 넣어줌
@@ -108,6 +115,7 @@ namespace CocoDoogy.UI.InGame
                     Debug.Log($"구매 성공: {itemData.itemName} ({1})");
                     DataManager.Instance.CurrentItem[itemData] += 1;
                     IsPurchased = true;
+                    SetColor(true);
                 }
                 else
                 {
