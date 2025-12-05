@@ -56,7 +56,6 @@ namespace CocoDoogy.Network
                             DialogMode.Confirm, 
                             ThrowIntro
                         );
-                        isPopup = null;
                     }
                 }
                 else
@@ -93,6 +92,7 @@ namespace CocoDoogy.Network
         {
             if(callbackType == CallbackType.Yes)
             {
+                isPopup = null;
                 Loading.LoadScene("Intro");
             }
         }

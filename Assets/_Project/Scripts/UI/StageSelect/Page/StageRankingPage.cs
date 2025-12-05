@@ -21,6 +21,7 @@ namespace CocoDoogy.UI.StageSelect.Page
         private void OnDisable()
         {
             userRankItem.Clear();
+            userRank = null;
             for (int i = container.childCount - 1; i >= 0; i--)
             {
                 LeanPool.Despawn(container.GetChild(i).gameObject);
@@ -67,7 +68,7 @@ namespace CocoDoogy.UI.StageSelect.Page
             }
             else
             {
-                userRankItem.Init(userRank.ToString(), DataManager.Instance.UserData.NickName, userRank.refillPoints.ToString(),
+                userRankItem.Init(userRank.rank.ToString(), DataManager.Instance.UserData.NickName, userRank.refillPoints.ToString(),
                     userRank.remainAP, (float)userRank.clearTime, userRank.replayId, CurrentStageStar, StageData);
             }
         }
