@@ -149,6 +149,7 @@ namespace CocoDoogy.UI.Popup
                 if (isReady)
                 {
                     SfxManager.StopDucking();
+                    ItemHandler.UseItem();
                     Loading.LoadScene("InGame");
                 }
                 else

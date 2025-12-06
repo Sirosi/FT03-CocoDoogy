@@ -2,6 +2,7 @@ using CocoDoogy.Core;
 using CocoDoogy.UI.Popup;
 using CocoDoogy.Utility.Loading;
 using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,7 @@ namespace CocoDoogy.Network
         private MessageDialog isPopup;
         private FirebaseLoading loadingUI;
         private bool isChecking = false;
+
         protected override void Awake()
         {
             base.Awake();
@@ -35,9 +37,9 @@ namespace CocoDoogy.Network
                 if (!nowConnected)
                 {
                     Debug.Log("인터넷 끊김! 재연결 시도중…");
-
-                    loadingUI = FirebaseLoading.ShowLoading();
                     
+                    loadingUI = FirebaseLoading.ShowLoading();
+
                     bool reconnected = await WaitForReconnect(10f);
 
                     if (reconnected)

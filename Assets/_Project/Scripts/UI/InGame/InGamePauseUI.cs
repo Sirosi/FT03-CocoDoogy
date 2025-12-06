@@ -71,6 +71,7 @@ namespace CocoDoogy.UI.InGame
                 if (isReady)
                 {
                     SfxManager.StopDucking();
+                    ItemHandler.UseItem();
                     Loading.LoadScene("InGame");
                 }
                 else
@@ -90,6 +91,7 @@ namespace CocoDoogy.UI.InGame
             if (type == CallbackType.Yes)
             {
                 SfxManager.StopDucking();
+                ItemHandler.UseItem();
                 Loading.LoadScene("Lobby");
             }
         }

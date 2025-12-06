@@ -40,6 +40,11 @@ namespace CocoDoogy.UI.Friend
             }
         }
 
+        private async void GetAllGiftRequestAsync()
+        {
+            
+        }
+
         protected override async Task RefreshPanelAsync()
         {
             foreach (Transform child in container)
@@ -64,5 +69,7 @@ namespace CocoDoogy.UI.Friend
                 nullMessage.gameObject.SetActive(false);
             }
         }
+        
+        
     }
 }

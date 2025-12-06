@@ -127,9 +127,73 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 670428707493747646, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 678595085083302565, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
       propertyPath: m_Name
       value: World
+      objectReference: {fileID: 0}
+    - target: {fileID: 1116251806222556277, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1326660274801405836, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767497018411354634, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2162172388873962609, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3402221785359345565, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3867183636968793762, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051845227978460697, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894212967233799539, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119068860147131408, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -192.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119068860147131408, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119068860147131408, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 53.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 6147482596608504389, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6174273118793685097, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6229296312804229047, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6556326960563829538, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7177815490040504817, guid: 0795fc588455fe747b46d0c1b39b6b54, type: 3}
       propertyPath: m_LocalPosition.x
