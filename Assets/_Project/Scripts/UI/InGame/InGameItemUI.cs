@@ -32,8 +32,8 @@ namespace CocoDoogy.UI.InGame
                 itemButtons[i].ItemData = itemData;
                 itemButtons[i].OnClicked += ShowInfo;
                 itemButtons[i].PlusImage.gameObject.SetActive(DataManager.Instance.CurrentItem[itemData] <= 0);
-                itemButtons[i].SetColor(DataManager.Instance.CurrentItem[itemData] > 0);
                 ItemHandler.SetValue(itemData, true);
+                itemButtons[i].SetColor(DataManager.Instance.CurrentItem[itemData] > 0);
             }
         }
 
