@@ -23,8 +23,7 @@ namespace CocoDoogy.UI.Popup
         [SerializeField] private Button purchaseButton;
         [SerializeField] private Button cancelButton;
         [SerializeField] private Button useButton;
-        
-        // TODO: purchase 버튼만 설정이 구매하기, 상점가기 2개가 있어서 텍스트 변경 용도로 남겨둠
+
         [Header("Buttons Text")]
         [SerializeField] private TextMeshProUGUI purchaseButtonText;
 
