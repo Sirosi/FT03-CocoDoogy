@@ -43,6 +43,8 @@ namespace CocoDoogy.UI.StageSelect.Item
             {
                 OnClickEvent?.Invoke(this);
             });
+
+            DataManager.Instance.OnPrivateUserDataLoaded += Refresh;
         }
 
         public void Init(IDictionary<string, object> data, ItemData item)

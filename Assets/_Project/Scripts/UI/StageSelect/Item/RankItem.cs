@@ -42,7 +42,6 @@ namespace CocoDoogy.UI.StageSelect.Item
             
             replayId = replay;
             stageData = stage;
-            // TODO: 본인이 클리어한 스테이지가 별이3개 
             replayButton.interactable = starCount == 3;
         }
 

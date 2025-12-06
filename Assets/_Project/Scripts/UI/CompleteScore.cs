@@ -43,7 +43,6 @@ namespace CocoDoogy.UI
 
         /// <summary>
         /// score를 매개변수로 받아 switch로 분기
-        /// //TODO: 사운드 추가작업 남음
         /// </summary>
         /// <param name="isDefeat"></param>
         /// <param name="score"></param>

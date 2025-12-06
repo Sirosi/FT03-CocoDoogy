@@ -17,7 +17,6 @@ namespace CocoDoogy.UI.IntroAndLogin
         [SerializeField] private Button startButton;
         [SerializeField] private TextMeshProUGUI touchToStartText;
 
-        // TODO : titleImage 흔들리는 효과는 버튼 클릭 시 딱 한번 흔들리고 LoginUI로 전환되게
         [Header("Shake Title Options")]
         [SerializeField] private float moveAmount = 20f;
         [SerializeField] private float titleDuration = 0.5f;
@@ -28,9 +27,6 @@ namespace CocoDoogy.UI.IntroAndLogin
         [Header("Blick Text Effect")]
         [Range(0, 0.3f)]
         [SerializeField] private float minBlinkRatio;
-        
-        // TODO : startButton 클릭 시 LoginUI로 전환되게
-        // TODO : touchToStartText는 깜빡거리다가 startButton 클릭 시 안보이게
         
         private void Awake()
         {

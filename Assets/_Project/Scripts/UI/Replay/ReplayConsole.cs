@@ -76,6 +76,7 @@ namespace CocoDoogy.UI.Replay
         {
             undoButton.interactable = false;
             redoButton.interactable = false;
+            pauseButton.interactable = false;
             CommandManager.UndoCommandAuto();
             _ = StateChange();
         }
@@ -84,6 +85,7 @@ namespace CocoDoogy.UI.Replay
         {
             undoButton.interactable = false;
             redoButton.interactable = false;
+            pauseButton.interactable = false;
             CommandManager.RedoCommandAuto();
             _ = StateChange();
         }
@@ -93,6 +95,7 @@ namespace CocoDoogy.UI.Replay
             await UniTask.Delay((int)(delay * 1000));
             undoButton.interactable = true;
             redoButton.interactable = true;
+            pauseButton.interactable = true;
         }
         
     }

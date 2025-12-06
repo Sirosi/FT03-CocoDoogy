@@ -25,7 +25,7 @@ namespace CocoDoogy.GameFlow.InGame
         /// 스테이지를 클리어 혹은 실패 후 아이템을 사용한 적이 있다면 해당 아이템을 DB에서 -1 하고
         /// </summary>
         /// <param name="openPopup"></param>
-        public async static void UseItem(Action openPopup = null)
+        public static async void UseItem(Action openPopup = null)
         {
             try
             {
@@ -33,7 +33,6 @@ namespace CocoDoogy.GameFlow.InGame
                 {
                     if (!itemData.Value)
                     {
-                        Debug.Log($"itemData:{itemData.Key.itemName}, value: {itemData.Value}");
                         _ = await FirebaseManager.UseItemAsync(itemData.Key.itemId);
                         DataManager.Instance.CurrentItem[itemData.Key]--;
                     }

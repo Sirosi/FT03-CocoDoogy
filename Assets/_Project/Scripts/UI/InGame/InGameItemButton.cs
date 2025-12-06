@@ -12,16 +12,17 @@ using UnityEngine.UI;
 
 namespace CocoDoogy.UI.InGame
 {
-    // TODO : Undo 아이템 사용 시 이전 행동에 
     public class InGameItemButton : MonoBehaviour
     {
+        [SerializeField] private Image buttonImage;
+        [SerializeField] private Image itemImage;
         [SerializeField] private Image plusImage;
         public Button Button { get; private set; }
         public Image ButtonColor { get; private set; }
 
         public Image PlusImage
         {
-            get =>  plusImage;
+            get => plusImage;
             set => plusImage = value;
         }
         
@@ -30,7 +31,14 @@ namespace CocoDoogy.UI.InGame
         /// </summary>
         public ItemData ItemData { get; set; }
 
+        /// <summary>
+        /// 아이템 버튼을 눌렀을 때 작동하는 이벤트
+        /// </summary>
         public Action<InGameItemButton, ItemData> OnClicked;
+        
+        /// <summary>
+        /// 아이템을 InGame내에서 구매했는지 여부
+        /// </summary>
         public bool IsPurchased { get; private set; } = false; 
         
         private void Awake()
@@ -135,10 +143,8 @@ namespace CocoDoogy.UI.InGame
         {
             float rgb = active ? 1f : 0.5f;
             Color targetColor = new(rgb, rgb, rgb);
-            foreach (var graphic in Button.GetComponentsInChildren<Graphic>(true))
-            {
-                graphic.DOColor(targetColor, 0.2f);
-            }
+            buttonImage.DOColor(targetColor, 0.2f);
+            itemImage.DOColor(targetColor, 0.2f);
         }
     }
 }

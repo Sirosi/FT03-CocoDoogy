@@ -11,8 +11,6 @@ using UnityEngine;
 
 namespace CocoDoogy.Network
 {
-
-    // TODO : 나중에 구조 변경 생각
     public partial class FirebaseManager : Singleton<FirebaseManager>
     {
         public FirebaseAuth Auth { get; private set; }

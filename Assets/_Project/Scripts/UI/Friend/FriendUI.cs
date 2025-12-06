@@ -1,5 +1,8 @@
 using CocoDoogy.CameraSwiper;
+using CocoDoogy.Network;
+using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.UserInfo;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +31,9 @@ namespace CocoDoogy.UI.Friend
         [SerializeField] private ReceivedRequestPanel receivedRequestPanel;
         [SerializeField] private SentRequestPanel sentRequestPanel;
 
+        [Header("Take All Gift Button")]
+        [SerializeField] private CommonButton takeAllGiftButton;
+        
         public FriendsInfoPanel FriendsInfoPanel => friendsInfoPanel;
         public ReceivedRequestPanel ReceivedRequestPanel => receivedRequestPanel;
         public SentRequestPanel SentRequestPanel => sentRequestPanel;
@@ -44,8 +50,8 @@ namespace CocoDoogy.UI.Friend
             friendsRequestButton.onClick.AddListener(OnClickFriendRequestButton);
             friendsSentButton.onClick.AddListener(OnClickFriendSentButton);
             searchFriendButton.onClick.AddListener(OnClickFriendSearch);
+            takeAllGiftButton.onClick.AddListener(OnClickSendGiftAllFriendAsync);
         }
-
         private void OnEnable()
         {
             InitTabs();
@@ -107,6 +113,23 @@ namespace CocoDoogy.UI.Friend
             ChangeUITabs.ChangeTab(friendsSentButton, false);
 
             ChangeUITabs.ChangeTab(clicked, true);
+        }
+        
+        private async void OnClickSendGiftAllFriendAsync()
+        {
+            try
+            {
+                int sentCount = await FirebaseManager.SendGiftToAllFriendsAsync();
+                MessageDialog.ShowMessage(
+                    sentCount != 0 ? "선물 보내기 성공" : "선물 보내기 실패",
+                    sentCount != 0 ? $"{sentCount}명의 친구에게 선물을 보냈습니다." : "이미 모든 친구에게 선물을 보냈습니다.",
+                    DialogMode.Confirm,
+                    null);
+            }
+            catch (Exception ex)
+            {
+                MessageDialog.ShowMessage("선물 보내기 실패", ex.Message,DialogMode.Confirm, null);
+            }
         }
     }
 }
