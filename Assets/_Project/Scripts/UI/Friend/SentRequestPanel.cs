@@ -1,5 +1,7 @@
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
+using Lean.Pool;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -30,17 +32,24 @@ namespace CocoDoogy.UI.Friend
 
         protected override async Task RefreshPanelAsync()
         {
-            foreach (Transform child in container)
+            refreshCts?.Cancel();
+            refreshCts = new CancellationTokenSource();
+            var token = refreshCts.Token;
+            for (int i = container.childCount - 1; i >= 0; i--)
             {
-                Destroy(child.gameObject);
+                Destroy(container.GetChild(i).gameObject);
             }
 
             var requestDict = await FirebaseManager.GetFriendRequestsAsync("friendSentList");
+            token.ThrowIfCancellationRequested();
+            
             foreach (var kvp in requestDict)
             {
+                token.ThrowIfCancellationRequested();
+                
                 string uid = kvp.Key;
                 string nickname = kvp.Value;
-                var item = Instantiate(prefabItem, container);
+                FriendRequestItem item = Instantiate(prefabItem, container);
                 item.GetComponent<FriendRequestItem>().SentInit(nickname, uid, OnCancelRequestAsync);
             }
 

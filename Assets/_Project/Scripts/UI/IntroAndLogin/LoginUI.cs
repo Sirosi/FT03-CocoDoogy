@@ -1,5 +1,6 @@
 using CocoDoogy.Network;
 using CocoDoogy.Network.Login;
+using CocoDoogy.UI.Popup;
 using Firebase.Auth;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -82,7 +83,7 @@ namespace CocoDoogy.UI.IntroAndLogin
 
         private void OnLoginError(string errorMessage)
         {
-            // TODO : 로그인에 실패한 경우
+            MessageDialog.ShowMessage("로그인 실패",errorMessage,DialogMode.Confirm,null);
         }
         
         /// <summary>

@@ -1,6 +1,9 @@
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
+using Lean.Pool;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -40,36 +43,46 @@ namespace CocoDoogy.UI.Friend
             }
         }
 
-        private async void GetAllGiftRequestAsync()
-        {
-            
-        }
-
         protected override async Task RefreshPanelAsync()
         {
-            foreach (Transform child in container)
-            {
-                Destroy(child.gameObject);
-            }
+            refreshCts?.Cancel();
+            refreshCts = new CancellationTokenSource();
+            var token = refreshCts.Token;
 
-            var requestDict = await FirebaseManager.GetFriendRequestsAsync("friendsList");
-            foreach ((string uid, string nickname) in requestDict)
+            try
             {
-                FriendRequestItem item = Instantiate(prefabItem, container);
-                item.GetComponent<FriendRequestItem>().FriendInit(nickname, uid, OnGiftRequestAsync, OnDeleteRequestAsync);
-            }
+                for (int i = container.childCount - 1; i >= 0; i--)
+                {
+                    Destroy(container.GetChild(i).gameObject);
+                }
 
-            if (requestDict.Count < 1)
-            {
-                nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "등록된 친구가 없습니다.";
+                Dictionary<string, string> requestDict = await FirebaseManager.GetFriendRequestsAsync("friendsList");
+                token.ThrowIfCancellationRequested();
+
+                foreach (var kvp in requestDict)
+                {
+                    token.ThrowIfCancellationRequested();
+
+                    string uid = kvp.Key;
+                    string nickname = kvp.Value;
+
+                    FriendRequestItem item = Instantiate(prefabItem, container);
+                    item.FriendInit(nickname, uid, OnGiftRequestAsync, OnDeleteRequestAsync);
+                }
+
+                bool hasFriends = requestDict.Count > 0;
+                nullMessage.gameObject.SetActive(!hasFriends);
+                if (!hasFriends)
+                    nullMessage.text = "등록된 친구가 없습니다.";
             }
-            else
+            catch (OperationCanceledException)
             {
-                nullMessage.gameObject.SetActive(false);
+
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"RefreshFriendListAsync 에러 발생: {ex}");
             }
         }
-        
-        
     }
 }
