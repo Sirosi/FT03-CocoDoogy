@@ -189,7 +189,7 @@ namespace CocoDoogy.GameFlow.InGame
 
         private void Clear()
         {
-            OutlineForTest.Clear();
+            TileOutlineDrawer.Clear();
             WeatherManager.NowWeather = WeatherType.None;
             Passages.Clear();
             LastConsumeActionPoints = 0;
@@ -271,7 +271,7 @@ namespace CocoDoogy.GameFlow.InGame
                 if (!phase.OnPhase()) break;
             }
             // TODO: 추후 삭제 필요
-            OutlineForTest.Draw();
+            TileOutlineDrawer.Draw();
         }
 
         public static void ChangeInteract(Sprite icon, Action callback)
