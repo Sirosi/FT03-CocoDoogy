@@ -42,7 +42,6 @@ namespace CocoDoogy.GameFlow.InGame
                 if (Instance.gridPos == value) return;
 
                 Instance.gridPos = value;
-                OnEvent?.Invoke(value, PlayerEventType.Move);
             }
         }
 
@@ -295,6 +294,7 @@ namespace CocoDoogy.GameFlow.InGame
             if (!IsReplay)
             {
                 InGameManager.ProcessPhase();
+                OnEvent?.Invoke(GridPos, PlayerEventType.Move);
             }
             else
             {
