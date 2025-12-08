@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &94436529 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5266203195757401564, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+  m_PrefabInstance: {fileID: 901437108}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &546006554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -719,6 +730,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8237808078614979181, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+      propertyPath: bgmSlider
+      value: 
+      objectReference: {fileID: 94436529}
+    - target: {fileID: 8237808078614979181, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+      propertyPath: sfxSlider
+      value: 
+      objectReference: {fileID: 1343566415}
+    - target: {fileID: 8237808078614979181, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+      propertyPath: masterSlider
+      value: 
+      objectReference: {fileID: 1029236624}
     - target: {fileID: 8679646416524261360, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -897,6 +920,28 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &1029236624 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7491227726382026229, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+  m_PrefabInstance: {fileID: 901437108}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1343566415 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8828047359363746144, guid: 2b2f0133fd214e848a42dafc0f9cf81f, type: 3}
+  m_PrefabInstance: {fileID: 901437108}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1427858541
 GameObject:
   m_ObjectHideFlags: 0

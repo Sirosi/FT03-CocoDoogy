@@ -33,11 +33,9 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private Button masterMute;
         [SerializeField] private Button bgmMute;
         [SerializeField] private Button sfxMute;
-        
-        
-        private float lastMasterVolume;
-        private float lastBgmVolume;
-        private float lastSfxVolume;
+        [SerializeField] private Image masterSlider;
+        [SerializeField] private Image bgmSlider;
+        [SerializeField] private Image sfxSlider;
         
 
 
@@ -86,11 +84,10 @@ namespace CocoDoogy.UI.UserInfo
         {
             if (value <= 0)
             {
-                masterIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
+                MasterMute(true);
             }
             else
             {
-                masterIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
                 MasterMute(false);
             }
 
@@ -101,11 +98,10 @@ namespace CocoDoogy.UI.UserInfo
         {
             if (value <= 0)
             {
-                bgmIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
+                BgmMute(true);
             }
             else
             {
-                bgmIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
                 BgmMute(false);
             }
 
@@ -116,13 +112,10 @@ namespace CocoDoogy.UI.UserInfo
         {
             if (value <= 0)
             {
-                sfxIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
-                sfxInnerIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
+                SfxMute(true);
             }
             else
             {
-                sfxIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
-                sfxInnerIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
                 SfxMute(false);
             }
 
@@ -138,17 +131,19 @@ namespace CocoDoogy.UI.UserInfo
             if (mute)
             {
                 masterMute.onClick.AddListener(()=> MasterMute(false));
-                lastMasterVolume = masterVolume.value;
-                masterVolume.value = 0;
+                VolumeController.Instance.SetMasterVolume(0);
                 
+                masterIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
+                masterSlider.color = new Color(0.5f, 0.5f, 0.5f);
                 masterVolume.image.color = new Color(0.5f, 0.5f, 0.5f);
             }
             else
             {
                 masterMute.onClick.AddListener(()=> MasterMute(true));
-                if (masterVolume.value <= 0) masterVolume.value = lastMasterVolume;
-                AudioSetting.MasterVolume = masterVolume.value;
+                VolumeController.Instance.SetMasterVolume(masterVolume.value);
                 
+                masterIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
+                masterSlider.color = new Color(1, 1, 1);
                 masterVolume.image.color = new Color(1, 1, 1);
             }
         }
@@ -159,17 +154,19 @@ namespace CocoDoogy.UI.UserInfo
             if (mute)
             {
                 bgmMute.onClick.AddListener(()=> BgmMute(false));
-                lastBgmVolume = bgmVolume.value;
-                bgmVolume.value = 0;
+                VolumeController.Instance.SetBgmVolume(0);
                 
+                bgmIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
+                bgmSlider.color = new Color(0.5f, 0.5f, 0.5f);
                 bgmVolume.image.color = new Color(0.5f, 0.5f, 0.5f);
             }
             else
             {
                 bgmMute.onClick.AddListener(()=> BgmMute(true));
-                if (bgmVolume.value <= 0) bgmVolume.value = lastBgmVolume;
-                AudioSetting.BgmVolume = bgmVolume.value;
+                VolumeController.Instance.SetMasterVolume(bgmVolume.value);
                 
+                bgmIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
+                bgmSlider.color = new Color(1, 1, 1);
                 bgmVolume.image.color = new Color(1, 1, 1);
             }
         }
@@ -180,17 +177,21 @@ namespace CocoDoogy.UI.UserInfo
             if (mute)
             {
                 sfxMute.onClick.AddListener(()=> SfxMute(false));
-                lastSfxVolume = sfxVolume.value;
-                sfxVolume.value = 0;
+                VolumeController.Instance.SetBgmVolume(0);
                 
+                sfxIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
+                sfxInnerIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
+                sfxSlider.color = new Color(0.5f, 0.5f, 0.5f);
                 sfxVolume.image.color = new Color(0.5f, 0.5f, 0.5f);
             }
             else
             {
                 sfxMute.onClick.AddListener(()=> SfxMute(true));
-                if (sfxVolume.value <= 0) sfxVolume.value = lastSfxVolume;
-                AudioSetting.SfxVolume = sfxVolume.value;
+                VolumeController.Instance.SetMasterVolume(sfxVolume.value);
                 
+                sfxIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
+                sfxInnerIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
+                sfxSlider.color = new Color(1, 1, 1);
                 sfxVolume.image.color = new Color(1, 1, 1);
             }
         }
