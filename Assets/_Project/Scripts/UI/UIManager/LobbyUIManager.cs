@@ -70,6 +70,16 @@ namespace CocoDoogy.UI.UIManager
             // 씬 이동 후 이벤트가 구독되기 전에 실행되서 UI Refresh가 되지 않아 따로 이벤트 실행
             DataManager.Instance.InvokePrivateUserData();
         }
+
+        private void OnDisable()
+        {
+            DataManager.Instance.OnPrivateUserDataLoaded -= friendPanel.FriendsInfoPanel.Refresh;
+            DataManager.Instance.OnPrivateUserDataLoaded -= friendPanel.ReceivedRequestPanel.Refresh;
+            DataManager.Instance.OnPrivateUserDataLoaded -= friendPanel.SentRequestPanel.Refresh;
+            DataManager.Instance.OnPrivateUserDataLoaded -= giftPanel.SubscriptionEvent;
+            DataManager.Instance.OnPrivateUserDataLoaded -= infoPanel.SubscriptionEvent;
+        }
+        
         private void OnClickProfileButton() => profilePanel.OpenPanel();
         private void OnClickFriendButton() => friendPanel.OpenPanel();
         private void OnClickGiftButton() =>  giftPanel.OpenPanel();

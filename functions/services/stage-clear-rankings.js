@@ -14,8 +14,15 @@ const rankingService = {
             const userDoc = await transaction.get(userRef);
             const nickname = userDoc.exists ? userDoc.data().nickName || "" : "";
 
-            if (!data[uid] || clearTime < data[uid].clearTime) {
-                data[uid] = { clearTime, remainAP, replayId, refillPoints, nickname};
+            const prev = data[uid];
+            const canUpdate =
+                !prev ||
+                refillPoints < prev.refillPoints ||
+                (refillPoints === prev.refillPoints && remainAP < prev.remainAP) ||
+                (refillPoints === prev.refillPoints && remainAP === prev.remainAP && clearTime < prev.clearTime);
+
+            if (canUpdate) {
+                data[uid] = { clearTime, remainAP, replayId, refillPoints, nickname };
             }
 
             let arr = Object.entries(data).map(([userUid, d]) => ({ userUid, ...d }));
