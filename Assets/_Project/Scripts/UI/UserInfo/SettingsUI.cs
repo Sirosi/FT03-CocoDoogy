@@ -39,7 +39,7 @@ namespace CocoDoogy.UI.UserInfo
         
 
 
-        void Awake()
+        private void Awake()
         {
             closeButton.onClick.AddListener(ClosePanel);
             
@@ -51,7 +51,7 @@ namespace CocoDoogy.UI.UserInfo
             bgmMute.onClick.AddListener(()=> BgmMute(true));
             sfxMute.onClick.AddListener(()=> SfxMute(true));
         }
-        void Start()
+        private void Start()
         {
             masterVolume.value = AudioSetting.MasterVolume;
             bgmVolume.value = AudioSetting.BgmVolume;
@@ -62,13 +62,13 @@ namespace CocoDoogy.UI.UserInfo
             SfxControl(sfxVolume.value);
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             Time.timeScale = 0;
             InGameManager.Timer.Pause();
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             InGameManager.Timer.Start();
             Time.timeScale = 1;
@@ -80,7 +80,7 @@ namespace CocoDoogy.UI.UserInfo
             PageCameraSwiper.IsSwipeable = true;
         }
 
-        void MasterControl(float value)
+        private void MasterControl(float value)
         {
             if (value <= 0)
             {
@@ -95,7 +95,7 @@ namespace CocoDoogy.UI.UserInfo
             AudioSetting.MasterVolume = value;
 
         }
-        void BGMControl(float value)
+        private void BGMControl(float value)
         {
             if (value <= 0)
             {
@@ -110,7 +110,7 @@ namespace CocoDoogy.UI.UserInfo
             AudioSetting.BgmVolume = value;
             
         }
-        void SfxControl(float value)
+        private void SfxControl(float value)
         {
             if (value <= 0)
             {
@@ -129,7 +129,7 @@ namespace CocoDoogy.UI.UserInfo
         }
 
         #region Mute Events
-        void MasterMute(bool mute)
+        private void MasterMute(bool mute)
         {
             masterMute.onClick.RemoveAllListeners();
             
@@ -146,7 +146,7 @@ namespace CocoDoogy.UI.UserInfo
                 AudioSetting.MasterVolume = masterVolume.value;
             }
         }
-        void BgmMute(bool mute)
+        private void BgmMute(bool mute)
         {
             bgmMute.onClick.RemoveAllListeners();
             
@@ -163,7 +163,7 @@ namespace CocoDoogy.UI.UserInfo
                 AudioSetting.BgmVolume = bgmVolume.value;
             }
         }
-        void SfxMute(bool mute)
+        private void SfxMute(bool mute)
         {
             sfxMute.onClick.RemoveAllListeners();
             
