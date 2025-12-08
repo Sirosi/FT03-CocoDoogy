@@ -37,7 +37,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), true);
             PlayerHandler.IsBehaviour = false;
             
-            OutlineForTest.Draw();
+            TileOutlineDrawer.Draw();
         }
     }
 }

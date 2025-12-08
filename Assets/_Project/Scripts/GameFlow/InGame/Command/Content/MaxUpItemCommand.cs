@@ -33,7 +33,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
             
-            OutlineForTest.Draw();
+            TileOutlineDrawer.Draw();
         }
 
         public override void Undo()
