@@ -133,7 +133,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                 Undid.Push(result);
                 break;
             }
-            OutlineForTest.Draw();
+            TileOutlineDrawer.Draw();
 
             return result;
         }
@@ -150,7 +150,7 @@ namespace CocoDoogy.GameFlow.InGame.Command
                 Executed.Push(result);
                 break;
             }
-            OutlineForTest.Draw();
+            TileOutlineDrawer.Draw();
 
             return result;
         }

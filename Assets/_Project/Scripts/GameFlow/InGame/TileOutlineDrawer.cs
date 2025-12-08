@@ -3,12 +3,12 @@ using CocoDoogy.Tile;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CocoDoogy.Test
+namespace CocoDoogy.GameFlow.InGame
 {
     /// <summary>
     /// 고정적으로 들어가야하는 기믹 등을 탐색하기 위한 Outline
     /// </summary>
-    public static class OutlineForTest
+    public static class TileOutlineDrawer
     {
         private static readonly Stack<HexTile> filledTiles = new();
         
