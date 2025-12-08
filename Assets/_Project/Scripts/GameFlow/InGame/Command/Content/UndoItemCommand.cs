@@ -1,4 +1,5 @@
 using CocoDoogy.Data;
+using CocoDoogy.Test;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
@@ -35,6 +36,8 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             CommandManager.RedoCommandAuto();
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), true);
             PlayerHandler.IsBehaviour = false;
+            
+            OutlineForTest.Draw();
         }
     }
 }

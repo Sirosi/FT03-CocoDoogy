@@ -1,4 +1,5 @@
 using CocoDoogy.Data;
+using CocoDoogy.Test;
 using CocoDoogy.Tile;
 using UnityEngine;
 
@@ -27,10 +28,12 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         {
             HexTileMap.ActionPoint += Delta;
             InGameManager.ConsumeActionPoint(Delta, true);
-
+            
             InGameManager.UseActionPoints++;
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
+            
+            OutlineForTest.Draw();
         }
 
         public override void Undo()
