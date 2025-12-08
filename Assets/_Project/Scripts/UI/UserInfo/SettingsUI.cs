@@ -33,6 +33,8 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private Button masterMute;
         [SerializeField] private Button bgmMute;
         [SerializeField] private Button sfxMute;
+        
+        
         private float lastMasterVolume;
         private float lastBgmVolume;
         private float lastSfxVolume;
@@ -84,11 +86,11 @@ namespace CocoDoogy.UI.UserInfo
         {
             if (value <= 0)
             {
-                masterIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
+                masterIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
             }
             else
             {
-                masterIcon.DOColor(new Color(1, 1, 1), 0.2f);
+                masterIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
                 MasterMute(false);
             }
 
@@ -99,11 +101,11 @@ namespace CocoDoogy.UI.UserInfo
         {
             if (value <= 0)
             {
-                bgmIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
+                bgmIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
             }
             else
             {
-                bgmIcon.DOColor(new Color(1, 1, 1), 0.2f);
+                bgmIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
                 BgmMute(false);
             }
 
@@ -114,13 +116,13 @@ namespace CocoDoogy.UI.UserInfo
         {
             if (value <= 0)
             {
-                sfxIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
-                sfxInnerIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
+                sfxIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
+                sfxInnerIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f).SetUpdate(true);
             }
             else
             {
-                sfxIcon.DOColor(new Color(1, 1, 1), 0.2f);
-                sfxInnerIcon.DOColor(new Color(1, 1, 1), 0.2f);
+                sfxIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
+                sfxInnerIcon.DOColor(new Color(1, 1, 1), 0.2f).SetUpdate(true);
                 SfxMute(false);
             }
 
@@ -138,12 +140,16 @@ namespace CocoDoogy.UI.UserInfo
                 masterMute.onClick.AddListener(()=> MasterMute(false));
                 lastMasterVolume = masterVolume.value;
                 masterVolume.value = 0;
+                
+                masterVolume.image.color = new Color(0.5f, 0.5f, 0.5f);
             }
             else
             {
                 masterMute.onClick.AddListener(()=> MasterMute(true));
                 if (masterVolume.value <= 0) masterVolume.value = lastMasterVolume;
                 AudioSetting.MasterVolume = masterVolume.value;
+                
+                masterVolume.image.color = new Color(1, 1, 1);
             }
         }
         private void BgmMute(bool mute)
@@ -155,12 +161,16 @@ namespace CocoDoogy.UI.UserInfo
                 bgmMute.onClick.AddListener(()=> BgmMute(false));
                 lastBgmVolume = bgmVolume.value;
                 bgmVolume.value = 0;
+                
+                bgmVolume.image.color = new Color(0.5f, 0.5f, 0.5f);
             }
             else
             {
                 bgmMute.onClick.AddListener(()=> BgmMute(true));
                 if (bgmVolume.value <= 0) bgmVolume.value = lastBgmVolume;
                 AudioSetting.BgmVolume = bgmVolume.value;
+                
+                bgmVolume.image.color = new Color(1, 1, 1);
             }
         }
         private void SfxMute(bool mute)
@@ -172,12 +182,16 @@ namespace CocoDoogy.UI.UserInfo
                 sfxMute.onClick.AddListener(()=> SfxMute(false));
                 lastSfxVolume = sfxVolume.value;
                 sfxVolume.value = 0;
+                
+                sfxVolume.image.color = new Color(0.5f, 0.5f, 0.5f);
             }
             else
             {
                 sfxMute.onClick.AddListener(()=> SfxMute(true));
                 if (sfxVolume.value <= 0) sfxVolume.value = lastSfxVolume;
                 AudioSetting.SfxVolume = sfxVolume.value;
+                
+                sfxVolume.image.color = new Color(1, 1, 1);
             }
         }
         #endregion
