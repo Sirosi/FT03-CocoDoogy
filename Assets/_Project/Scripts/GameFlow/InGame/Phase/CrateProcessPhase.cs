@@ -28,7 +28,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                     CommandManager.GimmickPieceChange(tile.GridPos, HexDirection.Center, PieceType.FloatedCrate, pieceType,
                         centerPiece.LookDirection, centerPiece.LookDirection);
                     centerPiece = tile.GetPiece(HexDirection.Center);
-                    centerPiece.GetComponent<FloatedCaskPiece>().ToMove(PlayerHandler.LookDirection.GetMirror());
+                    centerPiece.GetComponent<FloatedCratePiece>().ToMove(PlayerHandler.LookDirection.GetMirror());
                 }
                 else if (tileType == TileType.Ice && pieceType == PieceType.FloatedCrate)
                 {

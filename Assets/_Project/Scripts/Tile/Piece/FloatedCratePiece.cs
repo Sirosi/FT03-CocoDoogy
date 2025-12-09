@@ -9,7 +9,7 @@ namespace CocoDoogy.Tile.Piece
     /// 물 위에 뜨는 상자용
     /// </summary>
     [RequireComponent(typeof(Piece))]
-    public class FloatedCaskPiece: MonoBehaviour, IInit<Piece>
+    public class FloatedCratePiece: MonoBehaviour, IInit<Piece>
     {
         [Tooltip("움직일 상자의 Pivot")] [SerializeField] private Transform cratePivot;
 
