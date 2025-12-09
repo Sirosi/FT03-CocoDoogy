@@ -19,7 +19,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         
         private const int Delta = 1;
         
-        public MaxUpItemCommand(object param) : base(CommandType.MaxUp, param)
+        public MaxUpItemCommand(object param) : base(CommandType.MaxUp)
         {
             Effect = (ItemEffect)param;
         }

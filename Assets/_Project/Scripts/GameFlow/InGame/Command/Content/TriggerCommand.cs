@@ -24,7 +24,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public bool IsUnInteract { get => un == 1; private set => un = value ? (byte)1 : (byte)0; }
 
 
-        public TriggerCommand(object param): base(CommandType.Trigger, param)
+        public TriggerCommand(object param): base(CommandType.Trigger)
         {
             var data = ((Vector2Int, bool))param;
             GridPos = data.Item1;

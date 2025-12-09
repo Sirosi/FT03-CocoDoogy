@@ -26,7 +26,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public Vector2Int NextPos { get => np; private set => np = value; }
 
 
-        public SlideCommand(object param): base(CommandType.Slide, param)
+        public SlideCommand(object param): base(CommandType.Slide)
         {
             var data = ((Vector2Int, Vector2Int))param;
             PrePos = data.Item1;

@@ -19,7 +19,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public int NextCount { get => nc; private set => nc = value; }
 
 
-        public SandCountCommand(object param): base(CommandType.SandCount, param)
+        public SandCountCommand(object param): base(CommandType.SandCount)
         {
             var data = ((int, int))param;
             PreCount = data.Item1;

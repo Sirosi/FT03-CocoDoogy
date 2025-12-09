@@ -19,7 +19,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public HexDirection Dir { get => dir; private set => dir = value; }
 
 
-        public MoveCommand(object param): base(CommandType.Move, param)
+        public MoveCommand(object param): base(CommandType.Move)
         {
             Dir = (HexDirection)param;
         }
