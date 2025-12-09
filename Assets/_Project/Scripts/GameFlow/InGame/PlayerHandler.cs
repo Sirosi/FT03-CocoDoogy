@@ -254,7 +254,7 @@ namespace CocoDoogy.GameFlow.InGame
             if (!IsValid) return;
             if (!IsBehaviour) IsBehaviour = true;
 
-            InGameUIManager.Instance.OnInteractButtonActive();
+            if(!IsReplay)InGameUIManager.Instance.OnInteractButtonActive();
 
             Instance.isMoving = true;
             Instance.transform.parent = null;
