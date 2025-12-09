@@ -1135,6 +1135,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 492246486642275719, guid: 764b03716fee2cf419375dac02318ee8, type: 3}
   m_PrefabInstance: {fileID: 795463026}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &803564167 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4341693253395987081, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+  m_PrefabInstance: {fileID: 1214811590}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1007288601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1166,6 +1177,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 127905796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1072050368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1141102484508812853, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+  m_PrefabInstance: {fileID: 1214811590}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1196209380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1232,6 +1254,18 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 506397844961578296, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+      propertyPath: bgmSlider
+      value: 
+      objectReference: {fileID: 803564167}
+    - target: {fileID: 506397844961578296, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+      propertyPath: sfxSlider
+      value: 
+      objectReference: {fileID: 1072050368}
+    - target: {fileID: 506397844961578296, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+      propertyPath: masterSlider
+      value: 
+      objectReference: {fileID: 1986253848}
     - target: {fileID: 1070613806789676564, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0
@@ -2173,6 +2207,17 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000000009080395, y: 0.00079174107, z: 0.0053016907}
     m_Extent: {x: 0.0025773954, y: 0.006396352, z: 0.005275839}
   m_DirtyAABB: 0
+--- !u!114 &1986253848 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1343105166224384672, guid: 518da65f72db4354fa643c3334ce365d, type: 3}
+  m_PrefabInstance: {fileID: 1214811590}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2043915113
 GameObject:
   m_ObjectHideFlags: 0
