@@ -65,6 +65,7 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
                     break; 
             }
 
+            //기존에 있던 CoatSlot과 새로 배치될 CoatSlot을 참조받아 위치를 변경
             if (otherCoat != null)
             {
                 RectTransform otherRect = otherCoat.GetComponent<RectTransform>();
@@ -73,14 +74,15 @@ namespace CocoDoogy.MiniGame.CoatArrangeGame
                 Transform otherParent = otherCoat.transform.parent;
                 Vector2 otherAnchoredPos = otherRect.anchoredPosition;
 
-                // 부모 및 위치 교체 (UI 좌표 유지)
+                // 부모 및 위치 교체
                 otherCoat.transform.SetParent(originalParent, false);
                 otherRect.anchoredPosition = originalAnchoredPos;
                     
                 transform.SetParent(otherParent, false);
                 rectTransform.anchoredPosition = otherAnchoredPos;
-                
+                //소리실행
                 SfxManager.PlaySfx(SfxType.Minigame_DropCloth);
+                //코트 변경으로 인한 클리어 조건함수실행
                 parent.OnCoatSwapped(thisCoatSlot, otherCoatSlot);
             }
             else

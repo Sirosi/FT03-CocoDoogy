@@ -20,12 +20,14 @@ namespace CocoDoogy.MiniGame.TrashGame
         {
             base.OnPointerDown(eventData);
             SfxManager.PlaySfx(SfxType.Minigame_PickTrash);
+            image.raycastTarget = false;
         }
 
 
         public override void OnEndDrag(PointerEventData eventData)
         {
             base.OnEndDrag(eventData);
+            image.raycastTarget = true;
             GameObject hitObject = eventData.pointerCurrentRaycast.gameObject;
             TrashCan trashCan = hitObject != null ? hitObject.GetComponent<TrashCan>() : null;
             if (trashCan != null)
@@ -42,3 +44,25 @@ namespace CocoDoogy.MiniGame.TrashGame
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

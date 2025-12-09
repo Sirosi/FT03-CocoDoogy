@@ -79,7 +79,7 @@ namespace CocoDoogy.MiniGame.TrashGame
         /// </summary>
         protected override void OnOpenInit()
         {
-            Theme nowTheme = InGameManager.Stage.theme;  //TODO: 나중에 맵 데이터에서 호출하게 변경
+            Theme nowTheme = InGameManager.Stage.theme ;  //TODO: 나중에 맵 데이터에서 호출하게 변경
             trashes.Clear();
             StartTrashGame(nowTheme);
         }
@@ -105,15 +105,15 @@ namespace CocoDoogy.MiniGame.TrashGame
                 SetBackground(background);
             }
             ResizePanel();
+            if (trashcanDict.TryGetValue(theme, out Sprite trashcan))
+            {
+                SummonTrashCan(trashcan);
+            }
             if (trashDict.TryGetValue(theme, out Sprite[] trashes))
             {
                 SummonTrash(trashes);
             }
 
-            if (trashcanDict.TryGetValue(theme, out Sprite trashcan))
-            {
-                SummonTrashCan(trashcan);
-            }
         }
         protected override void SetBackground(Sprite sprite)
         {
@@ -125,7 +125,7 @@ namespace CocoDoogy.MiniGame.TrashGame
         /// 왜 필요하냐. Unity에서 Image 컴포넌트의 Preserve Aspect 옵션을 켜면, 이미지가 원본 비율대로 맞춰지는데
         /// 부모 RectTransform 크기와 다를 수 있기 때문에, 실제 패널 크기도 비율에 맞게 조정해야 화면이 어긋나지 않는다.
         /// </summary>
-        void ResizePanel()
+        protected override void ResizePanel()
         {
             if (background == null || background.sprite == null || trashGamePanel == null)
                 return;
@@ -159,75 +159,163 @@ namespace CocoDoogy.MiniGame.TrashGame
             panelRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
         }
 
-        
+        /// <summary>
+        /// 곂침방지
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        bool IsOverlapping(RectTransform a, RectTransform b)
+        {
+            Rect rectA = new Rect(a.anchoredPosition, a.sizeDelta);
+            Rect rectB = new Rect(b.anchoredPosition, b.sizeDelta);
+
+            return rectA.Overlaps(rectB);
+        }
         
         /// <summary>
         /// 쓰레기소환
         /// </summary>
         /// <param name="trashes"></param>
-        void SummonTrash(Sprite[] trashes)
+        // void SummonTrash(Sprite[] trashes)
+        // {
+        //  
+        //     float panelWidth = trashParent.rect.width;
+        //     float panelHeight = trashParent.rect.height;
+        //
+        //     float halfWidth = panelWidth * 0.5f;
+        //
+        //     // Y축 위치선정 아래에서 위로 정도 위치(숫자를 키울수록 아래로감)
+        //     float fixedY = -panelHeight * 0.33f;
+        //
+        //     for (int i = 0; i < trashCount; i++)
+        //     {
+        //         Sprite sprite = trashes[Random.Range(0, trashes.Length)];
+        //         float randomX = Random.Range(-halfWidth+50, halfWidth-50);
+        //
+        //         Trash trash = Instantiate(trashPrefab, trashParent);
+        //         RectTransform rt = trash.GetComponent<RectTransform>();
+        //         rt.anchoredPosition = new Vector2(randomX, fixedY);
+        //
+        //         //패널 비율 기반으로 크기 조정
+        //         float trashWidth = panelWidth * 0.07f;
+        //
+        //         float spriteRatio = sprite.rect.height / sprite.rect.width;
+        //         float trashHeight = trashWidth * spriteRatio;
+        //         rt.sizeDelta = new Vector2(trashWidth, trashHeight);
+        //         int tries = 0;
+        //         bool placed = false;
+        //
+        //         while (!placed && tries < 20)
+        //         {
+        //             float randomX = Random.Range(-halfWidth + 50, halfWidth - 50);
+        //             rt.anchoredPosition = new Vector2(randomX, fixedY);
+        //
+        //             if (!IsOverlapping(rt, trashCanRect))
+        //                 placed = true;
+        //
+        //             tries++;
+        //         }
+        //         trash.Init(this, sprite);
+        //         this.trashes.Add(trash);
+        //     }
+        // }
+        void SummonTrash(Sprite[] spriteList)
         {
-         
             float panelWidth = trashParent.rect.width;
             float panelHeight = trashParent.rect.height;
 
             float halfWidth = panelWidth * 0.5f;
-
-            // Y축 위치선정 아래에서 위로 정도 위치(숫자를 키울수록 아래로감)
             float fixedY = -panelHeight * 0.33f;
 
             for (int i = 0; i < trashCount; i++)
             {
-                Sprite sprite = trashes[Random.Range(0, trashes.Length)];
-                float randomX = Random.Range(-halfWidth+50, halfWidth-50);
+                Sprite sprite = spriteList[Random.Range(0, spriteList.Length)];
 
                 Trash trash = Instantiate(trashPrefab, trashParent);
                 RectTransform rt = trash.GetComponent<RectTransform>();
-                rt.anchoredPosition = new Vector2(randomX, fixedY);
 
-                //패널 비율 기반으로 크기 조정
+                // 크기 설정
                 float trashWidth = panelWidth * 0.07f;
-
-                float spriteRatio = sprite.rect.height / sprite.rect.width;
-                float trashHeight = trashWidth * spriteRatio;
+                float ratio = sprite.rect.height / sprite.rect.width;
+                float trashHeight = trashWidth * ratio;
                 rt.sizeDelta = new Vector2(trashWidth, trashHeight);
 
+                // TrashCan과만 충돌 체크
+                int tries = 0;
+                bool placed = false;
+
+                while (!placed && tries < 20)
+                {
+                    float randomX = Random.Range(-halfWidth + 50, halfWidth - 50);
+                    rt.anchoredPosition = new Vector2(randomX, fixedY);
+
+                    if (!IsOverlapping(rt, trashCanRect))
+                        placed = true;
+
+                    tries++;
+                }
+
                 trash.Init(this, sprite);
-                this.trashes.Add(trash);
+                trashes.Add(trash);
             }
         }
+
+        
 
         /// <summary>
         /// 쓰레기통 소환
         /// </summary>
         /// <param name="trashcanSprite"></param>
+        // void SummonTrashCan(Sprite trashcanSprite)
+        // {
+        //  
+        //     float panelWidth = trashParent.rect.width;
+        //     float panelHeight = trashParent.rect.height;
+        //
+        //     float halfWidth = panelWidth * 0.5f;
+        //     float randomX = Random.Range(-halfWidth+50, halfWidth-50);
+        //
+        //     // Y축 위치선정 아래에서 위로 정도 위치(숫자를 키울수록 아래로감)
+        //     float fixedY = -panelHeight * 0.43f;//0.43
+        //
+        //     TrashCan trashCan = Instantiate(trashCanPrefab, trashParent);
+        //     RectTransform rt = trashCan.GetComponent<RectTransform>();
+        //     rt.anchoredPosition = new Vector2(randomX, fixedY);
+        //
+        //     //패널 크기 비율로 TrashCan 크기 조정
+        //     float canWidth = panelWidth * 0.1f; 
+        //
+        //     float ratio = trashcanSprite.rect.height / trashcanSprite.rect.width;
+        //     float canHeight = canWidth * ratio;
+        //     rt.sizeDelta = new Vector2(canWidth, canHeight);
+        //
+        //     Image img = trashCan.GetComponent<Image>();
+        //     img.sprite = trashcanSprite;
+        //
+        // }
         void SummonTrashCan(Sprite trashcanSprite)
         {
-         
             float panelWidth = trashParent.rect.width;
             float panelHeight = trashParent.rect.height;
 
             float halfWidth = panelWidth * 0.5f;
-            float randomX = Random.Range(-halfWidth+50, halfWidth-50);
-
-            // Y축 위치선정 아래에서 위로 정도 위치(숫자를 키울수록 아래로감)
             float fixedY = -panelHeight * 0.43f;
 
             TrashCan trashCan = Instantiate(trashCanPrefab, trashParent);
-            RectTransform rt = trashCan.GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(randomX, fixedY);
+            trashCanRect = trashCan.GetComponent<RectTransform>();
 
-            //패널 크기 비율로 TrashCan 크기 조정
-            float canWidth = panelWidth * 0.1f; 
-
+            float canWidth = panelWidth * 0.1f;
             float ratio = trashcanSprite.rect.height / trashcanSprite.rect.width;
             float canHeight = canWidth * ratio;
-            rt.sizeDelta = new Vector2(canWidth, canHeight);
+            trashCanRect.sizeDelta = new Vector2(canWidth, canHeight);
 
-            Image img = trashCan.GetComponent<Image>();
-            img.sprite = trashcanSprite;
+            float randomX = Random.Range(-halfWidth + 50, halfWidth - 50);
+            trashCanRect.anchoredPosition = new Vector2(randomX, fixedY);
 
+            trashCan.GetComponent<Image>().sprite = trashcanSprite;
         }
+        private RectTransform trashCanRect;//쓰레기통과 곂치지 않도록
 
 
         /// <summary>
