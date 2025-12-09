@@ -20,12 +20,13 @@ namespace CocoDoogy.GameFlow.InGame
     {
         public static event Action<Vector2Int, PlayerEventType> OnEvent = null;
         public static Action<Vector2Int, PlayerEventType> OnEventCallback => OnEvent;
-        
+
 
         /// <summary>
         /// 플레이어가 인게임에 들어와서 행동을 했는지 여부
         /// </summary>
         public static bool IsBehaviour { get; set; } = false;
+        public static bool Locked { get; set; } = false;
 
         /// <summary>
         /// 현재 플레이 하고있는 씬이 Replay면 true로, InGame이면 false로
@@ -79,7 +80,7 @@ namespace CocoDoogy.GameFlow.InGame
         private HexDirection lookDirection = HexDirection.East;
         private PlayerAnimHandler anim = null;
 
-        private bool lockBehaviour = false;
+        private bool isMoving = false;
 
         private Camera mainCamera = null;
         private bool touched = false;
@@ -88,7 +89,7 @@ namespace CocoDoogy.GameFlow.InGame
         private int touchCount = 0;
 
         private ClearCheckPhase replayPhase = new();
-        
+
         protected override void Awake()
         {
             base.Awake();
@@ -102,7 +103,8 @@ namespace CocoDoogy.GameFlow.InGame
 
         void Update()
         {
-            if (lockBehaviour) return;
+            if (isMoving) return;
+            if (Locked) return;
             if (TouchSystem.IsPointerOverUI) return;
             if (IsReplay) return;
 
@@ -215,7 +217,7 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (!IsValid) return;
 
-            Instance.lockBehaviour = true;
+            Instance.isMoving = true;
 
             Instance.transform.parent = null;
             GridPos = gridPos;
@@ -251,9 +253,11 @@ namespace CocoDoogy.GameFlow.InGame
             print("Move호출");
             if (!IsValid) return;
             if (!IsBehaviour) IsBehaviour = true;
-            
+
             InGameUIManager.Instance.OnInteractButtonActive();
             Instance.lockBehaviour = true;
+
+            Instance.isMoving = true;
             Instance.transform.parent = null;
             prevGridPos = GridPos;
             GridPos = gridPos;
@@ -273,7 +277,7 @@ namespace CocoDoogy.GameFlow.InGame
         {
             if (!IsValid) return;
 
-            Instance.lockBehaviour = true;
+            Instance.isMoving = true;
 
             Instance.transform.parent = null;
 
@@ -291,7 +295,7 @@ namespace CocoDoogy.GameFlow.InGame
         {
             DOTween.Kill(Instance, false);
             Instance.anim.ChangeAnim(AnimType.Idle);
-            Instance.lockBehaviour = false;
+            Instance.isMoving = false;
             if (!IsReplay)
             {
                 InGameManager.ProcessPhase();
