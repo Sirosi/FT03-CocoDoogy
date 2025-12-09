@@ -60,7 +60,7 @@ public class ToyFindMiniGame : MiniGameBase
         /// 왜 필요하냐. Unity에서 Image 컴포넌트의 Preserve Aspect 옵션을 켜면, 이미지가 원본 비율대로 맞춰지는데
         /// 부모 RectTransform 크기와 다를 수 있기 때문에, 실제 패널 크기도 비율에 맞게 조정해야 화면이 어긋나지 않는다.
         /// </summary>
-        void ResizePanel()
+        protected override void ResizePanel()
         {
             if (background == null || background.sprite == null || sandGamePanel == null)
                 return;

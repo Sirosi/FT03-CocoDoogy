@@ -69,3 +69,12 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
         }
     }
 }
+
+
+
+
+
+
+
+
+

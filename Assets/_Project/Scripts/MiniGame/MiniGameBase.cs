@@ -17,21 +17,16 @@ namespace CocoDoogy.MiniGame
         [SerializeField] protected Image background;
         [SerializeField] protected TextMeshProUGUI remainCount;
         
-        
         [Tooltip("미니게임 설명 여부 체크용")]
         [SerializeField] private string miniGameID;
-        public TutorialExplainData tutorialExplainData;
-
         [SerializeField] private CompletePanel  completePanel;
-        
+
+        public TutorialExplainData tutorialExplainData;
         public string  MiniGameID => miniGameID;
-        
         protected Action remainCountCallback;
         protected Action clearCallback;
 
         private bool hasStarted = false;
-
-
         /// <summary>
         /// 해당 테마에 사용 가능한 미니게임 여부
         /// </summary>
@@ -66,10 +61,6 @@ namespace CocoDoogy.MiniGame
             if (!IsClear()) return;
             if (!hasStarted) return;
             hasStarted = false;
-            // MessageDialog.ShowMessage("미니게임 클리어", "보상을 받으시오", DialogMode.Confirm, _ => 
-            // {
-            // });
-
             SfxManager.PlaySfx(SfxType.UI_SuccessMission);
             completePanel.Show(() =>
             {
@@ -80,39 +71,30 @@ namespace CocoDoogy.MiniGame
                 clearCallback?.Invoke();
                 completePanel.Hide();
             });
-
         }
-
-        
-        
         /// <summary>
         /// 클리어까지 남은 진행도를 표시
         /// </summary>
         protected abstract void ShowRemainCount();
-        
         /// <summary>
         /// 미니게임 배경 세팅
         /// </summary>
         /// <param name="sprite"></param>
         protected abstract void SetBackground(Sprite sprite);
-
-
         /// <summary>
         /// 미니게임 시작 세팅
         /// </summary>
         protected abstract void OnOpenInit();
-
-
         /// <summary>
         /// 미니게임 클리어 조건
         /// </summary>
         /// <returns></returns>
         protected abstract bool IsClear();
-
         /// <summary>
         /// 미니게임 초기화
         /// </summary>
         protected abstract void Disable();
 
+        protected abstract void ResizePanel();
     }
 }

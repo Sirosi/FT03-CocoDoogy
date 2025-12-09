@@ -31,8 +31,6 @@ namespace CocoDoogy.MiniGame
             miniGameExplainText.gameObject.SetActive(true);
             miniGameExplainText.text = tutorialExplainData;
         }
-
-
         /// <summary>
         /// MiniGameManger가 갖고있는 모든 미니게임중 테마를 받으면서 호출
         /// </summary>
