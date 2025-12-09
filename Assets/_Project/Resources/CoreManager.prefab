@@ -222,8 +222,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4fbe5b99acaaa344b969150524423566, type: 2}
   - {fileID: 11400000, guid: 3bb92d2deb3ddfb4d87d0e7b4f70f5be, type: 2}
   - {fileID: 11400000, guid: f5f2704ec1531334aaac489cee5e88bf, type: 2}
-  - {fileID: 11400000, guid: c4cf2401e7b3d1a439f0506965b7e14d, type: 2}
   - {fileID: 11400000, guid: abce3a4a0dec11c41b353b28e3acac76, type: 2}
+  - {fileID: 11400000, guid: 2b2bb3d925c31194a9194fc08701433a, type: 2}
   - {fileID: 11400000, guid: e6a4d3dde9c14b846b52a0b8dea6f505, type: 2}
   - {fileID: 11400000, guid: ed248f90ddde7aa4e9548dd86576ed31, type: 2}
   - {fileID: 11400000, guid: 19d4f66e54064ce4d82a408d1e86f856, type: 2}
@@ -239,8 +239,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 354031f2317303c4ab12b02356359e79, type: 2}
   - {fileID: 11400000, guid: e666180ce7776df46a3be4c0bebd7c9c, type: 2}
   - {fileID: 11400000, guid: b1341f47869d6dc45b924eecdd4a8203, type: 2}
-  - {fileID: 11400000, guid: 4d6be666466cfc84388696cc883911e1, type: 2}
   - {fileID: 11400000, guid: 62d5299d38724f741b7e98e59344e31f, type: 2}
+  - {fileID: 11400000, guid: 4d6be666466cfc84388696cc883911e1, type: 2}
   - {fileID: 11400000, guid: 449145eec17147d4d90948550792ae32, type: 2}
   - {fileID: 11400000, guid: 3cadf9383e7271b46a42b7416bdc7072, type: 2}
   - {fileID: 11400000, guid: a00034d20378e464782a6ef3c1250d1f, type: 2}
@@ -377,10 +377,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
