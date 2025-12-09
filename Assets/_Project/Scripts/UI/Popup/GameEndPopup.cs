@@ -50,12 +50,9 @@ namespace CocoDoogy.UI.Popup
         [SerializeField] private Button homeButton;
         [SerializeField] private Button nextButton;
         
-        [Header("Button State")]
-        [SerializeField] private GameObject enableNextButton;
-        [SerializeField] private GameObject disableNextButton;
-        
         private Action<CallbackType> callback = null;
-        
+
+        private bool defeat;
         private void Awake()
         {
             if (gameEndPopup == null)
@@ -69,10 +66,19 @@ namespace CocoDoogy.UI.Popup
             nextButton.onClick.AddListener(OnClickNext);
         }
 
+        private void OnEnable()
+        {
+            defeat = false;
+            restartButton.interactable = false;
+            homeButton.interactable = false;
+            nextButton.interactable = false;
+        }
+        
         public static void OpenPopup(bool isDefeat, int star)
         {
             gameEndPopup.panel.SetActive(true);
-
+            gameEndPopup.defeat = isDefeat;
+            
             gameEndPopup.titleImage.sprite =
                 !isDefeat ? gameEndPopup.completeUI.titleSprite : gameEndPopup.defeatUI.titleSprite;
             gameEndPopup.titleTextImage.sprite =
@@ -91,20 +97,8 @@ namespace CocoDoogy.UI.Popup
             
             gameEndPopup.remainAPText.text = $"{InGameManager.UseActionPoints}";
             OnTimeChanged(!PlayerHandler.IsReplay ? InGameManager.Timer.NowTime : (float)ReplayUIManager.timer);
-            gameEndPopup.completeScore.GetStageClearResult(isDefeat, star);
             
-            if (isDefeat || !DataManager.GetStageData(InGameManager.Stage.theme, InGameManager.Stage.index + 1) || PlayerHandler.IsReplay)
-            {
-                // 다음 스테이지가 없다면 NextButton을 비활성화
-                gameEndPopup.nextButton.interactable = false;
-                gameEndPopup.enableNextButton.SetActive(false);
-                gameEndPopup.disableNextButton.SetActive(true);
-                return;
-            }
-            
-            gameEndPopup.nextButton.interactable = true;
-            gameEndPopup.enableNextButton.SetActive(true);
-            gameEndPopup.disableNextButton.SetActive(false);
+            gameEndPopup.completeScore.GetStageClearResult(isDefeat, star, OnButtonInteract);
         }
 
         private static void OnTimeChanged(float time)
@@ -112,6 +106,20 @@ namespace CocoDoogy.UI.Popup
             int minutes = (int)(time / 60);
             int seconds = (int)(time % 60);
             gameEndPopup.clearTimeText.text = $"{minutes:00}:{seconds:00}";
+        }
+
+        private static void OnButtonInteract()
+        {
+            gameEndPopup.restartButton.interactable = true;
+            gameEndPopup.homeButton.interactable = true;
+            if (gameEndPopup.defeat || !DataManager.GetStageData(InGameManager.Stage.theme, InGameManager.Stage.index + 1) || PlayerHandler.IsReplay)
+            {
+                // 다음 스테이지가 없다면 NextButton을 비활성화
+                gameEndPopup.nextButton.interactable = false;
+                return;
+            }
+            
+            gameEndPopup.nextButton.interactable = true;
         }
         private void OnClickRestart()
         {

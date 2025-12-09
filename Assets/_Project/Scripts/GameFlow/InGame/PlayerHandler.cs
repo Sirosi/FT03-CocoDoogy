@@ -8,6 +8,7 @@ using CocoDoogy.Tile.Gimmick;
 using CocoDoogy.Tile.Piece;
 using CocoDoogy.Tutorial;
 using CocoDoogy.UI.Replay;
+using CocoDoogy.UI.UIManager;
 using CocoDoogy.Utility;
 using DG.Tweening;
 using System;
@@ -251,7 +252,7 @@ namespace CocoDoogy.GameFlow.InGame
             if (!IsValid) return;
             if (!IsBehaviour) IsBehaviour = true;
             
-            
+            InGameUIManager.Instance.OnInteractButtonActive();
             Instance.lockBehaviour = true;
             Instance.transform.parent = null;
             prevGridPos = GridPos;

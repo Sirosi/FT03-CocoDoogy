@@ -2,6 +2,7 @@ using CocoDoogy.Audio;
 using Coffee.UIExtensions;
 using DG.Tweening;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,8 @@ namespace CocoDoogy.UI
 
         [SerializeField] private Defeat defeat;
 
+        public event Action OnStarAnimationComplete;
+        
         private RectTransform rectTransform;
         private Star[] stars;
 
@@ -44,11 +47,10 @@ namespace CocoDoogy.UI
         /// <summary>
         /// score를 매개변수로 받아 switch로 분기
         /// </summary>
-        /// <param name="isDefeat"></param>
-        /// <param name="score"></param>
-        public void GetStageClearResult(bool isDefeat, int score)
+        public async void GetStageClearResult(bool isDefeat, int score, Action onComplete)
         {
             Debug.Log($"GetStageClearResult : score = {score}");
+            OnStarAnimationComplete = onComplete;
             if (isDefeat)
             {
                 PlayDefeat();
@@ -63,7 +65,7 @@ namespace CocoDoogy.UI
                     });
             }
         }
-
+        
         /// <summary>
         /// 별을 반복해서 최대 3번 변경하는 메서드. 재귀함수
         /// </summary>
@@ -84,12 +86,11 @@ namespace CocoDoogy.UI
                     SfxManager.PlaySfx(SfxType.UI_SuccessStage);
                     SfxManager.StopDucking();
                 }
+                OnStarAnimationComplete?.Invoke();
                 return;
             }
 
             Star star = stars[index];
-
-            // Instantiate(starParticle, star.StarPos(), Quaternion.identity, rectTransform);
 
             PlayStarSfx(index);
 
@@ -102,6 +103,7 @@ namespace CocoDoogy.UI
         private void PlayDefeat()
         {
             SfxManager.PlaySfx(SfxType.UI_FailStage);
+            OnStarAnimationComplete?.Invoke();
         }
 
         private void PlayStarSfx(int index)

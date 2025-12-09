@@ -41,5 +41,10 @@ namespace CocoDoogy.UI.InGame
             iconImage.gameObject.SetActive(iconImage.sprite = icon);
             button.interactable = (action = callback) != null;
         }
+
+        public void OnInteractChanged()
+        {
+            button.interactable = false;
+        }
     }
 }
