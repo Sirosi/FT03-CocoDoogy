@@ -51,9 +51,9 @@ namespace CocoDoogy.Tutorial
             {
                 Tutorial1_4(index);
             }
-            else if(IsEqual(stage, Theme.Water, 16))
+            else if(IsEqual(stage, Theme.Water, 15))
             {
-                Tutorial2_16(index);
+                Tutorial2_15(index);
             }
             else
             {
@@ -203,7 +203,7 @@ namespace CocoDoogy.Tutorial
             Highlighter.Invisible();
             TutorialUI.Close();
         }
-        private void Tutorial2_16(int index = 0)
+        private void Tutorial2_15(int index = 0)
         {
             switch(index)
             {

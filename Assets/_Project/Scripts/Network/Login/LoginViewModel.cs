@@ -114,8 +114,6 @@ namespace CocoDoogy.Network.Login
         /// <summary>
         /// 입력된 닉네임이 적합한 닉네임인지 확인
         /// </summary>
-        /// <param name="nickname"></param>
-        /// <returns></returns>
         private bool CanUse(string nickname)
         {
             foreach (var check in CanUseNickname)
