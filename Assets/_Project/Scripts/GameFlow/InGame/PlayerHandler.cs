@@ -255,7 +255,6 @@ namespace CocoDoogy.GameFlow.InGame
             if (!IsBehaviour) IsBehaviour = true;
 
             InGameUIManager.Instance.OnInteractButtonActive();
-            Instance.lockBehaviour = true;
 
             Instance.isMoving = true;
             Instance.transform.parent = null;
