@@ -85,7 +85,7 @@ namespace CocoDoogy.Utility
 
             OnMapSaved?.Invoke();
 
-            return JsonUtility.ToJson(mapData);
+            return JsonUtility.ToJson(mapData, true);
         }
 
         /// <summary>
