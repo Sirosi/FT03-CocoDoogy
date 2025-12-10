@@ -32,7 +32,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public int SandCount { get => sc; private set => sc = value; }
         
         
-        public RefillCommand(object param) : base(CommandType.Refill, param)
+        public RefillCommand(object param) : base(CommandType.Refill)
         {
             var data = ((int, Vector2Int, int))param;
             RemainPoints = data.Item1;

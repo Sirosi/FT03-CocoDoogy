@@ -22,7 +22,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public WeatherType NextWeather { get => nw; private set => nw = value; }
 
 
-        public WeatherCommand(object param): base(CommandType.Weather, param)
+        public WeatherCommand(object param): base(CommandType.Weather)
         {
             (WeatherType, WeatherType) data = ((WeatherType, WeatherType))param;
 

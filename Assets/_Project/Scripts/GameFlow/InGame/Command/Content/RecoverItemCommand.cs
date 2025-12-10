@@ -21,7 +21,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         private const int Recover = 1;
 
 
-        public RecoverItemCommand(object param) : base(CommandType.Recover, param)
+        public RecoverItemCommand(object param) : base(CommandType.Recover)
         {
             Effect = (ItemEffect)param;
         }

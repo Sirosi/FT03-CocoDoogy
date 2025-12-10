@@ -25,7 +25,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public Vector2Int NextPos { get => np; private set => np = value; }
 
 
-        public TeleportCommand(object param) : base(CommandType.Teleport, param)
+        public TeleportCommand(object param) : base(CommandType.Teleport)
         {
             var poses = ((Vector2Int, Vector2Int))param;
             PrePos = poses.Item1;

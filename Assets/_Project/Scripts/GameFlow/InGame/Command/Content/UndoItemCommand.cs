@@ -16,7 +16,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
 
         [SerializeField] private ItemEffect ie;
 
-        public UndoItemCommand(object param) : base(CommandType.Undo, param)
+        public UndoItemCommand(object param) : base(CommandType.Undo)
         {
             Effect = (ItemEffect)param;
         }

@@ -14,7 +14,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public int Regen { get => rg; private set => rg = value; }
         
         
-        public IncreaseCommand(object param) : base(CommandType.Increase, param)
+        public IncreaseCommand(object param) : base(CommandType.Increase)
         {
             Regen = (int)param;
         }

@@ -20,7 +20,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public bool Docked { get => d == 1; private set => d = value ? (byte)1 : (byte)0; }
 
 
-        public DeckResetCommand(object param): base(CommandType.DeckReset, param)
+        public DeckResetCommand(object param): base(CommandType.DeckReset)
         {
             var data = ((Vector2Int, bool))param;
 

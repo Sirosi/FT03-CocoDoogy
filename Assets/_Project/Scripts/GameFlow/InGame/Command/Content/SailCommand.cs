@@ -25,7 +25,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public Vector2Int NextPos { get => np; private set => np = value; }
 
 
-        public SailCommand(object param) : base(CommandType.Sail, param)
+        public SailCommand(object param) : base(CommandType.Sail)
         {
             var data = ((Vector2Int, Vector2Int))param;
             PrePos = data.Item1;

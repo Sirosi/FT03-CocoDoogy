@@ -27,7 +27,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public HexDirection LookDirection { get => ld; private set => ld = value; }
 
 
-        public DeployCommand(object param): base(CommandType.Deploy, param)
+        public DeployCommand(object param): base(CommandType.Deploy)
         {
             (Vector2Int, HexDirection) data = ((Vector2Int, HexDirection))param;
 
