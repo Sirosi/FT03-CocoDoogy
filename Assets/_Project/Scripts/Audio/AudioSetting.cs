@@ -10,7 +10,11 @@ namespace CocoDoogy.Audio
         public static event Action<float> OnBgmChanged = null;
         public static event Action<float> OnSfxChanged = null;
 
-
+        public static event Action<bool> OnMasterMuteChanged = null;
+        public static event Action<bool> OnBgmMuteChanged = null;
+        public static event Action<bool> OnSfxMuteChanged = null;
+        
+        
         public static float MasterVolume
         {
             get => masterVolume;
@@ -42,11 +46,44 @@ namespace CocoDoogy.Audio
             }
         }
         
+        public static bool IsMasterMuted
+        {
+            get => isMasterMuted;
+            set
+            {
+                isMasterMuted = value;
+                OnMasterMuteChanged?.Invoke(isMasterMuted);
+            }
+        }
+        public static bool IsBgmMuted
+        {
+            get => isBgmMuted;
+            set
+            {
+                isBgmMuted = value;
+                OnBgmMuteChanged?.Invoke(isBgmMuted);
+            }
+        }
+        public static bool IsSfxMuted
+        {
+            get => isSfxMuted;
+            set
+            {
+                isSfxMuted = value;
+                OnSfxMuteChanged?.Invoke(isSfxMuted);
+            }
+        }
+        
+        private static bool isMasterMuted = false;
+        private static bool isBgmMuted = false;
+        private static bool isSfxMuted = false;
+        
+        //볼륨
         private static float masterVolume = 0.75f;
         private static float bgmVolume = 0.75f;
         private static float sfxVolume = 0.75f;
-
-
+        
+        
         protected override void Awake()
         {
             base.Awake();
@@ -78,15 +115,40 @@ namespace CocoDoogy.Audio
             VolumeController.Instance.SetSfxVolume(value);
         }
 
+        private static void OnMasterMuteSave(bool isMuted)
+        {
+            PlayerPrefs.SetInt("IsMasterMuted", isMuted ? 1 : 0);
+            // Assuming VolumeController will have this method
+            VolumeController.Instance.SetMasterMute(isMuted);
+        }
+        private static void OnBgmMuteSave(bool isMuted)
+        {
+            PlayerPrefs.SetInt("IsBgmMuted", isMuted ? 1 : 0);
+            VolumeController.Instance.SetBgmMute(isMuted);
+        }
+        private static void OnSfxMuteSave(bool isMuted)
+        {
+            PlayerPrefs.SetInt("IsSfxMuted", isMuted ? 1 : 0);
+            VolumeController.Instance.SetSfxMute(isMuted);
+        }
+        
         private void AwakeAudioSetting()
         {
             OnMasterChanged += OnMasterSave;
             OnBgmChanged += OnBgmSave;
             OnSfxChanged += OnSfxSave;
 
+            OnMasterMuteChanged += OnMasterMuteSave;
+            OnBgmMuteChanged += OnBgmMuteSave;
+            OnSfxMuteChanged += OnSfxMuteSave;
+            
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.75f);
             BgmVolume = PlayerPrefs.GetFloat("BgmVolume", 0.75f);
             SfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
+            
+            IsMasterMuted = PlayerPrefs.GetInt("IsMasterMuted", 0) == 1;
+            IsBgmMuted = PlayerPrefs.GetInt("IsBgmMuted", 0) == 1;
+            IsSfxMuted = PlayerPrefs.GetInt("IsSfxMuted", 0) == 1;
         }
     }
 }

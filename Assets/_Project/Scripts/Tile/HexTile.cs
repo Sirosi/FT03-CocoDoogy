@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using CocoDoogy.Data;
 using CocoDoogy.EffectPooling;
 using CocoDoogy.GameFlow.InGame;
@@ -302,6 +303,7 @@ namespace CocoDoogy.Tile
             ConnectPiece(direction, result);
             
             OnPieceChanged?.Invoke(this, direction);
+            SfxManager.PlaySfx(SfxType.Gimmick_ObjectSpawn);
             
             return result;
         }
@@ -317,6 +319,8 @@ namespace CocoDoogy.Tile
             Pieces[(int)direction] = null;
             
             OnPieceChanged?.Invoke(this, direction);
+            
+            SfxManager.PlaySfx(SfxType.Gimmick_ObjectDestroy);
         }
         /// <summary>
         /// 해당 위치의 기물 확인
