@@ -20,7 +20,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
         {
             if (!InGameManager.IsValid) return false;
             
-            InGameManager.ChangeInteract(null, null);
+            InGameManager.ChangeInteract(null, false, null);
 
             // 타일 존재 확인
             HexTile tile = HexTile.GetTile(PlayerHandler.GridPos);
@@ -32,8 +32,7 @@ namespace CocoDoogy.GameFlow.InGame.Phase
                 if (!piece) continue;
 
                 if (!piece.TryGetComponent(out IInteractable interactable)) continue;
-                if (!interactable.CanInteract) continue;
-                InGameManager.ChangeInteract(interactable.Icon, interactable.OnInteractClicked);
+                InGameManager.ChangeInteract(interactable.Icon, interactable.CanInteract, interactable.OnInteractClicked);
                 break;
             }
 

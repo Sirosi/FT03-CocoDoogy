@@ -18,7 +18,7 @@ namespace CocoDoogy.GameFlow.InGame
     {
         public static event Action<int> OnActionPointChanged = null;
         public static event Action<int> OnRefillCountChanged = null;
-        public static event Action<Sprite, Action> OnInteractChanged = null;
+        public static event Action<Sprite, bool, Action> OnInteractChanged = null;
         public static event Action<StageData> OnMapDrawn = null;
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace CocoDoogy.GameFlow.InGame
             ActionPoints = 0;
             Timer.Stop();
 
-            ChangeInteract(null, null);
+            ChangeInteract(null, false, null);
 
             foreach (IPhase phase in turnPhases)
             {
@@ -274,9 +274,9 @@ namespace CocoDoogy.GameFlow.InGame
             TileOutlineDrawer.Draw();
         }
 
-        public static void ChangeInteract(Sprite icon, Action callback)
+        public static void ChangeInteract(Sprite icon, bool interactable, Action callback)
         {
-            OnInteractChanged?.Invoke(icon, callback);
+            OnInteractChanged?.Invoke(icon, interactable, callback);
         }
     }
 }

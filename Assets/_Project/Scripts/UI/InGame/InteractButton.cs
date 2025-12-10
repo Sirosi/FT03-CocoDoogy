@@ -20,7 +20,7 @@ namespace CocoDoogy.UI.InGame
         void Awake()
         {
             button.onClick.AddListener(OnButtonClicked);
-            OnInteractChanged(null, null);
+            OnInteractChanged(null, false, null);
 
             InGameManager.OnInteractChanged += OnInteractChanged;
         }
@@ -36,10 +36,11 @@ namespace CocoDoogy.UI.InGame
         }
 
 
-        private void OnInteractChanged(Sprite icon, Action callback)
+        private void OnInteractChanged(Sprite icon, bool interactable, Action callback)
         {
             iconImage.gameObject.SetActive(iconImage.sprite = icon);
-            button.interactable = (action = callback) != null;
+            button.interactable = interactable;
+            action = callback;
         }
 
         public void OnInteractChanged()
