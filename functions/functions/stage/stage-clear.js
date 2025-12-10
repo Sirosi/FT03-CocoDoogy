@@ -13,7 +13,8 @@ exports.stageClear = onCall(fnConfig, async (request) => {
     const data = request.data || {};
     const { theme, level, clearTime, remainAP, replayData, star , refillPoints} = data;
 
-    if (!theme || !level || clearTime === undefined || remainAP === undefined || replayData === undefined || refillPoints === undefined || star === undefined) {
+    if (!theme || !level || clearTime === undefined || remainAP === undefined ||
+        replayData === undefined || refillPoints === undefined || star === undefined) {
         return { success: false, reason: "필수 파라미터가 누락되었습니다." };
     }
 
@@ -22,7 +23,16 @@ exports.stageClear = onCall(fnConfig, async (request) => {
 
     try {
 
-        await stageReplayService.stageClearReplay(replayId, replayData, stageId, uid);
+        await stageReplayService.stageClearReplay(
+            replayId,
+            replayData,
+            stageId,
+            uid,
+            clearTime,
+            remainAP,
+            star,
+            refillPoints
+        );
 
 
         await admin.firestore().runTransaction(async (transaction) => {

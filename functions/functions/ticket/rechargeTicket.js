@@ -2,7 +2,7 @@ const {onCall} = require("firebase-functions/v2/https");
 const {fnConfig} = require("../../config");
 const admin = require("../../admin");
 
-const minute = 1;
+const minute = 30;
 const rechargeInterval = minute * 60 * 1000;
 const maxTicket = 10;
 

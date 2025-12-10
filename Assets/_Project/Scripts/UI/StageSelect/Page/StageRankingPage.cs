@@ -64,7 +64,7 @@ namespace CocoDoogy.UI.StageSelect.Page
             if (userRank is null)
             {
                 userRankItem.Init("순위외", DataManager.Instance.UserData.NickName, userRecord.refillPoints.ToString(),
-                userRecord.remainAP.ToString(), userRecord.clearTime, userRecord.replayData, CurrentStageStar, StageData);
+                userRecord.remainAP.ToString(), userRecord.clearTime, userRecord.replayId, CurrentStageStar, StageData);
             }
             else
             {

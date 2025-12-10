@@ -22,7 +22,8 @@ namespace CocoDoogy.GameFlow.InGame
         }
          
         /// <summary>
-        /// 스테이지를 클리어 혹은 실패 후 아이템을 사용한 적이 있다면 해당 아이템을 DB에서 -1 하고
+        /// 스테이지를 클리어 혹은 실패 후 아이템을 사용한 적이 있다면 UseItemAsync를 작동시켜 DB에서 아이템 차감,
+        /// 아이템을 사용하지 않으면 아이템이 차감되지 않음.
         /// </summary>
         /// <param name="openPopup"></param>
         public static async void UseItem(Action openPopup = null)
