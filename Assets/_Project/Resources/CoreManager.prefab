@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1829738561049236941}
   - component: {fileID: 8884511360502333469}
   - component: {fileID: 907077531411847894}
+  - component: {fileID: 2393562919345064266}
   m_Layer: 0
   m_Name: CoreManager
   m_TagString: Untagged
@@ -221,8 +222,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4fbe5b99acaaa344b969150524423566, type: 2}
   - {fileID: 11400000, guid: 3bb92d2deb3ddfb4d87d0e7b4f70f5be, type: 2}
   - {fileID: 11400000, guid: f5f2704ec1531334aaac489cee5e88bf, type: 2}
-  - {fileID: 11400000, guid: c4cf2401e7b3d1a439f0506965b7e14d, type: 2}
   - {fileID: 11400000, guid: abce3a4a0dec11c41b353b28e3acac76, type: 2}
+  - {fileID: 11400000, guid: 2b2bb3d925c31194a9194fc08701433a, type: 2}
   - {fileID: 11400000, guid: e6a4d3dde9c14b846b52a0b8dea6f505, type: 2}
   - {fileID: 11400000, guid: ed248f90ddde7aa4e9548dd86576ed31, type: 2}
   - {fileID: 11400000, guid: 19d4f66e54064ce4d82a408d1e86f856, type: 2}
@@ -238,8 +239,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 354031f2317303c4ab12b02356359e79, type: 2}
   - {fileID: 11400000, guid: e666180ce7776df46a3be4c0bebd7c9c, type: 2}
   - {fileID: 11400000, guid: b1341f47869d6dc45b924eecdd4a8203, type: 2}
-  - {fileID: 11400000, guid: 4d6be666466cfc84388696cc883911e1, type: 2}
   - {fileID: 11400000, guid: 62d5299d38724f741b7e98e59344e31f, type: 2}
+  - {fileID: 11400000, guid: 4d6be666466cfc84388696cc883911e1, type: 2}
   - {fileID: 11400000, guid: 449145eec17147d4d90948550792ae32, type: 2}
   - {fileID: 11400000, guid: 3cadf9383e7271b46a42b7416bdc7072, type: 2}
   - {fileID: 11400000, guid: a00034d20378e464782a6ef3c1250d1f, type: 2}
@@ -261,9 +262,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 19373f9dae06cfe4d8d97e6cace02d9e, type: 2}
   - {fileID: 11400000, guid: 1fb2a3b41cf95104e8978521eb66fff2, type: 2}
   - {fileID: 11400000, guid: 7c8b38b3b30166d48bbe46c5fa0c32f0, type: 2}
-  - {fileID: 11400000, guid: 67d57180e67860348b445b12daf49c25, type: 2}
-  - {fileID: 11400000, guid: f861c19a3b6a6714a97a0453725c97fb, type: 2}
-  - {fileID: 11400000, guid: 5c86168dc0af0a14ab44655bae2e6bd2, type: 2}
+  - {fileID: 11400000, guid: 98e1de59159eca34885cbd8729c034e3, type: 2}
+  - {fileID: 11400000, guid: 5c6f96931b5403e439785b45387c04ee, type: 2}
+  - {fileID: 11400000, guid: 69427101fbcffb04cb99f4910c67595a, type: 2}
 --- !u!114 &8884511360502333469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,6 +292,18 @@ MonoBehaviour:
   touchEffectPrefab: {fileID: 2322220917563826550, guid: 1746761676261dd458f073587443f9cb, type: 3}
   onlyOneFinger: 1
   canvasRect: {fileID: 1771006052046265290}
+--- !u!114 &2393562919345064266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864466465157205230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beaa1ddf50774870885f6617ba3d519f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8724078286053695815
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,10 +377,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

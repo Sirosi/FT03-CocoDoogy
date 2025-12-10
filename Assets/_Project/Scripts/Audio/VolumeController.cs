@@ -32,17 +32,32 @@ namespace CocoDoogy.Audio
 
         public void SetMasterVolume(float volume)
         {
-            vcaMaster.setVolume(volume);
+            vcaMaster.setVolume(AudioSetting.IsMasterMuted ? 0f : volume);
         }
-        
+
         public void SetSfxVolume(float volume)
         {
-            vcaSfx.setVolume(volume);
+            vcaSfx.setVolume(AudioSetting.IsSfxMuted ? 0f : volume);
         }
 
         public void SetBgmVolume(float volume)
         {
-            vcaBgm.setVolume(volume);
+            vcaBgm.setVolume(AudioSetting.IsBgmMuted ? 0f : volume);
+        }
+        
+        public void SetMasterMute(bool isMuted)
+        {
+            SetMasterVolume(AudioSetting.MasterVolume);
+        }
+
+        public void SetSfxMute(bool isMuted)
+        {
+            SetSfxVolume(AudioSetting.SfxVolume);
+        }
+
+        public void SetBgmMute(bool isMuted)
+        {
+            SetBgmVolume(AudioSetting.BgmVolume);
         }
     }
 }

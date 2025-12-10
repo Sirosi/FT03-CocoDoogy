@@ -654,6 +654,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7177815490040504817}
     m_Modifications:
+    - target: {fileID: 629905424410669645, guid: a5fa4c7ff178dc8438f9ac60d821261d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2348195131058337497, guid: a5fa4c7ff178dc8438f9ac60d821261d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1344.6
@@ -693,6 +697,18 @@ PrefabInstance:
     - target: {fileID: 2348195131058337497, guid: a5fa4c7ff178dc8438f9ac60d821261d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3099690937480452398, guid: a5fa4c7ff178dc8438f9ac60d821261d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641643922560838703, guid: a5fa4c7ff178dc8438f9ac60d821261d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 6748701746921888928, guid: a5fa4c7ff178dc8438f9ac60d821261d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8708339087756062987, guid: a5fa4c7ff178dc8438f9ac60d821261d, type: 3}
       propertyPath: m_Name
@@ -1785,6 +1801,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7177815490040504817}
     m_Modifications:
+    - target: {fileID: 721808655549792436, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1956089848918731900, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2017858829892432571, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368796605412462621, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2768647937117269546, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -467
@@ -1825,9 +1857,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3076897369065251864, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874301904145520279, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075100705398034700, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5203751849911710435, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6052459270926071574, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6782806640109828451, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7267360595585669205, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
       propertyPath: m_Name
       value: Ice Palace
+      objectReference: {fileID: 0}
+    - target: {fileID: 8182764196091626290, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9020151828313596812, guid: f8041fbd46b7ffc449120ed456983fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2752,6 +2816,10 @@ PrefabInstance:
     - target: {fileID: 4415288227322981726, guid: 0de0dd108a9f79e428f71d8175f9d5fd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194475780841086976, guid: 0de0dd108a9f79e428f71d8175f9d5fd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

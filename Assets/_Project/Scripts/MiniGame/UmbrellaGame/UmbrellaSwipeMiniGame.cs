@@ -56,6 +56,11 @@ namespace CocoDoogy.MiniGame.UmbrellaGame
             }
         }
 
+        protected override void ResizePanel()
+        {
+            
+        }
+
         /// <summary>
         /// 배경 바꾸기
         /// </summary>

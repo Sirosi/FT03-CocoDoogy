@@ -22,20 +22,28 @@ namespace CocoDoogy.GameFlow.InGame
         }
          
         /// <summary>
-        /// 스테이지를 클리어 혹은 실패 후 아이템을 사용한 적이 있다면 해당 아이템을 DB에서 -1 하고
+        /// 스테이지를 클리어 혹은 실패 후 아이템을 사용한 적이 있다면 UseItemAsync를 작동시켜 DB에서 아이템 차감,
+        /// 아이템을 사용하지 않으면 아이템이 차감되지 않음.
         /// </summary>
         /// <param name="openPopup"></param>
-        public static void UseItem(Action openPopup = null)
+        public static async void UseItem(Action openPopup = null)
         {
-            foreach (var itemData in UsedItems)
+            try
             {
-                if (!itemData.Value)
+                foreach (var itemData in UsedItems)
                 {
-                    Debug.Log($"itemData:{itemData.Key.itemName}, value: {itemData.Value}");
-                    _ = FirebaseManager.UseItemAsync(itemData.Key.itemId);
+                    if (!itemData.Value)
+                    {
+                        _ = await FirebaseManager.UseItemAsync(itemData.Key.itemId);
+                        DataManager.Instance.CurrentItem[itemData.Key]--;
+                    }
                 }
+                openPopup?.Invoke();
             }
-            openPopup?.Invoke();
+            catch (Exception e)
+            {
+                Debug.Log($"아이템 구매 버그: {e.Message}");
+            }
         }
     }
 }

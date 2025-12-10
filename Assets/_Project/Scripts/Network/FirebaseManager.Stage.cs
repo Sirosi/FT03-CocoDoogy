@@ -127,5 +127,23 @@ namespace CocoDoogy.Network
 
             return 0;
         }
+
+        public static async Task<StageInfo> GetRecord(int theme, int level)
+        {
+            string stageId = $"{theme.Hex2()}{level.Hex2()}";
+            
+            var snapshot = await Instance.Firestore
+                .Document($"users/{Instance.Auth.CurrentUser.UserId}/stageInfo/{stageId}")
+                .GetSnapshotAsync();
+
+            if (snapshot.Exists)
+            {
+                StageInfo stageInfo = snapshot.ConvertTo<StageInfo>();
+                return stageInfo;
+            }
+
+            Debug.Log("해당 문서가 존재하지 않거나 찾지 못했습니다.");
+            return null;
+        }
     }
 }

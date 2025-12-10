@@ -1,3 +1,4 @@
+using CocoDoogy.Audio;
 using UnityEngine;
 using DG.Tweening;
 using System;
@@ -109,7 +110,10 @@ namespace CocoDoogy.EmoteBillboard
             transform.localScale = new Vector3(0, 0, 1); // 0에서 시작 (Z축은 유지)
             startPos = target ? target.position + offset : transform.position;
             transform.position = startPos;
-
+            
+            //Sfx 실행
+            PlayEmoteSfx(emotion);
+            
             // 애니메이션 시퀀스
             currentSequence = DOTween.Sequence();
 
@@ -187,5 +191,26 @@ namespace CocoDoogy.EmoteBillboard
             if (currentSequence != null)
                 currentSequence.Kill();
         }
+        
+        #region SFX
+        private static readonly System.Collections.Generic.Dictionary<Emotion, SfxType> EmotionSfxMap = 
+            new System.Collections.Generic.Dictionary<Emotion, SfxType>
+            {
+                { Emotion.Joy, SfxType.Emote_Positive },
+                { Emotion.Satisfaction, SfxType.Emote_Positive },
+                { Emotion.Boredom, SfxType.Emote_Neutral },
+                { Emotion.Sad, SfxType.Emote_Negative },
+                { Emotion.Thrill, SfxType.Emote_Negative },
+                { Emotion.Anxiety, SfxType.Emote_Negative },
+            };
+        
+        private void PlayEmoteSfx(Emotion emotion)
+        {
+            if (EmotionSfxMap.TryGetValue(emotion, out SfxType sfxType))
+            {
+                SfxManager.PlaySfx(sfxType);
+            }
+        }
+        #endregion
     }
 }

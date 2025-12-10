@@ -18,7 +18,7 @@ namespace CocoDoogy.GameFlow.InGame
     {
         public static event Action<int> OnActionPointChanged = null;
         public static event Action<int> OnRefillCountChanged = null;
-        public static event Action<Sprite, Action> OnInteractChanged = null;
+        public static event Action<Sprite, bool, Action> OnInteractChanged = null;
         public static event Action<StageData> OnMapDrawn = null;
 
         /// <summary>
@@ -64,7 +64,12 @@ namespace CocoDoogy.GameFlow.InGame
             }
         }
 
-        public static int UseActionPoints = 0;
+        public static int UseActionPoints
+        {
+            get => _UseActionPoints;
+            set => print(_UseActionPoints = value);
+        }
+        private static int _UseActionPoints = 0;
         public static int UseRefillCounts = 0;
         /// <summary>
         /// Refill전까지 남은 ActionPoints
@@ -184,7 +189,7 @@ namespace CocoDoogy.GameFlow.InGame
 
         private void Clear()
         {
-            OutlineForTest.Clear();
+            TileOutlineDrawer.Clear();
             WeatherManager.NowWeather = WeatherType.None;
             Passages.Clear();
             LastConsumeActionPoints = 0;
@@ -193,7 +198,7 @@ namespace CocoDoogy.GameFlow.InGame
             ActionPoints = 0;
             Timer.Stop();
 
-            ChangeInteract(null, null);
+            ChangeInteract(null, false, null);
 
             foreach (IPhase phase in turnPhases)
             {
@@ -229,7 +234,6 @@ namespace CocoDoogy.GameFlow.InGame
             if (containConsume)
             {
                 ConsumedActionPoints -= regen;
-                UseActionPoints -= regen;
             }
             if(notify)
             {
@@ -267,12 +271,12 @@ namespace CocoDoogy.GameFlow.InGame
                 if (!phase.OnPhase()) break;
             }
             // TODO: 추후 삭제 필요
-            OutlineForTest.Draw();
+            TileOutlineDrawer.Draw();
         }
 
-        public static void ChangeInteract(Sprite icon, Action callback)
+        public static void ChangeInteract(Sprite icon, bool interactable, Action callback)
         {
-            OnInteractChanged?.Invoke(icon, callback);
+            OnInteractChanged?.Invoke(icon, interactable, callback);
         }
     }
 }

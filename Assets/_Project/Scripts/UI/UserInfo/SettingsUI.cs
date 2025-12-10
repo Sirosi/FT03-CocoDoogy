@@ -1,12 +1,11 @@
 using CocoDoogy.Audio;
 using CocoDoogy.CameraSwiper;
 using CocoDoogy.GameFlow.InGame;
-using CocoDoogy.UI.InGame;
 using DG.Tweening;
-using System.Diagnostics;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 namespace CocoDoogy.UI.UserInfo
 {
@@ -33,149 +32,226 @@ namespace CocoDoogy.UI.UserInfo
         [SerializeField] private Button masterMute;
         [SerializeField] private Button bgmMute;
         [SerializeField] private Button sfxMute;
-        private float lastMasterVolume;
-        private float lastBgmVolume;
-        private float lastSfxVolume;
-        
+        [SerializeField] private Image masterSlider;
+        [SerializeField] private Image bgmSlider;
+        [SerializeField] private Image sfxSlider;
 
+        private bool _isUpdatingState = false; // 동시 변경 방지 플래그
 
-        void Awake()
+        private const float Color_Disabled = 0.5f;
+        private const float Color_Enabled = 1.0f;
+
+        private void Awake()
         {
             closeButton.onClick.AddListener(ClosePanel);
+
+            // 슬라이더 리스너
+            masterVolume.onValueChanged.AddListener(OnMasterVolumeChanged);
+            bgmVolume.onValueChanged.AddListener(OnBgmVolumeChanged);
+            sfxVolume.onValueChanged.AddListener(OnSfxVolumeChanged);
+
+            // 뮤트 버튼 리스너
+            masterMute.onClick.AddListener(() => OnMasterMuteClicked());
+            bgmMute.onClick.AddListener(() => OnBgmMuteClicked());
+            sfxMute.onClick.AddListener(() => OnSfxMuteClicked());
+        }
+
+        private void Start()
+        {
+            UpdateAllVisuals();
+        }
+
+        private void OnEnable()
+        {
+            Time.timeScale = 0;
+            if(InGameManager.Timer != null) InGameManager.Timer.Pause();
             
-            masterVolume.onValueChanged.AddListener(MasterControl);
-            bgmVolume.onValueChanged.AddListener(BGMControl);
-            sfxVolume.onValueChanged.AddListener(SfxControl);
-
-            masterMute.onClick.AddListener(()=> MasterMute(true));
-            bgmMute.onClick.AddListener(()=> BgmMute(true));
-            sfxMute.onClick.AddListener(()=> SfxMute(true));
-        }
-        void Start()
-        {
-            masterVolume.value = AudioSetting.MasterVolume;
-            bgmVolume.value = AudioSetting.BgmVolume;
-            sfxVolume.value = AudioSetting.SfxVolume;
-            
-            MasterControl(masterVolume.value);
-            BGMControl(bgmVolume.value);
-            SfxControl(sfxVolume.value);
+            masterVolume.SetValueWithoutNotify(AudioSetting.MasterVolume);
+            bgmVolume.SetValueWithoutNotify(AudioSetting.BgmVolume);
+            sfxVolume.SetValueWithoutNotify(AudioSetting.SfxVolume);
         }
 
-        void OnEnable()
+        private void OnDisable()
         {
-            InGameManager.Timer.Pause();
+            if(InGameManager.Timer != null) InGameManager.Timer.Start();
+            Time.timeScale = 1;
         }
 
-        void OnDisable()
-        {
-            InGameManager.Timer.Start();
-        }
-        
         public override void ClosePanel()
         {
             settingsWindow.gameObject.SetActive(false);
             PageCameraSwiper.IsSwipeable = true;
         }
 
-        void MasterControl(float value)
+        #region Slider Event Handlers
+        private void OnMasterVolumeChanged(float value)
         {
-            if (value <= 0)
-            {
-                masterIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
-            }
-            else
-            {
-                masterIcon.DOColor(new Color(1, 1, 1), 0.2f);
-                MasterMute(false);
-            }
+            if (_isUpdatingState) return;
+            _isUpdatingState = true;
 
             AudioSetting.MasterVolume = value;
 
-        }
-        void BGMControl(float value)
-        {
+            // 슬라이더가 0이 되면 뮤트 상태를 true로 설정
             if (value <= 0)
             {
-                bgmIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
+                AudioSetting.IsMasterMuted = true;
             }
             else
             {
-                bgmIcon.DOColor(new Color(1, 1, 1), 0.2f);
-                BgmMute(false);
+                // 슬라이더가 0보다 커지면 뮤트 상태를 false로 설정
+                AudioSetting.IsMasterMuted = false;
             }
+            UpdateAllVisuals();
+            _isUpdatingState = false;
+        }
+
+        private void OnBgmVolumeChanged(float value)
+        {
+            if (_isUpdatingState) return;
+            _isUpdatingState = true;
 
             AudioSetting.BgmVolume = value;
-            
-        }
-        void SfxControl(float value)
-        {
+
             if (value <= 0)
             {
-                sfxIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
-                sfxInnerIcon.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
+                AudioSetting.IsBgmMuted = true;
             }
             else
             {
-                sfxIcon.DOColor(new Color(1, 1, 1), 0.2f);
-                sfxInnerIcon.DOColor(new Color(1, 1, 1), 0.2f);
-                SfxMute(false);
+                AudioSetting.IsBgmMuted = false;
             }
+            UpdateAllVisuals();
+            _isUpdatingState = false;
+        }
+
+        private void OnSfxVolumeChanged(float value)
+        {
+            if (_isUpdatingState) return;
+            _isUpdatingState = true;
 
             AudioSetting.SfxVolume = value;
-            
+
+            if (value <= 0)
+            {
+                AudioSetting.IsSfxMuted = true;
+            }
+            else
+            {
+                AudioSetting.IsSfxMuted = false;
+            }
+            UpdateAllVisuals();
+            _isUpdatingState = false;
+        }
+        #endregion
+
+        #region 뮤트 기능
+        private void OnMasterMuteClicked()
+        {
+            if (_isUpdatingState) return;
+            _isUpdatingState = true;
+
+            bool newMuteState = !AudioSetting.IsMasterMuted;
+
+            // 중앙 데이터 변경
+            AudioSetting.IsMasterMuted = newMuteState;
+
+            // 마스터 뮤트를 풀면 하위 뮤트도 모두 해제. 뮤트하면 하위도 모두 뮤트.
+            AudioSetting.IsBgmMuted = newMuteState;
+            AudioSetting.IsSfxMuted = newMuteState;
+
+            UpdateAllVisuals();
+            _isUpdatingState = false;
         }
 
-        #region Mute Events
-        void MasterMute(bool mute)
+        private void OnBgmMuteClicked()
         {
-            masterMute.onClick.RemoveAllListeners();
-            
-            if (mute)
+            if (_isUpdatingState) return;
+            _isUpdatingState = true;
+
+            bool newMuteState = !AudioSetting.IsBgmMuted;
+
+            // BGM을 켜려는데 마스터가 꺼져있다면 마스터도 켠다.
+            if (!newMuteState && AudioSetting.IsMasterMuted)
             {
-                masterMute.onClick.AddListener(()=> MasterMute(false));
-                lastMasterVolume = masterVolume.value;
-                masterVolume.value = 0;
+                AudioSetting.IsMasterMuted = false;
             }
-            else
+
+            // BGM 상태 변경
+            AudioSetting.IsBgmMuted = newMuteState;
+
+            // BGM과 SFX가 둘 다 꺼지면 마스터도 끈다.
+            if (newMuteState && AudioSetting.IsSfxMuted)
             {
-                masterMute.onClick.AddListener(()=> MasterMute(true));
-                if (masterVolume.value <= 0) masterVolume.value = lastMasterVolume;
-                AudioSetting.MasterVolume = masterVolume.value;
+                AudioSetting.IsMasterMuted = true;
             }
+
+            UpdateAllVisuals();
+            _isUpdatingState = false;
         }
-        void BgmMute(bool mute)
+
+        private void OnSfxMuteClicked()
         {
-            bgmMute.onClick.RemoveAllListeners();
-            
-            if (mute)
+            if (_isUpdatingState) return;
+            _isUpdatingState = true;
+
+            bool newMuteState = !AudioSetting.IsSfxMuted;
+
+            // SFX를 켜려는데 마스터가 꺼져있다면 마스터도 켠다.
+            if (!newMuteState && AudioSetting.IsMasterMuted)
             {
-                bgmMute.onClick.AddListener(()=> BgmMute(false));
-                lastBgmVolume = bgmVolume.value;
-                bgmVolume.value = 0;
+                AudioSetting.IsMasterMuted = false;
             }
-            else
+
+            // SFX 상태 변경
+            AudioSetting.IsSfxMuted = newMuteState;
+
+            // BGM과 SFX가 둘 다 꺼지면 마스터도 끈다.
+            if (newMuteState && AudioSetting.IsBgmMuted)
             {
-                bgmMute.onClick.AddListener(()=> BgmMute(true));
-                if (bgmVolume.value <= 0) bgmVolume.value = lastBgmVolume;
-                AudioSetting.BgmVolume = bgmVolume.value;
+                AudioSetting.IsMasterMuted = true;
             }
+
+            UpdateAllVisuals();
+            _isUpdatingState = false;
         }
-        void SfxMute(bool mute)
+        #endregion
+
+        #region 비주얼 업데이트
+        private void UpdateAllVisuals()
         {
-            sfxMute.onClick.RemoveAllListeners();
+            UpdateMasterVisual();
+            UpdateBgmVisual();
+            UpdateSfxVisual();
+        }
+        
+        private void UpdateMasterVisual()
+        {
+            float targetValue = (AudioSetting.IsMasterMuted || masterVolume.value <= 0) ? Color_Disabled : Color_Enabled;
+            ApplyColorToGroup(targetValue, masterIcon, new List<Image> { masterSlider, masterVolume.image });
+        }
+
+        private void UpdateBgmVisual()
+        {
+            float targetValue = (AudioSetting.IsMasterMuted || AudioSetting.IsBgmMuted || bgmVolume.value <= 0) ? Color_Disabled : Color_Enabled;
+            ApplyColorToGroup(targetValue, bgmIcon, new List<Image> { bgmSlider, bgmVolume.image });
+        }
+
+        private void UpdateSfxVisual()
+        {
+            float targetValue = (AudioSetting.IsMasterMuted || AudioSetting.IsSfxMuted || sfxVolume.value <= 0) ? Color_Disabled : Color_Enabled;
+            ApplyColorToGroup(targetValue, sfxIcon, new List<Image> { sfxSlider, sfxVolume.image, sfxInnerIcon });
+        }
+
+        private void ApplyColorToGroup(float alphaValue, Image icon, List<Image> images)
+        {
+            Color targetColor = new Color(alphaValue, alphaValue, alphaValue, 1f);
+            float duration = 0.2f;
+
+            if (icon != null) icon.DOColor(targetColor, duration).SetUpdate(true);
             
-            if (mute)
+            foreach (var img in images)
             {
-                sfxMute.onClick.AddListener(()=> SfxMute(false));
-                lastSfxVolume = sfxVolume.value;
-                sfxVolume.value = 0;
-            }
-            else
-            {
-                sfxMute.onClick.AddListener(()=> SfxMute(true));
-                if (sfxVolume.value <= 0) sfxVolume.value = lastSfxVolume;
-                AudioSetting.SfxVolume = sfxVolume.value;
+                if (img != null) img.DOColor(targetColor, duration).SetUpdate(true);
             }
         }
         #endregion

@@ -303,6 +303,17 @@ Transform:
   - {fileID: 721363322}
   m_Father: {fileID: 418045918}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &235494470 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4352901443871384960, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
+  m_PrefabInstance: {fileID: 1038230949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038230950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba5ab6c5d0df9441af653481cf59d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &253932681
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,6 +896,7 @@ MonoBehaviour:
   emoteBillboard: {fileID: 1338427650}
   boredomCheckInterval: 0.5
   boredomThreshold: 10
+  emotionDelay: 0.5
 --- !u!114 &852171280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1013,10 +1025,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1620394125751149866, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1756167839018065860, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1077,6 +1085,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: ReplayUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4352901443871384960, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352901443871384960, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352901443871384960, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352901443871384960, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4420103450702632694, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
+      propertyPath: replayRefillbutton
+      value: 
+      objectReference: {fileID: 235494470}
     - target: {fileID: 4850061342803858574, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1093,10 +1121,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5661558851195593820, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
-      propertyPath: replayTimerUI
-      value: 
-      objectReference: {fileID: 1038230950}
     - target: {fileID: 6282869244307302115, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1264,19 +1288,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7007631462604025783, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1038230951}
   m_SourcePrefab: {fileID: 100100000, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
---- !u!114 &1038230950 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8267541112434903531, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
+--- !u!1 &1038230950 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7007631462604025783, guid: a236a08f2c6466d43a7f8e14a7cd3aa5, type: 3}
   m_PrefabInstance: {fileID: 1038230949}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &1038230951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038230950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eb86288a30441f08cd7449f8e11147f, type: 3}
+  m_Script: {fileID: 11500000, guid: 943ebf8f5f2d49129b8824bde67bd7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  replayResetButton: {fileID: 235494470}
 --- !u!1 &1114334511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,6 +1665,7 @@ GameObject:
   - component: {fileID: 1530506117}
   - component: {fileID: 1530506119}
   - component: {fileID: 1530506120}
+  - component: {fileID: 1530506121}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1690,6 +1725,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9c159f596554d76ba5212fe26e215df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1530506121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530506116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bd8da21c6703a47a2a4e05f2ace17e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPivot: {fileID: 2128501142}
+  mainCamera: {fileID: 2080633466}
 --- !u!1 &1607719211
 GameObject:
   m_ObjectHideFlags: 0

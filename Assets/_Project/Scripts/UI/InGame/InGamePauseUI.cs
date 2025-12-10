@@ -4,6 +4,7 @@ using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
 using CocoDoogy.UI.UIManager;
 using CocoDoogy.Utility.Loading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CocoDoogy.UI.InGame
@@ -60,7 +61,7 @@ namespace CocoDoogy.UI.InGame
         /// </summary>
         private void OnClickQuit()
         {
-            MessageDialog.ShowMessage("나가기", "주인은 다음에 찾을까요?", DialogMode.YesNo, QuitOrNot);
+            MessageDialog.ShowMessage("나가기", "주인은 다음에 찾을까요?", DialogMode.YesNo,QuitOrNot);
         }
         
         private async void ResetOrNot(CallbackType type)
@@ -71,11 +72,10 @@ namespace CocoDoogy.UI.InGame
                 if (isReady)
                 {
                     SfxManager.StopDucking();
-                    Loading.LoadScene("InGame");
+                    ItemHandler.UseItem(() => Loading.LoadScene("InGame"));
                 }
                 else
                 {
-                    // TODO : 티켓이 부족하면 메세지를 띄우게만 해뒀는데 여기에서 상점으로 연결까지 할 수도?
                     MessageDialog.ShowMessage(
                         "티켓 부족",
                         "티켓이 부족하여 게임을 진행할 수 없습니다.",
@@ -90,7 +90,7 @@ namespace CocoDoogy.UI.InGame
             if (type == CallbackType.Yes)
             {
                 SfxManager.StopDucking();
-                Loading.LoadScene("Lobby");
+                ItemHandler.UseItem(() => Loading.LoadScene("Lobby"));
             }
         }
     }

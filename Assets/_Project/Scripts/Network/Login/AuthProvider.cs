@@ -27,7 +27,10 @@ namespace CocoDoogy.Network.Login
         {
             GoogleSignIn.Configuration = new GoogleSignInConfiguration()
             {
-                WebClientId = webClientID, RequestIdToken = true, UseGameSignIn = false, RequestEmail = true
+                WebClientId = webClientID,
+                RequestIdToken = true,
+                UseGameSignIn = false,
+                RequestEmail = true
             };
         }
 

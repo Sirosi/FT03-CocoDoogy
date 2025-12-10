@@ -36,7 +36,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public bool DidGimmick { get => dg == 1; private set => dg = value ? (byte)1 : (byte)0; }
         
         
-        public GimmickCommand(object param) : base(CommandType.Gimmick, param)
+        public GimmickCommand(object param) : base(CommandType.Gimmick)
         {
             var data = ((Vector2Int, GimmickType, int, int, int, HexDirection, HexDirection, bool))param;
             GridPos = data.Item1;

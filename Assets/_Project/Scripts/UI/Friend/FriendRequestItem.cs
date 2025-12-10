@@ -17,13 +17,14 @@ namespace CocoDoogy.UI.Friend
         [SerializeField] private Button cancelButton;
         [SerializeField] private Button presentButton;
         [SerializeField] private Button deleteButton;
+        
         private Action<string> onAccept;
         private Action<string> onReject;
         private Action<string> onCancel;
         private Action<string> onDelete;
         private Action<string> onPresent;
         private string uid;
-
+        
         /// <summary>
         /// Received Request에 사용하는 초기화 메서드
         /// </summary>
@@ -34,9 +35,10 @@ namespace CocoDoogy.UI.Friend
         public async void ReceivedInit(string nickname, string receivedUid, Action<string> acceptCallback, Action<string> rejectCallback)
         {
             uid = receivedUid;
-            nicknameText.text = nickname;
             StageInfo record = await FirebaseManager.GetLastClearStage(uid);
-            recordText.text = $"{record.theme.Hex2Int()}테마 {record.level.Hex2Int()}";
+            
+            nicknameText.text = nickname;
+            recordText.text = $"{(record != null ? record.theme.Hex2Int():"X" )} 테마 {(record != null ? record.level.Hex2Int():"X")} 스테이지";
             onAccept = acceptCallback;
             onReject = rejectCallback;
 
@@ -50,10 +52,13 @@ namespace CocoDoogy.UI.Friend
         /// <param name="nickname"></param>
         /// <param name="sentUid"></param>
         /// <param name="cancelCallback"></param>
-        public void SentInit(string nickname, string sentUid, Action<string> cancelCallback)
+        public async void SentInit(string nickname, string sentUid, Action<string> cancelCallback)
         {
             uid = sentUid;
+            StageInfo record = await FirebaseManager.GetLastClearStage(uid);
+            
             nicknameText.text = nickname;
+            recordText.text = $"{(record != null ? record.theme.Hex2Int():"X" )} 테마 {(record != null ? record.level.Hex2Int():"X")} 스테이지";
             onCancel = cancelCallback;
 
             cancelButton.onClick.AddListener(() => onCancel?.Invoke(sentUid));
@@ -62,9 +67,10 @@ namespace CocoDoogy.UI.Friend
         public async void FriendInit(string nickname, string uid, Action<string> presentCallback, Action<string> cancelCallback)
         {
             this.uid = uid;
-            nicknameText.text = nickname;
             StageInfo record = await FirebaseManager.GetLastClearStage(uid);
-            recordText.text = $"{record.theme.Hex2Int()}테마 {record.level.Hex2Int()}";
+            
+            nicknameText.text = nickname;
+            recordText.text = $"{(record != null ? record.theme.Hex2Int():"X" )} 테마 {(record != null ? record.level.Hex2Int():"X")} 스테이지";
             onPresent = presentCallback;
             onDelete = cancelCallback;
 

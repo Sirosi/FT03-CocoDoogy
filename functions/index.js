@@ -31,14 +31,17 @@ const {deleteFriendsRequest} = require(
 const {giftFriendsRequest} = require(
     "./functions/friends/giftFriendsRequest",
 );
+const {giftAllFriendsRequest} = require(
+    "./functions/friends/giftAllFriendsRequest",
+);
 const {takePresentRequest} = require(
     "./functions/take/takePresentRequest",
 );
+const {takeAllPresentRequest} = require(
+    "./functions/take/takeAllPresentRequest",
+);
 const {useItem} = require(
     "./functions/item/useItem",
-);
-const {clearStage} = require(
-    "./functions/stage/clearStage",
 );
 const {stageClear} = require(
     "./functions/stage/stage-clear",
@@ -47,7 +50,6 @@ const {stageClearScore} = require(
     "./functions/stage/stage-clear-score",
 );
 
-exports.clearStage = clearStage;
 exports.takeInGameMoney = takeInGameMoney;
 
 exports.purchaseWithInGameMoney = purchaseWithInGameMoney;
@@ -62,7 +64,10 @@ exports.rejectFriendsRequest = rejectFriendsRequest;
 exports.cancelFriendsRequest = cancelFriendsRequest;
 exports.deleteFriendsRequest = deleteFriendsRequest;
 exports.giftFriendsRequest = giftFriendsRequest;
+exports.giftAllFriendsRequest = giftAllFriendsRequest;
 exports.takePresentRequest = takePresentRequest;
+exports.takeAllPresentRequest = takeAllPresentRequest;
+
 exports.useItem = useItem;
 exports.stageClear = stageClear;
 exports.stageClearScore = stageClearScore;

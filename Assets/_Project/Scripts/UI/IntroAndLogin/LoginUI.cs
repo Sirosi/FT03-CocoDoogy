@@ -1,5 +1,6 @@
 using CocoDoogy.Network;
 using CocoDoogy.Network.Login;
+using CocoDoogy.UI.Popup;
 using Firebase.Auth;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,7 +25,18 @@ namespace CocoDoogy.UI.IntroAndLogin
         {
             Init();
         }
+        private void OnEnable()
+        {
+            // 인터넷 연결 이벤트 구독
+            NetworkMonitor.Instance.OnConnectionChanged += UpdateButtonState;
+            UpdateButtonState(NetworkMonitor.Instance.IsConnected);
+        }
 
+        private void OnDisable()
+        {
+            // 인터넷 연결 이벤트 구독 해제
+            NetworkMonitor.Instance.OnConnectionChanged -= UpdateButtonState;
+        }
         /// <summary>
         /// 로그인을 위한 초기화를 하는 메서드
         /// </summary>
@@ -71,7 +83,16 @@ namespace CocoDoogy.UI.IntroAndLogin
 
         private void OnLoginError(string errorMessage)
         {
-            // TODO : 로그인에 실패한 경우
+            MessageDialog.ShowMessage("로그인 실패",errorMessage,DialogMode.Confirm,null);
+        }
+        
+        /// <summary>
+        /// 인터넷 연결 여부에 따라 버튼 상태 변경
+        /// </summary>
+        private void UpdateButtonState(bool isConnected)
+        {
+            googleLoginButton.interactable = isConnected;
+            anonymousLoginButton.interactable = isConnected;
         }
     }
 }

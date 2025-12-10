@@ -9,7 +9,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         public abstract bool IsUserCommand { get; }
 
 
-        public CommandBase(CommandType type, object param)
+        public CommandBase(CommandType type)
         {
             Type = type;
         }

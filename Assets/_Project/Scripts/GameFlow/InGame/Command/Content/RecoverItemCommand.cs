@@ -1,4 +1,5 @@
 using CocoDoogy.Data;
+using CocoDoogy.Test;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
@@ -20,7 +21,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
         private const int Recover = 1;
 
 
-        public RecoverItemCommand(object param) : base(CommandType.Recover, param)
+        public RecoverItemCommand(object param) : base(CommandType.Recover)
         {
             Effect = (ItemEffect)param;
         }
@@ -33,6 +34,8 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
 
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), false);
             PlayerHandler.IsBehaviour = true;
+            
+            TileOutlineDrawer.Draw();
         }
 
         public override void Undo()

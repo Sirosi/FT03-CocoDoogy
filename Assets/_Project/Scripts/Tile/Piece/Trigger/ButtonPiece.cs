@@ -28,7 +28,6 @@ namespace CocoDoogy.Tile.Piece.Trigger
             buttonObject.localPosition = Vector3.down * 0.2f;
             IsOn = true;
 
-            // TODO: 버튼 누르는 소리가 들려야 함
             SfxManager.PlaySfx(SfxType.Interaction_SwitchOn);
             int actionPoints = InGameManager.ConsumedActionPoints + this.actionPoints;
             print(actionPoints);

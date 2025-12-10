@@ -1,5 +1,8 @@
 using CocoDoogy.Network;
 using CocoDoogy.UI.Popup;
+using Lean.Pool;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -49,28 +52,43 @@ namespace CocoDoogy.UI.Friend
 
         protected override async Task RefreshPanelAsync()
         {
-            foreach (Transform child in container)
-            {
-                Destroy(child.gameObject);
-            }
+            refreshCts?.Cancel();
+            refreshCts = new CancellationTokenSource();
+            var token = refreshCts.Token;
 
-            var requestDict = await FirebaseManager.GetFriendRequestsAsync("friendReceivedList");
-            foreach (var kvp in requestDict)
+            try
             {
-                string uid = kvp.Key;
-                string nickname = kvp.Value;
-                var item = Instantiate(prefabItem, container);
-                item.GetComponent<FriendRequestItem>().ReceivedInit(nickname, uid, OnAcceptRequestAsync, OnRejectRequestAsync);
-            }
+                for (int i = container.childCount - 1; i >= 0; i--)
+                {
+                    Destroy(container.GetChild(i).gameObject);
+                }
 
-            if (requestDict.Count < 1)
-            {
-                nullMessage.gameObject.SetActive(true);
-                nullMessage.text = "받은 친구 요청이 없습니다.";
+                var requestDict = await FirebaseManager.GetFriendRequestsAsync("friendReceivedList");
+                token.ThrowIfCancellationRequested();
+
+                foreach (var kvp in requestDict)
+                {
+                    token.ThrowIfCancellationRequested();
+
+                    string uid = kvp.Key;
+                    string nickname = kvp.Value;
+
+                    FriendRequestItem item = Instantiate(prefabItem, container);
+                    item.ReceivedInit(nickname, uid, OnAcceptRequestAsync, OnRejectRequestAsync);
+                }
+
+                bool hasRequests = requestDict.Count > 0;
+                nullMessage.gameObject.SetActive(!hasRequests);
+                if (!hasRequests)
+                    nullMessage.text = "받은 친구 요청이 없습니다.";
             }
-            else
+            catch (OperationCanceledException)
             {
-                nullMessage.gameObject.SetActive(false);
+                
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"RefreshPanelAsync 에러 발생: {ex}");
             }
         }
     }

@@ -29,7 +29,7 @@ class Request {
                 const docs = await this.getDocuments(transaction, refs, needProfiles);
                 return await transactionLogic(transaction, refs, docs);
             });
-            return { success: true, meesage: result };
+            return { success: true, message: result };
         }catch(err){
             console.error(`${this.constructor.name} error:`, err);
             return { success: false, reason: err.message };
@@ -37,29 +37,51 @@ class Request {
     }
 
     async getDocuments(transaction, refs, needProfiles) {
-        const [userPrivateDoc, friendsPrivateDoc] = await Promise.all([
-            transaction.get(refs.userPrivateRef),
-            transaction.get(refs.friendsPrivateRef)
-        ]);
-        if(!userPrivateDoc.exists || !friendsPrivateDoc.exists){
+        let userPrivateDoc, friendsPrivateDoc;
+
+        if (transaction) {
+            [userPrivateDoc, friendsPrivateDoc] = await Promise.all([
+                transaction.get(refs.userPrivateRef),
+                transaction.get(refs.friendsPrivateRef)
+            ]);
+        } else {
+            [userPrivateDoc, friendsPrivateDoc] = await Promise.all([
+                refs.userPrivateRef.get(),
+                refs.friendsPrivateRef.get()
+            ]);
+        }
+
+        if (!userPrivateDoc.exists || !friendsPrivateDoc.exists) {
             throw new Error("사용자를 찾을 수 없습니다.");
         }
+
         const docs = {
             userPrivateData: userPrivateDoc.data(),
             friendsPrivateData: friendsPrivateDoc.data()
         };
 
-        if(needProfiles){
-            const [userPublicDoc, friendsPublicDoc] = await Promise.all([
-                transaction.get(refs.userPublicRef),
-                transaction.get(refs.friednsPublicRef)
-            ]);
-            if(!userPublicDoc.exists || !friendsPublicDoc.exists){
+        if (needProfiles) {
+            let userPublicDoc, friendsPublicDoc;
+            if (transaction) {
+                [userPublicDoc, friendsPublicDoc] = await Promise.all([
+                    transaction.get(refs.userPublicRef),
+                    transaction.get(refs.friednsPublicRef)
+                ]);
+            } else {
+                [userPublicDoc, friendsPublicDoc] = await Promise.all([
+                    refs.userPublicRef.get(),
+                    refs.friednsPublicRef.get()
+                ]);
+            }
+
+            if (!userPublicDoc.exists || !friendsPublicDoc.exists) {
                 throw new Error("사용자 프로필을 찾을 수 없습니다.");
             }
+
             docs.userPublicProfile = userPublicDoc.data();
             docs.friendsPublicProfile = friendsPublicDoc.data();
         }
+
         return docs;
     }
 }

@@ -1,6 +1,8 @@
+using CocoDoogy.UI.Popup;
 using Firebase.Firestore;
 using Firebase.Functions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -52,7 +54,8 @@ namespace CocoDoogy.Network
             try
             {
                 Dictionary<string, object> data = new() { { "giftId", giftId } };
-                HttpsCallableResult result = await Instance.Functions.GetHttpsCallable("takePresentRequest").CallAsync(data);
+                HttpsCallableResult result =
+                    await Instance.Functions.GetHttpsCallable("takePresentRequest").CallAsync(data);
 
                 string json = JsonConvert.SerializeObject(result.Data);
                 return JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
@@ -61,6 +64,31 @@ namespace CocoDoogy.Network
             {
                 Debug.LogError($"선물 받기 실패: {e.Message}");
                 throw;
+            }
+            finally
+            {
+                loading.Hide();
+            }
+        }
+
+        public static async Task<string> TakeAllGiftRequestAsync()
+        {
+            var loading = FirebaseLoading.ShowLoading();
+            try
+            {
+                HttpsCallableResult result = await Instance.Functions
+                    .GetHttpsCallable("takeAllPresentRequest")
+                    .CallAsync();
+
+                string json = JsonConvert.SerializeObject(result.Data);
+                IDictionary<string, object> dict = JsonConvert.DeserializeObject<IDictionary<string, object>>(json);
+
+                return dict["message"].ToString();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"TakeAllGiftRequestAsync Error: {e}");
+                return string.Empty;
             }
             finally
             {
@@ -89,7 +117,7 @@ namespace CocoDoogy.Network
                 loading.Hide();
             }
         }
-        
+
         public static async Task<List<IDictionary<string, object>>> GetGiftListAsync()
         {
             string userId = Instance.Auth.CurrentUser.UserId;
@@ -116,7 +144,7 @@ namespace CocoDoogy.Network
 
             return new List<IDictionary<string, object>>();
         }
-        
+
         /// <summary>
         /// Firebase Firestore에서 현재 로그인한 유저의 itemDic을 읽어와 반환하는 메서드
         /// </summary>
@@ -137,8 +165,10 @@ namespace CocoDoogy.Network
                 {
                     itemDic[item.Key] = item.Value;
                 }
+
                 return itemDic;
             }
+
             return new Dictionary<string, object>();
         }
     }

@@ -11,8 +11,6 @@ using UnityEngine;
 
 namespace CocoDoogy.Network
 {
-
-    // TODO : 나중에 구조 변경 생각
     public partial class FirebaseManager : Singleton<FirebaseManager>
     {
         public FirebaseAuth Auth { get; private set; }
@@ -28,6 +26,8 @@ namespace CocoDoogy.Network
         /// 파이어베이스 초기화가 완료 후에 작동하는 이벤트
         /// </summary>
         public event Action OnFirebaseInitialized;
+
+        public event Action OnDisconnectInternet;
 
         protected override void Awake()
         {

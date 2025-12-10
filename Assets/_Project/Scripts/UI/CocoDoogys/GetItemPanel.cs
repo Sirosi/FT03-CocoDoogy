@@ -63,9 +63,9 @@ namespace CocoDoogy._Project.Scripts.UI.CocoDoogys
                         .OnComplete(() =>
                         {
                             panel.gameObject.SetActive(false);
-                            callback?.Invoke();
-                        });
+                        }).SetUpdate(true);
                 });
+            callback?.Invoke();
         }
         private void MovePanelToPlayer()
         {

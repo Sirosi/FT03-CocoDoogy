@@ -10,7 +10,6 @@ namespace CocoDoogy.UI.InGame
     {
         [SerializeField] private TextMeshProUGUI text;
 
-
         void OnEnable()
         {
             InGameManager.OnRefillCountChanged += OnRefillCountChanged;

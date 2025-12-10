@@ -90,6 +90,7 @@ namespace CocoDoogy.Tile.Piece
                 piece.transform.rotation = preRot;
                 piece.transform.parent = tile.transform;
 
+                // 플레이어가 다리 위에 있을 때, 같이 회전
                 if (PlayerHandler.IsValid && prePos == PlayerHandler.GridPos)
                 {
                     DOTween.Kill(PlayerHandler.Instance, true);
@@ -112,6 +113,7 @@ namespace CocoDoogy.Tile.Piece
             }
             Parent.ConnectPiece(HexDirection.Center, piece);
 
+            // 다리가 플레이어와 같이 회전한 뒤 사후 처리
             if (PlayerHandler.IsValid && Parent.GridPos == PlayerHandler.GridPos)
             {
                 PlayerHandler.Instance.transform.parent = null;

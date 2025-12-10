@@ -53,11 +53,14 @@ namespace CocoDoogy.UI.UserInfo
                 {
                     cashMoneyText.text = "99,999+";
                 }
-                else cashMoneyText.text = cashMoney.ToString("N0");
-                
+                else
+                {
+                    cashMoneyText.text = cashMoney.ToString("N0");
+                }
+                    
                 
                 realtimeTicket.text =  $"코코 도장 : {ticketCount.ToString()}개 보유 중\n5분마다 하나씩 충전됩니다.";
-                realtimeMoney.text=  $"두기 잼 : {cashMoney.ToString("N0")}개 보유 중\n상점을 이용해 볼까요?";
+                realtimeMoney.text = $"두기 잼 : {cashMoney.ToString("N0")}개 보유 중\n해당 재화를 통해\n코코 도장과 아이템 구매 가능";
             }
             else
             {

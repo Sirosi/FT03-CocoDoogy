@@ -17,6 +17,8 @@ namespace CocoDoogy.UI.UIManager
         [SerializeField] private SettingsUI settingsUI;
         [SerializeField] private InGamePauseUI pauseUI;
 
+        [SerializeField] private InteractButton interactButton;
+        
         protected override void Awake()
         {
             base.Awake();
@@ -33,6 +35,11 @@ namespace CocoDoogy.UI.UIManager
         {
             pauseUI.OpenUI();
             SfxManager.PlayDucking();
+        }
+
+        public void OnInteractButtonActive()
+        {
+            interactButton.OnInteractChanged();
         }
     }
 }

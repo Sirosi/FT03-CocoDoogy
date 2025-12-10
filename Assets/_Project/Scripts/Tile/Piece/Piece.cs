@@ -134,6 +134,9 @@ namespace CocoDoogy.Tile.Piece
             }
         }
 
+        /// <summary>
+        /// 일반적인 기물 이동
+        /// </summary>
         private void MoveDefault(HexTile nextTile, HexDirection direction)
         {
             Vector3 prePos = Parent.GridPos.ToWorldPos() + DirectionPos.GetPos();
@@ -146,13 +149,18 @@ namespace CocoDoogy.Tile.Piece
             transform.DOMove(nextTile.GridPos.ToWorldPos() + DirectionPos.GetPos(), Constants.MOVE_DURATION)
                 .SetId(this);
         }
-
+        /// <summary>
+        /// 상자 기물이 발판으로 이동
+        /// </summary>
         private void MoveToGravityButton(HexTile nextTile, HexDirection direction)
         {
             Piece piece = nextTile.SetPiece(HexDirection.Center, PieceType.GravityCrate, LookDirection);
             piece.GetComponent<GravityCrate>().ToMove(direction.GetMirror());
             Release();
         }
+        /// <summary>
+        /// 상자 기물이 발판에서 이동
+        /// </summary>
         private void MoveFromGravityButton(HexTile nextTile, HexDirection direction)
         {
             Piece piece = nextTile.SetPiece(HexDirection.Center, PieceType.Crate, LookDirection);
@@ -160,6 +168,9 @@ namespace CocoDoogy.Tile.Piece
             piece.transform.DOMove(nextTile.GridPos.ToWorldPos(), Constants.MOVE_DURATION).SetId(piece);
             Parent.SetPiece(HexDirection.Center, PieceType.GravityButton, LookDirection);
         }
+        /// <summary>
+        /// 상자 기물이 발판에서 발판으로 이동
+        /// </summary>
         private void MoveButtonToButton(HexTile nextTile, HexDirection direction)
         {
             Piece piece = nextTile.SetPiece(HexDirection.Center, PieceType.GravityCrate, LookDirection);

@@ -1,3 +1,4 @@
+using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.GameFlow.InGame.Command;
 using CocoDoogy.GameFlow.InGame.Command.Content;
 using Cysharp.Threading.Tasks;
@@ -17,6 +18,9 @@ namespace CocoDoogy.UI.Replay
         [SerializeField] private Button redoButton;
         
         [SerializeField] private float delay = 0.5f; // 명령 간 딜레이 (초)
+
+        [SerializeField] private GameObject playIcon;
+        [SerializeField] private GameObject pauseIcon;
         
         private bool IsPaused;
         private void Awake()
@@ -28,9 +32,11 @@ namespace CocoDoogy.UI.Replay
             redoButton.onClick.AddListener(Redo);
             undoButton.onClick.AddListener(Undo);
             pauseButton.onClick.AddListener(ReplayPause);
-
             
+            playIcon.gameObject.SetActive(IsPaused);
+            pauseIcon.gameObject.SetActive(!IsPaused);
         }
+
 
         private void Start()
         {
@@ -42,6 +48,8 @@ namespace CocoDoogy.UI.Replay
             IsPaused = !IsPaused;
             undoButton.interactable = !undoButton.interactable;
             redoButton.interactable = !redoButton.interactable;
+            playIcon.gameObject.SetActive(IsPaused);
+            pauseIcon.gameObject.SetActive(!IsPaused);
         }
         
         private async UniTaskVoid StartReplay()
@@ -63,14 +71,32 @@ namespace CocoDoogy.UI.Replay
                 await UniTask.Delay((int)(delay * 1000)); // ms 단위
             }
         }
-        
+
         private void Undo()
         {
+            undoButton.interactable = false;
+            redoButton.interactable = false;
+            pauseButton.interactable = false;
             CommandManager.UndoCommandAuto();
+            _ = StateChange();
         }
+
         private void Redo()
         {
+            undoButton.interactable = false;
+            redoButton.interactable = false;
+            pauseButton.interactable = false;
             CommandManager.RedoCommandAuto();
+            _ = StateChange();
         }
+
+        private async UniTask StateChange()
+        {
+            await UniTask.Delay((int)(delay * 1000));
+            undoButton.interactable = true;
+            redoButton.interactable = true;
+            pauseButton.interactable = true;
+        }
+        
     }
 }

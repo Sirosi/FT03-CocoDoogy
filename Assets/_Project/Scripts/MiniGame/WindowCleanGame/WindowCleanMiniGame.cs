@@ -1,4 +1,5 @@
 using CocoDoogy.Core;
+using CocoDoogy.GameFlow.InGame;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
@@ -86,7 +87,7 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
         /// 왜 필요하냐. Unity에서 Image 컴포넌트의 Preserve Aspect 옵션을 켜면, 이미지가 원본 비율대로 맞춰지는데
         /// 부모 RectTransform 크기와 다를 수 있기 때문에, 실제 패널 크기도 비율에 맞게 조정해야 화면이 어긋나지 않는다.
         /// </summary>
-        void ResizePanel()
+        protected override void ResizePanel()
         {
             if (background == null || background.sprite == null || windowGamePanel == null)
                 return;
@@ -123,9 +124,9 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
 
         protected override void OnOpenInit()
         {
-            Theme theme = Theme.Forest;  //TODO: 나중에 맵 데이터에서 호출하게 변경
+            Theme nowTheme = InGameManager.Stage.theme;   //TODO: 나중에 맵 데이터에서 호출하게 변경
             //테마받고 배경바꾸기
-            SetBackground(BackgroundFromTheme(theme));
+            SetBackground(BackgroundFromTheme(nowTheme));
             ResizePanel();
             dirties.Clear();
             Vector3[] corners = new Vector3[4];
@@ -135,7 +136,7 @@ namespace CocoDoogy.MiniGame.WindowCleanGame
             Vector2 slotEndPoint = corners[2];
 
 
-            Sprite[] dirtySprites = dirtiesDict[theme];
+            Sprite[] dirtySprites = dirtiesDict[nowTheme];
             for(int i = 0;i < dirtyCount; i++)
             {
                 float x = Random.Range(slotStartPoint.x, slotEndPoint.x);

@@ -96,7 +96,7 @@ namespace CocoDoogy.UI.Popup
         /// <param name="message"></param>
         /// <param name="type"></param>
         /// <param name="callback"></param>
-        public static void ShowMessage(string title, string message, DialogMode type, Action<CallbackType> callback)
+        public static MessageDialog ShowMessage(string title, string message, DialogMode type, Action<CallbackType> callback)
         {
             MessageDialog messageDialog = Create();
             messageDialog.titleText.text = title;
@@ -112,6 +112,8 @@ namespace CocoDoogy.UI.Popup
             messageDialog.callback = callback;
 
             SfxManager.PlaySfx(SfxType.UI_PopUp);
+            
+            return messageDialog;
         }
         /// <summary>
         /// strCallback에 값을 넣어주면서 패널을 띄우는 함수

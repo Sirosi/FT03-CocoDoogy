@@ -94,7 +94,7 @@ namespace CocoDoogy.UI.StageSelect
             }
             else
             {
-                // TODO : 티켓이 부족하면 메세지를 띄우게만 해뒀는데 여기에서 상점으로 연결까지 할 수도?
+               
                 MessageDialog.ShowMessage(
                     "티켓 부족", 
                     "티켓이 부족하여 게임을 진행할 수 없습니다.",

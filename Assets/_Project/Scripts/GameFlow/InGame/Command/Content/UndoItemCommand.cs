@@ -1,4 +1,5 @@
 using CocoDoogy.Data;
+using CocoDoogy.Test;
 using UnityEngine;
 
 namespace CocoDoogy.GameFlow.InGame.Command.Content
@@ -15,7 +16,7 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
 
         [SerializeField] private ItemEffect ie;
 
-        public UndoItemCommand(object param) : base(CommandType.Undo, param)
+        public UndoItemCommand(object param) : base(CommandType.Undo)
         {
             Effect = (ItemEffect)param;
         }
@@ -35,6 +36,8 @@ namespace CocoDoogy.GameFlow.InGame.Command.Content
             CommandManager.RedoCommandAuto();
             ItemHandler.SetValue(DataManager.GetReplayItem(Effect), true);
             PlayerHandler.IsBehaviour = false;
+            
+            TileOutlineDrawer.Draw();
         }
     }
 }

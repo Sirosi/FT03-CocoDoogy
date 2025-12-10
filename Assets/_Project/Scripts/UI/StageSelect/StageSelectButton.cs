@@ -16,7 +16,7 @@ namespace CocoDoogy.UI.StageSelect
     /// </summary>
     public class StageSelectButton : MonoBehaviour
     {
-        public int Star { get; set; }
+        private int Star { get; set; }
 
         [Header("UI Components")]
         [SerializeField] private TextMeshProUGUI stageNumberText;
@@ -34,6 +34,7 @@ namespace CocoDoogy.UI.StageSelect
 
         private StageData stageData = null;
         private Action<StageData, int> callback = null;
+        private bool isLocked = false;
 
 #if UNITY_EDITOR
         private void Reset()
@@ -50,7 +51,17 @@ namespace CocoDoogy.UI.StageSelect
             clearStars = starObjects.ToArray();
         }
 #endif
+        private void OnEnable()
+        {
+            startButton.onClick.AddListener(OnClickStageSelectButton);
+        }
 
+        private void OnDisable()
+        {
+            startButton.onClick.RemoveListener(OnClickStageSelectButton);
+        }
+        
+        
         
         /// <summary>
         /// 스테이지 데이터 입력 및 초기화
@@ -64,14 +75,14 @@ namespace CocoDoogy.UI.StageSelect
             callback = actionCallback;
             
             Star = starSize;
-            Debug.Log(Star);
+
             foreach (GameObject star in clearStars)
             {
                 star.SetActive(starSize-- > 0);
             }
-
+        
             stageNumberText.text = $"{data.stageName}";
-
+        
             var last = StageSelectManager.LastClearedStage;
             StageData lastClearStage = null;
             
@@ -79,9 +90,8 @@ namespace CocoDoogy.UI.StageSelect
             {
                 lastClearStage = DataManager.GetStageData((Theme)(1 << (last.theme.Hex2Int() - 1)), last.level.Hex2Int());
             }
-
             
-            bool isLocked = true;
+            isLocked = true;
             foreach (var check in IsStageOpen)
             {
                 if (check(data, lastClearStage))
@@ -91,22 +101,22 @@ namespace CocoDoogy.UI.StageSelect
                 }
             }
             
-            ApplyLockedState(isLocked);
+            ApplyLockedState();
         }
         
         // TODO: 스테이지 테스트 할때 위에 Init 비활성화 하고 이거 활성화 해서 사용하면 됨 
         
-        // public void Init(StageData data, int starSize, Action<StageData> actionCallback)
+        // public void Init(StageData data, int starSize, Action<StageData, int> actionCallback)
         // {
-        //     if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
-        //         StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
-        //     {
-        //         startButton.interactable = false;
-        //         startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
-        //         starGroup.gameObject.SetActive(false);
-        //         stageNumberText.text = $"{data.stageName}";
-        //         return;
-        //     }
+        //     // if (StageSelectManager.LastClearedStage.theme.Hex2Int() < (int)data.theme ||
+        //     //     StageSelectManager.LastClearedStage.level.Hex2Int() < data.index - 1)
+        //     // {
+        //     //     startButton.interactable = false;
+        //     //     startButton.GetComponentInChildren<Image>().sprite = lockedSprite;
+        //     //     starGroup.gameObject.SetActive(false);
+        //     //     stageNumberText.text = $"{data.stageName}";
+        //     //     return;
+        //     // }
         //
         //     startButton.interactable = true;
         //     startButton.GetComponentInChildren<Image>().sprite = defaultSprite;
@@ -121,28 +131,30 @@ namespace CocoDoogy.UI.StageSelect
         //     }
         //
         //     stageNumberText.text = $"{data.stageName}";
+        //     startButton.onClick.AddListener(OnButtonClicked);
         // }
-        
-        private void ApplyLockedState(bool locked)
+        //
+        private void ApplyLockedState()
         {
-            var img = startButton.GetComponentInChildren<Image>();
+            Image img = startButton.image;
             if (img)
-                img.sprite = locked ? lockedSprite : defaultSprite;
+                img.sprite = isLocked ? lockedSprite : defaultSprite;
 
             if (starGroup)
-                starGroup.gameObject.SetActive(!locked);
+                starGroup.gameObject.SetActive(!isLocked);
 
-            if (stageNumberText && stageData && !locked) stageNumberText.text = $"{stageData.stageName}";
+            if (stageNumberText && stageData && !isLocked) stageNumberText.text = $"{stageData.stageName}";
             else stageNumberText.text = "";
-            
-            
-            startButton.onClick.RemoveAllListeners();
-            if (locked)
-                startButton.onClick.AddListener(OnLockedButtonClicked);
-            else
-                startButton.onClick.AddListener(OnButtonClicked);
         }
 
+        private void OnClickStageSelectButton()
+        {
+            if (isLocked)
+                OnLockedButtonClicked();
+            else
+                OnButtonClicked();
+        }
+        
         private void OnButtonClicked()
         {
             callback?.Invoke(stageData, Star);
@@ -154,7 +166,7 @@ namespace CocoDoogy.UI.StageSelect
         }
 
         #region < 스테이지 활성화 책임 연쇄 패턴>
-        private static Func<StageData, StageData, bool>[] IsStageOpen =
+        private static readonly Func<StageData, StageData, bool>[] IsStageOpen =
         {
             IsFirstStage, IsClearedTheme, IsClearedStageOrNextIndex, IsLastClearedNextStage
         };

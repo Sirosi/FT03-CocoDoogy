@@ -12,26 +12,40 @@ using UnityEngine.UI;
 
 namespace CocoDoogy.UI.InGame
 {
-    // TODO : Undo 아이템 사용 시 이전 행동에 
     public class InGameItemButton : MonoBehaviour
     {
-        public CommonButton Button { get; private set; }
+        [SerializeField] private Image buttonImage;
+        [SerializeField] private Image itemImage;
+        [SerializeField] private Image plusImage;
+        public Button Button { get; private set; }
         public Image ButtonColor { get; private set; }
+
+        public Image PlusImage
+        {
+            get => plusImage;
+            set => plusImage = value;
+        }
         
         /// <summary>
         /// 해당 버튼이 가지고 있는 ItemData를 InGameItemUI에서 넣어줌
         /// </summary>
         public ItemData ItemData { get; set; }
 
+        /// <summary>
+        /// 아이템 버튼을 눌렀을 때 작동하는 이벤트
+        /// </summary>
         public Action<InGameItemButton, ItemData> OnClicked;
-
+        
+        /// <summary>
+        /// 아이템을 InGame내에서 구매했는지 여부
+        /// </summary>
         public bool IsPurchased { get; private set; } = false; 
         
         private void Awake()
         {
             if (!Button)
             {
-                Button = GetComponent<CommonButton>();
+                Button = GetComponent<Button>();
             }
 
             if (!ButtonColor)
@@ -39,7 +53,11 @@ namespace CocoDoogy.UI.InGame
                 ButtonColor = GetComponent<Image>();
             }
             
-            Button.onClick.AddListener(() => OnClicked?.Invoke(this, ItemData));
+            Button.onClick.AddListener(() =>
+            {
+                OnClicked?.Invoke(this, ItemData);
+                SfxManager.PlaySfx(SfxType.UI_ButtonUp1);
+            });
         }
 
         /// <summary>
@@ -67,7 +85,6 @@ namespace CocoDoogy.UI.InGame
             {
                 case ItemEffect.ConsumeAndRecoverMaxAP:
                     Debug.Log("행동력을 1 소모하고 최대 행동력을 1 증가시킵니다.");
-                    if (InGameManager.ActionPoints <= 0) break;
                     CommandManager.MaxUp(itemData.effect);
                     SfxManager.PlaySfx(SfxType.Item_DogSleeping);
                     break;
@@ -106,6 +123,8 @@ namespace CocoDoogy.UI.InGame
                     Debug.Log($"구매 성공: {itemData.itemName} ({1})");
                     DataManager.Instance.CurrentItem[itemData] += 1;
                     IsPurchased = true;
+                    PlusImage.gameObject.SetActive(false);
+                    SetColor(true);
                 }
                 else
                 {
@@ -118,6 +137,14 @@ namespace CocoDoogy.UI.InGame
             {
                 Debug.LogError($"구매 실패: {e.Message}");
             }
+        }
+
+        public void SetColor(bool active)
+        {
+            float rgb = active ? 1f : 0.5f;
+            Color targetColor = new(rgb, rgb, rgb);
+            buttonImage.DOColor(targetColor, 0.2f);
+            itemImage.DOColor(targetColor, 0.2f);
         }
     }
 }
