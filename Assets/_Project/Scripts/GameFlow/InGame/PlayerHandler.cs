@@ -198,7 +198,8 @@ namespace CocoDoogy.GameFlow.InGame
                 GimmickExecutor.ExecuteFromTrigger(preGravityButton
                     .Value); // Deploy는 갑자기 위치가 바뀌는 문제라 발판이 해결 안 되는 사태를 대비
             }
-            Debug.Log("리필?");
+            // TODO : 이펙트 추가
+            VfxManager.CreateVfx(VfxType.None, Instance.transform.position, Instance.transform.rotation);
             OnBehaviourCompleted();
         }
 

@@ -1,4 +1,5 @@
 using CocoDoogy.Data;
+using CocoDoogy.EffectPooling;
 using CocoDoogy.GameFlow.InGame;
 using CocoDoogy.LifeCycle;
 using CocoDoogy.Tile.Piece;
@@ -23,7 +24,6 @@ namespace CocoDoogy.Tile
         [Header("Object Inner Reference")]
         [Tooltip("Tile Model Transform")] [SerializeField] private Transform modelGroup;
         [Tooltip("기물을 배치하는 Parent Transform")] [SerializeField] private Transform pieceGroup;
-
 
         public HexTileData BaseData { get; private set; } = null;
         public HexTileData CurrentData { get; private set; } = null;
@@ -208,7 +208,8 @@ namespace CocoDoogy.Tile
             {
                 centerPiece.LookDirection = centerPiece.LookDirection.AddRotate(rotate);
             }
-
+            
+            VfxManager.CreateVfx(VfxType.None, transform.position, transform.rotation);
             OnRotateChanged?.Invoke(this, rotate);
 
             // 회전 효과
@@ -291,6 +292,7 @@ namespace CocoDoogy.Tile
         {
             if (pieceType == PieceType.None) // None기물을 배치시도하는 건 제거로 인지
             {
+                VfxManager.CreateVfx(VfxType.None, transform.position, transform.rotation);
                 RemovePiece(direction);
                 return null;
             }

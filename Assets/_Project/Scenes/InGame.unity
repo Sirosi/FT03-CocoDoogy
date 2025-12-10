@@ -1824,6 +1824,7 @@ GameObject:
   - component: {fileID: 1530506120}
   - component: {fileID: 1530506121}
   - component: {fileID: 1530506122}
+  - component: {fileID: 1530506123}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1912,6 +1913,21 @@ MonoBehaviour:
   actionPointsUI: {fileID: 1214811591}
   refillButton: {fileID: 1214811592}
   weatherIcon: {fileID: 1214811593}
+--- !u!114 &1530506123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530506116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626fbc67c74f4da38ed77a8f6373d766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxEntries:
+  - type: 0
+    prefab: {fileID: 8014035877662346216, guid: 0456c09e8d9df274e85c876c6c9bd112, type: 3}
 --- !u!1 &1559489399
 GameObject:
   m_ObjectHideFlags: 0
