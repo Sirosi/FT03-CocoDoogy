@@ -7,6 +7,9 @@ namespace CocoDoogy.UI
 {
     public class InvertMask : Image
     {
+        private Material invertMat = null;
+
+
         protected override void Start()
         {
             base.Start();
@@ -25,9 +28,12 @@ namespace CocoDoogy.UI
         {
             get
             {
-                Material result = new Material(base.materialForRendering);
-                result.SetInt("_StencilComp", (int)CompareFunction.NotEqual);
-                return result;
+                Material baseMat = base.materialForRendering;
+                if (!invertMat || invertMat.shader != baseMat)
+                {
+                    (invertMat = baseMat).SetInt("_StencilComp", (int)CompareFunction.NotEqual);
+                }
+                return invertMat;
             }
         }
     }
