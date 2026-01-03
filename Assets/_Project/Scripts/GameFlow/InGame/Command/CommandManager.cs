@@ -120,39 +120,23 @@ namespace CocoDoogy.GameFlow.InGame.Command
             }
         }
 
-        /// <summary>
-        /// 마지막으로 플레이어가 수행한 작업 실행
-        /// </summary>
-        /// <returns></returns>
-        public static CommandBase UndoCommand()
-        {
-            CommandBase result = null;
-            while (Executed.TryPop(out CommandBase command))
-            {
-                (result = command).Undo();
-                Undid.Push(result);
-                break;
-            }
+        private static CommandBase UndoCommand() {
+            if (!Executed.TryPop(out CommandBase command)) return null;
+            
+            command.Undo();
+            Undid.Push(command);
             TileOutlineDrawer.Draw();
-
-            return result;
+            
+            return command;
         }
-        /// <summary>
-        /// 마지막으로 플레이어가 Undo한 작업 실행
-        /// </summary>
-        /// <returns></returns>
-        public static CommandBase RedoCommand()
-        {
-            CommandBase result = null;
-            while (Undid.TryPop(out CommandBase command))
-            {
-                (result = command).Execute();
-                Executed.Push(result);
-                break;
-            }
+        private static CommandBase RedoCommand() {
+            if (!Undid.TryPop(out CommandBase command)) return null;
+            
+            command.Execute();
+            Executed.Push(command);
             TileOutlineDrawer.Draw();
 
-            return result;
+            return command;
         }
         #endregion
     }
